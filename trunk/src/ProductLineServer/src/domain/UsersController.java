@@ -18,4 +18,10 @@ public class UsersController {
 		
 	}
 
+
+	public void registerUser(String username, String password, String email) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

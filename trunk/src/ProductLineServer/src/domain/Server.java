@@ -19,7 +19,7 @@ public class Server extends ProductLine._ServerDisp {
 	@Override
 	public void registerUser(String username, String password, String email,
 			Current __current) {
-		// TODO Auto-generated method stub
+		UsersController.getInstance().registerUser(username,password,email);
 		
 	}
 
