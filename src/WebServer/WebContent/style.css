@@ -1,0 +1,1022 @@
+{
+margin:0px auto;
+padding:0px;
+}
+
+body{
+	font-family:Tahoma, Geneva, sans-serif;
+	font-size:14px;
+	color:#FFD68F;
+	text-align:center;
+	background-color: #360000;
+}
+
+b{
+	color:#fff;
+	text-decoration:underline;
+}
+
+strong{ color:#FEE9C4;}
+
+
+h1{
+	font-size:21px;
+	font-weight:bold;
+	color:#FC0;
+	margin:0px;
+	padding:0px;
+}
+
+.clear{
+	clear:both;
+	margin:0px;
+	padding:0px;
+}
+
+.conten_area{
+	width:803px;
+	margin:0px auto;
+	padding:0px 0px 0px 200px;
+	
+}
+
+.sub_menu{
+width:150px;
+float:right;
+margin:0px;
+padding:0px 0px 7px 0px;
+font-weight:bold;
+text-align: right;
+}
+
+.sub_menu a{
+	text-decoration:none;
+	color:#FFFFFF;
+}
+
+.sub_menu a:hover{
+	text-decoration: underline overline;
+	color:#FFFFFF;
+}
+
+.workzone{
+	width:604px;
+	float:left;
+	padding:0px 0px 0px 0px;
+	margin:0px 0px 0px 0px;
+	text-align: center;
+}
+
+.header{
+	width:237px;
+	float:left;
+	margin:0px 0px 0px 0px;
+	padding:357px 33px 0px 334px;
+	background-image: url(Imagenes/header_img.jpg);
+	background-repeat:no-repeat;
+	background-position: 0px 0px;
+}
+
+.menu{
+	font-color: white;
+	-webkit-box-shadow: 0 0 10px rgb(0,0,0);  
+	-moz-box-shadow: 0 0 10px rgb(0,0,0);  
+	box-shadow: 0 0 10px rgb(0,0,0);
+	-webkit-box-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	background-color: rgba(139, 0, 0, 0.7);
+	filter:alpha(opacity=50);
+	position:relative;
+	bottom: 100px;
+
+}
+
+.menu_heading{
+	text-align: right;
+	margin: 0px;
+	padding:0px 10px 0px 0px;
+}
+
+.menu_body{
+	width:140px;
+	float:right;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:18px;
+	font-weight:bold;
+	margin:0px;
+	padding:10px 10px 0px 0px;
+	position: relative;
+}
+
+.menu ul{
+margin:0px;
+padding:0px;
+
+}
+
+.menu li{
+	list-style-type:none;
+	margin:0px;
+	text-align:right;
+	padding:5px 20px 0px 0px;
+	background-image: url(Imagenes/bullet.GIF);
+	background-repeat: no-repeat;
+	background-position: right 10px;
+	font-size: 18px;
+}
+
+.menu li a{
+	text-decoration:none;
+	color:#ffffff;
+}
+
+.menu li a:hover{
+	text-decoration: underline overline;
+	color:#FFFFFF;
+}
+
+/* content master */
+.content{
+	width:556px;
+	float:left;
+	padding:0px 24px 45px 24px;
+	margin:0px;
+	background: url(Imagenes/content_bg.jpg) left bottom no-repeat;
+}
+
+/* welcome */
+.welcome{
+ width:556px;
+ float:left;
+ margin:15px 0px 0px 0px;
+ padding:0px 0px 0px 0px;
+ }
+ 
+.welocme_heading{
+width:505px;
+float:left;
+font-size:21px;
+	font-weight:bold;
+	color:#FEE9C4;
+margin:0px;
+padding:0px 27px 11px 24px;
+}
+
+.welcome_top{
+	width:556px;
+	height:20px;
+	float:left;
+	margin:0px;
+	padding:0px;
+	background-image: url(Imagenes/welcome_top.jpg);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+}
+
+.welcome_content{
+	width:505px;
+	margin:0px;
+	padding:0px 27px 0px 24px;
+	background-image: url(Imagenes/welcome_bg.jpg);
+	background-repeat: repeat-y;
+	background-position: 0px 0px;
+	text-align:justify;
+}
+
+.welcome_bottom{
+	width:556px;
+	height:20px;
+	float:left;
+	margin:0px;
+	padding:0px;
+	background-image: url(Imagenes/welcome_bottom.jpg);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+}
+
+/* game */
+.game{
+ width:556px;
+ float:left;
+ margin:15px 0px 0px 0px;
+ padding:0px 0px 0px 0px;
+ }
+ 
+.game_heading{
+width:505px;
+float:left;
+font-size:21px;
+	font-weight:bold;
+	color:#FEE9C4;
+	
+margin:0px;
+padding:0px 27px 11px 24px;
+}
+
+.game_top{
+	width:556px;
+	height:20px;
+	float:left;
+	margin:0px;
+	padding:0px;
+	background-image: url(Imagenes/game_top.jpg);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+}
+
+.game_content{
+	width:505px;
+	margin:0px;
+	padding:0px 27px 0px 24px;
+	background-image: url(Imagenes/game_bg.jpg);
+	background-repeat: repeat-y;
+	background-position: 0px 0px;
+}
+
+.game_bottom{
+	width:556px;
+	height:20px;
+	float:left;
+	margin:0px;
+	padding:0px;
+	background-image: url(Imagenes/game_bottom.jpg);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+}
+
+/* services category */
+.web_design{
+width:149px;
+float:left;
+margin:0px;
+padding:0px 12px 0px 0px;
+border-right:1px dotted #FEE9C4;
+}
+.web_design_heading{
+	width:113px;
+	float:left;
+	font-size:11px;
+	font-weight:bold;
+	margin:0px;
+	padding:6px 0px 9px 36px;
+	background-image: url(Imagenes/img.jpg);
+	background-repeat: no-repeat;
+	background-position: left 0px;
+}
+.web_design_content{
+width:149px;
+float:left;
+margin:0px;
+padding:5px 0px 0px 0px;
+}
+/* logo category */
+
+.logo_design{
+width:149px;
+float:left;
+margin:0px;
+padding:0px 12px 0px 16px;
+border-right:1px dotted #FEE9C4;
+}
+
+.logo_design_heading{
+	width:113px;
+	float:left;
+	font-size:11px;
+	font-weight:bold;
+	margin:0px;
+	padding:6px 0px 9px 36px;
+	background-image: url(Imagenes/img2.jpg);
+	background-repeat: no-repeat;
+	background-position: left 0px;
+}
+.logo_design_content{
+width:149px;
+float:left;
+margin:0px;
+padding:5px 0px 0px 0px;
+}
+
+/* icon category */
+.icon_design{
+width:149px;
+float:left;
+margin:0px;
+padding:0px 0px 0px 16px;
+
+}
+
+.icon_design_heading{
+	width:113px;
+	float:left;
+	font-size:11px;
+	font-weight:bold;
+	margin:0px;
+	padding:6px 0px 9px 36px;
+	background-image: url(Imagenes/img3.jpg);
+	background-repeat: no-repeat;
+	background-position: left 0px;
+}
+.icon_design_content{
+width:149px;
+float:left;
+margin:0px;
+padding:5px 0px 0px 0px;
+}
+
+/* our client */
+
+.our_client{
+ width:556px;
+ float:left;
+ margin:15px 0px 0px 0px;
+ padding:0px 0px 0px 0px;
+ }
+ 
+.our_client_heading{
+width:505px;
+float:left;
+margin:0px;
+font-size:21px;
+font-weight:bold;
+color:#FEE9C4;
+padding:0px 27px 11px 24px;
+}
+
+.our_client_top{
+	width:556px;
+	height:20px;
+	float:left;
+	margin:0px;
+	padding:0px;
+	background-image: url(Imagenes/client_top.jpg);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+}
+
+.our_client_content{
+	width:298px; height:194px;
+	margin:0px;
+	
+	padding:25px 234px 49px 24px;
+	background-image: url(Imagenes/client_content.gif);
+	background-repeat: repeat-y;
+	background-position: 0px 0px;
+	text-align:justify;
+}
+
+.our_client_list{
+width:270px;
+float:left;
+margin:0px;
+padding:10px 0px 0px 0px;
+}
+
+.our_client_list ul{
+margin:0px;
+padding:0px 0px 0px 15px;
+}
+
+.our_client_list li{
+list-style-type:disc;
+margin:0px;
+padding:4px 0px 0px 0px;
+}
+
+.our_client_list li a{
+text-decoration:underline;
+color:#FFEFD2;
+}
+
+.our_client_list li a:hover{
+text-decoration:none;
+color:#FFEFD2;
+}
+
+.our_client_bottom{
+	width:556px;
+	height:20px;
+	float:left;
+	margin:0px;
+	padding:0px;
+	background-image: url(Imagenes/client_bottom.jpg);
+	background-repeat: no-repeat;
+	background-position: 0px 0px;
+}
+/* footer */
+
+.footer{
+	width:604x;
+	padding:20px 0px 0px 0px;
+	margin:0px 0px 0px 0px;
+}
+
+.footer_menu{
+	width:604px;
+	float:left;
+	text-align:center;
+	color:#F3E8D2;
+	text-transform:uppercase;
+}
+
+/* link */
+a {
+	color:#ffffff;
+	text-decoration:underline;
+}
+
+a:hover {
+	text-decoration:none;
+}
+
+p a{
+text-decoration:none;
+color:#fff;
+float:right;}
+
+p a:hover{
+text-decoration:none;
+color:#fff;
+float:right}
+
+
+
+/* Inside Style Start Here	*/
+
+.insidebanner {
+	height:332px;
+	background:url(Imagenes/insidebanner.jpg) left top no-repeat;
+}
+h5 {
+	font:15px Myriad Pro, Arial, Helvetica, sans-serif;
+	color:#ffffff;
+	font-weight:100;
+	padding:0px 0px 5px 0px;
+	border-bottom:1px dotted #ffffff;
+	margin:0px 0px 10px 0px;
+}
+
+
+h6 {
+	font:17px Myriad Pro, Arial, Helvetica, sans-serif;
+	color:#ffffff;
+	font-weight:100;
+	padding:0px 0px 5px 0px;
+	margin:0px 0px 10px 0px;
+}
+
+.ourvalue {
+	margin:10px 0px 0px 0px;
+}
+
+.aboutus-img {
+	float:right;
+	border:4px solid #b0a48b;
+	margin:0px 0px 10px 20px;
+}
+
+.aboutcolumnzone {
+	padding:20px 0px 16px 0px;
+}
+
+.aboutcolumn1 {
+	width:48%;
+	float:left;
+	margin:0px 0px 10px 0px;
+}
+
+.aboutcolumn2 {
+	width:48%;
+	float:right;
+	margin:0px 0px 10px 0px;
+}
+
+.abouticon {
+	float:left;
+	margin:0px 20px 0px 0px;
+}
+
+.servicecolumnzone {
+	padding:20px 0px 16px 0px;
+}
+
+.servicecolumn1 {
+	width:48%;
+	float:left;
+	margin:0px 0px 10px 0px;
+}
+
+.servicecolumn2 {
+	width:48%;
+	float:right;
+	margin:0px 0px 10px 0px;
+}
+
+.our-comment {
+	margin:10px 0px 0px 0px;
+}
+
+.blog-posted-row {
+	padding:3px;
+}
+
+.ourprojectrow {
+	margin-bottom:20px; 
+	border-bottom:1px dotted #000000; 
+	padding-bottom:10px;
+}
+
+.project-img {
+	float:right;
+	margin-left:20px;
+	border: 6px solid #b0a48b;
+}
+
+.pantallaRisk-img {
+	float:center;
+	border: 6px solid #b0a48b;
+}
+
+input.button {
+	color:#ffffff;
+	background:#414141;
+	font:bold 11px Arial, Helvetica, sans-serif;
+	text-decoration:none;
+	padding:10px 10px;
+	margin:0px 5px 5px 0;
+	border:1px solid #000000;
+}
+input.button:hover {
+	cursor:pointer;
+	color:#cccccc;
+}
+
+.insidereadmore {
+	padding:10px 0px 10px 0px;
+}
+
+.FormatoTextBox {
+	color:#000000; 
+	font-size: 14pt;  
+	font-weight:bold;
+    font-family:Tahoma, Geneva, sans-serif; 
+	width:225px; 
+	height:25px; 
+	dir="ltr" lang="es"
+}
+
+.FormatoPassword {
+	color:#000000; 
+    font-size: 14pt; 
+	width:225px; 
+	height:25px;
+}
+
+.Tipografia {
+	font-size:14pt;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-weight:bold;
+	color:#edbe4c;
+}
+.description2 {
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	color: #000;
+    font-weight:bold;
+
+}
+
+
+.Bienvenida {
+	font-size:20pt;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-weight:bold;
+	color:#edbe4c;
+}
+
+.Entrada {
+	font-size:12px;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-weight:bold;
+	font-style:italic;
+	color:#edbe4c;
+}
+.SubInfor {
+	font-size:10px;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-weight:bold;
+	font-style:italic;
+	color:#ffffff;
+}
+
+.enlace {
+	width:150px;
+	float:right;
+	margin:0px;
+	padding:0px 0px 7px 0px;
+	font-weight:bold;
+	text-align: right;
+	font-size:8pt;
+	font-family:Tahoma, Geneva, sans-serif;
+}
+
+.online {
+	width:150px;
+	float:right;
+	font-weight:bold;
+	font-size:12pt;
+	font-family:Tahoma, Geneva, sans-serif;
+	color:#edbe4c;
+	cursor:pointer;	
+}
+
+.fondoTabla{
+	-webkit-box-shadow: 0 0 10px rgb(0,0,0);  
+	-moz-box-shadow: 0 0 10px rgb(0,0,0);  
+	-webkit-box-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	background-color: rgba(139, 0, 0, 0.7);
+	filter:alpha(opacity=50);
+}
+
+.listadoJugadores{
+	background-color: rgba(255, 255, 255, 1);
+	border: 3px solid #000000;
+	border-radius: 5px;
+	width:240px;
+	height:130px;
+	font-size:14px;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-weight:bold;
+	cursor:default;
+	resize:none;
+}
+
+.RotuloJugadores {
+	text-align:center;
+	font-size:18pt;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-weight:bold;
+	color:#FFF;
+}
+
+.subTabla{
+	background-repeat:no-repeat;
+	background-image:url(Imagenes/fondoListado.png);
+	width:330px;
+	height:250px;
+}
+
+.listadoDinero{
+	background-color: rgba(255, 255, 255, 1);
+	border: 3px solid #000000;
+	border-radius:15px;
+	width:120px;
+	height:30px;
+	font-size:14px;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-weight:bold;
+	cursor:default;
+	resize:none;
+	text-align:right;
+	margin:-40px 65px -5px 0px;
+}
+
+.tablaDinero{
+	background-repeat:no-repeat;
+	background-image:url(Imagenes/listDinero.png);
+	background-repeat:no-repeat;
+	width:225px;
+	height:80px;
+}
+
+.subTablaAcciones{
+	background-repeat:no-repeat;
+	background-image:url(Imagenes/fondoListado.png);
+	width:330px;
+	height:247px;
+	text-align: center;
+}
+
+#capa1{ 
+	position:absolute; 
+	z-index:1;
+}
+
+.pos0
+{
+	margin:-395px 0px 0px 390px;
+}
+
+.pos1
+{
+	margin:-435px 0px 0px 400px;
+}
+
+.pos2
+{
+	margin:-390px 0px 0px 460px;
+}
+
+.pos3
+{
+	margin:-430px 0px 0px 460px;
+}
+
+.pos4
+{
+	margin:-360px 0px 0px 480px;
+}
+
+.pos5
+{
+	margin:-400px 0px 0px 520px;
+}
+
+.pos6
+{
+	margin:-360px 0px 0px 410px;
+}
+
+.pos7
+{
+	margin:-370px 0px 0px 600px;
+}
+
+.pos8
+{
+	margin:-332px 0px 0px 705px;
+}
+
+.pos9
+{
+	margin:-295px 0px 0px 652px;
+}
+
+.pos10
+{
+	margin:-395px 0px 0px 705px;
+}
+
+.pos11
+{
+	margin:-345px 0px 0px 825px;
+}
+
+.pos12
+{
+	margin:-430px 0px 0px 795px;
+}
+
+.pos13
+{
+	margin:-320px 0px 0px 540px;
+}
+
+.pos14
+{
+	margin:-364px 0px 0px 717px;
+}
+
+.pos15
+{
+	margin:-280px 0px 0px 725px;
+}
+
+.pos16
+{
+	margin:-430px 0px 0px 645px;
+}
+
+.pos17
+{
+	margin:-415px 0px 0px 600px;
+}
+
+.pos18
+{
+	margin:-427px 0px 0px 715px;
+}
+
+.pos19
+{
+	margin:-225px 0px 0px 480px;
+}
+
+.pos20
+{
+	margin:-260px 0px 0px 520px;
+}
+
+.pos21
+{
+	margin:-310px 0px 0px 485px;
+}
+
+.pos22
+{
+	margin:-165px 0px 0px 565px;
+}
+
+.pos23
+{
+	margin:-280px 0px 0px 420px;
+}
+
+.pos24
+{
+	margin:-165px 0px 0px 490px;
+}
+
+.pos25
+{
+	margin:-430px 0px 0px 70px;
+}
+
+.pos26
+{
+	margin:-397px 0px 0px 120px;
+}
+
+.pos27
+{
+	margin:-295px 0px 0px 120px;
+}
+
+.pos28
+{
+	margin:-347px 0px 0px 170px;
+}
+
+.pos29
+{
+	margin:-450px 0px 0px 340px;
+}
+
+.pos30
+{
+	margin:-430px 0px 0px 150px;
+}
+
+.pos31
+{
+	margin:-397px 0px 0px 180px;
+}
+
+.pos32
+{
+	margin:-390px 0px 0px 235px;
+}
+
+.pos33
+{
+	margin:-355px 0px 0px 105px;
+}
+
+.pos34
+{
+	margin:-123px 0px 0px 235px;
+}
+
+.pos35
+{
+	margin:-200px 0px 0px 260px;
+}
+
+.pos36
+{
+	margin:-180px 0px 0px 210px;
+}
+
+.pos37
+{
+	margin:-250px 0px 0px 200px;
+}
+
+.pos38
+{
+	margin:-140px 0px 0px 855px;
+}
+
+.pos39
+{
+	margin:-225px 0px 0px 770px;
+}
+
+.pos40
+{
+	margin:-210px 0px 0px 860px;
+}
+
+.pos41
+{
+	margin:-140px 0px 0px 785px;
+}
+
+.info_ataque {
+	color: #FFF;
+	font-size: 10px;
+}
+
+.textoAyuda
+{
+	background-color:transparent;
+	border:transparent;	
+	width:155px;
+	height:auto;
+	font-size:16px;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-weight:bold;
+	cursor:default;
+	text-align:center;
+	resize:none;
+}
+
+.posInformacion
+{
+	margin:25px 0px 0px -90px;	
+}
+
+.InformacionTerritorio
+{
+	background-color:transparent;
+	border:transparent;	
+	width:950px;
+	height:auto;
+	font-size:18px;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-weight:bold;
+	cursor:default;
+	text-align:center;
+	resize:none;
+}
+
+
+.RotuloLeyenda {
+	text-align:center;
+	vertical-align:middle;
+	font-size:18pt;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-weight:bold;
+	color:#FFF;
+}
+
+.RotuloLeyendaS {
+	text-align:left;
+	vertical-align:super;
+	font-size:12pt;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-weight:bold;
+	color:#FFF;
+}
+
+.posBocadillo
+{
+	margin:-30px 0px 0px 0px;
+}
+
+.posTabla
+{
+	margin:-80px 0px 0px 0px;
+}
+
+#capa2{ 
+	position:absolute; 
+	z-index:2;
+}
+
+.posAccion
+{
+	margin:80px 0px 0px 70px;
+}
+
+.posCancelar
+{
+	margin:80px 0px 0px 230px;
+}
+
+.posAyuda
+{
+	margin:130px 0px 0px 80px;	
+}
+
+.textoAccion
+{
+	background-color:transparent;
+	border:transparent;	
+	width:155px;
+	height:30px;
+	font-size:16px;
+	font-family:Tahoma, Geneva, sans-serif;
+	font-weight:bold;
+	cursor:default;
+	text-align:right;
+}
+.description {
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 14px;
+	color: #000;
+}
+
