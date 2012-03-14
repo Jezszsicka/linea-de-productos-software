@@ -1,0 +1,12 @@
+C:\Users\Juan\Documents\Visual Studio 2010\Projects\Client\Client\bin\Release\Client.exe
+C:\Users\Juan\Documents\Visual Studio 2010\Projects\Client\Client\bin\Release\Client.pdb
+C:\Users\Juan\Documents\Visual Studio 2010\Projects\Client\Client\bin\Release\Ice.dll
+C:\Users\Juan\Documents\Visual Studio 2010\Projects\Client\Client\bin\Release\Ice.pdb
+C:\Users\Juan\Documents\Visual Studio 2010\Projects\Client\Client\bin\Release\Ice.xml
+C:\Users\Juan\Documents\Visual Studio 2010\Projects\Client\Client\obj\x86\Release\ResolveAssemblyReference.cache
+C:\Users\Juan\Documents\Visual Studio 2010\Projects\Client\Client\obj\x86\Release\Client.Login.resources
+C:\Users\Juan\Documents\Visual Studio 2010\Projects\Client\Client\obj\x86\Release\Client.Properties.Resources.resources
+C:\Users\Juan\Documents\Visual Studio 2010\Projects\Client\Client\obj\x86\Release\GenerateResource.read.1.tlog
+C:\Users\Juan\Documents\Visual Studio 2010\Projects\Client\Client\obj\x86\Release\GenerateResource.write.1.tlog
+C:\Users\Juan\Documents\Visual Studio 2010\Projects\Client\Client\obj\x86\Release\Client.exe
+C:\Users\Juan\Documents\Visual Studio 2010\Projects\Client\Client\obj\x86\Release\Client.pdb
