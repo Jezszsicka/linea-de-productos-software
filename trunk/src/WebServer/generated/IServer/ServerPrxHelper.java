@@ -22,6 +22,126 @@ package IServer;
 
 public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements ServerPrx
 {
+    public java.util.List<java.lang.String>
+    chatParticipants()
+    {
+        return chatParticipants(null, false);
+    }
+
+    public java.util.List<java.lang.String>
+    chatParticipants(java.util.Map<String, String> __ctx)
+    {
+        return chatParticipants(__ctx, true);
+    }
+
+    private java.util.List<java.lang.String>
+    chatParticipants(java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    {
+        if(__explicitCtx && __ctx == null)
+        {
+            __ctx = _emptyContext;
+        }
+        int __cnt = 0;
+        while(true)
+        {
+            Ice._ObjectDel __delBase = null;
+            try
+            {
+                __checkTwowayOnly("chatParticipants");
+                __delBase = __getDelegate(false);
+                _ServerDel __del = (_ServerDel)__delBase;
+                return __del.chatParticipants(__ctx);
+            }
+            catch(IceInternal.LocalExceptionWrapper __ex)
+            {
+                __handleExceptionWrapper(__delBase, __ex);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __cnt = __handleException(__delBase, __ex, null, __cnt);
+            }
+        }
+    }
+
+    private static final String __chatParticipants_name = "chatParticipants";
+
+    public Ice.AsyncResult begin_chatParticipants()
+    {
+        return begin_chatParticipants(null, false, null);
+    }
+
+    public Ice.AsyncResult begin_chatParticipants(java.util.Map<String, String> __ctx)
+    {
+        return begin_chatParticipants(__ctx, true, null);
+    }
+
+    public Ice.AsyncResult begin_chatParticipants(Ice.Callback __cb)
+    {
+        return begin_chatParticipants(null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_chatParticipants(java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    {
+        return begin_chatParticipants(__ctx, true, __cb);
+    }
+
+    public Ice.AsyncResult begin_chatParticipants(Callback_Server_chatParticipants __cb)
+    {
+        return begin_chatParticipants(null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_chatParticipants(java.util.Map<String, String> __ctx, Callback_Server_chatParticipants __cb)
+    {
+        return begin_chatParticipants(__ctx, true, __cb);
+    }
+
+    private Ice.AsyncResult begin_chatParticipants(java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    {
+        __checkAsyncTwowayOnly(__chatParticipants_name);
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __chatParticipants_name, __cb);
+        try
+        {
+            __result.__prepare(__chatParticipants_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            IceInternal.BasicStream __os = __result.__os();
+            __os.endWriteEncaps();
+            __result.__send(true);
+        }
+        catch(Ice.LocalException __ex)
+        {
+            __result.__exceptionAsync(__ex);
+        }
+        return __result;
+    }
+
+    public java.util.List<java.lang.String> end_chatParticipants(Ice.AsyncResult __result)
+    {
+        Ice.AsyncResult.__check(__result, this, __chatParticipants_name);
+        if(!__result.__wait())
+        {
+            try
+            {
+                __result.__throwUserException();
+            }
+            catch(Ice.UserException __ex)
+            {
+                throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+            }
+        }
+        java.util.List<java.lang.String> __ret;
+        IceInternal.BasicStream __is = __result.__is();
+        __is.startReadEncaps();
+        __ret = new java.util.ArrayList<String>();
+        final int __len0 = __is.readAndCheckSeqSize(1);
+        for(int __i0 = 0; __i0 < __len0; __i0++)
+        {
+            String __elem;
+            __elem = __is.readString();
+            __ret.add(__elem);
+        }
+        __is.endReadEncaps();
+        return __ret;
+    }
+
     public void
     loginUser(String username, String password, Ice.Identity client)
         throws InvalidLoggingException,

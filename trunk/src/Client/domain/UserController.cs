@@ -29,15 +29,24 @@ namespace Client.domain{
         }
         
         public void registerUser(String username, String password, String email) {
-            ServerProxy.getInstance().registerUser(username, password, email);
+            try
+            {
+                ServerProxy.getInstance().registerUser(username, password, email);
+            }
+            catch (Exception e) 
+            {
+                MessageBox.Show(e.Message);
+            }
         }
 
         public void loginUser(String username, String password) {
             try
             {
                 ServerProxy.getInstance().loginUser(username, password, callback);
+                this.Username = username;
                 LoginController.getInstance().close();
                 WaitingRoomController.getInstance().open();
+                
             }
             catch (InvalidLoggingException e)
             {
@@ -56,8 +65,11 @@ namespace Client.domain{
             }
             catch (UserAlreadyLoggedException e)
             {
-               MessageBox.Show("Su cuenta está en uso", "Cuenta en uso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Su cuenta está en uso", "Cuenta en uso", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            catch (Exception e) {
+                MessageBox.Show(e.Message, "Cuenta en uso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }            
         }
 
         public static void setCallback(Ice.Identity ident) {
@@ -67,7 +79,21 @@ namespace Client.domain{
 
         public void logoutUser()
         {
-            ServerProxy.getInstance().logoutUser(username);
+            try
+            {
+                ServerProxy.getInstance().logoutUser(Username);
+            }
+            catch (Exception e) {
+                MessageBox.Show(e.Message, "Cuenta en uso", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+        public String Username
+        {
+            get { return username; }
+            set { username = value; }
+        }
+
+
     }
 }

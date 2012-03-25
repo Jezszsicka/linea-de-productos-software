@@ -77,6 +77,12 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
         return __ids[0];
     }
 
+    public final java.util.List<java.lang.String>
+    chatParticipants()
+    {
+        return chatParticipants(null);
+    }
+
     public final void
     loginUser(String username, String password, Ice.Identity client)
         throws InvalidLoggingException,
@@ -223,8 +229,31 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
         return Ice.DispatchStatus.DispatchOK;
     }
 
+    public static Ice.DispatchStatus
+    ___chatParticipants(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        __inS.is().skipEmptyEncaps();
+        IceInternal.BasicStream __os = __inS.os();
+        java.util.List<java.lang.String> __ret = __obj.chatParticipants(__current);
+        if(__ret == null)
+        {
+            __os.writeSize(0);
+        }
+        else
+        {
+            __os.writeSize(__ret.size());
+            for(String __elem : __ret)
+            {
+                __os.writeString(__elem);
+            }
+        }
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
     private final static String[] __all =
     {
+        "chatParticipants",
         "ice_id",
         "ice_ids",
         "ice_isA",
@@ -249,37 +278,41 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
         {
             case 0:
             {
-                return ___ice_id(this, in, __current);
+                return ___chatParticipants(this, in, __current);
             }
             case 1:
             {
-                return ___ice_ids(this, in, __current);
+                return ___ice_id(this, in, __current);
             }
             case 2:
             {
-                return ___ice_isA(this, in, __current);
+                return ___ice_ids(this, in, __current);
             }
             case 3:
             {
-                return ___ice_ping(this, in, __current);
+                return ___ice_isA(this, in, __current);
             }
             case 4:
             {
-                return ___loginUser(this, in, __current);
+                return ___ice_ping(this, in, __current);
             }
             case 5:
             {
-                return ___logoutUser(this, in, __current);
+                return ___loginUser(this, in, __current);
             }
             case 6:
             {
-                return ___registerUser(this, in, __current);
+                return ___logoutUser(this, in, __current);
             }
             case 7:
             {
-                return ___sendMessage(this, in, __current);
+                return ___registerUser(this, in, __current);
             }
             case 8:
+            {
+                return ___sendMessage(this, in, __current);
+            }
+            case 9:
             {
                 return ___sendPrivateMessage(this, in, __current);
             }

@@ -5,6 +5,7 @@ package domain;
 
 import java.util.List;
 
+import persistence.GameDAO;
 import persistence.HibernateUtil;
 
 /**
@@ -14,6 +15,7 @@ import persistence.HibernateUtil;
 public class GamesController {
 	
 	public static GamesController controller;
+	private List<Game> games;
 	
 	private GamesController(){
 		
@@ -27,16 +29,18 @@ public class GamesController {
 		return controller;
 	}
 
-	public List<GameInfo> listGames(){
-		org.hibernate.Session hibernateSession = HibernateUtil.getSessionFactory().openSession();
-		hibernateSession.beginTransaction();
-		@SuppressWarnings("unchecked")
-		List<GameInfo> games = hibernateSession.createQuery("from Games").list();
-		hibernateSession.getTransaction().commit();
-		return games;
+	public List<Game> listGames(){
+		
+		List<Game> gamesInfo = GameDAO.getDAO().list();
+		
+		return gamesInfo;
 	}
 	
-	public void joinGame(String username, String game){
+	public void joinGame(String player, String game){
+		Game selectedGame = GameDAO.getDAO().loadByID(game);
+		if(!selectedGame.isPlaying(player)){
+			selectedGame.addPlayer(player);
+		}
 		
 	}
 	

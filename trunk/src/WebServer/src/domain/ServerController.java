@@ -1,5 +1,7 @@
 package domain;
 
+import persistence.HibernateUtil;
+
 public class ServerController {
 	
 	private static ServerController controller;
@@ -21,6 +23,7 @@ public class ServerController {
 			server = new ServerThread();
 			server.start();
 			online = true;
+			HibernateUtil.start();
 		}
 			
 	}

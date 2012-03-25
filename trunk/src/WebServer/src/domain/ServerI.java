@@ -1,5 +1,7 @@
 package domain;
 
+import java.util.List;
+
 import IClient.ClientPrx;
 import IClient.ClientPrxHelper;
 import IServer.InvalidLoggingException;
@@ -53,6 +55,11 @@ public class ServerI extends IServer._ServerDisp {
 	@Override
 	public synchronized void sendMessage(String sender, String message, Current __current) {
 		MessageController.getInstance().sendMessage(sender,message);
+	}
+
+	@Override
+	public List<String> chatParticipants(Current __current) {
+		return MessageController.getInstance().getParticipants();
 	}
 
 }

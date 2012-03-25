@@ -24,11 +24,10 @@ namespace Client.domain
            return controller;
        }
 
-       public void Start()
+       public int Start(string[] args)
        {
            App app = new App();
-           String [] args = new String[1];
-           app.main(args, "config.client");
+           return app.main(args, "config.client");
        }
     }
 }

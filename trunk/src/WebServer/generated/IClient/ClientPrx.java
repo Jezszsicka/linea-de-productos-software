@@ -22,24 +22,6 @@ package IClient;
 
 public interface ClientPrx extends Ice.ObjectPrx
 {
-    public void saludo();
-
-    public void saludo(java.util.Map<String, String> __ctx);
-
-    public Ice.AsyncResult begin_saludo();
-
-    public Ice.AsyncResult begin_saludo(java.util.Map<String, String> __ctx);
-
-    public Ice.AsyncResult begin_saludo(Ice.Callback __cb);
-
-    public Ice.AsyncResult begin_saludo(java.util.Map<String, String> __ctx, Ice.Callback __cb);
-
-    public Ice.AsyncResult begin_saludo(Callback_Client_saludo __cb);
-
-    public Ice.AsyncResult begin_saludo(java.util.Map<String, String> __ctx, Callback_Client_saludo __cb);
-
-    public void end_saludo(Ice.AsyncResult __result);
-
     public void receiveMessage(String sender, String message);
 
     public void receiveMessage(String sender, String message, java.util.Map<String, String> __ctx);

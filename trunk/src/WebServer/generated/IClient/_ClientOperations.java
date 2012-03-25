@@ -22,7 +22,5 @@ package IClient;
 
 public interface _ClientOperations
 {
-    void saludo(Ice.Current __current);
-
     void receiveMessage(String sender, String message, Ice.Current __current);
 }

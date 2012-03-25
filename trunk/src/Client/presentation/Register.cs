@@ -67,6 +67,11 @@ namespace Client.presentation
             RegisterController.getInstance().close();
         }
 
+        private void txtRetypePassword_Click(object sender, EventArgs e)
+        {
+            txtRetypePassword.Font = new Font(textBox1.Font, FontStyle.Regular);
+        }
+
     }
 
 

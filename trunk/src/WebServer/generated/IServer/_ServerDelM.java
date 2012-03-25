@@ -22,6 +22,52 @@ package IServer;
 
 public final class _ServerDelM extends Ice._ObjectDelM implements _ServerDel
 {
+    public java.util.List<java.lang.String>
+    chatParticipants(java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        IceInternal.Outgoing __og = __handler.getOutgoing("chatParticipants", Ice.OperationMode.Normal, __ctx);
+        try
+        {
+            boolean __ok = __og.invoke();
+            try
+            {
+                if(!__ok)
+                {
+                    try
+                    {
+                        __og.throwUserException();
+                    }
+                    catch(Ice.UserException __ex)
+                    {
+                        throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                    }
+                }
+                IceInternal.BasicStream __is = __og.is();
+                __is.startReadEncaps();
+                java.util.List<java.lang.String> __ret;
+                __ret = new java.util.ArrayList<String>();
+                final int __len0 = __is.readAndCheckSeqSize(1);
+                for(int __i0 = 0; __i0 < __len0; __i0++)
+                {
+                    String __elem;
+                    __elem = __is.readString();
+                    __ret.add(__elem);
+                }
+                __is.endReadEncaps();
+                return __ret;
+            }
+            catch(Ice.LocalException __ex)
+            {
+                throw new IceInternal.LocalExceptionWrapper(__ex, false);
+            }
+        }
+        finally
+        {
+            __handler.reclaimOutgoing(__og);
+        }
+    }
+
     public void
     loginUser(String username, String password, Ice.Identity client, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper,

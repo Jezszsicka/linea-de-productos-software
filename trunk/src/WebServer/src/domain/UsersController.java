@@ -3,7 +3,9 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import persistence.HibernateUtil;
+import org.hibernate.HibernateException;
+
+import persistence.UserDAO;
 import IClient.ClientPrx;
 import IServer.InvalidLoggingException;
 import IServer.UserAlreadyExistsException;
@@ -11,155 +13,139 @@ import IServer.UserAlreadyLoggedException;
 import IServer.UserNotLoggedException;
 import constants.UserConstants;
 
-
-
 public class UsersController {
 
 	private static UsersController controller;
 	private List<Session> sessions;
-	
-	public List<Session> getSessions(){
+
+	public List<Session> getSessions() {
 		return sessions;
 	}
-	
-	private UsersController(){
+
+	private UsersController() {
 		sessions = new ArrayList<Session>();
 	}
-	
+
 	public static UsersController getInstance() {
-		if(controller == null)
+		if (controller == null)
 			controller = new UsersController();
 		return controller;
 	}
 
-	/**Create a new user account
+	/**
+	 * Create a new user account
 	 * 
-	 * @param username	Username for the new account
-	 * @param password	Password for the user account
-	 * @param email		Email of the user
+	 * @param username
+	 *            Username for the new account
+	 * @param password
+	 *            Password for the user account
+	 * @param email
+	 *            Email of the user
 	 * **/
-	public void registerUser(String username,String password,String email) throws UserAlreadyExistsException{
-		org.hibernate.classic.Session hibernateSession = HibernateUtil.getSessionFactory().openSession();
-		hibernateSession.beginTransaction();
-		@SuppressWarnings("unchecked")
-		List<User> query = hibernateSession.createQuery("from User as user where user.username = '"+username+"' or user.email = '"+email+"'").list();
-		hibernateSession.getTransaction().commit();
-		
-		if(query.size() > 0){
-			User user = query.get(0);
-			if(user.getUsername().equals(username))
-				throw new UserAlreadyExistsException("Username is already in use");
-			if(user.getEmail().equals(email))
-				throw new UserAlreadyExistsException("Email already in use");
-		}else{
-			hibernateSession.beginTransaction();
-			User user = new User(username,Utils.hashMD5(password),email,Role.Player);
-			hibernateSession.save(user);
-			hibernateSession.getTransaction().commit();
+	public void registerUser(String username, String password, String email)
+			throws UserAlreadyExistsException {
+		try {
+			User user = new User(username, Utils.hashMD5(password), email,
+					Role.Player);
+			UserDAO.getDAO().create(user);
+		} catch (HibernateException e) {
+			throw new UserAlreadyExistsException();
 		}
 	}
-	
-	
-	/**Allows a user to enter the system
+
+	/**
+	 * Allows a user to enter the system
 	 * 
 	 * @param username
 	 * @param password
 	 * @param callback
 	 * 
 	 * **/
-	public void loginUser(String username, String password,ClientPrx callback) throws UserAlreadyLoggedException, InvalidLoggingException {
-		org.hibernate.classic.Session hibernateSession = HibernateUtil.getSessionFactory().openSession();
-		hibernateSession.beginTransaction();
-		@SuppressWarnings("unchecked")
-		List<User> query = hibernateSession.createQuery("from User as user where user.username = '"+username+"'").list();
-		hibernateSession.getTransaction().commit();
+	public void loginUser(String username, String password, ClientPrx callback)
+			throws UserAlreadyLoggedException, InvalidLoggingException {
 		
-		//User found
-		if(query.size() > 0){
-			User user = query.get(0);
-			if(user.isBlocked()){
+		String hashMD5 = Utils.hashMD5(password);
+		UserDAO userDAO = UserDAO.getDAO();
+		User user = userDAO.checkLogin(username,hashMD5);
+		
+
+		// User found
+		if (user != null) {
+			if (user.isBlocked()) {
 				throw new InvalidLoggingException("Blocked account");
-			}else{
-				//Checking password
+			} else {
+				// Checking password
 				String hashMD5 = Utils.hashMD5(password);
-				if(!user.getPassword().equals(hashMD5)){	//Incorrect password
+				if (!user.getPassword().equals(hashMD5)) { // Incorrect password
 					int attemps = user.getAttemps();
 					user.setAttemps(++attemps);
-					if(attemps >= UserConstants.MAXATTEMPS){
+					if (attemps >= UserConstants.MAXATTEMPS) {
 						user.setBlocked(true);
-						hibernateSession.beginTransaction();
-						hibernateSession.update(user);
-						hibernateSession.getTransaction().commit();
+						userDAO.update(user);
 						throw new InvalidLoggingException("Blocked account");
 					}
-					hibernateSession.beginTransaction();
-					hibernateSession.update(user);
-					hibernateSession.getTransaction().commit();
+					userDAO.update(user);
 					throw new InvalidLoggingException("Incorrect password");
-				}else{ //Correct password
-					Session newSession = new Session(username,callback);
-					if(!sessions.contains(newSession)){
+				} else { // Correct password
+					Session newSession = new Session(username, callback);
+					if (!sessions.contains(newSession)) {
 						sessions.add(newSession);
-						if(user.getAttemps()>0){
+						MessageController.getInstance()
+								.addParticipant(username);
+						if (user.getAttemps() > 0) {
 							user.setAttemps(0);
-							hibernateSession.beginTransaction();
-							hibernateSession.update(user);
-							hibernateSession.getTransaction().commit();
+							userDAO.update(user);
 						}
-					}else{
-						for(Session session : sessions){
-							if(newSession.equals(session)){
-								try{
+					} else {
+						for (Session session : sessions) {
+							if (newSession.equals(session)) {
+								try {
 									session.checkConnection();
-									throw new UserAlreadyLoggedException("User Already logged");
-								}catch(Ice.ConnectionLostException e){
+									throw new UserAlreadyLoggedException(
+											"User Already logged");
+								} catch (Ice.ConnectionLostException e) {
 									sessions.remove(session);
 									sessions.add(newSession);
 								}
 							}
 						}
-						
+
 					}
 				}
 			}
-		}else //User not found
+		} else
+			// User not found
 			throw new InvalidLoggingException("Incorrect username");
 	}
-	
+
 	public Role loginUser(String username, String password) {
 		return Role.Admin;
-		
+
 	}
-	
-	
-	
+
 	public void logoutUser(String username) throws UserNotLoggedException {
 		Session session = searchSession(username);
-		if(session == null)
+		if (session == null)
 			throw new UserNotLoggedException("User not logged, session expired");
-		else
+		else {
 			sessions.remove(session);
+			MessageController.getInstance().removeParticipant(username);
+		}
 	}
-	
-	
-	public void deleteUser(String username){
+
+	public void deleteUser(String username) {
 		User user = new User(username);
-		org.hibernate.classic.Session hibernateSession = HibernateUtil.getSessionFactory().openSession();
-		hibernateSession.beginTransaction();
-		hibernateSession.delete(user);
-		hibernateSession.getTransaction().commit();
+		UserDAO.getDAO().delete(user);
 	}
-	
-	public Session searchSession(String username){
-		for(Session session : sessions){
-			if(session.getUsername().equals(username))
+
+	public Session searchSession(String username) {
+		for (Session session : sessions) {
+			if (session.getUsername().equals(username))
 				return session;
 		}
-		
+
 		return null;
-			
+
 	}
-	
-	
-	
+
 }

@@ -31,8 +31,8 @@
             this.lblUsername = new System.Windows.Forms.Label();
             this.lblPassword = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.txtEmail = new System.Windows.Forms.TextBox();
-            this.lblRetypePassword = new System.Windows.Forms.Label();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnRegister = new System.Windows.Forms.Button();
             this.txtRetypePassword = new System.Windows.Forms.TextBox();
@@ -45,7 +45,7 @@
             // lblUsername
             // 
             this.lblUsername.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblUsername.Location = new System.Drawing.Point(69, 33);
+            this.lblUsername.Location = new System.Drawing.Point(53, 41);
             this.lblUsername.Name = "lblUsername";
             this.lblUsername.Size = new System.Drawing.Size(80, 20);
             this.lblUsername.TabIndex = 0;
@@ -55,7 +55,7 @@
             // lblPassword
             // 
             this.lblPassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPassword.Location = new System.Drawing.Point(69, 67);
+            this.lblPassword.Location = new System.Drawing.Point(53, 75);
             this.lblPassword.Name = "lblPassword";
             this.lblPassword.Size = new System.Drawing.Size(80, 20);
             this.lblPassword.TabIndex = 1;
@@ -64,8 +64,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.textBox1);
             this.panel1.Controls.Add(this.txtEmail);
-            this.panel1.Controls.Add(this.lblRetypePassword);
             this.panel1.Controls.Add(this.btnCancel);
             this.panel1.Controls.Add(this.btnRegister);
             this.panel1.Controls.Add(this.txtRetypePassword);
@@ -77,30 +77,33 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(356, 235);
+            this.panel1.Size = new System.Drawing.Size(524, 235);
             this.panel1.TabIndex = 2;
+            // 
+            // textBox1
+            // 
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.textBox1.Location = new System.Drawing.Point(327, 110);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(160, 20);
+            this.textBox1.TabIndex = 10;
+            this.textBox1.Text = "Vuelva a escribir su email";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // txtEmail
             // 
             this.txtEmail.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtEmail.Location = new System.Drawing.Point(191, 131);
+            this.txtEmail.Location = new System.Drawing.Point(175, 109);
             this.txtEmail.Name = "txtEmail";
-            this.txtEmail.Size = new System.Drawing.Size(100, 20);
+            this.txtEmail.Size = new System.Drawing.Size(134, 20);
             this.txtEmail.TabIndex = 9;
-            // 
-            // lblRetypePassword
-            // 
-            this.lblRetypePassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblRetypePassword.Location = new System.Drawing.Point(69, 96);
-            this.lblRetypePassword.Name = "lblRetypePassword";
-            this.lblRetypePassword.Size = new System.Drawing.Size(99, 23);
-            this.lblRetypePassword.TabIndex = 8;
-            this.lblRetypePassword.Text = "Retype Password";
-            this.lblRetypePassword.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.txtEmail.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(200, 176);
+            this.btnCancel.Location = new System.Drawing.Point(289, 172);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 7;
@@ -110,7 +113,7 @@
             // 
             // btnRegister
             // 
-            this.btnRegister.Location = new System.Drawing.Point(73, 176);
+            this.btnRegister.Location = new System.Drawing.Point(162, 172);
             this.btnRegister.Name = "btnRegister";
             this.btnRegister.Size = new System.Drawing.Size(75, 23);
             this.btnRegister.TabIndex = 6;
@@ -121,16 +124,20 @@
             // txtRetypePassword
             // 
             this.txtRetypePassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtRetypePassword.Location = new System.Drawing.Point(191, 99);
+            this.txtRetypePassword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtRetypePassword.ForeColor = System.Drawing.SystemColors.ControlDark;
+            this.txtRetypePassword.Location = new System.Drawing.Point(327, 75);
             this.txtRetypePassword.Name = "txtRetypePassword";
-            this.txtRetypePassword.Size = new System.Drawing.Size(100, 20);
+            this.txtRetypePassword.Size = new System.Drawing.Size(160, 20);
             this.txtRetypePassword.TabIndex = 5;
-            this.txtRetypePassword.UseSystemPasswordChar = true;
+            this.txtRetypePassword.Text = "Vuelva a escribir la contraseña";
+            this.txtRetypePassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtRetypePassword.Click += new System.EventHandler(this.txtRetypePassword_Click);
             // 
             // lblEmail
             // 
             this.lblEmail.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEmail.Location = new System.Drawing.Point(70, 131);
+            this.lblEmail.Location = new System.Drawing.Point(54, 109);
             this.lblEmail.Name = "lblEmail";
             this.lblEmail.Size = new System.Drawing.Size(80, 20);
             this.lblEmail.TabIndex = 4;
@@ -140,25 +147,27 @@
             // txtPassword
             // 
             this.txtPassword.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtPassword.Location = new System.Drawing.Point(191, 67);
+            this.txtPassword.Location = new System.Drawing.Point(175, 75);
             this.txtPassword.Name = "txtPassword";
-            this.txtPassword.Size = new System.Drawing.Size(100, 20);
+            this.txtPassword.Size = new System.Drawing.Size(134, 20);
             this.txtPassword.TabIndex = 3;
+            this.txtPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtPassword.UseSystemPasswordChar = true;
             // 
             // txtUsername
             // 
             this.txtUsername.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtUsername.Location = new System.Drawing.Point(191, 33);
+            this.txtUsername.Location = new System.Drawing.Point(175, 41);
             this.txtUsername.Name = "txtUsername";
-            this.txtUsername.Size = new System.Drawing.Size(100, 20);
+            this.txtUsername.Size = new System.Drawing.Size(134, 20);
             this.txtUsername.TabIndex = 2;
+            this.txtUsername.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Register
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(356, 235);
+            this.ClientSize = new System.Drawing.Size(524, 235);
             this.Controls.Add(this.panel1);
             this.Name = "Register";
             this.Text = "Register";
@@ -180,8 +189,8 @@
         private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.TextBox txtUsername;
-        private System.Windows.Forms.Label lblRetypePassword;
         private System.Windows.Forms.TextBox txtEmail;
+        private System.Windows.Forms.TextBox textBox1;
 
     }
 }
