@@ -33,5 +33,10 @@ namespace Client.presentation
            waitingRoomForm.Close();
        }
 
+
+       public void showMessage(String sender, String message)
+       {
+           
+       }
     }
 }

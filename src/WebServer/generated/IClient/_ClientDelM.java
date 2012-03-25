@@ -68,41 +68,4 @@ public final class _ClientDelM extends Ice._ObjectDelM implements _ClientDel
             __handler.reclaimOutgoing(__og);
         }
     }
-
-    public void
-    saludo(java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
-    {
-        IceInternal.Outgoing __og = __handler.getOutgoing("saludo", Ice.OperationMode.Normal, __ctx);
-        try
-        {
-            boolean __ok = __og.invoke();
-            if(!__og.is().isEmpty())
-            {
-                try
-                {
-                    if(!__ok)
-                    {
-                        try
-                        {
-                            __og.throwUserException();
-                        }
-                        catch(Ice.UserException __ex)
-                        {
-                            throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
-                        }
-                    }
-                    __og.is().skipEmptyEncaps();
-                }
-                catch(Ice.LocalException __ex)
-                {
-                    throw new IceInternal.LocalExceptionWrapper(__ex, false);
-                }
-            }
-        }
-        finally
-        {
-            __handler.reclaimOutgoing(__og);
-        }
-    }
 }

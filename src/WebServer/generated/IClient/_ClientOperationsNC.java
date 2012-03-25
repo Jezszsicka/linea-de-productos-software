@@ -22,7 +22,5 @@ package IClient;
 
 public interface _ClientOperationsNC
 {
-    void saludo();
-
     void receiveMessage(String sender, String message);
 }

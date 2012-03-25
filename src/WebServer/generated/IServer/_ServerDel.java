@@ -40,4 +40,7 @@ public interface _ServerDel extends Ice._ObjectDel
 
     void sendMessage(String sender, String message, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
+
+    java.util.List<java.lang.String> chatParticipants(java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper;
 }

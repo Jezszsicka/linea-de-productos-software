@@ -1,17 +1,22 @@
 package domain;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
-public class User {
+public class User implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3073145422215440636L;
 	private String username;
 	private String password;
 	private String email;
 	private Role role;
 	private String name;
-	private String first_Name;
 	private String last_name;
+	private String second_last_name;
 	private Set<String> friends;
 	// private List<Ranking> ranking;
 	private int attemps;
@@ -38,8 +43,8 @@ public class User {
 	 * @param username
 	 * @param password
 	 * @param name
-	 * @param first_Name
 	 * @param last_name
+	 * @param second_last_name
 	 * @param email
 	 * @param friends
 	 */
@@ -50,8 +55,8 @@ public class User {
 		this.username = username;
 		this.password = password;
 		this.name = name;
-		this.first_Name = first_Name;
-		this.last_name = last_name;
+		this.last_name = first_Name;
+		this.second_last_name = last_name;
 		this.email = email;
 		this.friends = friends;
 	}
@@ -60,20 +65,20 @@ public class User {
 	 * @param username
 	 * @param password
 	 * @param name
-	 * @param first_Name
 	 * @param last_name
+	 * @param second_last_name
 	 * @param email
 	 * @param friends
 	 * @param ranking
 	 */
 	public User(String username, String password, String name,
-			String first_Name, String last_name, String email,
+			String last_name, String second_last_name, String email,
 			Set<String> friends, List<Ranking> ranking) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
-		this.first_Name = first_Name;
 		this.last_name = last_name;
+		this.second_last_name = second_last_name;
 		this.email = email;
 		this.friends = friends;
 		// this.ranking = ranking;
@@ -162,7 +167,7 @@ public class User {
 	 * @return the first_Name
 	 */
 	public String getFirst_Name() {
-		return first_Name;
+		return last_name;
 	}
 
 	/**
@@ -170,14 +175,14 @@ public class User {
 	 *            the first_Name to set
 	 */
 	public void setFirst_Name(String first_Name) {
-		this.first_Name = first_Name;
+		this.last_name = first_Name;
 	}
 
 	/**
 	 * @return the last_name
 	 */
 	public String getLast_name() {
-		return last_name;
+		return second_last_name;
 	}
 
 	/**
@@ -185,7 +190,7 @@ public class User {
 	 *            the last_name to set
 	 */
 	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+		this.second_last_name = last_name;
 	}
 
 	/**
@@ -241,8 +246,8 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [username=" + username + ", password=" + password
-				+ ", name=" + name + ", first_Name=" + first_Name
-				+ ", last_name=" + last_name + ", email=" + email
+				+ ", name=" + name + ", first_Name=" + last_name
+				+ ", last_name=" + second_last_name + ", email=" + email
 				+ ", friends=" + friends + "]";
 	}
 

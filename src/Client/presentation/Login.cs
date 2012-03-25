@@ -23,8 +23,6 @@ namespace Client
         private void btnLogin_Click(object sender, EventArgs e)
         {
             UserController.getInstance().loginUser(username.Text, password.Text);
-            LoginController.getInstance().close();
-            WaitingRoomController.getInstance().open();
         }
 
         private void btnRegister_Click(object sender, EventArgs e)

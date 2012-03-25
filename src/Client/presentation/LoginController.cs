@@ -12,6 +12,7 @@ namespace Client.presentation
 
        private LoginController()
        {
+           loginForm = new Login();
        }
 
        public static LoginController getInstance(){
@@ -23,7 +24,6 @@ namespace Client.presentation
 
        public void open()
        {
-           loginForm = new Login();
            loginForm.Show();
            loginForm.Activate();
        }

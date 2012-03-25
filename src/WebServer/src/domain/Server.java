@@ -1,6 +1,7 @@
 package domain;
 
 
+
 public class Server extends Ice.Application{
 
 	/**
@@ -24,7 +25,6 @@ public class Server extends Ice.Application{
 		ServerI server = new ServerI(communicator());
 		adapter.add(server, communicator().stringToIdentity("sender"));
 		adapter.activate();
-
 	//	Thread t = new Thread(server);
 	//	t.start();
 		

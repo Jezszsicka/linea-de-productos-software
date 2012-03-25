@@ -123,4 +123,22 @@ public interface ServerPrx extends Ice.ObjectPrx
     public Ice.AsyncResult begin_sendMessage(String sender, String message, java.util.Map<String, String> __ctx, Callback_Server_sendMessage __cb);
 
     public void end_sendMessage(Ice.AsyncResult __result);
+
+    public java.util.List<java.lang.String> chatParticipants();
+
+    public java.util.List<java.lang.String> chatParticipants(java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_chatParticipants();
+
+    public Ice.AsyncResult begin_chatParticipants(java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_chatParticipants(Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_chatParticipants(java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_chatParticipants(Callback_Server_chatParticipants __cb);
+
+    public Ice.AsyncResult begin_chatParticipants(java.util.Map<String, String> __ctx, Callback_Server_chatParticipants __cb);
+
+    public java.util.List<java.lang.String> end_chatParticipants(Ice.AsyncResult __result);
 }

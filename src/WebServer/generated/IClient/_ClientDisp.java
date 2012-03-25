@@ -83,21 +83,6 @@ public abstract class _ClientDisp extends Ice.ObjectImpl implements Client
         receiveMessage(sender, message, null);
     }
 
-    public final void
-    saludo()
-    {
-        saludo(null);
-    }
-
-    public static Ice.DispatchStatus
-    ___saludo(Client __obj, IceInternal.Incoming __inS, Ice.Current __current)
-    {
-        __checkMode(Ice.OperationMode.Normal, __current.mode);
-        __inS.is().skipEmptyEncaps();
-        __obj.saludo(__current);
-        return Ice.DispatchStatus.DispatchOK;
-    }
-
     public static Ice.DispatchStatus
     ___receiveMessage(Client __obj, IceInternal.Incoming __inS, Ice.Current __current)
     {
@@ -119,8 +104,7 @@ public abstract class _ClientDisp extends Ice.ObjectImpl implements Client
         "ice_ids",
         "ice_isA",
         "ice_ping",
-        "receiveMessage",
-        "saludo"
+        "receiveMessage"
     };
 
     public Ice.DispatchStatus
@@ -153,10 +137,6 @@ public abstract class _ClientDisp extends Ice.ObjectImpl implements Client
             case 4:
             {
                 return ___receiveMessage(this, in, __current);
-            }
-            case 5:
-            {
-                return ___saludo(this, in, __current);
             }
         }
 

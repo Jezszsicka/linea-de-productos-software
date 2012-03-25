@@ -2,6 +2,7 @@
 
 module IServer {
 
+	sequence<string> StringSeq;
     exception genericException {
 		string reason;
 	};
@@ -17,6 +18,7 @@ module IServer {
 		void logoutUser(string username) throws UserNotLoggedException;
 		void sendPrivateMessage(string sender, string destinatary, string message);
 		void sendMessage(string sender, string message);
+		["java:type:java.util.ArrayList<String>"] StringSeq chatParticipants();
     };
     
 };

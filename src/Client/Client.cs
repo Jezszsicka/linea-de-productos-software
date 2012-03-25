@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Client.domain;
 
 namespace Client{
 
@@ -12,15 +13,7 @@ namespace Client{
 
        public static int Main(string[] args)
         {
-            /*Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Login());
-            */
-
-            App app = new App();
-            return app.main(args, "config.client");
-           
-    
+            return ServerController.getInstance().Start(args);
         }
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using Client.presentation;
+using Client.domain;
+
 
 namespace Client.communications{
     public class ClientI : IClient.ClientDisp_
@@ -15,7 +17,7 @@ namespace Client.communications{
 
         public override void receiveMessage(string sender, string message, Ice.Current current__)
         {
-           // WaitingRoomController.getInstance().showMessage(sender, message);
+            MessageController.getInstance().receiveMessage(sender,message);
         }
     }
 }
