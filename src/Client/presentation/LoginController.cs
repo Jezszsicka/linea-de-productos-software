@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Client.domain;
 
 namespace Client.presentation
 {
@@ -32,6 +33,20 @@ namespace Client.presentation
            loginForm.Hide();
        }
 
+       private void validateInput(String username, String password)
+       {
+           if (username == null || password == null)
+           {
+               throw new Exception();
+           }
+       }
+
+
+       public void loginUser(string username, string password)
+       {
+           validateInput(username, password);
+           UserController.getInstance().loginUser(username,password);
+       }
     }
 }
 

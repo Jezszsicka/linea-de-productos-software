@@ -22,7 +22,7 @@ namespace Client
 
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            UserController.getInstance().loginUser(username.Text, password.Text);
+            LoginController.getInstance().loginUser(username.Text, password.Text);
         }
 
         private void btnRegister_Click(object sender, EventArgs e)

@@ -75,7 +75,7 @@ public class UsersController {
 				throw new InvalidLoggingException("Blocked account");
 			} else {
 				// Checking password
-				String hashMD5 = Utils.hashMD5(password);
+				hashMD5 = Utils.hashMD5(password);
 				if (!user.getPassword().equals(hashMD5)) { // Incorrect password
 					int attemps = user.getAttemps();
 					user.setAttemps(++attemps);
