@@ -5,6 +5,8 @@ package domain;
 
 import java.util.List;
 
+import model.Game;
+
 import persistence.GameDAO;
 import persistence.HibernateUtil;
 

@@ -1,10 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-                                   
 <!-- Generated 26-feb-2012 15:10:29 by Hibernate Tools 3.4.0.CR1 -->
 <hibernate-mapping>
- <class name="domain.User" table="USER">
+ <class name="model.User" table="USER">
   <id name="username" type="java.lang.String">
    <column name="USERNAME"/>
    <generator class="assigned"/>
@@ -18,12 +17,12 @@
   <property generated="never" lazy="false" name="first_Name" type="java.lang.String">
    <column name="FIRST_NAME"/>
   </property>
- <property name="role" column="ROLE" not-null="true">
-      <type name="org.hibernate.type.EnumType">
-         <param name="enumClass">domain.Role</param>
-         <param name="type">12</param>
-      </type>
- </property>
+  <property column="ROLE" generated="never" lazy="false" name="role" not-null="true">
+   <type name="org.hibernate.type.EnumType">
+    <param name="enumClass">model.Role</param>
+    <param name="type">12</param>
+   </type>
+  </property>
   <property generated="never" lazy="false" name="last_name" type="java.lang.String">
    <column name="LAST_NAME"/>
   </property>

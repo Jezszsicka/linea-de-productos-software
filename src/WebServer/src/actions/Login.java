@@ -1,8 +1,9 @@
 package actions;
 
+import model.Role;
+
 import com.opensymphony.xwork2.ActionSupport;
 
-import domain.Role;
 import domain.UsersController;
 
 public class Login extends ActionSupport {

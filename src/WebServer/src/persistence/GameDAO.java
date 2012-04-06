@@ -2,7 +2,8 @@ package persistence;
 
 import java.util.List;
 
-import domain.Game;
+import model.Game;
+
 
 public class GameDAO extends DAO<Game,String> {
 	
