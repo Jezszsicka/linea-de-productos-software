@@ -3,6 +3,8 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Session;
+
 public class MessageController {
 	private static MessageController controller;
 	private List<String> participants;

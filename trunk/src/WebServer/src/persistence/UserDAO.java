@@ -2,7 +2,8 @@ package persistence;
 
 import java.util.List;
 
-import domain.User;
+import model.User;
+
 
 public class UserDAO extends DAO<User, String> {
 
@@ -18,13 +19,19 @@ public class UserDAO extends DAO<User, String> {
 
 	@Override
 	public User loadByID(String username) {
+		User user = null;
+	
 		begin();
 		@SuppressWarnings({ "unchecked" })
 		List<User> query = session.createQuery(
 				"from User as user where user.username = '" + username + "'")
 				.list();
 		commit();
-		return query.get(0);
+		
+		if(query.size() > 0)
+			user = query.get(0);
+		
+		return user;
 	}
 
 	@Override

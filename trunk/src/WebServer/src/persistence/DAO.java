@@ -33,6 +33,7 @@ public abstract class DAO<PersistentObj extends Serializable, KeyType> {
 			commit();
 		} catch (HibernateException e) {
 			rollback();
+			throw e;
 		}
 	}
 

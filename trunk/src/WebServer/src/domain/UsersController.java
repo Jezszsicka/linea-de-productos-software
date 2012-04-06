@@ -3,6 +3,10 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Role;
+import model.Session;
+import model.User;
+
 import org.hibernate.HibernateException;
 
 import persistence.UserDAO;
@@ -45,11 +49,18 @@ public class UsersController {
 	public void registerUser(String username, String password, String email)
 			throws UserAlreadyExistsException {
 		try {
-			User user = new User(username, Utils.hashMD5(password), email,
-					Role.Player);
-			UserDAO.getDAO().create(user);
+			UserDAO userDAO = UserDAO.getDAO();
+			User user = userDAO.loadByID(username);
+			if(user == null){
+				user = new User(username, Utils.hashMD5(password), email,
+						Role.Player);
+				UserDAO.getDAO().create(user);
+			}else{
+				throw new UserAlreadyExistsException();
+			}
+			
 		} catch (HibernateException e) {
-			throw new UserAlreadyExistsException();
+			System.out.println("Error en al base de datos al registrar");
 		}
 	}
 
