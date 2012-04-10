@@ -78,13 +78,25 @@ public abstract class _ClientDisp extends Ice.ObjectImpl implements Client
     }
 
     public final void
-    receiveMessage(String sender, String message)
+    receiveWaitingRoomMessage(String sender, String message)
     {
-        receiveMessage(sender, message, null);
+        receiveWaitingRoomMessage(sender, message, null);
+    }
+
+    public final void
+    userLeave(String username)
+    {
+        userLeave(username, null);
+    }
+
+    public final void
+    userLogged(String username)
+    {
+        userLogged(username, null);
     }
 
     public static Ice.DispatchStatus
-    ___receiveMessage(Client __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    ___receiveWaitingRoomMessage(Client __obj, IceInternal.Incoming __inS, Ice.Current __current)
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
@@ -94,7 +106,33 @@ public abstract class _ClientDisp extends Ice.ObjectImpl implements Client
         String message;
         message = __is.readString();
         __is.endReadEncaps();
-        __obj.receiveMessage(sender, message, __current);
+        __obj.receiveWaitingRoomMessage(sender, message, __current);
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
+    public static Ice.DispatchStatus
+    ___userLogged(Client __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.is();
+        __is.startReadEncaps();
+        String username;
+        username = __is.readString();
+        __is.endReadEncaps();
+        __obj.userLogged(username, __current);
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
+    public static Ice.DispatchStatus
+    ___userLeave(Client __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.is();
+        __is.startReadEncaps();
+        String username;
+        username = __is.readString();
+        __is.endReadEncaps();
+        __obj.userLeave(username, __current);
         return Ice.DispatchStatus.DispatchOK;
     }
 
@@ -104,7 +142,9 @@ public abstract class _ClientDisp extends Ice.ObjectImpl implements Client
         "ice_ids",
         "ice_isA",
         "ice_ping",
-        "receiveMessage"
+        "receiveWaitingRoomMessage",
+        "userLeave",
+        "userLogged"
     };
 
     public Ice.DispatchStatus
@@ -136,7 +176,15 @@ public abstract class _ClientDisp extends Ice.ObjectImpl implements Client
             }
             case 4:
             {
-                return ___receiveMessage(this, in, __current);
+                return ___receiveWaitingRoomMessage(this, in, __current);
+            }
+            case 5:
+            {
+                return ___userLeave(this, in, __current);
+            }
+            case 6:
+            {
+                return ___userLogged(this, in, __current);
             }
         }
 

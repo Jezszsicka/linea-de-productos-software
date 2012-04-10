@@ -106,23 +106,41 @@ public interface ServerPrx extends Ice.ObjectPrx
 
     public void end_sendPrivateMessage(Ice.AsyncResult __result);
 
-    public void sendMessage(String sender, String message);
+    public void sendGameMessage(String game, String sender, String message);
 
-    public void sendMessage(String sender, String message, java.util.Map<String, String> __ctx);
+    public void sendGameMessage(String game, String sender, String message, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_sendMessage(String sender, String message);
+    public Ice.AsyncResult begin_sendGameMessage(String game, String sender, String message);
 
-    public Ice.AsyncResult begin_sendMessage(String sender, String message, java.util.Map<String, String> __ctx);
+    public Ice.AsyncResult begin_sendGameMessage(String game, String sender, String message, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_sendMessage(String sender, String message, Ice.Callback __cb);
+    public Ice.AsyncResult begin_sendGameMessage(String game, String sender, String message, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_sendMessage(String sender, String message, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+    public Ice.AsyncResult begin_sendGameMessage(String game, String sender, String message, java.util.Map<String, String> __ctx, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_sendMessage(String sender, String message, Callback_Server_sendMessage __cb);
+    public Ice.AsyncResult begin_sendGameMessage(String game, String sender, String message, Callback_Server_sendGameMessage __cb);
 
-    public Ice.AsyncResult begin_sendMessage(String sender, String message, java.util.Map<String, String> __ctx, Callback_Server_sendMessage __cb);
+    public Ice.AsyncResult begin_sendGameMessage(String game, String sender, String message, java.util.Map<String, String> __ctx, Callback_Server_sendGameMessage __cb);
 
-    public void end_sendMessage(Ice.AsyncResult __result);
+    public void end_sendGameMessage(Ice.AsyncResult __result);
+
+    public void sendGeneralMessage(String sender, String message);
+
+    public void sendGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_sendGeneralMessage(String sender, String message);
+
+    public Ice.AsyncResult begin_sendGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_sendGeneralMessage(String sender, String message, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_sendGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_sendGeneralMessage(String sender, String message, Callback_Server_sendGeneralMessage __cb);
+
+    public Ice.AsyncResult begin_sendGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx, Callback_Server_sendGeneralMessage __cb);
+
+    public void end_sendGeneralMessage(Ice.AsyncResult __result);
 
     public java.util.List<java.lang.String> chatParticipants();
 

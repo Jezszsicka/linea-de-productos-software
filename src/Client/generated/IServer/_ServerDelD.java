@@ -270,11 +270,11 @@ public final class _ServerDelD extends Ice._ObjectDelD implements _ServerDel
     }
 
     public void
-    sendMessage(final String sender, final String message, java.util.Map<String, String> __ctx)
+    sendGameMessage(final String game, final String sender, final String message, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
         final Ice.Current __current = new Ice.Current();
-        __initCurrent(__current, "sendMessage", Ice.OperationMode.Normal, __ctx);
+        __initCurrent(__current, "sendGameMessage", Ice.OperationMode.Normal, __ctx);
         IceInternal.Direct __direct = null;
         try
         {
@@ -291,7 +291,57 @@ public final class _ServerDelD extends Ice._ObjectDelD implements _ServerDel
                     {
                         throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
                     }
-                    __servant.sendMessage(sender, message, __current);
+                    __servant.sendGameMessage(game, sender, message, __current);
+                    return Ice.DispatchStatus.DispatchOK;
+                }
+            };
+            try
+            {
+                Ice.DispatchStatus __status = __direct.servant().__collocDispatch(__direct);
+                if(__status == Ice.DispatchStatus.DispatchUserException)
+                {
+                    __direct.throwUserException();
+                }
+                assert __status == Ice.DispatchStatus.DispatchOK;
+            }
+            finally
+            {
+                __direct.destroy();
+            }
+        }
+        catch(Ice.SystemException __ex)
+        {
+            throw __ex;
+        }
+        catch(java.lang.Throwable __ex)
+        {
+            IceInternal.LocalExceptionWrapper.throwWrapper(__ex);
+        }
+    }
+
+    public void
+    sendGeneralMessage(final String sender, final String message, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        final Ice.Current __current = new Ice.Current();
+        __initCurrent(__current, "sendGeneralMessage", Ice.OperationMode.Normal, __ctx);
+        IceInternal.Direct __direct = null;
+        try
+        {
+            __direct = new IceInternal.Direct(__current)
+            {
+                public Ice.DispatchStatus run(Ice.Object __obj)
+                {
+                    Server __servant = null;
+                    try
+                    {
+                        __servant = (Server)__obj;
+                    }
+                    catch(ClassCastException __ex)
+                    {
+                        throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
+                    }
+                    __servant.sendGeneralMessage(sender, message, __current);
                     return Ice.DispatchStatus.DispatchOK;
                 }
             };

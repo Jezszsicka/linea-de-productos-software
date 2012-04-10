@@ -52,14 +52,24 @@ public class ServerI extends IServer._ServerDisp {
 		
 	}
 
-	@Override
-	public synchronized void sendMessage(String sender, String message, Current __current) {
-		MessageController.getInstance().sendMessage(sender,message);
-	}
 
 	@Override
 	public List<String> chatParticipants(Current __current) {
 		return MessageController.getInstance().getParticipants();
+	}
+
+	@Override
+	public void sendGameMessage(String game, String sender, String message,
+			Current __current) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sendGeneralMessage(String sender, String message,
+			Current __current) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

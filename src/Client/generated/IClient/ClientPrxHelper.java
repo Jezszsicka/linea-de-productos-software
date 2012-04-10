@@ -23,19 +23,19 @@ package IClient;
 public final class ClientPrxHelper extends Ice.ObjectPrxHelperBase implements ClientPrx
 {
     public void
-    receiveMessage(String sender, String message)
+    receiveWaitingRoomMessage(String sender, String message)
     {
-        receiveMessage(sender, message, null, false);
+        receiveWaitingRoomMessage(sender, message, null, false);
     }
 
     public void
-    receiveMessage(String sender, String message, java.util.Map<String, String> __ctx)
+    receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx)
     {
-        receiveMessage(sender, message, __ctx, true);
+        receiveWaitingRoomMessage(sender, message, __ctx, true);
     }
 
     private void
-    receiveMessage(String sender, String message, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
         if(__explicitCtx && __ctx == null)
         {
@@ -49,7 +49,7 @@ public final class ClientPrxHelper extends Ice.ObjectPrxHelperBase implements Cl
             {
                 __delBase = __getDelegate(false);
                 _ClientDel __del = (_ClientDel)__delBase;
-                __del.receiveMessage(sender, message, __ctx);
+                __del.receiveWaitingRoomMessage(sender, message, __ctx);
                 return;
             }
             catch(IceInternal.LocalExceptionWrapper __ex)
@@ -63,44 +63,44 @@ public final class ClientPrxHelper extends Ice.ObjectPrxHelperBase implements Cl
         }
     }
 
-    private static final String __receiveMessage_name = "receiveMessage";
+    private static final String __receiveWaitingRoomMessage_name = "receiveWaitingRoomMessage";
 
-    public Ice.AsyncResult begin_receiveMessage(String sender, String message)
+    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message)
     {
-        return begin_receiveMessage(sender, message, null, false, null);
+        return begin_receiveWaitingRoomMessage(sender, message, null, false, null);
     }
 
-    public Ice.AsyncResult begin_receiveMessage(String sender, String message, java.util.Map<String, String> __ctx)
+    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx)
     {
-        return begin_receiveMessage(sender, message, __ctx, true, null);
+        return begin_receiveWaitingRoomMessage(sender, message, __ctx, true, null);
     }
 
-    public Ice.AsyncResult begin_receiveMessage(String sender, String message, Ice.Callback __cb)
+    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, Ice.Callback __cb)
     {
-        return begin_receiveMessage(sender, message, null, false, __cb);
+        return begin_receiveWaitingRoomMessage(sender, message, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_receiveMessage(String sender, String message, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx, Ice.Callback __cb)
     {
-        return begin_receiveMessage(sender, message, __ctx, true, __cb);
+        return begin_receiveWaitingRoomMessage(sender, message, __ctx, true, __cb);
     }
 
-    public Ice.AsyncResult begin_receiveMessage(String sender, String message, Callback_Client_receiveMessage __cb)
+    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, Callback_Client_receiveWaitingRoomMessage __cb)
     {
-        return begin_receiveMessage(sender, message, null, false, __cb);
+        return begin_receiveWaitingRoomMessage(sender, message, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_receiveMessage(String sender, String message, java.util.Map<String, String> __ctx, Callback_Client_receiveMessage __cb)
+    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx, Callback_Client_receiveWaitingRoomMessage __cb)
     {
-        return begin_receiveMessage(sender, message, __ctx, true, __cb);
+        return begin_receiveWaitingRoomMessage(sender, message, __ctx, true, __cb);
     }
 
-    private Ice.AsyncResult begin_receiveMessage(String sender, String message, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    private Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
     {
-        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __receiveMessage_name, __cb);
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __receiveWaitingRoomMessage_name, __cb);
         try
         {
-            __result.__prepare(__receiveMessage_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            __result.__prepare(__receiveWaitingRoomMessage_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
             IceInternal.BasicStream __os = __result.__os();
             __os.writeString(sender);
             __os.writeString(message);
@@ -114,9 +114,201 @@ public final class ClientPrxHelper extends Ice.ObjectPrxHelperBase implements Cl
         return __result;
     }
 
-    public void end_receiveMessage(Ice.AsyncResult __result)
+    public void end_receiveWaitingRoomMessage(Ice.AsyncResult __result)
     {
-        __end(__result, __receiveMessage_name);
+        __end(__result, __receiveWaitingRoomMessage_name);
+    }
+
+    public void
+    userLeave(String username)
+    {
+        userLeave(username, null, false);
+    }
+
+    public void
+    userLeave(String username, java.util.Map<String, String> __ctx)
+    {
+        userLeave(username, __ctx, true);
+    }
+
+    private void
+    userLeave(String username, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    {
+        if(__explicitCtx && __ctx == null)
+        {
+            __ctx = _emptyContext;
+        }
+        int __cnt = 0;
+        while(true)
+        {
+            Ice._ObjectDel __delBase = null;
+            try
+            {
+                __delBase = __getDelegate(false);
+                _ClientDel __del = (_ClientDel)__delBase;
+                __del.userLeave(username, __ctx);
+                return;
+            }
+            catch(IceInternal.LocalExceptionWrapper __ex)
+            {
+                __handleExceptionWrapper(__delBase, __ex);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __cnt = __handleException(__delBase, __ex, null, __cnt);
+            }
+        }
+    }
+
+    private static final String __userLeave_name = "userLeave";
+
+    public Ice.AsyncResult begin_userLeave(String username)
+    {
+        return begin_userLeave(username, null, false, null);
+    }
+
+    public Ice.AsyncResult begin_userLeave(String username, java.util.Map<String, String> __ctx)
+    {
+        return begin_userLeave(username, __ctx, true, null);
+    }
+
+    public Ice.AsyncResult begin_userLeave(String username, Ice.Callback __cb)
+    {
+        return begin_userLeave(username, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_userLeave(String username, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    {
+        return begin_userLeave(username, __ctx, true, __cb);
+    }
+
+    public Ice.AsyncResult begin_userLeave(String username, Callback_Client_userLeave __cb)
+    {
+        return begin_userLeave(username, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_userLeave(String username, java.util.Map<String, String> __ctx, Callback_Client_userLeave __cb)
+    {
+        return begin_userLeave(username, __ctx, true, __cb);
+    }
+
+    private Ice.AsyncResult begin_userLeave(String username, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    {
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __userLeave_name, __cb);
+        try
+        {
+            __result.__prepare(__userLeave_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            IceInternal.BasicStream __os = __result.__os();
+            __os.writeString(username);
+            __os.endWriteEncaps();
+            __result.__send(true);
+        }
+        catch(Ice.LocalException __ex)
+        {
+            __result.__exceptionAsync(__ex);
+        }
+        return __result;
+    }
+
+    public void end_userLeave(Ice.AsyncResult __result)
+    {
+        __end(__result, __userLeave_name);
+    }
+
+    public void
+    userLogged(String username)
+    {
+        userLogged(username, null, false);
+    }
+
+    public void
+    userLogged(String username, java.util.Map<String, String> __ctx)
+    {
+        userLogged(username, __ctx, true);
+    }
+
+    private void
+    userLogged(String username, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    {
+        if(__explicitCtx && __ctx == null)
+        {
+            __ctx = _emptyContext;
+        }
+        int __cnt = 0;
+        while(true)
+        {
+            Ice._ObjectDel __delBase = null;
+            try
+            {
+                __delBase = __getDelegate(false);
+                _ClientDel __del = (_ClientDel)__delBase;
+                __del.userLogged(username, __ctx);
+                return;
+            }
+            catch(IceInternal.LocalExceptionWrapper __ex)
+            {
+                __handleExceptionWrapper(__delBase, __ex);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __cnt = __handleException(__delBase, __ex, null, __cnt);
+            }
+        }
+    }
+
+    private static final String __userLogged_name = "userLogged";
+
+    public Ice.AsyncResult begin_userLogged(String username)
+    {
+        return begin_userLogged(username, null, false, null);
+    }
+
+    public Ice.AsyncResult begin_userLogged(String username, java.util.Map<String, String> __ctx)
+    {
+        return begin_userLogged(username, __ctx, true, null);
+    }
+
+    public Ice.AsyncResult begin_userLogged(String username, Ice.Callback __cb)
+    {
+        return begin_userLogged(username, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_userLogged(String username, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    {
+        return begin_userLogged(username, __ctx, true, __cb);
+    }
+
+    public Ice.AsyncResult begin_userLogged(String username, Callback_Client_userLogged __cb)
+    {
+        return begin_userLogged(username, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_userLogged(String username, java.util.Map<String, String> __ctx, Callback_Client_userLogged __cb)
+    {
+        return begin_userLogged(username, __ctx, true, __cb);
+    }
+
+    private Ice.AsyncResult begin_userLogged(String username, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    {
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __userLogged_name, __cb);
+        try
+        {
+            __result.__prepare(__userLogged_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            IceInternal.BasicStream __os = __result.__os();
+            __os.writeString(username);
+            __os.endWriteEncaps();
+            __result.__send(true);
+        }
+        catch(Ice.LocalException __ex)
+        {
+            __result.__exceptionAsync(__ex);
+        }
+        return __result;
+    }
+
+    public void end_userLogged(Ice.AsyncResult __result)
+    {
+        __end(__result, __userLogged_name);
     }
 
     public static ClientPrx

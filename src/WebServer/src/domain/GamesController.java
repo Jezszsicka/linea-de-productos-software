@@ -41,7 +41,8 @@ public class GamesController {
 	public void joinGame(String player, String game){
 		Game selectedGame = GameDAO.getDAO().loadByID(game);
 		if(!selectedGame.isPlaying(player)){
-			selectedGame.addPlayer(player);
+			//TODO
+	//		selectedGame.addPlayer(player);
 		}
 		
 	}

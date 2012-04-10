@@ -22,5 +22,9 @@ package IClient;
 
 public interface _ClientOperations
 {
-    void receiveMessage(String sender, String message, Ice.Current __current);
+    void receiveWaitingRoomMessage(String sender, String message, Ice.Current __current);
+
+    void userLogged(String username, Ice.Current __current);
+
+    void userLeave(String username, Ice.Current __current);
 }

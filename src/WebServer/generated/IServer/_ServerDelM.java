@@ -222,10 +222,58 @@ public final class _ServerDelM extends Ice._ObjectDelM implements _ServerDel
     }
 
     public void
-    sendMessage(String sender, String message, java.util.Map<String, String> __ctx)
+    sendGameMessage(String game, String sender, String message, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
-        IceInternal.Outgoing __og = __handler.getOutgoing("sendMessage", Ice.OperationMode.Normal, __ctx);
+        IceInternal.Outgoing __og = __handler.getOutgoing("sendGameMessage", Ice.OperationMode.Normal, __ctx);
+        try
+        {
+            try
+            {
+                IceInternal.BasicStream __os = __og.os();
+                __os.writeString(game);
+                __os.writeString(sender);
+                __os.writeString(message);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __og.abort(__ex);
+            }
+            boolean __ok = __og.invoke();
+            if(!__og.is().isEmpty())
+            {
+                try
+                {
+                    if(!__ok)
+                    {
+                        try
+                        {
+                            __og.throwUserException();
+                        }
+                        catch(Ice.UserException __ex)
+                        {
+                            throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                        }
+                    }
+                    __og.is().skipEmptyEncaps();
+                }
+                catch(Ice.LocalException __ex)
+                {
+                    throw new IceInternal.LocalExceptionWrapper(__ex, false);
+                }
+            }
+        }
+        finally
+        {
+            __handler.reclaimOutgoing(__og);
+        }
+    }
+
+    public void
+    sendGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        IceInternal.Outgoing __og = __handler.getOutgoing("sendGeneralMessage", Ice.OperationMode.Normal, __ctx);
         try
         {
             try

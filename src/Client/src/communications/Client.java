@@ -6,9 +6,9 @@ import javax.swing.JOptionPane;
 import IServer.ServerPrx;
 import IServer.ServerPrxHelper;
 import Ice.Application;
-
-
-import domain.UserController;
+import Ice.Identity;
+import Ice.ObjectAdapter;
+import domain.Facade;
 
 
 public class Client extends Application {
@@ -20,7 +20,7 @@ public class Client extends Application {
 		try
         {
             starServerConnection();
-            UserController.initialize();
+            Facade.initialize();
             communicator().waitForShutdown();
         }
         catch (Ice.ConnectionRefusedException e) { 
@@ -37,20 +37,22 @@ public class Client extends Application {
 	
 	private void starServerConnection(){
 		server = ServerPrxHelper.checkedCast(communicator().propertyToProxy("Server.Proxy"));
-        ServerProxy.setServerProxy(server);
 	}
 	
-	public static void initializeCallback(){
-		Ice.ObjectAdapter adapter = communicator().createObjectAdapter("");
-        Ice.Identity callback = new Ice.Identity();
+	public static Identity initializeCallback(){
+		ObjectAdapter adapter = communicator().createObjectAdapter("");
+        Identity callback = new Ice.Identity();
         callback.name = UUID.randomUUID().toString();
         callback.category = "";
         adapter.add(new ClientI(), callback);
         adapter.activate();
         server.ice_getConnection().setAdapter(adapter);
-        UserController.getInstance().setCallback(callback); 
+        return callback;
 	}
 	
+	public static ServerPrx getProxy(){
+		return server;
+	}
 	
 	public static void main(String [] args){
 		Client client = new Client();

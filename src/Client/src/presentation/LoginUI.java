@@ -1,8 +1,9 @@
 package presentation;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -12,9 +13,23 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import domain.Facade;
+
+
+/**
+* This code was edited or generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+*/
 @SuppressWarnings("serial")
 public class LoginUI extends javax.swing.JFrame {
-
 	{
 		// Set Look & Feel
 		try {
@@ -25,89 +40,142 @@ public class LoginUI extends javax.swing.JFrame {
 		}
 	}
 
-	private JTextField txtUser;
+	private JPanel pnlBackground;
+	private JButton btnLogin;
+	private JTextField txtUsername;
 	private JPasswordField txtPassword;
-	private LoginUIController controller;
-
-	/**
-	 * Auto-generated main method to display this JFrame
-	 */
+	private JLabel lblUsername;
+	private JLabel lblPassword;
+	private JButton btnRegister;
 
 	public LoginUI() {
 		super();
-		setSize(new Dimension(470, 292));
-		setName("LoginUI");
 		initGUI();
-		setLocationRelativeTo(null);
-	}
-
-	public LoginUI(LoginUIController loginUIController) {
-		super();
-		setSize(new Dimension(470, 292));
-		setName("LoginUI");
-		initGUI();
-		setLocationRelativeTo(null);
-		this.controller = loginUIController;
 	}
 
 	private void initGUI() {
+		setResizable(false);
+		setSize(new Dimension(500, 300));
 		getContentPane().setLayout(null);
-
-		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 454, 254);
-		getContentPane().add(panel);
-		panel.setLayout(null);
-
-		JButton btnLogin = new JButton("Login");
-		btnLogin.setFocusable(false);
-		btnLogin.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				do_btnLogin_mouseClicked(arg0);
-			}
-		});
-		btnLogin.setBounds(227, 149, 89, 23);
-		panel.add(btnLogin);
-
-		txtUser = new JTextField();
-		txtUser.setBounds(212, 63, 120, 20);
-		panel.add(txtUser);
-		txtUser.setColumns(10);
-
-		txtPassword = new JPasswordField();
-		txtPassword.setBounds(212, 102, 120, 20);
-		panel.add(txtPassword);
-		txtPassword.setColumns(10);
-
-		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblUsername.setAlignmentX(Component.CENTER_ALIGNMENT);
-		lblUsername.setBounds(107, 66, 59, 15);
-		panel.add(lblUsername);
-
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblPassword.setBounds(109, 105, 59, 15);
-		panel.add(lblPassword);
-
-		JButton btnRegister = new JButton("Register");
-		btnRegister.setFocusable(false);
-		btnRegister.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				do_btnRegister_mouseClicked(arg0);
-			}
-		});
-		btnRegister.setBounds(227, 183, 89, 23);
-		panel.add(btnRegister);
+		getContentPane().add(getPnlBackground());
+		setLocationRelativeTo(null);
+		setVisible(true);
 	}
 
-	protected void do_btnLogin_mouseClicked(MouseEvent arg0) {
+	private JPanel getPnlBackground() {
+		if (pnlBackground == null) {
+			pnlBackground = new JPanel();
+			pnlBackground.setBounds(0, 0, 494, 272);
+			pnlBackground.setLayout(null);
+			pnlBackground.add(getBtnLogin());
+			pnlBackground.add(getTxtUsername());
+			pnlBackground.add(getTxtPassword());
+			pnlBackground.add(getLblUsername());
+			pnlBackground.add(getLblPassword());
+			pnlBackground.add(getBtnRegister());
+		}
+		return pnlBackground;
+	}
+
+	private JButton getBtnLogin() {
+		if (btnLogin == null) {
+			btnLogin = new JButton("Login");
+			btnLogin.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					do_btnLogin_mouseClicked(e);
+				}
+			});
+			btnLogin.setFocusable(false);
+			btnLogin.setBounds(243, 143, 89, 23);
+		}
+		return btnLogin;
+	}
+
+	private JTextField getTxtUsername() {
+		if (txtUsername == null) {
+			txtUsername = new JTextField();
+			txtUsername.setColumns(10);
+			txtUsername.setBounds(228, 57, 120, 20);
+			txtUsername.addKeyListener(new KeyAdapter() {
+				public void keyPressed(KeyEvent evt) {
+					txtUsernameKeyPressed(evt);
+				}
+			});
+		}
+		return txtUsername;
+	}
+
+	private JPasswordField getTxtPassword() {
+		if (txtPassword == null) {
+			txtPassword = new JPasswordField();
+			txtPassword.setColumns(10);
+			txtPassword.setBounds(228, 96, 120, 20);
+			txtPassword.addKeyListener(new KeyAdapter() {
+				public void keyPressed(KeyEvent evt) {
+					txtPasswordKeyPressed(evt);
+				}
+			});
+		}
+		return txtPassword;
+	}
+
+	private JLabel getLblUsername() {
+		if (lblUsername == null) {
+			lblUsername = new JLabel("Username");
+			lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12));
+			lblUsername.setAlignmentX(0.5f);
+			lblUsername.setBounds(123, 60, 59, 15);
+		}
+		return lblUsername;
+	}
+
+	private JLabel getLblPassword() {
+		if (lblPassword == null) {
+			lblPassword = new JLabel("Password");
+			lblPassword.setFont(new Font("Tahoma", Font.BOLD, 12));
+			lblPassword.setBounds(125, 99, 59, 15);
+		}
+		return lblPassword;
+	}
+
+	private JButton getBtnRegister() {
+		if (btnRegister == null) {
+			btnRegister = new JButton("Register");
+			btnRegister.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					do_btnRegister_mouseClicked(e);
+				}
+			});
+			btnRegister.setFocusable(false);
+			btnRegister.setBounds(243, 177, 89, 23);
+		}
+		return btnRegister;
+	}
+
+	protected void do_btnRegister_mouseClicked(MouseEvent e) {
+		Facade.getInstance().startRegister();
+	}
+
+	protected void do_btnLogin_mouseClicked(MouseEvent e) {
+		loginUser();
+	}
+	
+	private void txtPasswordKeyPressed(KeyEvent evt) {
+		if(evt.getKeyCode() == 40){
+			loginUser();
+		}
+	}
+	
+	private void txtUsernameKeyPressed(KeyEvent evt) {
+		if(evt.getKeyCode() == 40){
+			loginUser();
+		}
+	}
+	
+	private void loginUser(){
 		String password = new String(txtPassword.getPassword());
-		controller.loginUser(txtUser.getText(), password);
-	}
-
-	protected void do_btnRegister_mouseClicked(MouseEvent arg0) {
-		controller.openRegisterUI();
+		Facade.getInstance().loginUser(txtUsername.getText(), password);
 	}
 }

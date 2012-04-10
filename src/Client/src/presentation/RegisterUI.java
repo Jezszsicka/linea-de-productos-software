@@ -11,18 +11,21 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import domain.UserController;
+import domain.Facade;
+
 
 /**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
- * Builder, which is free for non-commercial use. If Jigloo is being used
- * commercially (ie, by a corporation, company or business for any purpose
- * whatever) then you should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details. Use of Jigloo implies
- * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
- * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
- * ANY CORPORATE OR COMMERCIAL PURPOSE.
- */
+* This code was edited or generated using CloudGarden's Jigloo
+* SWT/Swing GUI Builder, which is free for non-commercial
+* use. If Jigloo is being used commercially (ie, by a corporation,
+* company or business for any purpose whatever) then you
+* should purchase a license for each developer using Jigloo.
+* Please visit www.cloudgarden.com for details.
+* Use of Jigloo implies acceptance of these licensing terms.
+* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
+* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
+* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
+*/
 @SuppressWarnings("serial")
 public class RegisterUI extends javax.swing.JFrame {
 
@@ -37,7 +40,6 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField txtEmail;
 	private JPasswordField txtPasswordR;
 	private JTextField txtEmailR;
-	private RegisterUIController controller;
 
 	{
 		// Set Look & Feel
@@ -54,21 +56,12 @@ public class RegisterUI extends javax.swing.JFrame {
 		initGUI();
 	}
 
-	public RegisterUI(RegisterUIController registerUIController) {
-		super();
-		this.controller = registerUIController;
-		initGUI();
-	}
-
 	private void initGUI() {
 		setSize(new Dimension(550, 240));
-		try {
-		} catch (Exception e) {
-			// add your error handling code here
-			e.printStackTrace();
-		}
 		getContentPane().setLayout(null);
 		getContentPane().add(getPnlBackground());
+		setLocationRelativeTo(null);
+		setVisible(true);
 	}
 
 	private JPanel getPnlBackground() {
@@ -100,6 +93,7 @@ public class RegisterUI extends javax.swing.JFrame {
 				}
 			});
 			btnRegister.setBounds(120, 159, 89, 23);
+			btnRegister.setFocusable(false);
 		}
 		return btnRegister;
 	}
@@ -114,6 +108,7 @@ public class RegisterUI extends javax.swing.JFrame {
 				}
 			});
 			btnCancel.setBounds(329, 159, 89, 23);
+			btnCancel.setFocusable(false);
 		}
 		return btnCancel;
 	}
@@ -191,7 +186,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	}
 
 	protected void do_btnCancel_mouseClicked(MouseEvent e) {
-		UserController.getInstance().cancelRegister();
+		Facade.getInstance().cancelRegister();
 	}
 
 	protected void do_btnRegister_mouseClicked(MouseEvent arg0) {
@@ -200,7 +195,7 @@ public class RegisterUI extends javax.swing.JFrame {
 		String retypedPassword = new String(txtPasswordR.getPassword());
 		String email = txtEmail.getText();
 		String retypedEmail = txtEmailR.getText();
-		controller.registerUser(username, password, retypedPassword, email,
-				retypedEmail);
+		Facade.getInstance().registerUser(username, password, retypedPassword,
+				email, retypedEmail);
 	}
 }

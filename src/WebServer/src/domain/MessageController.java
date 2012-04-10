@@ -22,14 +22,14 @@ public class MessageController {
 	public void sendPrivateMessage(String sender, String destinatary, String message) {
 		if(participants.contains(destinatary)){
 			Session session = UsersController.getInstance().searchSession(destinatary);
-			session.getCallback().receiveMessage(sender, message);
+		//	session.getCallback().receiveMessage(sender, message);
 		}
 	}
 
 	public void sendMessage(String sender, String message) {
 		for(String chatUser : participants){
 			if(!chatUser.equals(sender))
-				UsersController.getInstance().searchSession(chatUser).getCallback().receiveMessage(sender, message);
+				UsersController.getInstance().searchSession(chatUser).getCallback().receiveWaitingRoomMessage(sender, message);
 		}
 	}
 	
