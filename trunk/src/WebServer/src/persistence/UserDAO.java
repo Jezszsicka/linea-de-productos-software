@@ -28,8 +28,9 @@ public class UserDAO extends DAO<User, String> {
 				.list();
 		commit();
 		
-		if(query.size() > 0)
+		if(query.size() > 0){
 			user = query.get(0);
+		}
 		
 		return user;
 	}
@@ -44,9 +45,18 @@ public class UserDAO extends DAO<User, String> {
 	}
 
 	public User checkLogin(String username, String password) {
+		User user = null;
+		
+		begin();
 		@SuppressWarnings("unchecked")
 		List<User> query = session.createQuery("from User as user where user.username = '"+ username +"' and password = '"+password +"'" ).list();
-		return query.get(0);
+		commit();
+		
+		if(query.size() > 0){
+			user = query.get(0);
+		}
+		
+		return user;
 	}
 
 }

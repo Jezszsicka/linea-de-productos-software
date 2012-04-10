@@ -106,9 +106,15 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
     }
 
     public final void
-    sendMessage(String sender, String message)
+    sendGameMessage(String game, String sender, String message)
     {
-        sendMessage(sender, message, null);
+        sendGameMessage(game, sender, message, null);
+    }
+
+    public final void
+    sendGeneralMessage(String sender, String message)
+    {
+        sendGeneralMessage(sender, message, null);
     }
 
     public final void
@@ -215,7 +221,24 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
     }
 
     public static Ice.DispatchStatus
-    ___sendMessage(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    ___sendGameMessage(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.is();
+        __is.startReadEncaps();
+        String game;
+        game = __is.readString();
+        String sender;
+        sender = __is.readString();
+        String message;
+        message = __is.readString();
+        __is.endReadEncaps();
+        __obj.sendGameMessage(game, sender, message, __current);
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
+    public static Ice.DispatchStatus
+    ___sendGeneralMessage(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
@@ -225,7 +248,7 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
         String message;
         message = __is.readString();
         __is.endReadEncaps();
-        __obj.sendMessage(sender, message, __current);
+        __obj.sendGeneralMessage(sender, message, __current);
         return Ice.DispatchStatus.DispatchOK;
     }
 
@@ -261,7 +284,8 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
         "loginUser",
         "logoutUser",
         "registerUser",
-        "sendMessage",
+        "sendGameMessage",
+        "sendGeneralMessage",
         "sendPrivateMessage"
     };
 
@@ -310,9 +334,13 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
             }
             case 8:
             {
-                return ___sendMessage(this, in, __current);
+                return ___sendGameMessage(this, in, __current);
             }
             case 9:
+            {
+                return ___sendGeneralMessage(this, in, __current);
+            }
+            case 10:
             {
                 return ___sendPrivateMessage(this, in, __current);
             }

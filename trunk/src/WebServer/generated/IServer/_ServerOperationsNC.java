@@ -34,7 +34,9 @@ public interface _ServerOperationsNC
 
     void sendPrivateMessage(String sender, String destinatary, String message);
 
-    void sendMessage(String sender, String message);
+    void sendGameMessage(String game, String sender, String message);
+
+    void sendGeneralMessage(String sender, String message);
 
     java.util.List<java.lang.String> chatParticipants();
 }

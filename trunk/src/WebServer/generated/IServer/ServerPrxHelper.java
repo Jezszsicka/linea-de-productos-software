@@ -512,19 +512,19 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
     }
 
     public void
-    sendMessage(String sender, String message)
+    sendGameMessage(String game, String sender, String message)
     {
-        sendMessage(sender, message, null, false);
+        sendGameMessage(game, sender, message, null, false);
     }
 
     public void
-    sendMessage(String sender, String message, java.util.Map<String, String> __ctx)
+    sendGameMessage(String game, String sender, String message, java.util.Map<String, String> __ctx)
     {
-        sendMessage(sender, message, __ctx, true);
+        sendGameMessage(game, sender, message, __ctx, true);
     }
 
     private void
-    sendMessage(String sender, String message, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    sendGameMessage(String game, String sender, String message, java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
         if(__explicitCtx && __ctx == null)
         {
@@ -538,7 +538,7 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
             {
                 __delBase = __getDelegate(false);
                 _ServerDel __del = (_ServerDel)__delBase;
-                __del.sendMessage(sender, message, __ctx);
+                __del.sendGameMessage(game, sender, message, __ctx);
                 return;
             }
             catch(IceInternal.LocalExceptionWrapper __ex)
@@ -552,44 +552,142 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
         }
     }
 
-    private static final String __sendMessage_name = "sendMessage";
+    private static final String __sendGameMessage_name = "sendGameMessage";
 
-    public Ice.AsyncResult begin_sendMessage(String sender, String message)
+    public Ice.AsyncResult begin_sendGameMessage(String game, String sender, String message)
     {
-        return begin_sendMessage(sender, message, null, false, null);
+        return begin_sendGameMessage(game, sender, message, null, false, null);
     }
 
-    public Ice.AsyncResult begin_sendMessage(String sender, String message, java.util.Map<String, String> __ctx)
+    public Ice.AsyncResult begin_sendGameMessage(String game, String sender, String message, java.util.Map<String, String> __ctx)
     {
-        return begin_sendMessage(sender, message, __ctx, true, null);
+        return begin_sendGameMessage(game, sender, message, __ctx, true, null);
     }
 
-    public Ice.AsyncResult begin_sendMessage(String sender, String message, Ice.Callback __cb)
+    public Ice.AsyncResult begin_sendGameMessage(String game, String sender, String message, Ice.Callback __cb)
     {
-        return begin_sendMessage(sender, message, null, false, __cb);
+        return begin_sendGameMessage(game, sender, message, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_sendMessage(String sender, String message, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    public Ice.AsyncResult begin_sendGameMessage(String game, String sender, String message, java.util.Map<String, String> __ctx, Ice.Callback __cb)
     {
-        return begin_sendMessage(sender, message, __ctx, true, __cb);
+        return begin_sendGameMessage(game, sender, message, __ctx, true, __cb);
     }
 
-    public Ice.AsyncResult begin_sendMessage(String sender, String message, Callback_Server_sendMessage __cb)
+    public Ice.AsyncResult begin_sendGameMessage(String game, String sender, String message, Callback_Server_sendGameMessage __cb)
     {
-        return begin_sendMessage(sender, message, null, false, __cb);
+        return begin_sendGameMessage(game, sender, message, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_sendMessage(String sender, String message, java.util.Map<String, String> __ctx, Callback_Server_sendMessage __cb)
+    public Ice.AsyncResult begin_sendGameMessage(String game, String sender, String message, java.util.Map<String, String> __ctx, Callback_Server_sendGameMessage __cb)
     {
-        return begin_sendMessage(sender, message, __ctx, true, __cb);
+        return begin_sendGameMessage(game, sender, message, __ctx, true, __cb);
     }
 
-    private Ice.AsyncResult begin_sendMessage(String sender, String message, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    private Ice.AsyncResult begin_sendGameMessage(String game, String sender, String message, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
     {
-        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __sendMessage_name, __cb);
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __sendGameMessage_name, __cb);
         try
         {
-            __result.__prepare(__sendMessage_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            __result.__prepare(__sendGameMessage_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            IceInternal.BasicStream __os = __result.__os();
+            __os.writeString(game);
+            __os.writeString(sender);
+            __os.writeString(message);
+            __os.endWriteEncaps();
+            __result.__send(true);
+        }
+        catch(Ice.LocalException __ex)
+        {
+            __result.__exceptionAsync(__ex);
+        }
+        return __result;
+    }
+
+    public void end_sendGameMessage(Ice.AsyncResult __result)
+    {
+        __end(__result, __sendGameMessage_name);
+    }
+
+    public void
+    sendGeneralMessage(String sender, String message)
+    {
+        sendGeneralMessage(sender, message, null, false);
+    }
+
+    public void
+    sendGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx)
+    {
+        sendGeneralMessage(sender, message, __ctx, true);
+    }
+
+    private void
+    sendGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    {
+        if(__explicitCtx && __ctx == null)
+        {
+            __ctx = _emptyContext;
+        }
+        int __cnt = 0;
+        while(true)
+        {
+            Ice._ObjectDel __delBase = null;
+            try
+            {
+                __delBase = __getDelegate(false);
+                _ServerDel __del = (_ServerDel)__delBase;
+                __del.sendGeneralMessage(sender, message, __ctx);
+                return;
+            }
+            catch(IceInternal.LocalExceptionWrapper __ex)
+            {
+                __handleExceptionWrapper(__delBase, __ex);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __cnt = __handleException(__delBase, __ex, null, __cnt);
+            }
+        }
+    }
+
+    private static final String __sendGeneralMessage_name = "sendGeneralMessage";
+
+    public Ice.AsyncResult begin_sendGeneralMessage(String sender, String message)
+    {
+        return begin_sendGeneralMessage(sender, message, null, false, null);
+    }
+
+    public Ice.AsyncResult begin_sendGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx)
+    {
+        return begin_sendGeneralMessage(sender, message, __ctx, true, null);
+    }
+
+    public Ice.AsyncResult begin_sendGeneralMessage(String sender, String message, Ice.Callback __cb)
+    {
+        return begin_sendGeneralMessage(sender, message, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_sendGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    {
+        return begin_sendGeneralMessage(sender, message, __ctx, true, __cb);
+    }
+
+    public Ice.AsyncResult begin_sendGeneralMessage(String sender, String message, Callback_Server_sendGeneralMessage __cb)
+    {
+        return begin_sendGeneralMessage(sender, message, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_sendGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx, Callback_Server_sendGeneralMessage __cb)
+    {
+        return begin_sendGeneralMessage(sender, message, __ctx, true, __cb);
+    }
+
+    private Ice.AsyncResult begin_sendGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    {
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __sendGeneralMessage_name, __cb);
+        try
+        {
+            __result.__prepare(__sendGeneralMessage_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
             IceInternal.BasicStream __os = __result.__os();
             __os.writeString(sender);
             __os.writeString(message);
@@ -603,9 +701,9 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
         return __result;
     }
 
-    public void end_sendMessage(Ice.AsyncResult __result)
+    public void end_sendGeneralMessage(Ice.AsyncResult __result)
     {
-        __end(__result, __sendMessage_name);
+        __end(__result, __sendGeneralMessage_name);
     }
 
     public void

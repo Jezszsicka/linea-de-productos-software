@@ -22,6 +22,12 @@ package IClient;
 
 public interface _ClientDel extends Ice._ObjectDel
 {
-    void receiveMessage(String sender, String message, java.util.Map<String, String> __ctx)
+    void receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper;
+
+    void userLogged(String username, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper;
+
+    void userLeave(String username, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
 }

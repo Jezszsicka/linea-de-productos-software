@@ -22,5 +22,9 @@ package IClient;
 
 public interface _ClientOperationsNC
 {
-    void receiveMessage(String sender, String message);
+    void receiveWaitingRoomMessage(String sender, String message);
+
+    void userLogged(String username);
+
+    void userLeave(String username);
 }

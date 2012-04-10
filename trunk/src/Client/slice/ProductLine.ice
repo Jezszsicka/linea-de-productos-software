@@ -17,7 +17,8 @@ module IServer {
         void loginUser(string username, string password,Ice::Identity client) throws UserAlreadyLoggedException,InvalidLoggingException;
 		void logoutUser(string username) throws UserNotLoggedException;
 		void sendPrivateMessage(string sender, string destinatary, string message);
-		void sendMessage(string sender, string message);
+		void sendGameMessage(string game,string sender, string message);
+		void sendGeneralMessage(string sender,string message);
 		["java:type:java.util.ArrayList<String>"] StringSeq chatParticipants();
     };
     
@@ -26,6 +27,8 @@ module IServer {
 
 module IClient {
     interface Client {
-    	void receiveMessage(string sender, string message);
+    	void receiveWaitingRoomMessage(string sender, string message);
+    	void userLogged(string username);
+    	void userLeave(string username);
     };
 };
