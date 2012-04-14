@@ -6,6 +6,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -13,7 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import domain.Facade;
+import domain.Controller;
 
 
 /**
@@ -60,6 +62,11 @@ public class LoginUI extends javax.swing.JFrame {
 		getContentPane().add(getPnlBackground());
 		setLocationRelativeTo(null);
 		setVisible(true);
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent evt) {
+				thisWindowClosing(evt);
+			}
+		});
 	}
 
 	private JPanel getPnlBackground() {
@@ -155,7 +162,7 @@ public class LoginUI extends javax.swing.JFrame {
 	}
 
 	protected void do_btnRegister_mouseClicked(MouseEvent e) {
-		Facade.getInstance().startRegister();
+		Controller.getInstance().startRegister();
 	}
 
 	protected void do_btnLogin_mouseClicked(MouseEvent e) {
@@ -163,19 +170,23 @@ public class LoginUI extends javax.swing.JFrame {
 	}
 	
 	private void txtPasswordKeyPressed(KeyEvent evt) {
-		if(evt.getKeyCode() == 40){
+		if(evt.getKeyCode() == 10){
 			loginUser();
 		}
 	}
 	
 	private void txtUsernameKeyPressed(KeyEvent evt) {
-		if(evt.getKeyCode() == 40){
+		if(evt.getKeyCode() == 10){
 			loginUser();
 		}
 	}
 	
 	private void loginUser(){
 		String password = new String(txtPassword.getPassword());
-		Facade.getInstance().loginUser(txtUsername.getText(), password);
+		Controller.getInstance().loginUser(txtUsername.getText(), password);
+	}
+	
+	private void thisWindowClosing(WindowEvent evt) {
+		Controller.getInstance().closeConnection();
 	}
 }

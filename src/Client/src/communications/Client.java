@@ -6,22 +6,22 @@ import javax.swing.JOptionPane;
 import IServer.ServerPrx;
 import IServer.ServerPrxHelper;
 import Ice.Application;
+import Ice.Communicator;
 import Ice.Identity;
 import Ice.ObjectAdapter;
-import domain.Facade;
 
 
 public class Client extends Application {
 	
-	private static ServerPrx server;
+	private static ServerPrx proxy;
+	private static Communicator communicator;
 	
 	@Override
 	public int run(String[] args) {
 		try
         {
             starServerConnection();
-            Facade.initialize();
-            communicator().waitForShutdown();
+            communicator.waitForShutdown();
         }
         catch (Ice.ConnectionRefusedException e) { 
     			try {
@@ -36,7 +36,8 @@ public class Client extends Application {
 	}
 	
 	private void starServerConnection(){
-		server = ServerPrxHelper.checkedCast(communicator().propertyToProxy("Server.Proxy"));
+		proxy = ServerPrxHelper.checkedCast(communicator().propertyToProxy("Server.Proxy"));
+		communicator = communicator();
 	}
 	
 	public static Identity initializeCallback(){
@@ -46,12 +47,11 @@ public class Client extends Application {
         callback.category = "";
         adapter.add(new ClientI(), callback);
         adapter.activate();
-        server.ice_getConnection().setAdapter(adapter);
         return callback;
 	}
 	
 	public static ServerPrx getProxy(){
-		return server;
+		return proxy;
 	}
 	
 	public static void main(String [] args){

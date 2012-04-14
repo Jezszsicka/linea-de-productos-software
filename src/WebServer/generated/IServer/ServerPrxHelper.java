@@ -23,19 +23,19 @@ package IServer;
 public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements ServerPrx
 {
     public java.util.List<java.lang.String>
-    chatParticipants()
+    listUsers()
     {
-        return chatParticipants(null, false);
+        return listUsers(null, false);
     }
 
     public java.util.List<java.lang.String>
-    chatParticipants(java.util.Map<String, String> __ctx)
+    listUsers(java.util.Map<String, String> __ctx)
     {
-        return chatParticipants(__ctx, true);
+        return listUsers(__ctx, true);
     }
 
     private java.util.List<java.lang.String>
-    chatParticipants(java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    listUsers(java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
         if(__explicitCtx && __ctx == null)
         {
@@ -47,10 +47,10 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
             Ice._ObjectDel __delBase = null;
             try
             {
-                __checkTwowayOnly("chatParticipants");
+                __checkTwowayOnly("listUsers");
                 __delBase = __getDelegate(false);
                 _ServerDel __del = (_ServerDel)__delBase;
-                return __del.chatParticipants(__ctx);
+                return __del.listUsers(__ctx);
             }
             catch(IceInternal.LocalExceptionWrapper __ex)
             {
@@ -63,45 +63,45 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
         }
     }
 
-    private static final String __chatParticipants_name = "chatParticipants";
+    private static final String __listUsers_name = "listUsers";
 
-    public Ice.AsyncResult begin_chatParticipants()
+    public Ice.AsyncResult begin_listUsers()
     {
-        return begin_chatParticipants(null, false, null);
+        return begin_listUsers(null, false, null);
     }
 
-    public Ice.AsyncResult begin_chatParticipants(java.util.Map<String, String> __ctx)
+    public Ice.AsyncResult begin_listUsers(java.util.Map<String, String> __ctx)
     {
-        return begin_chatParticipants(__ctx, true, null);
+        return begin_listUsers(__ctx, true, null);
     }
 
-    public Ice.AsyncResult begin_chatParticipants(Ice.Callback __cb)
+    public Ice.AsyncResult begin_listUsers(Ice.Callback __cb)
     {
-        return begin_chatParticipants(null, false, __cb);
+        return begin_listUsers(null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_chatParticipants(java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    public Ice.AsyncResult begin_listUsers(java.util.Map<String, String> __ctx, Ice.Callback __cb)
     {
-        return begin_chatParticipants(__ctx, true, __cb);
+        return begin_listUsers(__ctx, true, __cb);
     }
 
-    public Ice.AsyncResult begin_chatParticipants(Callback_Server_chatParticipants __cb)
+    public Ice.AsyncResult begin_listUsers(Callback_Server_listUsers __cb)
     {
-        return begin_chatParticipants(null, false, __cb);
+        return begin_listUsers(null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_chatParticipants(java.util.Map<String, String> __ctx, Callback_Server_chatParticipants __cb)
+    public Ice.AsyncResult begin_listUsers(java.util.Map<String, String> __ctx, Callback_Server_listUsers __cb)
     {
-        return begin_chatParticipants(__ctx, true, __cb);
+        return begin_listUsers(__ctx, true, __cb);
     }
 
-    private Ice.AsyncResult begin_chatParticipants(java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    private Ice.AsyncResult begin_listUsers(java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
     {
-        __checkAsyncTwowayOnly(__chatParticipants_name);
-        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __chatParticipants_name, __cb);
+        __checkAsyncTwowayOnly(__listUsers_name);
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __listUsers_name, __cb);
         try
         {
-            __result.__prepare(__chatParticipants_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            __result.__prepare(__listUsers_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
             IceInternal.BasicStream __os = __result.__os();
             __os.endWriteEncaps();
             __result.__send(true);
@@ -113,9 +113,9 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
         return __result;
     }
 
-    public java.util.List<java.lang.String> end_chatParticipants(Ice.AsyncResult __result)
+    public java.util.List<java.lang.String> end_listUsers(Ice.AsyncResult __result)
     {
-        Ice.AsyncResult.__check(__result, this, __chatParticipants_name);
+        Ice.AsyncResult.__check(__result, this, __listUsers_name);
         if(!__result.__wait())
         {
             try

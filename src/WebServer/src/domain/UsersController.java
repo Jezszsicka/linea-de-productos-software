@@ -159,4 +159,12 @@ public class UsersController {
 
 	}
 
+	public List<String> listUsers() {
+		List<String> users = new ArrayList<String>();
+		for(Session session : sessions){
+			users.add(session.getUsername());
+		}
+		return users;
+	}
+
 }

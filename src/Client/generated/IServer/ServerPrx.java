@@ -88,6 +88,24 @@ public interface ServerPrx extends Ice.ObjectPrx
     public void end_logoutUser(Ice.AsyncResult __result)
         throws UserNotLoggedException;
 
+    public java.util.List<java.lang.String> listUsers();
+
+    public java.util.List<java.lang.String> listUsers(java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_listUsers();
+
+    public Ice.AsyncResult begin_listUsers(java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_listUsers(Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_listUsers(java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_listUsers(Callback_Server_listUsers __cb);
+
+    public Ice.AsyncResult begin_listUsers(java.util.Map<String, String> __ctx, Callback_Server_listUsers __cb);
+
+    public java.util.List<java.lang.String> end_listUsers(Ice.AsyncResult __result);
+
     public void sendPrivateMessage(String sender, String destinatary, String message);
 
     public void sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx);
@@ -141,22 +159,4 @@ public interface ServerPrx extends Ice.ObjectPrx
     public Ice.AsyncResult begin_sendGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx, Callback_Server_sendGeneralMessage __cb);
 
     public void end_sendGeneralMessage(Ice.AsyncResult __result);
-
-    public java.util.List<java.lang.String> chatParticipants();
-
-    public java.util.List<java.lang.String> chatParticipants(java.util.Map<String, String> __ctx);
-
-    public Ice.AsyncResult begin_chatParticipants();
-
-    public Ice.AsyncResult begin_chatParticipants(java.util.Map<String, String> __ctx);
-
-    public Ice.AsyncResult begin_chatParticipants(Ice.Callback __cb);
-
-    public Ice.AsyncResult begin_chatParticipants(java.util.Map<String, String> __ctx, Ice.Callback __cb);
-
-    public Ice.AsyncResult begin_chatParticipants(Callback_Server_chatParticipants __cb);
-
-    public Ice.AsyncResult begin_chatParticipants(java.util.Map<String, String> __ctx, Callback_Server_chatParticipants __cb);
-
-    public java.util.List<java.lang.String> end_chatParticipants(Ice.AsyncResult __result);
 }

@@ -32,11 +32,11 @@ public interface _ServerOperationsNC
     void logoutUser(String username)
         throws UserNotLoggedException;
 
+    java.util.List<java.lang.String> listUsers();
+
     void sendPrivateMessage(String sender, String destinatary, String message);
 
     void sendGameMessage(String game, String sender, String message);
 
     void sendGeneralMessage(String sender, String message);
-
-    java.util.List<java.lang.String> chatParticipants();
 }

@@ -2,39 +2,47 @@ package domain;
 
 import javax.swing.JOptionPane;
 
+import model.Session;
 import presentation.CreateGameUI;
 import presentation.LoginUI;
+import presentation.ProfileUI;
 import presentation.RegisterUI;
 import presentation.WaitingRoomUI;
 import IServer.InvalidLoggingException;
 import IServer.UserAlreadyExistsException;
 import IServer.UserAlreadyLoggedException;
 import IServer.UserNotLoggedException;
+
+import communications.ConnectionController;
+
 import exceptions.WrongInputException;
 
-public class Facade {
-	public static Facade facade;
+public class Controller {
+	public static Controller controller;
 
 	private LoginUI loginUI;
 	private RegisterUI registerUI;
 	private WaitingRoomUI waitingRoomUI;
 	private CreateGameUI createGameUI;
-
+	private ProfileUI profileUI;
+	
+	private Session session;
 	private SessionManager userManager;
 	private GamesManager gameManager;
-
-	private Facade() {
+	private ConnectionController connection;
+	
+	private Controller() {
 		loginUI = new LoginUI();
-		userManager = SessionManager.getInstance();
+		connection = new ConnectionController();
+		userManager = new SessionManager();
+
 	}
 
-	public static void initialize() {
-		if (facade == null)
-			facade = new Facade();
-	}
-
-	public static Facade getInstance() {
-		return facade;
+	public static Controller getInstance() {
+		if( controller == null){
+			controller = new Controller();
+		}
+		return controller;
 	}
 
 	public void registerUser(String username, String password,
@@ -70,11 +78,13 @@ public class Facade {
 
 	public void loginUser(String username, String password) {
 		try {
-			userManager.loginUser(username, password);
-			gameManager = new GamesManager();
-			waitingRoomUI = new WaitingRoomUI();
+			session = userManager.loginUser(username, password);
+			connection.startSession();
+			gameManager = new GamesManager(session);
+			waitingRoomUI = new WaitingRoomUI(session.getUsername(),session.getProxy().listUsers());
 			loginUI.dispose();
 			loginUI = null;
+			
 
 		} catch (WrongInputException e) {
 			JOptionPane.showMessageDialog(registerUI, e.getMessage(),
@@ -130,7 +140,18 @@ public class Facade {
 		waitingRoomUI.receiveMessage(sender,message);
 	}
 
+	public void showProfile() {
+		profileUI = new ProfileUI();
+	}
+	
+	public void closeConnection() {
+		connection.stopConnection();
+		System.exit(0);
+	}
 
+	public static void main(String[] args){
+		Controller.getInstance();
+	}
 
 
 

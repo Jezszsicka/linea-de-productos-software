@@ -2,7 +2,7 @@ package communications;
 
 import IClient._ClientDisp;
 import Ice.Current;
-import domain.Facade;
+import domain.Controller;
 
 public class ClientI extends _ClientDisp{
 
@@ -20,7 +20,7 @@ public class ClientI extends _ClientDisp{
 
 	@Override
 	public void userLogged(String chatUser, Current __current) {
-		Facade.getInstance().userLogged(chatUser);
+		Controller.getInstance().userLogged(chatUser);
 		
 	}
 

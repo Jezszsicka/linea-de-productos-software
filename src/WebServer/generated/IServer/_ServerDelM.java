@@ -23,10 +23,10 @@ package IServer;
 public final class _ServerDelM extends Ice._ObjectDelM implements _ServerDel
 {
     public java.util.List<java.lang.String>
-    chatParticipants(java.util.Map<String, String> __ctx)
+    listUsers(java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
-        IceInternal.Outgoing __og = __handler.getOutgoing("chatParticipants", Ice.OperationMode.Normal, __ctx);
+        IceInternal.Outgoing __og = __handler.getOutgoing("listUsers", Ice.OperationMode.Normal, __ctx);
         try
         {
             boolean __ok = __og.invoke();
