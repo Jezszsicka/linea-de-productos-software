@@ -23,11 +23,11 @@ package IServer;
 public final class _ServerDelD extends Ice._ObjectDelD implements _ServerDel
 {
     public java.util.List<java.lang.String>
-    chatParticipants(java.util.Map<String, String> __ctx)
+    listUsers(java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
         final Ice.Current __current = new Ice.Current();
-        __initCurrent(__current, "chatParticipants", Ice.OperationMode.Normal, __ctx);
+        __initCurrent(__current, "listUsers", Ice.OperationMode.Normal, __ctx);
         final Ice.Holder<java.util.List<java.lang.String> > __result = new Ice.Holder<java.util.List<java.lang.String> >();
         IceInternal.Direct __direct = null;
         try
@@ -45,7 +45,7 @@ public final class _ServerDelD extends Ice._ObjectDelD implements _ServerDel
                     {
                         throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
                     }
-                    __result.value = __servant.chatParticipants(__current);
+                    __result.value = __servant.listUsers(__current);
                     return Ice.DispatchStatus.DispatchOK;
                 }
             };

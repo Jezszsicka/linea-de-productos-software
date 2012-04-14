@@ -5,22 +5,13 @@ import model.Session;
 
 
 public class GamesManager {
-	private static Session session;
+	private Session session;
 	
-	
-	public GamesManager(){
-		session = SessionManager.getInstance().getSession();
+	public GamesManager(Session session){
+		this.session = session;
 	}
 	
 	public void sendGeneralMessage(String message){
 		session.getProxy().sendGeneralMessage(session.getUsername(), message);
 	}
-	
-	
-/*	public void List<String> listUsers(){
-		session.getProxy().listUsers();
-	}*/
-	
-	
-
 }

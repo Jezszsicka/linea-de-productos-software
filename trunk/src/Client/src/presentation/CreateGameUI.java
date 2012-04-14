@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import domain.Facade;
+import domain.Controller;
 import domain.GamesManager;
 
 @SuppressWarnings("serial")
@@ -65,6 +65,6 @@ public class CreateGameUI extends javax.swing.JFrame {
 	}
 
 	protected void do_btnCancel_mouseClicked(MouseEvent arg0) {
-		Facade.getInstance().cancelCreateGame();
+		Controller.getInstance().cancelCreateGame();
 	}
 }

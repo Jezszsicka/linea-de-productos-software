@@ -29,7 +29,7 @@ public class ServerController {
 	}
 	
 	public void restartServer(){
-		Server.communicator().destroy();
+		Server.stopServer();
 		try {
 			server.join();
 		} catch (InterruptedException e) {
@@ -41,9 +41,9 @@ public class ServerController {
 	}
 	
 	public void stopServer(){
-		Server.communicator().shutdown();
+		Server.stopServer();
 		try {
-			server.join(1000);
+			server.join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

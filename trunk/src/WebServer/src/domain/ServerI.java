@@ -8,20 +8,12 @@ import IServer.InvalidLoggingException;
 import IServer.UserAlreadyExistsException;
 import IServer.UserAlreadyLoggedException;
 import IServer.UserNotLoggedException;
-import Ice.Communicator;
 import Ice.Current;
 import Ice.Identity;
 
-public class ServerI extends IServer._ServerDisp {
+@SuppressWarnings("serial")
+public class ServerI extends IServer._ServerDisp{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7940671137250949695L;
-
-	public ServerI(Communicator communicator) {
-
-	}
 
 	@Override
 	public synchronized void registerUser(String username, String password,
@@ -54,11 +46,6 @@ public class ServerI extends IServer._ServerDisp {
 
 
 	@Override
-	public List<String> chatParticipants(Current __current) {
-		return MessageController.getInstance().getParticipants();
-	}
-
-	@Override
 	public void sendGameMessage(String game, String sender, String message,
 			Current __current) {
 		// TODO Auto-generated method stub
@@ -71,5 +58,10 @@ public class ServerI extends IServer._ServerDisp {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public List<String> listUsers(Current __current) {
+		return UsersController.getInstance().listUsers();
+	}	
 
 }

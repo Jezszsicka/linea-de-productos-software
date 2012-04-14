@@ -2,8 +2,12 @@ package presentation;
 
 import java.awt.Dimension;
 import java.awt.Rectangle;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -14,7 +18,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
-import domain.Facade;
+import domain.Controller;
 import domain.SessionManager;
 
 
@@ -32,6 +36,7 @@ import domain.SessionManager;
 */
 @SuppressWarnings("serial")
 public class WaitingRoomUI extends javax.swing.JFrame{
+	private String username;
 	private JPanel pnlBackground;
 	private JButton btnProfile;
 	private JTextArea txtChatUsers;
@@ -59,13 +64,14 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 		initGUI();
 	}
 
-	public WaitingRoomUI(List<String> users){
+	public WaitingRoomUI(String username, List<String> users){
 		super();
 		initGUI();
-		String userList = null;
+		this.username= username;
+		String userList = "";
 		for(String user : users)
 			userList += user+"\n";
-		txtChatUsers.setText(userList);
+		txtChatUsers.setText(userList);	
 	}
 	
 	private void initGUI() {
@@ -75,6 +81,11 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 		getContentPane().add(getPnlBackground());
 		setLocationRelativeTo(null);
 		setVisible(true);
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent evt) {
+				thisWindowClosing(evt);
+			}
+		});
 	}
 
 	private JPanel getPnlBackground() {
@@ -140,6 +151,11 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 			txtMessage = new JTextField();
 			txtMessage.setBounds(23, 414, 380, 20);
 			txtMessage.setColumns(10);
+			txtMessage.addKeyListener(new KeyAdapter() {
+				public void keyPressed(KeyEvent evt) {
+					txtMessageKeyPressed(evt);
+				}
+			});
 		}
 		return txtMessage;
 	}
@@ -177,6 +193,7 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 		if(pnlChatUsers == null) {
 			pnlChatUsers = new JScrollPane();
 			pnlChatUsers.setBounds(522, 54, 152, 348);
+			pnlChatUsers.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			pnlChatUsers.setViewportView(getTxtChatUsers());
 		}
 		return pnlChatUsers;
@@ -185,12 +202,14 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 	private JTextArea getTxtChatUsers() {
 		if(txtChatUsers == null) {
 			txtChatUsers = new JTextArea();
+			txtChatUsers.setPreferredSize(new java.awt.Dimension(114, 346));
+			txtChatUsers.setEditable(false);
 		}
 		return txtChatUsers;
 	}
 
 	protected void btnCreateGameMouseClicked(MouseEvent evt) {
-		Facade.getInstance().startCreateGame();
+		Controller.getInstance().startCreateGame();
 	}
 
 	protected void btnExitMouseClicked(MouseEvent evt) {
@@ -198,7 +217,7 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 				"Are you sure you want to exit?", "Are you sure?",
 				JOptionPane.YES_NO_OPTION);
 		if (option == JOptionPane.YES_OPTION) {
-			Facade.getInstance().logoutUser();
+			Controller.getInstance().logoutUser();
 			dispose();
 		}
 	}
@@ -206,8 +225,8 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 	
 	private void btnSendMouseClicked(MouseEvent evt) {
 		String message = txtMessage.getText();
-		Facade.getInstance().sendGeneralMessage(message);
-		txtChat.setText(txtChat.getText()+SessionManager.getInstance().getSession().getUsername()+": "+txtMessage.getText()+"\n");
+		Controller.getInstance().sendGeneralMessage(message);
+		txtChat.setText(txtChat.getText()+username+": "+txtMessage.getText()+"\n");
 		txtMessage.setText(null);
 	}
 	
@@ -216,6 +235,11 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 			btnProfile = new JButton();
 			btnProfile.setText("Profile");
 			btnProfile.setBounds(601, 11, 63, 23);
+			btnProfile.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					btnProfileMouseClicked(evt);
+				}
+			});
 		}
 		return btnProfile;
 	}
@@ -232,6 +256,29 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 	public void userLeave(String user){
 		txtChat.setText(txtChat.getText()+user+" has left\n");
 		
+	}
+	
+	private void btnProfileMouseClicked(MouseEvent evt) {
+		Controller.getInstance().showProfile();
+	}
+	
+	private void thisWindowClosing(WindowEvent evt) {
+		int option = JOptionPane.showConfirmDialog(this,
+				"Are you sure you want to exit?", "Are you sure?",
+				JOptionPane.YES_NO_OPTION);
+		if (option == JOptionPane.YES_OPTION) {
+			Controller.getInstance().logoutUser();
+			dispose();
+		}
+	}
+	
+	private void txtMessageKeyPressed(KeyEvent evt) {
+		if(evt.getKeyCode() == 10){
+			String message = txtMessage.getText();
+			Controller.getInstance().sendGeneralMessage(message);
+			txtChat.setText(txtChat.getText()+username+": "+txtMessage.getText()+"\n");
+			txtMessage.setText(null);
+		}
 	}
 
 }

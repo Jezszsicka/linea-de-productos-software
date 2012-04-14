@@ -35,6 +35,9 @@ public interface _ServerDel extends Ice._ObjectDel
         throws IceInternal.LocalExceptionWrapper,
                UserNotLoggedException;
 
+    java.util.List<java.lang.String> listUsers(java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper;
+
     void sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
 
@@ -42,8 +45,5 @@ public interface _ServerDel extends Ice._ObjectDel
         throws IceInternal.LocalExceptionWrapper;
 
     void sendGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper;
-
-    java.util.List<java.lang.String> chatParticipants(java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
 }

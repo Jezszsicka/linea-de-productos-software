@@ -14,27 +14,19 @@ import communications.Client;
 import exceptions.WrongInputException;
 
 public class SessionManager {
-	private static SessionManager manager;
 	private Session session;
-
-	private SessionManager() {
+	
+	public SessionManager() {
 		
 	}
 	
-	public static SessionManager getInstance(){
-		if(manager == null){
-			manager = new SessionManager();
-		}
-		return manager;
-	}
-
-	public void loginUser(String username, String password)
+	public Session loginUser(String username, String password)
 			throws WrongInputException, InvalidLoggingException,
 			UserAlreadyLoggedException {
 		validateLoginInput(username, password);
 		session = new Session(username,Client.initializeCallback(),Client.getProxy());
 		session.getProxy().loginUser(username, password, session.getCallback());
-		
+		return session;
 	}
 
 	public void registerUser(String username, String password,
@@ -87,19 +79,4 @@ public class SessionManager {
 		session.getProxy().logoutUser(session.getUsername());
 		session = null;
 	}
-
-	/**
-	 * @return the session
-	 */
-	public Session getSession() {
-		return session;
-	}
-
-	/**
-	 * @param session the session to set
-	 */
-	public void setSession(Session session) {
-		this.session = session;
-	}
-
 }

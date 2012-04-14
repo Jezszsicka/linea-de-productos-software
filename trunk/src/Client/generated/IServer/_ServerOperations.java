@@ -32,11 +32,11 @@ public interface _ServerOperations
     void logoutUser(String username, Ice.Current __current)
         throws UserNotLoggedException;
 
+    java.util.List<java.lang.String> listUsers(Ice.Current __current);
+
     void sendPrivateMessage(String sender, String destinatary, String message, Ice.Current __current);
 
     void sendGameMessage(String game, String sender, String message, Ice.Current __current);
 
     void sendGeneralMessage(String sender, String message, Ice.Current __current);
-
-    java.util.List<java.lang.String> chatParticipants(Ice.Current __current);
 }
