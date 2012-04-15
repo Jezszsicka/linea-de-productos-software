@@ -16,7 +16,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import domain.Controller;
-
+import java.awt.BorderLayout;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -57,10 +57,11 @@ public class LoginUI extends javax.swing.JFrame {
 
 	private void initGUI() {
 		setResizable(false);
-		setSize(new Dimension(500, 300));
-		getContentPane().setLayout(null);
-		getContentPane().add(getPnlBackground());
+		this.setSize(482, 272);
+		getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
 		setLocationRelativeTo(null);
+		BorderLayout thisLayout = new BorderLayout();
+		getContentPane().setLayout(thisLayout);
 		setVisible(true);
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
@@ -72,7 +73,7 @@ public class LoginUI extends javax.swing.JFrame {
 	private JPanel getPnlBackground() {
 		if (pnlBackground == null) {
 			pnlBackground = new JPanel();
-			pnlBackground.setBounds(0, 0, 494, 272);
+			pnlBackground.setBounds(0, 0, 514, 234);
 			pnlBackground.setLayout(null);
 			pnlBackground.add(getBtnLogin());
 			pnlBackground.add(getTxtUsername());
