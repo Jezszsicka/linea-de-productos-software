@@ -23,11 +23,11 @@ package IClient;
 public final class _ClientDelD extends Ice._ObjectDelD implements _ClientDel
 {
     public void
-    receiveWaitingRoomMessage(final String sender, final String message, java.util.Map<String, String> __ctx)
+    receiveGeneralMessage(final String sender, final String message, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
         final Ice.Current __current = new Ice.Current();
-        __initCurrent(__current, "receiveWaitingRoomMessage", Ice.OperationMode.Normal, __ctx);
+        __initCurrent(__current, "receiveGeneralMessage", Ice.OperationMode.Normal, __ctx);
         IceInternal.Direct __direct = null;
         try
         {
@@ -44,7 +44,7 @@ public final class _ClientDelD extends Ice._ObjectDelD implements _ClientDel
                     {
                         throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
                     }
-                    __servant.receiveWaitingRoomMessage(sender, message, __current);
+                    __servant.receiveGeneralMessage(sender, message, __current);
                     return Ice.DispatchStatus.DispatchOK;
                 }
             };

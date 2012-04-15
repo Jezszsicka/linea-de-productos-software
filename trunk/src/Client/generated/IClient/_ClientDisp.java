@@ -78,9 +78,9 @@ public abstract class _ClientDisp extends Ice.ObjectImpl implements Client
     }
 
     public final void
-    receiveWaitingRoomMessage(String sender, String message)
+    receiveGeneralMessage(String sender, String message)
     {
-        receiveWaitingRoomMessage(sender, message, null);
+        receiveGeneralMessage(sender, message, null);
     }
 
     public final void
@@ -96,7 +96,7 @@ public abstract class _ClientDisp extends Ice.ObjectImpl implements Client
     }
 
     public static Ice.DispatchStatus
-    ___receiveWaitingRoomMessage(Client __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    ___receiveGeneralMessage(Client __obj, IceInternal.Incoming __inS, Ice.Current __current)
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
@@ -106,7 +106,7 @@ public abstract class _ClientDisp extends Ice.ObjectImpl implements Client
         String message;
         message = __is.readString();
         __is.endReadEncaps();
-        __obj.receiveWaitingRoomMessage(sender, message, __current);
+        __obj.receiveGeneralMessage(sender, message, __current);
         return Ice.DispatchStatus.DispatchOK;
     }
 
@@ -142,7 +142,7 @@ public abstract class _ClientDisp extends Ice.ObjectImpl implements Client
         "ice_ids",
         "ice_isA",
         "ice_ping",
-        "receiveWaitingRoomMessage",
+        "receiveGeneralMessage",
         "userLeave",
         "userLogged"
     };
@@ -176,7 +176,7 @@ public abstract class _ClientDisp extends Ice.ObjectImpl implements Client
             }
             case 4:
             {
-                return ___receiveWaitingRoomMessage(this, in, __current);
+                return ___receiveGeneralMessage(this, in, __current);
             }
             case 5:
             {

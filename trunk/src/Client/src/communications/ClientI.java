@@ -12,10 +12,9 @@ public class ClientI extends _ClientDisp{
 	private static final long serialVersionUID = -817742229741007859L;
 
 	@Override
-	public void receiveWaitingRoomMessage(String sender, String message,
+	public void receiveGeneralMessage(String sender, String message,
 			Current __current) {
-		//Facade.getInstance().receiveWaitingRoomMessage(sender, message);
-		
+		Controller.getInstance().receiveGeneralMessage(sender, message);
 	}
 
 	@Override

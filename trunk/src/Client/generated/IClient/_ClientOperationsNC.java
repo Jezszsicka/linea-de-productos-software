@@ -22,7 +22,7 @@ package IClient;
 
 public interface _ClientOperationsNC
 {
-    void receiveWaitingRoomMessage(String sender, String message);
+    void receiveGeneralMessage(String sender, String message);
 
     void userLogged(String username);
 

@@ -23,19 +23,19 @@ package IClient;
 public final class ClientPrxHelper extends Ice.ObjectPrxHelperBase implements ClientPrx
 {
     public void
-    receiveWaitingRoomMessage(String sender, String message)
+    receiveGeneralMessage(String sender, String message)
     {
-        receiveWaitingRoomMessage(sender, message, null, false);
+        receiveGeneralMessage(sender, message, null, false);
     }
 
     public void
-    receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx)
+    receiveGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx)
     {
-        receiveWaitingRoomMessage(sender, message, __ctx, true);
+        receiveGeneralMessage(sender, message, __ctx, true);
     }
 
     private void
-    receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    receiveGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
         if(__explicitCtx && __ctx == null)
         {
@@ -49,7 +49,7 @@ public final class ClientPrxHelper extends Ice.ObjectPrxHelperBase implements Cl
             {
                 __delBase = __getDelegate(false);
                 _ClientDel __del = (_ClientDel)__delBase;
-                __del.receiveWaitingRoomMessage(sender, message, __ctx);
+                __del.receiveGeneralMessage(sender, message, __ctx);
                 return;
             }
             catch(IceInternal.LocalExceptionWrapper __ex)
@@ -63,44 +63,44 @@ public final class ClientPrxHelper extends Ice.ObjectPrxHelperBase implements Cl
         }
     }
 
-    private static final String __receiveWaitingRoomMessage_name = "receiveWaitingRoomMessage";
+    private static final String __receiveGeneralMessage_name = "receiveGeneralMessage";
 
-    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message)
+    public Ice.AsyncResult begin_receiveGeneralMessage(String sender, String message)
     {
-        return begin_receiveWaitingRoomMessage(sender, message, null, false, null);
+        return begin_receiveGeneralMessage(sender, message, null, false, null);
     }
 
-    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx)
+    public Ice.AsyncResult begin_receiveGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx)
     {
-        return begin_receiveWaitingRoomMessage(sender, message, __ctx, true, null);
+        return begin_receiveGeneralMessage(sender, message, __ctx, true, null);
     }
 
-    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, Ice.Callback __cb)
+    public Ice.AsyncResult begin_receiveGeneralMessage(String sender, String message, Ice.Callback __cb)
     {
-        return begin_receiveWaitingRoomMessage(sender, message, null, false, __cb);
+        return begin_receiveGeneralMessage(sender, message, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    public Ice.AsyncResult begin_receiveGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx, Ice.Callback __cb)
     {
-        return begin_receiveWaitingRoomMessage(sender, message, __ctx, true, __cb);
+        return begin_receiveGeneralMessage(sender, message, __ctx, true, __cb);
     }
 
-    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, Callback_Client_receiveWaitingRoomMessage __cb)
+    public Ice.AsyncResult begin_receiveGeneralMessage(String sender, String message, Callback_Client_receiveGeneralMessage __cb)
     {
-        return begin_receiveWaitingRoomMessage(sender, message, null, false, __cb);
+        return begin_receiveGeneralMessage(sender, message, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx, Callback_Client_receiveWaitingRoomMessage __cb)
+    public Ice.AsyncResult begin_receiveGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx, Callback_Client_receiveGeneralMessage __cb)
     {
-        return begin_receiveWaitingRoomMessage(sender, message, __ctx, true, __cb);
+        return begin_receiveGeneralMessage(sender, message, __ctx, true, __cb);
     }
 
-    private Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    private Ice.AsyncResult begin_receiveGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
     {
-        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __receiveWaitingRoomMessage_name, __cb);
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __receiveGeneralMessage_name, __cb);
         try
         {
-            __result.__prepare(__receiveWaitingRoomMessage_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            __result.__prepare(__receiveGeneralMessage_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
             IceInternal.BasicStream __os = __result.__os();
             __os.writeString(sender);
             __os.writeString(message);
@@ -114,9 +114,9 @@ public final class ClientPrxHelper extends Ice.ObjectPrxHelperBase implements Cl
         return __result;
     }
 
-    public void end_receiveWaitingRoomMessage(Ice.AsyncResult __result)
+    public void end_receiveGeneralMessage(Ice.AsyncResult __result)
     {
-        __end(__result, __receiveWaitingRoomMessage_name);
+        __end(__result, __receiveGeneralMessage_name);
     }
 
     public void

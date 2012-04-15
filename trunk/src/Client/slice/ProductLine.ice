@@ -27,7 +27,7 @@ module IServer {
 
 module IClient {
     interface Client {
-    	void receiveWaitingRoomMessage(string sender, string message);
+    	void receiveGeneralMessage(string sender, string message);
     	void userLogged(string username);
     	void userLeave(string username);
     };

@@ -101,8 +101,6 @@ public class UsersController {
 					Session newSession = new Session(username, callback);
 					if (!sessions.contains(newSession)) {
 						sessions.add(newSession);
-						MessageController.getInstance()
-								.addParticipant(username);
 						if (user.getAttemps() > 0) {
 							user.setAttemps(0);
 							userDAO.update(user);
@@ -140,7 +138,6 @@ public class UsersController {
 			throw new UserNotLoggedException("User not logged, session expired");
 		else {
 			sessions.remove(session);
-			MessageController.getInstance().removeParticipant(username);
 		}
 	}
 
@@ -165,6 +162,15 @@ public class UsersController {
 			users.add(session.getUsername());
 		}
 		return users;
+	}
+
+	public void sendGeneralMessage(String sender, String message) {
+		for(Session session : sessions){
+			if(!session.getUsername().equals(sender)){
+				session.getCallback().receiveGeneralMessage(sender, message);
+			}
+		}
+		
 	}
 
 }
