@@ -23,10 +23,10 @@ package IClient;
 public final class _ClientDelM extends Ice._ObjectDelM implements _ClientDel
 {
     public void
-    receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx)
+    receiveGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
-        IceInternal.Outgoing __og = __handler.getOutgoing("receiveWaitingRoomMessage", Ice.OperationMode.Normal, __ctx);
+        IceInternal.Outgoing __og = __handler.getOutgoing("receiveGeneralMessage", Ice.OperationMode.Normal, __ctx);
         try
         {
             try

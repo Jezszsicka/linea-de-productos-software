@@ -22,23 +22,23 @@ package IClient;
 
 public interface ClientPrx extends Ice.ObjectPrx
 {
-    public void receiveWaitingRoomMessage(String sender, String message);
+    public void receiveGeneralMessage(String sender, String message);
 
-    public void receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx);
+    public void receiveGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message);
+    public Ice.AsyncResult begin_receiveGeneralMessage(String sender, String message);
 
-    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx);
+    public Ice.AsyncResult begin_receiveGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, Ice.Callback __cb);
+    public Ice.AsyncResult begin_receiveGeneralMessage(String sender, String message, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+    public Ice.AsyncResult begin_receiveGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, Callback_Client_receiveWaitingRoomMessage __cb);
+    public Ice.AsyncResult begin_receiveGeneralMessage(String sender, String message, Callback_Client_receiveGeneralMessage __cb);
 
-    public Ice.AsyncResult begin_receiveWaitingRoomMessage(String sender, String message, java.util.Map<String, String> __ctx, Callback_Client_receiveWaitingRoomMessage __cb);
+    public Ice.AsyncResult begin_receiveGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx, Callback_Client_receiveGeneralMessage __cb);
 
-    public void end_receiveWaitingRoomMessage(Ice.AsyncResult __result);
+    public void end_receiveGeneralMessage(Ice.AsyncResult __result);
 
     public void userLogged(String username);
 

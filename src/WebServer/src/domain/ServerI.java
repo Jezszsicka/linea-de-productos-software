@@ -40,7 +40,7 @@ public class ServerI extends IServer._ServerDisp{
 	@Override
 	public synchronized void sendPrivateMessage(String sender, String destinatary,
 			String message, Current __current) {
-		MessageController.getInstance().sendPrivateMessage(sender,destinatary,message);
+		
 		
 	}
 
@@ -55,7 +55,7 @@ public class ServerI extends IServer._ServerDisp{
 	@Override
 	public void sendGeneralMessage(String sender, String message,
 			Current __current) {
-		// TODO Auto-generated method stub
+		UsersController.getInstance().sendGeneralMessage(sender, message);
 		
 	}
 
