@@ -1,12 +1,39 @@
 #include <Ice/Identity.ice>
 
-module IServer {
+module ProductLine {
+	enum RoleType { Player, Admin };
+	enum GameType {	Ludo, Chess, Trivial, Monopoly, Checkers};
 
-	sequence<string> StringSeq;
-    exception genericException {
-		string reason;
+	["java:getset"]
+	class Ranking {
+		int wonGames;
+		int lostGames;
+		GameType game;
 	};
 	
+	["java:type:java.util.ArrayList<String>"] sequence<string> StringList;
+	["java:type:java.util.ArrayList<Ranking>"] sequence<Ranking> RankingList;
+
+	
+	["java:getset"]
+	class User{
+		["protected"] string username;
+		["protected"] string password;
+		["protected"] string email;
+		["protected"] RoleType role;
+		["protected"] string name;
+		["protected"] string lastName;
+		["protected"] string secondLastName;
+		["protected"] StringList friends;	
+		["protected"] RankingList rankings;
+	};
+	
+
+	
+
+	exception genericException {
+		string reason;
+	};
 	exception UserAlreadyLoggedException extends genericException{};
 	exception UserNotLoggedException extends genericException{};
 	exception UserAlreadyExistsException extends genericException{};
@@ -14,21 +41,19 @@ module IServer {
 
     interface Server {
     	void registerUser(string username, string password, string email) throws UserAlreadyExistsException;
-        void loginUser(string username, string password,Ice::Identity client) throws UserAlreadyLoggedException,InvalidLoggingException;
+        User loginUser(string username, string password,Ice::Identity client) throws UserAlreadyLoggedException,InvalidLoggingException;
 		void logoutUser(string username) throws UserNotLoggedException;
-		["java:type:java.util.ArrayList<String>"] StringSeq listUsers();
+		StringList listUsers();
 		void sendPrivateMessage(string sender, string destinatary, string message);
 		void sendGameMessage(string game,string sender, string message);
 		void sendGeneralMessage(string sender,string message);
+		void saveProfile(User profile);
     };
     
-};
-
-
-module IClient {
     interface Client {
     	void receiveGeneralMessage(string sender, string message);
     	void userLogged(string username);
     	void userLeave(string username);
     };
+    
 };

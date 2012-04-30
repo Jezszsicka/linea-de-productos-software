@@ -1,43 +1,43 @@
 <?xml version="1.0"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
-<!-- Generated 26-feb-2012 15:10:29 by Hibernate Tools 3.4.0.CR1 -->
-<hibernate-mapping>
- <class name="model.User" table="USER">
-  <id name="username" type="java.lang.String">
-   <column name="USERNAME"/>
-   <generator class="assigned"/>
-  </id>
-  <property generated="never" lazy="false" name="password" type="java.lang.String">
-   <column name="PASSWORD"/>
-  </property>
-  <property generated="never" lazy="false" name="name" type="java.lang.String">
-   <column name="NAME"/>
-  </property>
-  <property generated="never" lazy="false" name="first_Name" type="java.lang.String">
-   <column name="FIRST_NAME"/>
-  </property>
-  <property column="ROLE" generated="never" lazy="false" name="role" not-null="true">
-   <type name="org.hibernate.type.EnumType">
-    <param name="enumClass">model.Role</param>
-    <param name="type">12</param>
-   </type>
-  </property>
-  <property generated="never" lazy="false" name="last_name" type="java.lang.String">
-   <column name="LAST_NAME"/>
-  </property>
-  <property generated="never" lazy="false" name="email" type="java.lang.String">
-   <column name="EMAIL"/>
-  </property>
-  <property generated="never" lazy="false" name="attemps" type="int">
-   <column name="ATTEMPS"/>
-  </property>
-  <property generated="never" lazy="false" name="blocked" type="boolean">
-   <column name="BLOCKED"/>
-  </property>
-  <set name="friends" sort="unsorted" table="FRIENDS">
-   <key column="USERNAME"/>
-   <element column="FRIEND" type="java.lang.String"/>
-  </set>
- </class>
-</hibernate-mapping>
+    <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                       "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+    <!-- Generated 26-feb-2012 15:10:29 by Hibernate Tools 3.4.0.CR1 -->
+    <hibernate-mapping>
+        <class name="ProductLine.User" table="USER">
+            <id name="username" type="java.lang.String">
+                <column name="USERNAME" />
+                <generator class="assigned" />
+            </id>
+            <property generated="never" lazy="false" name="password"
+                type="java.lang.String">
+                <column name="PASSWORD" />
+            </property>
+            <property generated="never" lazy="false" name="email"
+                type="java.lang.String">
+                <column name="EMAIL" />
+            </property>
+            <property column="ROLE" generated="never" lazy="false" name="role"
+                not-null="true">
+                <type name="org.hibernate.type.EnumType">
+                    <param name="enumClass">ProductLine.RoleType</param>
+                    <param name="type">12</param>
+                </type>
+            </property>
+            <property generated="never" lazy="false" name="name"
+                type="java.lang.String">
+                <column name="NAME" />
+            </property>
+            <property generated="never" lazy="false" name="lastName"
+                type="java.lang.String">
+                <column name="LASTNAME" />
+            </property>
+            <property generated="never" lazy="false" name="secondLastName"
+                type="java.lang.String">
+                <column name="LAST_NAME" />
+            </property>
+    <!--    <set name="rankings" sort="unsorted" table="RANKINGS">
+                <key column="username" />
+                <many-to-many class="ProductLine.Ranking" column="game" unique="true" />
+            </set>-->
+        </class>
+    </hibernate-mapping>

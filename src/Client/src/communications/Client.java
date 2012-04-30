@@ -3,24 +3,28 @@ import java.util.UUID;
 
 import javax.swing.JOptionPane;
 
-import IServer.ServerPrx;
-import IServer.ServerPrxHelper;
+import domain.Controller;
+
 import Ice.Application;
 import Ice.Communicator;
 import Ice.Identity;
 import Ice.ObjectAdapter;
+import ProductLine.ServerPrx;
+import ProductLine.ServerPrxHelper;
 
 
 public class Client extends Application {
 	
 	private static ServerPrx proxy;
 	private static Communicator communicator;
+	private static Identity callback;
 	
 	@Override
 	public int run(String[] args) {
 		try
         {
             starServerConnection();
+            Controller.initialize();
             communicator.waitForShutdown();
         }
         catch (Ice.ConnectionRefusedException e) { 
@@ -38,16 +42,17 @@ public class Client extends Application {
 	private void starServerConnection(){
 		proxy = ServerPrxHelper.checkedCast(communicator().propertyToProxy("Server.Proxy"));
 		communicator = communicator();
-	}
-	
-	public static Identity initializeCallback(){
-		ObjectAdapter adapter = communicator().createObjectAdapter("");
-        Identity callback = new Ice.Identity();
+		ObjectAdapter adapter = communicator.createObjectAdapter("");
+        callback = new Ice.Identity();
         callback.name = UUID.randomUUID().toString();
         callback.category = "";
         adapter.add(new ClientI(), callback);
         adapter.activate();
-        return callback;
+        proxy.ice_getConnection().setAdapter(adapter);
+	}
+	
+	public static Identity getCallback(){
+		return callback;
 	}
 	
 	public static ServerPrx getProxy(){

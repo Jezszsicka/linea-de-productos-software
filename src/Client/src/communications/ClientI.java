@@ -1,7 +1,8 @@
 package communications;
 
-import IClient._ClientDisp;
+
 import Ice.Current;
+import ProductLine._ClientDisp;
 import domain.Controller;
 
 public class ClientI extends _ClientDisp{
@@ -18,15 +19,14 @@ public class ClientI extends _ClientDisp{
 	}
 
 	@Override
-	public void userLogged(String chatUser, Current __current) {
-		Controller.getInstance().userLogged(chatUser);
+	public void userLogged(String username, Current __current) {
+		Controller.getInstance().userLogged(username);
 		
 	}
 
 	@Override
-	public void userLeave(String chatUser, Current __current) {
-		// TODO Auto-generated method stub
-		
+	public void userLeave(String username, Current __current) {
+		Controller.getInstance().userLeave(username);	
 	}
 
 

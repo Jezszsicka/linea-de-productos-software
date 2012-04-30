@@ -1,32 +1,38 @@
 package model;
 
-import IServer.ServerPrx;
+import java.util.HashSet;
+import java.util.Set;
+
 import Ice.Identity;
+import ProductLine.ServerPrx;
+import ProductLine.User;
 
 public class Session {
-	private String username;
+	private User user;
 	private Identity callback;
 	private ServerPrx proxy;
 	
 	
-	public Session(String username,Identity callback,ServerPrx proxy){
-		this.username = username;
+	public Session(User user,Identity callback,ServerPrx proxy){
+		this.user = user;
 		this.callback = callback;
 		this.proxy = proxy;
+		Set<String> set = new HashSet<String>();
+		set.add("asfd");
 	}
 
 	/**
-	 * @return the username
+	 * @return the user
 	 */
-	public String getUsername() {
-		return username;
+	public User getUser() {
+		return user;
 	}
 
 	/**
-	 * @param username the username to set
+	 * @param user the user to set
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	/**

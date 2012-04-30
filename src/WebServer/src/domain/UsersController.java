@@ -3,19 +3,18 @@ package domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Role;
 import model.Session;
-import model.User;
 
 import org.hibernate.HibernateException;
 
 import persistence.UserDAO;
-import IClient.ClientPrx;
-import IServer.InvalidLoggingException;
-import IServer.UserAlreadyExistsException;
-import IServer.UserAlreadyLoggedException;
-import IServer.UserNotLoggedException;
-import constants.UserConstants;
+import ProductLine.ClientPrx;
+import ProductLine.InvalidLoggingException;
+import ProductLine.RoleType;
+import ProductLine.User;
+import ProductLine.UserAlreadyExistsException;
+import ProductLine.UserAlreadyLoggedException;
+import ProductLine.UserNotLoggedException;
 
 public class UsersController {
 
@@ -52,8 +51,10 @@ public class UsersController {
 			UserDAO userDAO = UserDAO.getDAO();
 			User user = userDAO.loadByID(username);
 			if(user == null){
-				user = new User(username, Utils.hashMD5(password), email,
-						Role.Player);
+				user = new User();
+				user.setUsername(username);
+				user.setPassword(password);
+				user.setEmail(email);
 				UserDAO.getDAO().create(user);
 			}else{
 				throw new UserAlreadyExistsException();
@@ -72,7 +73,7 @@ public class UsersController {
 	 * @param callback
 	 * 
 	 * **/
-	public void loginUser(String username, String password, ClientPrx callback)
+	public User loginUser(String username, String password, ClientPrx callback)
 			throws UserAlreadyLoggedException, InvalidLoggingException {
 		
 		String hashMD5 = Utils.hashMD5(password);
@@ -82,29 +83,17 @@ public class UsersController {
 
 		// User found
 		if (user != null) {
-			if (user.isBlocked()) {
-				throw new InvalidLoggingException("Blocked account");
-			} else {
 				// Checking password
 				hashMD5 = Utils.hashMD5(password);
 				if (!user.getPassword().equals(hashMD5)) { // Incorrect password
-					int attemps = user.getAttemps();
-					user.setAttemps(++attemps);
-					if (attemps >= UserConstants.MAXATTEMPS) {
-						user.setBlocked(true);
-						userDAO.update(user);
-						throw new InvalidLoggingException("Blocked account");
-					}
-					userDAO.update(user);
 					throw new InvalidLoggingException("Incorrect password");
 				} else { // Correct password
 					Session newSession = new Session(username, callback);
 					if (!sessions.contains(newSession)) {
+						for(Session session : sessions)
+							if(!session.getUsername().equals(username))
+								session.getCallback().userLogged(username);
 						sessions.add(newSession);
-						if (user.getAttemps() > 0) {
-							user.setAttemps(0);
-							userDAO.update(user);
-						}
 					} else {
 						for (Session session : sessions) {
 							if (newSession.equals(session)) {
@@ -122,27 +111,35 @@ public class UsersController {
 					}
 				}
 			}
-		} else
+		 else
 			// User not found
 			throw new InvalidLoggingException("Incorrect username");
+		
+		return user;
 	}
 
-	public Role loginUser(String username, String password) {
-		return Role.Admin;
+	public RoleType loginUser(String username, String password) {
+		return RoleType.Admin;
 
 	}
 
 	public void logoutUser(String username) throws UserNotLoggedException {
-		Session session = searchSession(username);
-		if (session == null)
+		Session leaveSession = searchSession(username);
+		if (leaveSession == null)
 			throw new UserNotLoggedException("User not logged, session expired");
 		else {
-			sessions.remove(session);
+			for(Session session : sessions){
+				if(!session.getUsername().equals(username)){
+					session.getCallback().userLeave(username);
+				}
+			}
+			sessions.remove(leaveSession);
 		}
 	}
 
 	public void deleteUser(String username) {
-		User user = new User(username);
+		User user = new User();
+		user.setUsername(username);
 		UserDAO.getDAO().delete(user);
 	}
 

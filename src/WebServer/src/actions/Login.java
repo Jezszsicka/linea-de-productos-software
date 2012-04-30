@@ -1,6 +1,9 @@
 package actions;
 
-import model.Role;
+
+
+
+import ProductLine.RoleType;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -16,7 +19,7 @@ public class Login extends ActionSupport {
 	private String password;
 
 	public String execute(){
-		Role role = UsersController.getInstance().loginUser(username, password);
+		RoleType role = UsersController.getInstance().loginUser(username, password);
 		switch(role){
 		case Admin:
 			return "Admin";

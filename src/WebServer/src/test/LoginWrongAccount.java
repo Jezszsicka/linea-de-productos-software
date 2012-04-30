@@ -9,8 +9,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import IServer.InvalidLoggingException;
-import IServer.UserAlreadyLoggedException;
+import ProductLine.InvalidLoggingException;
+import ProductLine.UserAlreadyLoggedException;
 
 import domain.ServerThread;
 import domain.UsersController;

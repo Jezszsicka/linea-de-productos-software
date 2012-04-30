@@ -17,6 +17,10 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 
+import ProductLine.User;
+
+import domain.Controller;
+
 /**
 * This code was edited or generated using CloudGarden's Jigloo
 * SWT/Swing GUI Builder, which is free for non-commercial
@@ -49,17 +53,18 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel lblGame;
 	private JButton btnCancel;
 	private JLabel lblAccount;
+	private JButton btnChangeEmail;
+	private JButton btnChangePassword;
 	private JLabel lblAvatar;
 	private JButton btnAvatar;
 	private JLabel lblUser;
 	private JButton btnSave;
 
-	/**
-	* Auto-generated main method to display this JFrame
-	*/
+	private User user;
 		
-	public ProfileUI() {
+	public ProfileUI(User user) {
 		super();
+		this.user = user;
 		initGUI();
 	}
 	
@@ -89,6 +94,8 @@ public class ProfileUI extends javax.swing.JFrame {
 			pnlBackground.add(getLblLost());
 			pnlBackground.add(getLblPlayed());
 			pnlBackground.add(getLblRate());
+			pnlBackground.add(getBtnChangePassword());
+			pnlBackground.add(getBtnChangeEmail());
 		}
 		return pnlBackground;
 	}
@@ -98,6 +105,11 @@ public class ProfileUI extends javax.swing.JFrame {
 			btnSave = new JButton();
 			btnSave.setText("Save");
 			btnSave.setBounds(375, 402, 73, 23);
+			btnSave.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					btnSaveMouseClicked(evt);
+				}
+			});
 		}
 		return btnSave;
 	}
@@ -106,9 +118,9 @@ public class ProfileUI extends javax.swing.JFrame {
 		if(lblUser == null) {
 			lblUser = new JLabel();
 			lblUser.setBounds(28, 11, 72, 15);
-			lblUser.setText("Username");
 			lblUser.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblUser.setHorizontalAlignment(SwingConstants.CENTER);
+			lblUser.setText(user.getUsername());
 		}
 		return lblUser;
 	}
@@ -129,6 +141,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	
 	private void btnAvatarMouseClicked(MouseEvent evt) {
 		new AvatarList(this);
+		setEnabled(false);
 	}
 	
 	private JLabel getLblAvatar() {
@@ -157,6 +170,12 @@ public class ProfileUI extends javax.swing.JFrame {
 			btnCancel = new JButton();
 			btnCancel.setText("Cancel");
 			btnCancel.setBounds(477, 402, 74, 23);
+			btnCancel.setHorizontalTextPosition(SwingConstants.CENTER);
+			btnCancel.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					btnCancelMouseClicked(evt);
+				}
+			});
 		}
 		return btnCancel;
 	}
@@ -219,6 +238,34 @@ public class ProfileUI extends javax.swing.JFrame {
 	public void setAvatar(int avatar) {
 		ImageIcon icon = new ImageIcon(getClass().getClassLoader().getResource(avatar+".jpg"));	
 		lblAvatar.setIcon(icon);
+	}
+	
+	private void btnCancelMouseClicked(MouseEvent evt) {
+		dispose();
+		Controller.getInstance().closeProfile(false);
+	}
+	
+	private void btnSaveMouseClicked(MouseEvent evt) {
+		dispose();
+		Controller.getInstance().closeProfile(true);
+	}
+	
+	private JButton getBtnChangePassword() {
+		if(btnChangePassword == null) {
+			btnChangePassword = new JButton();
+			btnChangePassword.setText("Change password");
+			btnChangePassword.setBounds(18, 278, 124, 23);
+		}
+		return btnChangePassword;
+	}
+	
+	private JButton getBtnChangeEmail() {
+		if(btnChangeEmail == null) {
+			btnChangeEmail = new JButton();
+			btnChangeEmail.setText("Change email");
+			btnChangeEmail.setBounds(18, 312, 124, 23);
+		}
+		return btnChangeEmail;
 	}
 
 }
