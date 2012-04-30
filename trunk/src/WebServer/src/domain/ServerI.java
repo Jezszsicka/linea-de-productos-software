@@ -1,18 +1,19 @@
 package domain;
 
 import java.util.List;
-
-import IClient.ClientPrx;
-import IClient.ClientPrxHelper;
-import IServer.InvalidLoggingException;
-import IServer.UserAlreadyExistsException;
-import IServer.UserAlreadyLoggedException;
-import IServer.UserNotLoggedException;
 import Ice.Current;
 import Ice.Identity;
+import ProductLine.ClientPrx;
+import ProductLine.ClientPrxHelper;
+import ProductLine.InvalidLoggingException;
+import ProductLine.User;
+import ProductLine.UserAlreadyExistsException;
+import ProductLine.UserAlreadyLoggedException;
+import ProductLine.UserNotLoggedException;
+import ProductLine._ServerDisp;
 
 @SuppressWarnings("serial")
-public class ServerI extends IServer._ServerDisp{
+public class ServerI extends _ServerDisp{
 
 
 	@Override
@@ -23,12 +24,12 @@ public class ServerI extends IServer._ServerDisp{
 	}
 
 	@Override
-	public synchronized void loginUser(String username, String password,
+	public synchronized User loginUser(String username, String password,
 			Identity client, Current __current)
 			throws UserAlreadyLoggedException, InvalidLoggingException {
 		Ice.ObjectPrx base = __current.con.createProxy(client);
 		ClientPrx callback = ClientPrxHelper.uncheckedCast(base);
-		UsersController.getInstance().loginUser(username, password, callback);
+		return UsersController.getInstance().loginUser(username, password, callback);
 	}
 	
 	@Override

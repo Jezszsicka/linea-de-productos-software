@@ -4,10 +4,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import model.Session;
-import IServer.InvalidLoggingException;
-import IServer.UserAlreadyExistsException;
-import IServer.UserAlreadyLoggedException;
-import IServer.UserNotLoggedException;
+import Ice.Identity;
+import ProductLine.InvalidLoggingException;
+import ProductLine.User;
+import ProductLine.UserAlreadyExistsException;
+import ProductLine.UserAlreadyLoggedException;
+import ProductLine.UserNotLoggedException;
 
 import communications.Client;
 
@@ -24,8 +26,9 @@ public class SessionManager {
 			throws WrongInputException, InvalidLoggingException,
 			UserAlreadyLoggedException {
 		validateLoginInput(username, password);
-		session = new Session(username,Client.initializeCallback(),Client.getProxy());
-		session.getProxy().loginUser(username, password, session.getCallback());
+		Identity callback = Client.getCallback();
+		User user = Client.getProxy().loginUser(username, password, callback);
+		session = new Session(user,callback,Client.getProxy());
 		return session;
 	}
 
@@ -76,7 +79,11 @@ public class SessionManager {
 	}
 
 	public void logoutUser() throws UserNotLoggedException {
-		session.getProxy().logoutUser(session.getUsername());
+		session.getProxy().logoutUser(session.getUser().getUsername());
 		session = null;
+	}
+
+	public void saveProfile() {
+		session.getProxy().saveProfile(session.getUser());
 	}
 }

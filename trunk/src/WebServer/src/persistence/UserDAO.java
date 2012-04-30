@@ -2,7 +2,8 @@ package persistence;
 
 import java.util.List;
 
-import model.User;
+import ProductLine.User;
+
 
 
 public class UserDAO extends DAO<User, String> {

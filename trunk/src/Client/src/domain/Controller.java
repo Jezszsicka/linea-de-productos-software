@@ -2,18 +2,19 @@ package domain;
 
 import javax.swing.JOptionPane;
 
+import ProductLine.InvalidLoggingException;
+import ProductLine.UserAlreadyExistsException;
+import ProductLine.UserAlreadyLoggedException;
+import ProductLine.UserNotLoggedException;
+
 import model.Session;
 import presentation.CreateGameUI;
 import presentation.LoginUI;
 import presentation.ProfileUI;
 import presentation.RegisterUI;
 import presentation.WaitingRoomUI;
-import IServer.InvalidLoggingException;
-import IServer.UserAlreadyExistsException;
-import IServer.UserAlreadyLoggedException;
-import IServer.UserNotLoggedException;
 
-import communications.ConnectionController;
+import communications.Client;
 
 import exceptions.WrongInputException;
 
@@ -27,28 +28,29 @@ public class Controller {
 	private ProfileUI profileUI;
 	
 	private Session session;
-	private SessionManager userManager;
+	private SessionManager sessionManager;
 	private GamesManager gameManager;
-	private ConnectionController connection;
 	
 	private Controller() {
 		loginUI = new LoginUI();
-		connection = new ConnectionController();
-		userManager = new SessionManager();
+		sessionManager = new SessionManager();
 
 	}
 
-	public static Controller getInstance() {
+	public static void initialize (){
 		if( controller == null){
 			controller = new Controller();
-		}
+		}	
+	}
+	
+	public static Controller getInstance() {
 		return controller;
 	}
 
 	public void registerUser(String username, String password,
 			String retypedPassword, String email, String retypedEmail) {
 		try {
-			userManager.registerUser(username, password, retypedPassword,
+			sessionManager.registerUser(username, password, retypedPassword,
 					email, retypedEmail);
 			loginUI.setEnabled(true);
 			registerUI.dispose();
@@ -78,10 +80,9 @@ public class Controller {
 
 	public void loginUser(String username, String password) {
 		try {
-			session = userManager.loginUser(username, password);
-			connection.startSession();
+			session = sessionManager.loginUser(username, password);
 			gameManager = new GamesManager(session);
-			waitingRoomUI = new WaitingRoomUI(session.getUsername(),session.getProxy().listUsers());
+			waitingRoomUI = new WaitingRoomUI(session.getUser().getUsername(),session.getProxy().listUsers());
 			loginUI.dispose();
 			loginUI = null;
 			
@@ -104,7 +105,7 @@ public class Controller {
 
 	public void logoutUser() {
 		try {
-			userManager.logoutUser();
+			sessionManager.logoutUser();
 			gameManager = null;
 			waitingRoomUI.dispose();
 			loginUI = new LoginUI();
@@ -141,18 +142,22 @@ public class Controller {
 	}
 
 	public void showProfile() {
-		profileUI = new ProfileUI();
+		profileUI = new ProfileUI(session.getUser());
+		waitingRoomUI.setEnabled(false);
+	}
+	
+	public void closeProfile(boolean save) {
+		if(save){
+			sessionManager.saveProfile();
+		}
+		waitingRoomUI.setEnabled(true);
 	}
 	
 	public void closeConnection() {
-		connection.stopConnection();
+		Client.communicator().destroy();
 		System.exit(0);
 	}
 
-	public static void main(String[] args){
-		Controller.getInstance();
-	}
-
-
+	
 
 }

@@ -1,6 +1,8 @@
 package model;
 
-import IClient.ClientPrx;
+import ProductLine.ClientPrx;
+
+
 
 public class Session {
 

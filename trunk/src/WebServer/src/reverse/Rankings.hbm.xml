@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 29-abr-2012 19:07:22 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="Rankings" table="rankings" catalog="BoardGames">
+        <composite-id name="id" class="RankingsId">
+            <key-property name="username" type="string">
+                <column name="username" length="45" />
+            </key-property>
+            <key-property name="game" type="string">
+                <column name="game" length="8" />
+            </key-property>
+        </composite-id>
+        <property name="wonGames" type="int">
+            <column name="wonGames" not-null="true" />
+        </property>
+        <property name="lostGames" type="int">
+            <column name="lostGames" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

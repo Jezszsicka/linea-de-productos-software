@@ -12,6 +12,6 @@ public class GamesManager {
 	}
 	
 	public void sendGeneralMessage(String message){
-		session.getProxy().sendGeneralMessage(session.getUsername(), message);
+		session.getProxy().sendGeneralMessage(session.getUser().getUsername(), message);
 	}
 }
