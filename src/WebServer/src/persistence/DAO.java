@@ -19,7 +19,7 @@ public abstract class DAO<PersistentObj extends Serializable, KeyType> {
 	}
 
 	protected void commit() {
-		session.getTransaction().commit();
+		session.getTransaction().commit();	
 	}
 
 	protected void rollback() {

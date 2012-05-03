@@ -2,9 +2,10 @@ package presentation;
 import java.awt.BorderLayout;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JButton;
-import javax.swing.JComboBox<model.PlayerType>;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
