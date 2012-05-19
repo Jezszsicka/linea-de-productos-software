@@ -13,22 +13,25 @@ module ProductLine {
 	
 	["java:type:java.util.ArrayList<String>"] sequence<string> StringList;
 	["java:type:java.util.ArrayList<Ranking>"] sequence<Ranking> RankingList;
-
+	sequence<byte> Image;
 	
 	["java:getset"]
 	class User{
 		["protected"] string username;
+		["protected"] string name;
+		["protected"] string lastName;
 		["protected"] string password;
 		["protected"] string email;
 		["protected"] RoleType role;
-		["protected"] string name;
-		["protected"] string lastName;
-		["protected"] string secondLastName;
+		["protected"] int country;
+		["protected"] Image avatar;
 		["protected"] StringList friends;	
 		["protected"] RankingList rankings;
+		
+		
 	};
 	
-
+	["java:type:java.util.ArrayList<User>"] sequence<User> UserList;
 	
 
 	exception genericException {
@@ -40,19 +43,24 @@ module ProductLine {
 	exception InvalidLoggingException extends genericException{};
 
     interface Server {
-    	void registerUser(string username, string password, string email) throws UserAlreadyExistsException;
+    	void registerUser(User newUser) throws UserAlreadyExistsException;
         User loginUser(string username, string password,Ice::Identity client) throws UserAlreadyLoggedException,InvalidLoggingException;
 		void logoutUser(string username) throws UserNotLoggedException;
-		StringList listUsers();
-		void sendPrivateMessage(string sender, string destinatary, string message);
+		void changeName(string username, string name, string lastname);
+		void changePassword(string username, string password, string newPassword) throws InvalidLoggingException;
+		void changeEmail(string username, string email, string password) throws InvalidLoggingException;
+		void changeAvatar(string username, Image avatar);
+		UserList listUsers(string username);
 		void sendGameMessage(string game,string sender, string message);
 		void sendGeneralMessage(string sender,string message);
+		void sendPrivateMessage(string sender, string destinatary, string message) throws UserNotLoggedException;
 		void saveProfile(User profile);
     };
     
     interface Client {
     	void receiveGeneralMessage(string sender, string message);
-    	void userLogged(string username);
+    	void receivePrivateMessage(string sender, string message);
+    	void userLogged(User loggedUser);
     	void userLeave(string username);
     };
     

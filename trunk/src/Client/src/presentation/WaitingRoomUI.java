@@ -1,59 +1,80 @@
 package presentation;
 
 import java.awt.Dimension;
-import java.awt.Rectangle;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingConstants;
+import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.LineBorder;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.html.HTMLDocument;
+import javax.swing.text.html.HTMLEditorKit;
+
+import ProductLine.User;
+import ProductLine.UserNotLoggedException;
 
 import domain.Controller;
-import domain.SessionManager;
-
+import java.awt.BorderLayout;
 
 /**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
+ * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
+ * Builder, which is free for non-commercial use. If Jigloo is being used
+ * commercially (ie, by a corporation, company or business for any purpose
+ * whatever) then you should purchase a license for each developer using Jigloo.
+ * Please visit www.cloudgarden.com for details. Use of Jigloo implies
+ * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
+ * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
+ * ANY CORPORATE OR COMMERCIAL PURPOSE.
+ */
 @SuppressWarnings("serial")
-public class WaitingRoomUI extends javax.swing.JFrame{
-	private String username;
-	private List<String> users;
+public class WaitingRoomUI extends javax.swing.JFrame {
+
+	private static final int userNameLabelWidth = 80;
+	private static final int userNameLabelHeight = 45;
+	private static final int userIconLabelWidth = 45;
+	private static final int userIconLabelHeight = 45;
+	private static final int margin = 5;
+	private List<User> users;
+
+	private JPanel jPanel1;
+	private JPanel pnlButtons;
+	private User user;
+
+	private JScrollPane scrollPnlUsers;
+	private JPanel pnlUsers;
 	private JLabel lblAvatar;
 	private JPanel pnlBackground;
-	private JButton btnProfile;
-	private JTextArea txtChatUsers;
-	private JScrollPane pnlChatUsers;
+	private JLabel btnProfile;
 	private JButton btnJoinGame;
 	private JButton btnSend;
 	private JButton btnCreateGame;
 	private JButton btnExit;
 	private JTextField txtMessage;
 	private JScrollPane pnlChat;
-	private JTextArea txtChat;
+	private JTextPane txtChat;
+	private HTMLEditorKit htmlEditor;
+	private HTMLDocument chatText;
 
 	{
 		// Set Look & Feel
@@ -65,26 +86,30 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 		}
 	}
 
-	public WaitingRoomUI() {
+	public WaitingRoomUI(User user, List<User> users) {
 		super();
 		initGUI();
-	}
-
-	public WaitingRoomUI(String username, List<String> users){
-		super();
-		initGUI();
-		this.username= username;
+		this.user = user;
 		this.users = users;
+		if (user.getAvatar().length == 0) {
+			lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/1.jpg")));
+		} else {
+			lblAvatar.setIcon(new ImageIcon(user.getAvatar()));
+		}
+
 		refreshUsersList();
 	}
-	
+
 	private void initGUI() {
-		setSize(new Dimension(700, 500));
-		setBounds(new Rectangle(0, 0, 700, 500));
-		getContentPane().setLayout(null);
-		getContentPane().add(getPnlBackground());
+		this.setSize(734, 527);
+		this.setBounds(0, 0, 734, 527);
+		getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
 		setLocationRelativeTo(null);
 		setVisible(true);
+		BorderLayout thisLayout = new BorderLayout();
+		getContentPane().setLayout(thisLayout);
+		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
 				thisWindowClosing(evt);
@@ -98,14 +123,12 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 			pnlBackground.setBounds(0, 0, 684, 462);
 			pnlBackground.setLayout(null);
 			pnlBackground.add(getBtnSend());
-			pnlBackground.add(getBtnCreateGame());
 			pnlBackground.add(getBtnExit());
 			pnlBackground.add(getTxtMessage());
 			pnlBackground.add(getPnlChat());
-			pnlBackground.add(getBtnJoinGame());
-			pnlBackground.add(getPnlChatUsers());
-			pnlBackground.add(getBtnProfile());
 			pnlBackground.add(getLblAvatar());
+			pnlBackground.add(getScrollPnlUsers());
+			pnlBackground.add(getPnlButtons());
 		}
 		return pnlBackground;
 	}
@@ -113,7 +136,8 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 	private JButton getBtnSend() {
 		if (btnSend == null) {
 			btnSend = new JButton("Send");
-			btnSend.setBounds(413, 413, 64, 23);
+			btnSend.setBounds(413, 447, 64, 23);
+			btnSend.setFocusable(false);
 			btnSend.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnSendMouseClicked(evt);
@@ -126,7 +150,8 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 	private JButton getBtnCreateGame() {
 		if (btnCreateGame == null) {
 			btnCreateGame = new JButton("Create game");
-			btnCreateGame.setBounds(180, 25, 66, 53);
+			btnCreateGame.setBounds(11, 6, 66, 53);
+			btnCreateGame.setFocusable(false);
 			btnCreateGame.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -140,7 +165,8 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 	private JButton getBtnExit() {
 		if (btnExit == null) {
 			btnExit = new JButton("Exit");
-			btnExit.setBounds(585, 413, 89, 23);
+			btnExit.setBounds(610, 447, 89, 23);
+			btnExit.setFocusable(false);
 			btnExit.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -154,8 +180,7 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 	private JTextField getTxtMessage() {
 		if (txtMessage == null) {
 			txtMessage = new JTextField();
-			txtMessage.setBounds(23, 414, 380, 20);
-			txtMessage.setColumns(10);
+			txtMessage.setBounds(23, 450, 380, 20);
 			txtMessage.addKeyListener(new KeyAdapter() {
 				public void keyPressed(KeyEvent evt) {
 					txtMessageKeyPressed(evt);
@@ -169,48 +194,113 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 		if (pnlChat == null) {
 			pnlChat = new JScrollPane();
 			pnlChat.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			pnlChat.setBounds(23, 115, 454, 288);
+			pnlChat.setBounds(24, 146, 451, 289);
+			pnlChat.setAutoscrolls(true);
 			pnlChat.setViewportView(getTxtChat());
 		}
 		return pnlChat;
 	}
 
-	private JTextArea getTxtChat() {
+	private JTextPane getTxtChat() {
 		if (txtChat == null) {
-			txtChat = new JTextArea();
+			txtChat = new JTextPane();
 			txtChat.setInheritsPopupMenu(true);
-			txtChat.setLineWrap(true);
 			txtChat.setBounds(500, 54, 147, 291);
+			txtChat.setEditable(false);
+			txtChat.setContentType("text/html");
+			htmlEditor = new HTMLEditorKit();
+			chatText = new HTMLDocument();
+			txtChat.setEditorKit(htmlEditor);
+			txtChat.setDocument(chatText);
 		}
 		return txtChat;
 	}
-	
+
 	private JButton getBtnJoinGame() {
-		if(btnJoinGame == null) {
+		if (btnJoinGame == null) {
 			btnJoinGame = new JButton();
 			btnJoinGame.setText("Join game");
-			btnJoinGame.setBounds(334, 44, 87, 23);
+			btnJoinGame.setBounds(103, 12, 87, 23);
+			btnJoinGame.setFocusable(false);
+			btnJoinGame.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					btnJoinGameMouseClicked(evt);
+				}
+			});
 		}
 		return btnJoinGame;
 	}
-	
-	private JScrollPane getPnlChatUsers() {
-		if(pnlChatUsers == null) {
-			pnlChatUsers = new JScrollPane();
-			pnlChatUsers.setBounds(552, 115, 122, 287);
-			pnlChatUsers.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-			pnlChatUsers.setViewportView(getTxtChatUsers());
+
+	private JLabel getBtnProfile() {
+		if (btnProfile == null) {
+			btnProfile = new JLabel();
+			btnProfile.setBounds(358, 6, 60, 60);
+			btnProfile.setFocusable(false);
+			btnProfile.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/profile_icon.png")));
+			btnProfile.setBorder(BorderFactory
+					.createBevelBorder(BevelBorder.RAISED));
+			btnProfile.addMouseListener(new MouseAdapter() {
+				public void mouseReleased(MouseEvent evt) {
+					btnProfileMouseReleased(evt);
+				}
+
+				public void mousePressed(MouseEvent evt) {
+					btnProfileMousePressed(evt);
+				}
+
+				public void mouseClicked(MouseEvent evt) {
+					btnProfileMouseClicked(evt);
+				}
+			});
 		}
-		return pnlChatUsers;
+		return btnProfile;
 	}
-	
-	private JTextArea getTxtChatUsers() {
-		if(txtChatUsers == null) {
-			txtChatUsers = new JTextArea();
-			txtChatUsers.setPreferredSize(new java.awt.Dimension(117, 285));
-			txtChatUsers.setEditable(false);
+
+	private JLabel getLblAvatar() {
+		if (lblAvatar == null) {
+			lblAvatar = new JLabel();
+			lblAvatar.setBounds(23, 15, 82, 89);
+			lblAvatar.setBorder(BorderFactory
+					.createBevelBorder(BevelBorder.LOWERED));
+			lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/2.jpg")));
+			lblAvatar.setSize(100, 120);
 		}
-		return txtChatUsers;
+		return lblAvatar;
+	}
+
+	private JScrollPane getScrollPnlUsers() {
+		if (scrollPnlUsers == null) {
+			scrollPnlUsers = new JScrollPane();
+			scrollPnlUsers.setBounds(546, 146, 150, 289);
+			scrollPnlUsers
+					.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			scrollPnlUsers.setViewportView(getPnlUsers());
+		}
+		return scrollPnlUsers;
+	}
+
+	private JPanel getPnlUsers() {
+		if (pnlUsers == null) {
+			pnlUsers = new JPanel();
+			pnlUsers.setLayout(null);
+		}
+		return pnlUsers;
+	}
+
+	private void btnProfileMouseClicked(MouseEvent evt) {
+		Controller.getInstance().showProfile();
+	}
+
+	private void thisWindowClosing(WindowEvent evt) {
+		int option = JOptionPane.showConfirmDialog(this,
+				"Are you sure you want to exit?", "Are you sure?",
+				JOptionPane.YES_NO_OPTION);
+		if (option == JOptionPane.YES_OPTION) {
+			Controller.getInstance().logoutUser();
+			dispose();
+		}
 	}
 
 	protected void btnCreateGameMouseClicked(MouseEvent evt) {
@@ -227,82 +317,222 @@ public class WaitingRoomUI extends javax.swing.JFrame{
 		}
 	}
 
-	
-	private void btnSendMouseClicked(MouseEvent evt) {
-		String message = txtMessage.getText();
-		Controller.getInstance().sendGeneralMessage(message);
-		txtChat.setText(txtChat.getText()+username+": "+txtMessage.getText()+"\n");
-		txtMessage.setText(null);
+	private void txtMessageKeyPressed(KeyEvent evt) {
+		if (evt.getKeyCode() == 10 && txtMessage.getText().length() > 0)
+			sendMessage();
+
 	}
-	
-	private JButton getBtnProfile() {
-		if(btnProfile == null) {
-			btnProfile = new JButton();
-			btnProfile.setText("Profile");
-			btnProfile.setBounds(585, 29, 68, 53);
-			btnProfile.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					btnProfileMouseClicked(evt);
-				}
-			});
+
+	private void btnSendMouseClicked(MouseEvent evt) {
+		sendMessage();
+	}
+
+	private void btnJoinGameMouseClicked(MouseEvent evt) {
+		Controller.getInstance().joinGame();
+	}
+
+	public void receivePrivateMessage(String sender, String message) {
+		try {
+			htmlEditor.insertHTML(chatText, chatText.getLength(),
+					"<font color=\"red\"><b> &lt;" + sender + ":</b>" + message
+							+ "</font>", 0, 0, null);
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		return btnProfile;
+
 	}
 
 	public void receiveMessage(String sender, String message) {
-		txtChat.setText(txtChat.getText()+sender+": "+message+"\n");
+		try {
+			htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
+					+ sender + ":</b> " + message, 0, 0, null);
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public void userLogged(String user) {
+	public void userLogged(User user) {
 		users.add(user);
-		txtChat.setText(txtChat.getText()+user+" has joined\n");
-		refreshUsersList();
-	}
-	
-	public void userLeave(String user){
-		users.remove(user);
-		txtChat.setText(txtChat.getText()+user+" has left\n");
-		refreshUsersList();
-	}
-	
-	private void btnProfileMouseClicked(MouseEvent evt) {
-		Controller.getInstance().showProfile();
-	}
-	
-	private void thisWindowClosing(WindowEvent evt) {
-		int option = JOptionPane.showConfirmDialog(this,
-				"Are you sure you want to exit?", "Are you sure?",
-				JOptionPane.YES_NO_OPTION);
-		if (option == JOptionPane.YES_OPTION) {
-			Controller.getInstance().logoutUser();
-			dispose();
+		try {
+			htmlEditor
+					.insertHTML(chatText, chatText.getLength(),
+							"<b>" + user.getUsername() + " has joined</b> ", 0,
+							0, null);
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		refreshUsersList();
 	}
-	
-	private void txtMessageKeyPressed(KeyEvent evt) {
-		if(evt.getKeyCode() == 10){
-			String message = txtMessage.getText();
+
+	public void userLeave(String user) {
+		for (int i = 0; i < user.length(); i++) {
+			if (user.equals(users.get(i).getUsername())) {
+				users.remove(i);
+				break;
+			}
+		}
+		try {
+			htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>" + user
+					+ " has left</b> ", 0, 0, null);
+		} catch (BadLocationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		refreshUsersList();
+	}
+
+	private void refreshUsersList() {
+		int size = 0;
+		pnlUsers.removeAll();
+		for (int i = 0; i < users.size(); i++) {
+			JLabel userAvatarLabel = new JLabel();
+			if (users.get(i).getAvatar().length == 0) {
+				userAvatarLabel.setIcon(new ImageIcon(getClass()
+						.getClassLoader().getResource("images/1.jpg")));
+			} else {
+				ImageIcon image = new ImageIcon(users.get(i).getAvatar());
+				image = new ImageIcon(image.getImage().getScaledInstance(
+						userIconLabelWidth, userIconLabelHeight,
+						Image.SCALE_SMOOTH));
+				userAvatarLabel.setIcon(image);
+			}
+			userAvatarLabel.setBounds(5, margin + i * userNameLabelHeight + i
+					* margin, userIconLabelWidth, userIconLabelHeight);
+			pnlUsers.add(userAvatarLabel);
+			JLabel userNameLabel = new JLabel();
+			userNameLabel.setText(users.get(i).getUsername());
+			userNameLabel.setBounds(60, margin + i * userNameLabelHeight + i
+					* margin, userNameLabelWidth, userNameLabelHeight);
+			userNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+			userNameLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+			userNameLabel.setFont(new Font("Courier New", Font.BOLD, 15));
+			pnlUsers.add(userNameLabel);
+			size += margin + userNameLabelHeight;
+		}
+		size += margin;
+		pnlUsers.setPreferredSize(new Dimension(pnlUsers.getWidth(), size));
+		pnlUsers.setSize(pnlUsers.getWidth(), size);
+		pnlUsers.repaint();
+
+	}
+
+	private void sendMessage() {
+		String message = txtMessage.getText();
+		if (message.startsWith("\"")) {
+			String[] splitMessage = message.split(" ");
+			String destinatary = splitMessage[0].substring(1);
+			if (!destinatary.equalsIgnoreCase(user.getUsername())) {
+				String privateMessage = message.split(destinatary)[1];
+				try {
+					Controller.getInstance().sendPrivateMessage(
+							user.getUsername(), destinatary, privateMessage);
+					try {
+						htmlEditor.insertHTML(chatText, chatText.getLength(),
+								"<font color=\"red\"><b> >" + destinatary
+										+ ":</b>" + privateMessage + "</font>",
+								0, 0, null);
+					} catch (BadLocationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} catch (UserNotLoggedException e1) {
+					try {
+						htmlEditor.insertHTML(chatText, chatText.getLength(),
+								"<font color=\"gray\"><b>" + destinatary
+										+ " is offline</b></font>", 0, 0, null);
+					} catch (BadLocationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}else{
+				try {
+					htmlEditor.insertHTML(chatText, chatText.getLength(),
+							"<font color=\"gray\"><b>You can't send a message to yourself</b></font>", 0, 0, null);
+				} catch (BadLocationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		} else {
 			Controller.getInstance().sendGeneralMessage(message);
-			txtChat.setText(txtChat.getText()+username+": "+txtMessage.getText()+"\n");
-			txtMessage.setText(null);
+			try {
+				htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
+						+ user.getUsername() + ":</b> " + message, 0, 0, null);
+			} catch (BadLocationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		txtMessage.setText(null);
 	}
-	
-	private void refreshUsersList(){
-		String userList = "";
-		for(String user : users)
-			userList += user+"\n";
-		txtChatUsers.setText(userList);	
-	}
-	
-	private JLabel getLblAvatar() {
-		if(lblAvatar == null) {
-			lblAvatar = new JLabel();
-			lblAvatar.setBounds(23, 15, 82, 89);
-			lblAvatar.setBorder(BorderFactory.createBevelBorder(BevelBorder.LOWERED));
-			lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader().getResource("2.jpg")));
+
+	private JPanel getPnlButtons() {
+		if (pnlButtons == null) {
+			pnlButtons = new JPanel();
+			pnlButtons.setLayout(null);
+			pnlButtons.setBounds(156, 15, 540, 70);
+			pnlButtons.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
+			pnlButtons.add(getBtnCreateGame());
+			pnlButtons.add(getBtnJoinGame());
+			pnlButtons.add(getJPanel1());
 		}
-		return lblAvatar;
+		return pnlButtons;
+	}
+
+	private JPanel getJPanel1() {
+		if (jPanel1 == null) {
+			jPanel1 = new JPanel();
+			BorderLayout jPanel1Layout = new BorderLayout();
+			jPanel1.setLayout(jPanel1Layout);
+			jPanel1.setBounds(469, 5, 58, 60);
+			jPanel1.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
+			jPanel1.add(getBtnProfile());
+		}
+		return jPanel1;
+	}
+
+	private void btnProfileMousePressed(MouseEvent evt) {
+		btnProfile.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.LOWERED));
+	}
+
+	private void btnProfileMouseReleased(MouseEvent evt) {
+		btnProfile.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.RAISED));
+	}
+
+	public void setAvatar(byte[] avatar) {
+		lblAvatar.setIcon(new ImageIcon(avatar));
 	}
 
 }

@@ -24,7 +24,9 @@ public interface _ClientOperationsNC
 {
     void receiveGeneralMessage(String sender, String message);
 
-    void userLogged(String username);
+    void receivePrivateMessage(String sender, String message);
+
+    void userLogged(User loggedUser);
 
     void userLeave(String username);
 }

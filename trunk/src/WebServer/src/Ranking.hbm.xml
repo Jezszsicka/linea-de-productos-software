@@ -3,7 +3,7 @@
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 	<class name="ProductLine.Ranking" table="RANKINGS">
-		<id column="GAME" name="game">
+		<id column="game" name="game">
 			<type name="org.hibernate.type.EnumType">
 				<param name="enumClass">ProductLine.GameType</param>
 				<param name="type">12</param>

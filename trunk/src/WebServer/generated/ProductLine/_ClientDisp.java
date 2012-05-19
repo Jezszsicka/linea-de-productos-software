@@ -84,15 +84,21 @@ public abstract class _ClientDisp extends Ice.ObjectImpl implements Client
     }
 
     public final void
+    receivePrivateMessage(String sender, String message)
+    {
+        receivePrivateMessage(sender, message, null);
+    }
+
+    public final void
     userLeave(String username)
     {
         userLeave(username, null);
     }
 
     public final void
-    userLogged(String username)
+    userLogged(User loggedUser)
     {
-        userLogged(username, null);
+        userLogged(loggedUser, null);
     }
 
     public static Ice.DispatchStatus
@@ -111,15 +117,31 @@ public abstract class _ClientDisp extends Ice.ObjectImpl implements Client
     }
 
     public static Ice.DispatchStatus
+    ___receivePrivateMessage(Client __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.is();
+        __is.startReadEncaps();
+        String sender;
+        sender = __is.readString();
+        String message;
+        message = __is.readString();
+        __is.endReadEncaps();
+        __obj.receivePrivateMessage(sender, message, __current);
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
+    public static Ice.DispatchStatus
     ___userLogged(Client __obj, IceInternal.Incoming __inS, Ice.Current __current)
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
         __is.startReadEncaps();
-        String username;
-        username = __is.readString();
+        UserHolder loggedUser = new UserHolder();
+        __is.readObject(loggedUser);
+        __is.readPendingObjects();
         __is.endReadEncaps();
-        __obj.userLogged(username, __current);
+        __obj.userLogged(loggedUser.value, __current);
         return Ice.DispatchStatus.DispatchOK;
     }
 
@@ -143,6 +165,7 @@ public abstract class _ClientDisp extends Ice.ObjectImpl implements Client
         "ice_isA",
         "ice_ping",
         "receiveGeneralMessage",
+        "receivePrivateMessage",
         "userLeave",
         "userLogged"
     };
@@ -180,9 +203,13 @@ public abstract class _ClientDisp extends Ice.ObjectImpl implements Client
             }
             case 5:
             {
-                return ___userLeave(this, in, __current);
+                return ___receivePrivateMessage(this, in, __current);
             }
             case 6:
+            {
+                return ___userLeave(this, in, __current);
+            }
+            case 7:
             {
                 return ___userLogged(this, in, __current);
             }

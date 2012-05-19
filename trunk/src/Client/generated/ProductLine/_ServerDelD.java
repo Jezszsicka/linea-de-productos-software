@@ -22,13 +22,12 @@ package ProductLine;
 
 public final class _ServerDelD extends Ice._ObjectDelD implements _ServerDel
 {
-    public java.util.List<java.lang.String>
-    listUsers(java.util.Map<String, String> __ctx)
+    public void
+    changeAvatar(final String username, final byte[] avatar, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
         final Ice.Current __current = new Ice.Current();
-        __initCurrent(__current, "listUsers", Ice.OperationMode.Normal, __ctx);
-        final StringListHolder __result = new StringListHolder();
+        __initCurrent(__current, "changeAvatar", Ice.OperationMode.Normal, __ctx);
         IceInternal.Direct __direct = null;
         try
         {
@@ -45,7 +44,234 @@ public final class _ServerDelD extends Ice._ObjectDelD implements _ServerDel
                     {
                         throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
                     }
-                    __result.value = __servant.listUsers(__current);
+                    __servant.changeAvatar(username, avatar, __current);
+                    return Ice.DispatchStatus.DispatchOK;
+                }
+            };
+            try
+            {
+                Ice.DispatchStatus __status = __direct.servant().__collocDispatch(__direct);
+                if(__status == Ice.DispatchStatus.DispatchUserException)
+                {
+                    __direct.throwUserException();
+                }
+                assert __status == Ice.DispatchStatus.DispatchOK;
+            }
+            finally
+            {
+                __direct.destroy();
+            }
+        }
+        catch(Ice.SystemException __ex)
+        {
+            throw __ex;
+        }
+        catch(java.lang.Throwable __ex)
+        {
+            IceInternal.LocalExceptionWrapper.throwWrapper(__ex);
+        }
+    }
+
+    public void
+    changeEmail(final String username, final String email, final String password, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               InvalidLoggingException
+    {
+        final Ice.Current __current = new Ice.Current();
+        __initCurrent(__current, "changeEmail", Ice.OperationMode.Normal, __ctx);
+        IceInternal.Direct __direct = null;
+        try
+        {
+            __direct = new IceInternal.Direct(__current)
+            {
+                public Ice.DispatchStatus run(Ice.Object __obj)
+                {
+                    Server __servant = null;
+                    try
+                    {
+                        __servant = (Server)__obj;
+                    }
+                    catch(ClassCastException __ex)
+                    {
+                        throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
+                    }
+                    try
+                    {
+                        __servant.changeEmail(username, email, password, __current);
+                        return Ice.DispatchStatus.DispatchOK;
+                    }
+                    catch(Ice.UserException __ex)
+                    {
+                        setUserException(__ex);
+                        return Ice.DispatchStatus.DispatchUserException;
+                    }
+                }
+            };
+            try
+            {
+                Ice.DispatchStatus __status = __direct.servant().__collocDispatch(__direct);
+                if(__status == Ice.DispatchStatus.DispatchUserException)
+                {
+                    __direct.throwUserException();
+                }
+                assert __status == Ice.DispatchStatus.DispatchOK;
+            }
+            finally
+            {
+                __direct.destroy();
+            }
+        }
+        catch(InvalidLoggingException __ex)
+        {
+            throw __ex;
+        }
+        catch(Ice.SystemException __ex)
+        {
+            throw __ex;
+        }
+        catch(java.lang.Throwable __ex)
+        {
+            IceInternal.LocalExceptionWrapper.throwWrapper(__ex);
+        }
+    }
+
+    public void
+    changeName(final String username, final String name, final String lastname, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        final Ice.Current __current = new Ice.Current();
+        __initCurrent(__current, "changeName", Ice.OperationMode.Normal, __ctx);
+        IceInternal.Direct __direct = null;
+        try
+        {
+            __direct = new IceInternal.Direct(__current)
+            {
+                public Ice.DispatchStatus run(Ice.Object __obj)
+                {
+                    Server __servant = null;
+                    try
+                    {
+                        __servant = (Server)__obj;
+                    }
+                    catch(ClassCastException __ex)
+                    {
+                        throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
+                    }
+                    __servant.changeName(username, name, lastname, __current);
+                    return Ice.DispatchStatus.DispatchOK;
+                }
+            };
+            try
+            {
+                Ice.DispatchStatus __status = __direct.servant().__collocDispatch(__direct);
+                if(__status == Ice.DispatchStatus.DispatchUserException)
+                {
+                    __direct.throwUserException();
+                }
+                assert __status == Ice.DispatchStatus.DispatchOK;
+            }
+            finally
+            {
+                __direct.destroy();
+            }
+        }
+        catch(Ice.SystemException __ex)
+        {
+            throw __ex;
+        }
+        catch(java.lang.Throwable __ex)
+        {
+            IceInternal.LocalExceptionWrapper.throwWrapper(__ex);
+        }
+    }
+
+    public void
+    changePassword(final String username, final String password, final String newPassword, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               InvalidLoggingException
+    {
+        final Ice.Current __current = new Ice.Current();
+        __initCurrent(__current, "changePassword", Ice.OperationMode.Normal, __ctx);
+        IceInternal.Direct __direct = null;
+        try
+        {
+            __direct = new IceInternal.Direct(__current)
+            {
+                public Ice.DispatchStatus run(Ice.Object __obj)
+                {
+                    Server __servant = null;
+                    try
+                    {
+                        __servant = (Server)__obj;
+                    }
+                    catch(ClassCastException __ex)
+                    {
+                        throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
+                    }
+                    try
+                    {
+                        __servant.changePassword(username, password, newPassword, __current);
+                        return Ice.DispatchStatus.DispatchOK;
+                    }
+                    catch(Ice.UserException __ex)
+                    {
+                        setUserException(__ex);
+                        return Ice.DispatchStatus.DispatchUserException;
+                    }
+                }
+            };
+            try
+            {
+                Ice.DispatchStatus __status = __direct.servant().__collocDispatch(__direct);
+                if(__status == Ice.DispatchStatus.DispatchUserException)
+                {
+                    __direct.throwUserException();
+                }
+                assert __status == Ice.DispatchStatus.DispatchOK;
+            }
+            finally
+            {
+                __direct.destroy();
+            }
+        }
+        catch(InvalidLoggingException __ex)
+        {
+            throw __ex;
+        }
+        catch(Ice.SystemException __ex)
+        {
+            throw __ex;
+        }
+        catch(java.lang.Throwable __ex)
+        {
+            IceInternal.LocalExceptionWrapper.throwWrapper(__ex);
+        }
+    }
+
+    public java.util.List<User>
+    listUsers(final String username, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        final Ice.Current __current = new Ice.Current();
+        __initCurrent(__current, "listUsers", Ice.OperationMode.Normal, __ctx);
+        final UserListHolder __result = new UserListHolder();
+        IceInternal.Direct __direct = null;
+        try
+        {
+            __direct = new IceInternal.Direct(__current)
+            {
+                public Ice.DispatchStatus run(Ice.Object __obj)
+                {
+                    Server __servant = null;
+                    try
+                    {
+                        __servant = (Server)__obj;
+                    }
+                    catch(ClassCastException __ex)
+                    {
+                        throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
+                    }
+                    __result.value = __servant.listUsers(username, __current);
                     return Ice.DispatchStatus.DispatchOK;
                 }
             };
@@ -210,7 +436,7 @@ public final class _ServerDelD extends Ice._ObjectDelD implements _ServerDel
     }
 
     public void
-    registerUser(final String username, final String password, final String email, java.util.Map<String, String> __ctx)
+    registerUser(final User newUser, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper,
                UserAlreadyExistsException
     {
@@ -234,7 +460,7 @@ public final class _ServerDelD extends Ice._ObjectDelD implements _ServerDel
                     }
                     try
                     {
-                        __servant.registerUser(username, password, email, __current);
+                        __servant.registerUser(newUser, __current);
                         return Ice.DispatchStatus.DispatchOK;
                     }
                     catch(Ice.UserException __ex)
@@ -424,7 +650,8 @@ public final class _ServerDelD extends Ice._ObjectDelD implements _ServerDel
 
     public void
     sendPrivateMessage(final String sender, final String destinatary, final String message, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               UserNotLoggedException
     {
         final Ice.Current __current = new Ice.Current();
         __initCurrent(__current, "sendPrivateMessage", Ice.OperationMode.Normal, __ctx);
@@ -444,8 +671,16 @@ public final class _ServerDelD extends Ice._ObjectDelD implements _ServerDel
                     {
                         throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
                     }
-                    __servant.sendPrivateMessage(sender, destinatary, message, __current);
-                    return Ice.DispatchStatus.DispatchOK;
+                    try
+                    {
+                        __servant.sendPrivateMessage(sender, destinatary, message, __current);
+                        return Ice.DispatchStatus.DispatchOK;
+                    }
+                    catch(Ice.UserException __ex)
+                    {
+                        setUserException(__ex);
+                        return Ice.DispatchStatus.DispatchUserException;
+                    }
                 }
             };
             try
@@ -461,6 +696,10 @@ public final class _ServerDelD extends Ice._ObjectDelD implements _ServerDel
             {
                 __direct.destroy();
             }
+        }
+        catch(UserNotLoggedException __ex)
+        {
+            throw __ex;
         }
         catch(Ice.SystemException __ex)
         {

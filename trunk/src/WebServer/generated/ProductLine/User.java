@@ -26,15 +26,16 @@ public class User extends Ice.ObjectImpl
     {
     }
 
-    public User(String username, String password, String email, RoleType role, String name, String lastName, String secondLastName, java.util.List<java.lang.String> friends, java.util.List<Ranking> rankings)
+    public User(String username, String name, String lastName, String password, String email, RoleType role, int country, byte[] avatar, java.util.List<java.lang.String> friends, java.util.List<Ranking> rankings)
     {
         this.username = username;
+        this.name = name;
+        this.lastName = lastName;
         this.password = password;
         this.email = email;
         this.role = role;
-        this.name = name;
-        this.lastName = lastName;
-        this.secondLastName = secondLastName;
+        this.country = country;
+        this.avatar = avatar;
         this.friends = friends;
         this.rankings = rankings;
     }
@@ -115,12 +116,13 @@ public class User extends Ice.ObjectImpl
         __os.writeTypeId(ice_staticId());
         __os.startWriteSlice();
         __os.writeString(username);
+        __os.writeString(name);
+        __os.writeString(lastName);
         __os.writeString(password);
         __os.writeString(email);
         role.__write(__os);
-        __os.writeString(name);
-        __os.writeString(lastName);
-        __os.writeString(secondLastName);
+        __os.writeInt(country);
+        ImageHelper.write(__os, avatar);
         StringListHelper.write(__os, friends);
         RankingListHelper.write(__os, rankings);
         __os.endWriteSlice();
@@ -136,12 +138,13 @@ public class User extends Ice.ObjectImpl
         }
         __is.startReadSlice();
         username = __is.readString();
+        name = __is.readString();
+        lastName = __is.readString();
         password = __is.readString();
         email = __is.readString();
         role = RoleType.__read(__is);
-        name = __is.readString();
-        lastName = __is.readString();
-        secondLastName = __is.readString();
+        country = __is.readInt();
+        avatar = ImageHelper.read(__is);
         friends = StringListHelper.read(__is);
         rankings = RankingListHelper.read(__is);
         __is.endReadSlice();
@@ -176,6 +179,34 @@ public class User extends Ice.ObjectImpl
     setUsername(String _username)
     {
         username = _username;
+    }
+
+    protected String name;
+
+    public String
+    getName()
+    {
+        return name;
+    }
+
+    public void
+    setName(String _name)
+    {
+        name = _name;
+    }
+
+    protected String lastName;
+
+    public String
+    getLastName()
+    {
+        return lastName;
+    }
+
+    public void
+    setLastName(String _lastName)
+    {
+        lastName = _lastName;
     }
 
     protected String password;
@@ -220,46 +251,44 @@ public class User extends Ice.ObjectImpl
         role = _role;
     }
 
-    protected String name;
+    protected int country;
 
-    public String
-    getName()
+    public int
+    getCountry()
     {
-        return name;
+        return country;
     }
 
     public void
-    setName(String _name)
+    setCountry(int _country)
     {
-        name = _name;
+        country = _country;
     }
 
-    protected String lastName;
+    protected byte[] avatar;
 
-    public String
-    getLastName()
+    public byte[]
+    getAvatar()
     {
-        return lastName;
-    }
-
-    public void
-    setLastName(String _lastName)
-    {
-        lastName = _lastName;
-    }
-
-    protected String secondLastName;
-
-    public String
-    getSecondLastName()
-    {
-        return secondLastName;
+        return avatar;
     }
 
     public void
-    setSecondLastName(String _secondLastName)
+    setAvatar(byte[] _avatar)
     {
-        secondLastName = _secondLastName;
+        avatar = _avatar;
+    }
+
+    public byte
+    getAvatar(int _index)
+    {
+        return avatar[_index];
+    }
+
+    public void
+    setAvatar(int _index, byte _val)
+    {
+        avatar[_index] = _val;
     }
 
     protected java.util.List<java.lang.String> friends;

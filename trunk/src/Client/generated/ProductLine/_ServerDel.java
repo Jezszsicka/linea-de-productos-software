@@ -22,7 +22,7 @@ package ProductLine;
 
 public interface _ServerDel extends Ice._ObjectDel
 {
-    void registerUser(String username, String password, String email, java.util.Map<String, String> __ctx)
+    void registerUser(User newUser, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper,
                UserAlreadyExistsException;
 
@@ -35,10 +35,21 @@ public interface _ServerDel extends Ice._ObjectDel
         throws IceInternal.LocalExceptionWrapper,
                UserNotLoggedException;
 
-    java.util.List<java.lang.String> listUsers(java.util.Map<String, String> __ctx)
+    void changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
 
-    void sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx)
+    void changePassword(String username, String password, String newPassword, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               InvalidLoggingException;
+
+    void changeEmail(String username, String email, String password, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               InvalidLoggingException;
+
+    void changeAvatar(String username, byte[] avatar, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper;
+
+    java.util.List<User> listUsers(String username, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
 
     void sendGameMessage(String game, String sender, String message, java.util.Map<String, String> __ctx)
@@ -46,6 +57,10 @@ public interface _ServerDel extends Ice._ObjectDel
 
     void sendGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
+
+    void sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               UserNotLoggedException;
 
     void saveProfile(User profile, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;

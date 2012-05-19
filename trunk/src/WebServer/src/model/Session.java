@@ -1,31 +1,32 @@
 package model;
 
 import ProductLine.ClientPrx;
+import ProductLine.User;
 
 
 
 public class Session {
 
-	private String username;
+	private User user;
 	private ClientPrx callback;
 
-	public Session(String username, ClientPrx callback) {
-		this.username = username;
+	public Session(User user, ClientPrx callback) {
+		this.user = user;
 		this.callback = callback;
 	}
 
 	/**
-	 * @return the username
+	 * @return the user
 	 */
-	public String getUsername() {
-		return username;
+	public User getUser() {
+		return user;
 	}
 
 	/**
-	 * @param username the username to set
+	 * @param user the user to set
 	 */
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUsername(User user) {
+		this.user = user;
 	}
 
 	/**
@@ -44,29 +45,29 @@ public class Session {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (!(obj instanceof Session)) {
 			return false;
+		}
 		Session other = (Session) obj;
-		if (username == null) {
-			if (other.username != null)
+		if (user == null) {
+			if (other.user != null) {
 				return false;
-		} else if (!username.equals(other.username))
+			}
+		} else if (!user.getUsername().equals(other.user.getUsername())) {
 			return false;
+		}
 		return true;
 	}
-	
-	
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return "Session [username=" + username + "]";
+		return "Session [user=" + user + ", callback=" + callback + "]";
 	}
 
 	public void checkConnection() {

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-    <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
-                                       "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 	<class name="ProductLine.User" table="USER">
 		<id name="username" type="java.lang.String">
@@ -30,17 +30,18 @@
 			type="java.lang.String">
 			<column name="LASTNAME" />
 		</property>
-		<property generated="never" lazy="false" name="secondLastName"
-			type="java.lang.String">
-			<column name="SECONDLASTNAME" />
+		<property generated="never" lazy="false" name="country" type="integer">
+			<column name="COUNTRY" />
 		</property>
-		<bag name="friends" table="friends" order-by="friendName asc">
+		<property generated="never" lazy="false" name="avatar" type="binary">
+			<column name="AVATAR" />
+		</property>
+		<bag name="friends" order-by="friendName asc" table="friends">
 			<key column="user" />
 			<element column="friendName" type="java.lang.String" />
 		</bag>
-		<bag name="rankings">
-			<key column="user" />
-			<one-to-many class="ProductLine.Ranking" />
-		</bag>
+
+		<!--<bag name="rankings"> <key column="user" /> <one-to-many class="ProductLine.Ranking" 
+			/> </bag> -->
 	</class>
 </hibernate-mapping>

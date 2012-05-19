@@ -20,6 +20,7 @@ public class UsersController {
 
 	private static UsersController controller;
 	private List<Session> sessions;
+	private UserDAO userDAO;
 
 	public List<Session> getSessions() {
 		return sessions;
@@ -27,6 +28,7 @@ public class UsersController {
 
 	private UsersController() {
 		sessions = new ArrayList<Session>();
+		userDAO = UserDAO.getDAO();
 	}
 
 	public static UsersController getInstance() {
@@ -45,23 +47,17 @@ public class UsersController {
 	 * @param email
 	 *            Email of the user
 	 * **/
-	public void registerUser(String username, String password, String email)
-			throws UserAlreadyExistsException {
+	public void registerUser(User user) throws UserAlreadyExistsException {
 		try {
-			UserDAO userDAO = UserDAO.getDAO();
-			User user = userDAO.loadByID(username);
-			if(user == null){
-				user = new User();
-				user.setUsername(username);
-				user.setPassword(password);
-				user.setEmail(email);
-				UserDAO.getDAO().create(user);
-			}else{
+			User loadedUser = userDAO.loadByID(user.getUsername());
+			if (loadedUser == null) {
+				userDAO.create(user);
+			} else {
 				throw new UserAlreadyExistsException();
 			}
-			
+
 		} catch (HibernateException e) {
-			System.out.println("Error en al base de datos al registrar");
+			e.printStackTrace();
 		}
 	}
 
@@ -75,46 +71,36 @@ public class UsersController {
 	 * **/
 	public User loginUser(String username, String password, ClientPrx callback)
 			throws UserAlreadyLoggedException, InvalidLoggingException {
-		
-		String hashMD5 = Utils.hashMD5(password);
-		UserDAO userDAO = UserDAO.getDAO();
-		User user = userDAO.checkLogin(username,hashMD5);
-		
 
+		User user = userDAO.checkLogin(username, password);
 		// User found
 		if (user != null) {
-				// Checking password
-				hashMD5 = Utils.hashMD5(password);
-				if (!user.getPassword().equals(hashMD5)) { // Incorrect password
-					throw new InvalidLoggingException("Incorrect password");
-				} else { // Correct password
-					Session newSession = new Session(username, callback);
-					if (!sessions.contains(newSession)) {
-						for(Session session : sessions)
-							if(!session.getUsername().equals(username))
-								session.getCallback().userLogged(username);
-						sessions.add(newSession);
-					} else {
-						for (Session session : sessions) {
-							if (newSession.equals(session)) {
-								try {
-									session.checkConnection();
-									throw new UserAlreadyLoggedException(
-											"User Already logged");
-								} catch (Ice.ConnectionLostException e) {
-									sessions.remove(session);
-									sessions.add(newSession);
-								}
-							}
+			Session newSession = new Session(user, callback);
+			if (!sessions.contains(newSession)) {
+				for (Session session : sessions)
+					if (!session.getUser().getUsername()
+							.equalsIgnoreCase(username))
+						session.getCallback().userLogged(user);
+				sessions.add(newSession);
+			} else {
+				for (Session session : sessions) {
+					if (newSession.equals(session)) {
+						try {
+							session.checkConnection();
+							throw new UserAlreadyLoggedException(
+									"User Already logged");
+						} catch (Ice.ConnectionLostException e) {
+							sessions.remove(session);
+							sessions.add(newSession);
 						}
-
 					}
 				}
+
 			}
-		 else
+
+		} else
 			// User not found
-			throw new InvalidLoggingException("Incorrect username");
-		
+			throw new InvalidLoggingException("Incorrect username or password");
 		return user;
 	}
 
@@ -128,8 +114,8 @@ public class UsersController {
 		if (leaveSession == null)
 			throw new UserNotLoggedException("User not logged, session expired");
 		else {
-			for(Session session : sessions){
-				if(!session.getUsername().equals(username)){
+			for (Session session : sessions) {
+				if (!session.getUser().getUsername().equalsIgnoreCase(username)) {
 					session.getCallback().userLeave(username);
 				}
 			}
@@ -140,12 +126,12 @@ public class UsersController {
 	public void deleteUser(String username) {
 		User user = new User();
 		user.setUsername(username);
-		UserDAO.getDAO().delete(user);
+		userDAO.delete(user);
 	}
 
 	public Session searchSession(String username) {
 		for (Session session : sessions) {
-			if (session.getUsername().equals(username))
+			if (session.getUser().getUsername().equalsIgnoreCase(username))
 				return session;
 		}
 
@@ -153,21 +139,70 @@ public class UsersController {
 
 	}
 
-	public List<String> listUsers() {
-		List<String> users = new ArrayList<String>();
-		for(Session session : sessions){
-			users.add(session.getUsername());
+	public List<User> listUsers(String username) {
+		List<User> users = new ArrayList<User>();
+		for (Session session : sessions) {
+			if (!session.getUser().getUsername().equalsIgnoreCase(username))
+				users.add(userDAO.loadByID(session.getUser().getUsername()));
 		}
 		return users;
 	}
 
 	public void sendGeneralMessage(String sender, String message) {
-		for(Session session : sessions){
-			if(!session.getUsername().equals(sender)){
+		for (Session session : sessions) {
+			if (!session.getUser().getUsername().equalsIgnoreCase(sender)) {
 				session.getCallback().receiveGeneralMessage(sender, message);
 			}
 		}
-		
+
+	}
+
+	public void sendPrivateMessage(String sender, String destinatary,
+			String message) throws UserNotLoggedException {
+
+		Session session = searchSession(destinatary);
+		if (session != null) {
+			session.getCallback().receivePrivateMessage(sender, message);
+		} else {
+			throw new UserNotLoggedException();
+		}
+
+	}
+
+	public void saveProfile(ProductLine.User profile) {
+		userDAO.update(profile);
+	}
+
+	public void changeName(String username, String name, String lastname) {
+		User user = searchSession(username).getUser();
+		user.setName(name);
+		user.setLastName(lastname);
+		userDAO.update(user);
+
+	}
+
+	public void changeEmail(String username, String email, String password)
+			throws InvalidLoggingException {
+		User user = searchSession(username).getUser();
+		if (!user.getPassword().equals(password))
+			throw new InvalidLoggingException("Incorrect password");
+		user.setEmail(email);
+		userDAO.update(user);
+	}
+
+	public void changePassword(String username, String password,
+			String newPassword) throws InvalidLoggingException {
+		User user = searchSession(username).getUser();
+		if (!user.getPassword().equals(password))
+			throw new InvalidLoggingException("Incorrect password");
+		user.setPassword(newPassword);
+		userDAO.update(user);
+	}
+
+	public void changeAvatar(String username, byte[] avatar) {
+		User user = searchSession(username).getUser();
+		user.setAvatar(avatar);
+		userDAO.update(user);
 	}
 
 }

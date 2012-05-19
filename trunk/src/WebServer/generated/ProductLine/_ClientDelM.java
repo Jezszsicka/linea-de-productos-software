@@ -70,6 +70,53 @@ public final class _ClientDelM extends Ice._ObjectDelM implements _ClientDel
     }
 
     public void
+    receivePrivateMessage(String sender, String message, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        IceInternal.Outgoing __og = __handler.getOutgoing("receivePrivateMessage", Ice.OperationMode.Normal, __ctx);
+        try
+        {
+            try
+            {
+                IceInternal.BasicStream __os = __og.os();
+                __os.writeString(sender);
+                __os.writeString(message);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __og.abort(__ex);
+            }
+            boolean __ok = __og.invoke();
+            if(!__og.is().isEmpty())
+            {
+                try
+                {
+                    if(!__ok)
+                    {
+                        try
+                        {
+                            __og.throwUserException();
+                        }
+                        catch(Ice.UserException __ex)
+                        {
+                            throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                        }
+                    }
+                    __og.is().skipEmptyEncaps();
+                }
+                catch(Ice.LocalException __ex)
+                {
+                    throw new IceInternal.LocalExceptionWrapper(__ex, false);
+                }
+            }
+        }
+        finally
+        {
+            __handler.reclaimOutgoing(__og);
+        }
+    }
+
+    public void
     userLeave(String username, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
@@ -116,7 +163,7 @@ public final class _ClientDelM extends Ice._ObjectDelM implements _ClientDel
     }
 
     public void
-    userLogged(String username, java.util.Map<String, String> __ctx)
+    userLogged(User loggedUser, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
         IceInternal.Outgoing __og = __handler.getOutgoing("userLogged", Ice.OperationMode.Normal, __ctx);
@@ -125,7 +172,8 @@ public final class _ClientDelM extends Ice._ObjectDelM implements _ClientDel
             try
             {
                 IceInternal.BasicStream __os = __og.os();
-                __os.writeString(username);
+                __os.writeObject(loggedUser);
+                __os.writePendingObjects();
             }
             catch(Ice.LocalException __ex)
             {

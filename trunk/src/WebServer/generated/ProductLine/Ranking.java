@@ -26,11 +26,11 @@ public class Ranking extends Ice.ObjectImpl
     {
     }
 
-    public Ranking(GameType game, int wonGames, int lostGames)
+    public Ranking(int wonGames, int lostGames, GameType game)
     {
-        this.game = game;
         this.wonGames = wonGames;
         this.lostGames = lostGames;
+        this.game = game;
     }
 
     private static class __F implements Ice.ObjectFactory
@@ -108,9 +108,9 @@ public class Ranking extends Ice.ObjectImpl
     {
         __os.writeTypeId(ice_staticId());
         __os.startWriteSlice();
-        game.__write(__os);
         __os.writeInt(wonGames);
         __os.writeInt(lostGames);
+        game.__write(__os);
         __os.endWriteSlice();
         super.__write(__os);
     }
@@ -123,9 +123,9 @@ public class Ranking extends Ice.ObjectImpl
             __is.readTypeId();
         }
         __is.startReadSlice();
-        game = GameType.__read(__is);
         wonGames = __is.readInt();
         lostGames = __is.readInt();
+        game = GameType.__read(__is);
         __is.endReadSlice();
         super.__read(__is, true);
     }
@@ -144,20 +144,6 @@ public class Ranking extends Ice.ObjectImpl
         Ice.MarshalException ex = new Ice.MarshalException();
         ex.reason = "type ProductLine::Ranking was not generated with stream support";
         throw ex;
-    }
-
-    public GameType game;
-
-    public GameType
-    getGame()
-    {
-        return game;
-    }
-
-    public void
-    setGame(GameType _game)
-    {
-        game = _game;
     }
 
     public int wonGames;
@@ -186,5 +172,19 @@ public class Ranking extends Ice.ObjectImpl
     setLostGames(int _lostGames)
     {
         lostGames = _lostGames;
+    }
+
+    public GameType game;
+
+    public GameType
+    getGame()
+    {
+        return game;
+    }
+
+    public void
+    setGame(GameType _game)
+    {
+        game = _game;
     }
 }

@@ -22,23 +22,23 @@ package ProductLine;
 
 public interface ServerPrx extends Ice.ObjectPrx
 {
-    public void registerUser(String username, String password, String email)
+    public void registerUser(User newUser)
         throws UserAlreadyExistsException;
 
-    public void registerUser(String username, String password, String email, java.util.Map<String, String> __ctx)
+    public void registerUser(User newUser, java.util.Map<String, String> __ctx)
         throws UserAlreadyExistsException;
 
-    public Ice.AsyncResult begin_registerUser(String username, String password, String email);
+    public Ice.AsyncResult begin_registerUser(User newUser);
 
-    public Ice.AsyncResult begin_registerUser(String username, String password, String email, java.util.Map<String, String> __ctx);
+    public Ice.AsyncResult begin_registerUser(User newUser, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_registerUser(String username, String password, String email, Ice.Callback __cb);
+    public Ice.AsyncResult begin_registerUser(User newUser, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_registerUser(String username, String password, String email, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+    public Ice.AsyncResult begin_registerUser(User newUser, java.util.Map<String, String> __ctx, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_registerUser(String username, String password, String email, Callback_Server_registerUser __cb);
+    public Ice.AsyncResult begin_registerUser(User newUser, Callback_Server_registerUser __cb);
 
-    public Ice.AsyncResult begin_registerUser(String username, String password, String email, java.util.Map<String, String> __ctx, Callback_Server_registerUser __cb);
+    public Ice.AsyncResult begin_registerUser(User newUser, java.util.Map<String, String> __ctx, Callback_Server_registerUser __cb);
 
     public void end_registerUser(Ice.AsyncResult __result)
         throws UserAlreadyExistsException;
@@ -88,41 +88,101 @@ public interface ServerPrx extends Ice.ObjectPrx
     public void end_logoutUser(Ice.AsyncResult __result)
         throws UserNotLoggedException;
 
-    public java.util.List<java.lang.String> listUsers();
+    public void changeName(String username, String name, String lastname);
 
-    public java.util.List<java.lang.String> listUsers(java.util.Map<String, String> __ctx);
+    public void changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_listUsers();
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname);
 
-    public Ice.AsyncResult begin_listUsers(java.util.Map<String, String> __ctx);
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_listUsers(Ice.Callback __cb);
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_listUsers(java.util.Map<String, String> __ctx, Ice.Callback __cb);
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_listUsers(Callback_Server_listUsers __cb);
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, Callback_Server_changeName __cb);
 
-    public Ice.AsyncResult begin_listUsers(java.util.Map<String, String> __ctx, Callback_Server_listUsers __cb);
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx, Callback_Server_changeName __cb);
 
-    public java.util.List<java.lang.String> end_listUsers(Ice.AsyncResult __result);
+    public void end_changeName(Ice.AsyncResult __result);
 
-    public void sendPrivateMessage(String sender, String destinatary, String message);
+    public void changePassword(String username, String password, String newPassword)
+        throws InvalidLoggingException;
 
-    public void sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx);
+    public void changePassword(String username, String password, String newPassword, java.util.Map<String, String> __ctx)
+        throws InvalidLoggingException;
 
-    public Ice.AsyncResult begin_sendPrivateMessage(String sender, String destinatary, String message);
+    public Ice.AsyncResult begin_changePassword(String username, String password, String newPassword);
 
-    public Ice.AsyncResult begin_sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx);
+    public Ice.AsyncResult begin_changePassword(String username, String password, String newPassword, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_sendPrivateMessage(String sender, String destinatary, String message, Ice.Callback __cb);
+    public Ice.AsyncResult begin_changePassword(String username, String password, String newPassword, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+    public Ice.AsyncResult begin_changePassword(String username, String password, String newPassword, java.util.Map<String, String> __ctx, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_sendPrivateMessage(String sender, String destinatary, String message, Callback_Server_sendPrivateMessage __cb);
+    public Ice.AsyncResult begin_changePassword(String username, String password, String newPassword, Callback_Server_changePassword __cb);
 
-    public Ice.AsyncResult begin_sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx, Callback_Server_sendPrivateMessage __cb);
+    public Ice.AsyncResult begin_changePassword(String username, String password, String newPassword, java.util.Map<String, String> __ctx, Callback_Server_changePassword __cb);
 
-    public void end_sendPrivateMessage(Ice.AsyncResult __result);
+    public void end_changePassword(Ice.AsyncResult __result)
+        throws InvalidLoggingException;
+
+    public void changeEmail(String username, String email, String password)
+        throws InvalidLoggingException;
+
+    public void changeEmail(String username, String email, String password, java.util.Map<String, String> __ctx)
+        throws InvalidLoggingException;
+
+    public Ice.AsyncResult begin_changeEmail(String username, String email, String password);
+
+    public Ice.AsyncResult begin_changeEmail(String username, String email, String password, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_changeEmail(String username, String email, String password, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_changeEmail(String username, String email, String password, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_changeEmail(String username, String email, String password, Callback_Server_changeEmail __cb);
+
+    public Ice.AsyncResult begin_changeEmail(String username, String email, String password, java.util.Map<String, String> __ctx, Callback_Server_changeEmail __cb);
+
+    public void end_changeEmail(Ice.AsyncResult __result)
+        throws InvalidLoggingException;
+
+    public void changeAvatar(String username, byte[] avatar);
+
+    public void changeAvatar(String username, byte[] avatar, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_changeAvatar(String username, byte[] avatar);
+
+    public Ice.AsyncResult begin_changeAvatar(String username, byte[] avatar, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_changeAvatar(String username, byte[] avatar, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_changeAvatar(String username, byte[] avatar, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_changeAvatar(String username, byte[] avatar, Callback_Server_changeAvatar __cb);
+
+    public Ice.AsyncResult begin_changeAvatar(String username, byte[] avatar, java.util.Map<String, String> __ctx, Callback_Server_changeAvatar __cb);
+
+    public void end_changeAvatar(Ice.AsyncResult __result);
+
+    public java.util.List<User> listUsers(String username);
+
+    public java.util.List<User> listUsers(String username, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_listUsers(String username);
+
+    public Ice.AsyncResult begin_listUsers(String username, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_listUsers(String username, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_listUsers(String username, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_listUsers(String username, Callback_Server_listUsers __cb);
+
+    public Ice.AsyncResult begin_listUsers(String username, java.util.Map<String, String> __ctx, Callback_Server_listUsers __cb);
+
+    public java.util.List<User> end_listUsers(Ice.AsyncResult __result);
 
     public void sendGameMessage(String game, String sender, String message);
 
@@ -159,6 +219,27 @@ public interface ServerPrx extends Ice.ObjectPrx
     public Ice.AsyncResult begin_sendGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx, Callback_Server_sendGeneralMessage __cb);
 
     public void end_sendGeneralMessage(Ice.AsyncResult __result);
+
+    public void sendPrivateMessage(String sender, String destinatary, String message)
+        throws UserNotLoggedException;
+
+    public void sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx)
+        throws UserNotLoggedException;
+
+    public Ice.AsyncResult begin_sendPrivateMessage(String sender, String destinatary, String message);
+
+    public Ice.AsyncResult begin_sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_sendPrivateMessage(String sender, String destinatary, String message, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_sendPrivateMessage(String sender, String destinatary, String message, Callback_Server_sendPrivateMessage __cb);
+
+    public Ice.AsyncResult begin_sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx, Callback_Server_sendPrivateMessage __cb);
+
+    public void end_sendPrivateMessage(Ice.AsyncResult __result)
+        throws UserNotLoggedException;
 
     public void saveProfile(User profile);
 

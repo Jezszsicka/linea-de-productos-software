@@ -51,9 +51,10 @@ public abstract class DAO<PersistentObj extends Serializable, KeyType> {
 	public void update(PersistentObj obj) {
 		try {
 			begin();
-			session.update(obj);
+			session.merge(obj);
 			commit();
 		} catch (HibernateException e) {
+			e.printStackTrace();
 			rollback();
 		}
 	}

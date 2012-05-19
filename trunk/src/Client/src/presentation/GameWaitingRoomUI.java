@@ -50,7 +50,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			getContentPane().setLayout(null);
 			getContentPane().add(getPnlBackground(), "Center");
 			pack();
-			this.setSize(781, 456);
+			this.setSize(774, 456);
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
@@ -61,7 +61,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		if(pnlBackground == null) {
 			pnlBackground = new JPanel();
 			pnlBackground.setLayout(null);
-			pnlBackground.setBounds(0, 0, 765, 418);
+			pnlBackground.setBounds(0, 0, 758, 418);
 			pnlBackground.add(getBtnSend());
 			pnlBackground.add(getTxtMessage());
 			pnlBackground.add(getPnlChat());
@@ -91,7 +91,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JScrollPane getPnlChat() {
 		if(pnlChat == null) {
 			pnlChat = new JScrollPane();
-			pnlChat.setBounds(15, 141, 738, 195);
+			pnlChat.setBounds(15, 210, 730, 126);
 			pnlChat.setViewportView(getTxtChat());
 		}
 		return pnlChat;
@@ -111,7 +111,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 							new String[] { "Item One", "Item Two" });
 			lstPlayerType = new JComboBox();
 			lstPlayerType.setModel(lstPlayerTypeModel);
-			lstPlayerType.setBounds(135, 95, 91, 20);
+			lstPlayerType.setBounds(135, 26, 91, 20);
 		}
 		return lstPlayerType;
 	}
@@ -120,7 +120,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		if(lblPlayerName == null) {
 			lblPlayerName = new JLabel();
 			lblPlayerName.setText("Player name");
-			lblPlayerName.setBounds(15, 95, 72, 20);
+			lblPlayerName.setBounds(15, 26, 72, 20);
 		}
 		return lblPlayerName;
 	}
