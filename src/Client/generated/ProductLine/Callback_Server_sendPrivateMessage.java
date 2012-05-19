@@ -20,6 +20,28 @@
 
 package ProductLine;
 
-public abstract class Callback_Server_sendPrivateMessage extends Ice.OnewayCallback
+public abstract class Callback_Server_sendPrivateMessage extends Ice.TwowayCallback
 {
+    public abstract void response();
+    public abstract void exception(Ice.UserException __ex);
+
+    public final void __completed(Ice.AsyncResult __result)
+    {
+        ServerPrx __proxy = (ServerPrx)__result.getProxy();
+        try
+        {
+            __proxy.end_sendPrivateMessage(__result);
+        }
+        catch(Ice.UserException __ex)
+        {
+            exception(__ex);
+            return;
+        }
+        catch(Ice.LocalException __ex)
+        {
+            exception(__ex);
+            return;
+        }
+        response();
+    }
 }

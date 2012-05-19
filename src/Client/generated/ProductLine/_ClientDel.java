@@ -25,7 +25,10 @@ public interface _ClientDel extends Ice._ObjectDel
     void receiveGeneralMessage(String sender, String message, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
 
-    void userLogged(String username, java.util.Map<String, String> __ctx)
+    void receivePrivateMessage(String sender, String message, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper;
+
+    void userLogged(User loggedUser, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper;
 
     void userLeave(String username, java.util.Map<String, String> __ctx)

@@ -77,10 +77,36 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
         return __ids[1];
     }
 
-    public final java.util.List<java.lang.String>
-    listUsers()
+    public final void
+    changeAvatar(String username, byte[] avatar)
     {
-        return listUsers(null);
+        changeAvatar(username, avatar, null);
+    }
+
+    public final void
+    changeEmail(String username, String email, String password)
+        throws InvalidLoggingException
+    {
+        changeEmail(username, email, password, null);
+    }
+
+    public final void
+    changeName(String username, String name, String lastname)
+    {
+        changeName(username, name, lastname, null);
+    }
+
+    public final void
+    changePassword(String username, String password, String newPassword)
+        throws InvalidLoggingException
+    {
+        changePassword(username, password, newPassword, null);
+    }
+
+    public final java.util.List<User>
+    listUsers(String username)
+    {
+        return listUsers(username, null);
     }
 
     public final User
@@ -99,10 +125,10 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
     }
 
     public final void
-    registerUser(String username, String password, String email)
+    registerUser(User newUser)
         throws UserAlreadyExistsException
     {
-        registerUser(username, password, email, null);
+        registerUser(newUser, null);
     }
 
     public final void
@@ -125,6 +151,7 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
 
     public final void
     sendPrivateMessage(String sender, String destinatary, String message)
+        throws UserNotLoggedException
     {
         sendPrivateMessage(sender, destinatary, message, null);
     }
@@ -135,17 +162,14 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
         __is.startReadEncaps();
-        String username;
-        username = __is.readString();
-        String password;
-        password = __is.readString();
-        String email;
-        email = __is.readString();
+        UserHolder newUser = new UserHolder();
+        __is.readObject(newUser);
+        __is.readPendingObjects();
         __is.endReadEncaps();
         IceInternal.BasicStream __os = __inS.os();
         try
         {
-            __obj.registerUser(username, password, email, __current);
+            __obj.registerUser(newUser.value, __current);
             return Ice.DispatchStatus.DispatchOK;
         }
         catch(UserAlreadyExistsException ex)
@@ -212,30 +236,102 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
     }
 
     public static Ice.DispatchStatus
-    ___listUsers(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
-    {
-        __checkMode(Ice.OperationMode.Normal, __current.mode);
-        __inS.is().skipEmptyEncaps();
-        IceInternal.BasicStream __os = __inS.os();
-        java.util.List<java.lang.String> __ret = __obj.listUsers(__current);
-        StringListHelper.write(__os, __ret);
-        return Ice.DispatchStatus.DispatchOK;
-    }
-
-    public static Ice.DispatchStatus
-    ___sendPrivateMessage(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    ___changeName(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
         IceInternal.BasicStream __is = __inS.is();
         __is.startReadEncaps();
-        String sender;
-        sender = __is.readString();
-        String destinatary;
-        destinatary = __is.readString();
-        String message;
-        message = __is.readString();
+        String username;
+        username = __is.readString();
+        String name;
+        name = __is.readString();
+        String lastname;
+        lastname = __is.readString();
         __is.endReadEncaps();
-        __obj.sendPrivateMessage(sender, destinatary, message, __current);
+        __obj.changeName(username, name, lastname, __current);
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
+    public static Ice.DispatchStatus
+    ___changePassword(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.is();
+        __is.startReadEncaps();
+        String username;
+        username = __is.readString();
+        String password;
+        password = __is.readString();
+        String newPassword;
+        newPassword = __is.readString();
+        __is.endReadEncaps();
+        IceInternal.BasicStream __os = __inS.os();
+        try
+        {
+            __obj.changePassword(username, password, newPassword, __current);
+            return Ice.DispatchStatus.DispatchOK;
+        }
+        catch(InvalidLoggingException ex)
+        {
+            __os.writeUserException(ex);
+            return Ice.DispatchStatus.DispatchUserException;
+        }
+    }
+
+    public static Ice.DispatchStatus
+    ___changeEmail(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.is();
+        __is.startReadEncaps();
+        String username;
+        username = __is.readString();
+        String email;
+        email = __is.readString();
+        String password;
+        password = __is.readString();
+        __is.endReadEncaps();
+        IceInternal.BasicStream __os = __inS.os();
+        try
+        {
+            __obj.changeEmail(username, email, password, __current);
+            return Ice.DispatchStatus.DispatchOK;
+        }
+        catch(InvalidLoggingException ex)
+        {
+            __os.writeUserException(ex);
+            return Ice.DispatchStatus.DispatchUserException;
+        }
+    }
+
+    public static Ice.DispatchStatus
+    ___changeAvatar(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.is();
+        __is.startReadEncaps();
+        String username;
+        username = __is.readString();
+        byte[] avatar;
+        avatar = ImageHelper.read(__is);
+        __is.endReadEncaps();
+        __obj.changeAvatar(username, avatar, __current);
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
+    public static Ice.DispatchStatus
+    ___listUsers(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.is();
+        __is.startReadEncaps();
+        String username;
+        username = __is.readString();
+        __is.endReadEncaps();
+        IceInternal.BasicStream __os = __inS.os();
+        java.util.List<User> __ret = __obj.listUsers(username, __current);
+        UserListHelper.write(__os, __ret);
+        __os.writePendingObjects();
         return Ice.DispatchStatus.DispatchOK;
     }
 
@@ -272,6 +368,32 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
     }
 
     public static Ice.DispatchStatus
+    ___sendPrivateMessage(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.is();
+        __is.startReadEncaps();
+        String sender;
+        sender = __is.readString();
+        String destinatary;
+        destinatary = __is.readString();
+        String message;
+        message = __is.readString();
+        __is.endReadEncaps();
+        IceInternal.BasicStream __os = __inS.os();
+        try
+        {
+            __obj.sendPrivateMessage(sender, destinatary, message, __current);
+            return Ice.DispatchStatus.DispatchOK;
+        }
+        catch(UserNotLoggedException ex)
+        {
+            __os.writeUserException(ex);
+            return Ice.DispatchStatus.DispatchUserException;
+        }
+    }
+
+    public static Ice.DispatchStatus
     ___saveProfile(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
     {
         __checkMode(Ice.OperationMode.Normal, __current.mode);
@@ -287,6 +409,10 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
 
     private final static String[] __all =
     {
+        "changeAvatar",
+        "changeEmail",
+        "changeName",
+        "changePassword",
         "ice_id",
         "ice_ids",
         "ice_isA",
@@ -314,49 +440,65 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
         {
             case 0:
             {
-                return ___ice_id(this, in, __current);
+                return ___changeAvatar(this, in, __current);
             }
             case 1:
             {
-                return ___ice_ids(this, in, __current);
+                return ___changeEmail(this, in, __current);
             }
             case 2:
             {
-                return ___ice_isA(this, in, __current);
+                return ___changeName(this, in, __current);
             }
             case 3:
             {
-                return ___ice_ping(this, in, __current);
+                return ___changePassword(this, in, __current);
             }
             case 4:
             {
-                return ___listUsers(this, in, __current);
+                return ___ice_id(this, in, __current);
             }
             case 5:
             {
-                return ___loginUser(this, in, __current);
+                return ___ice_ids(this, in, __current);
             }
             case 6:
             {
-                return ___logoutUser(this, in, __current);
+                return ___ice_isA(this, in, __current);
             }
             case 7:
             {
-                return ___registerUser(this, in, __current);
+                return ___ice_ping(this, in, __current);
             }
             case 8:
             {
-                return ___saveProfile(this, in, __current);
+                return ___listUsers(this, in, __current);
             }
             case 9:
             {
-                return ___sendGameMessage(this, in, __current);
+                return ___loginUser(this, in, __current);
             }
             case 10:
             {
-                return ___sendGeneralMessage(this, in, __current);
+                return ___logoutUser(this, in, __current);
             }
             case 11:
+            {
+                return ___registerUser(this, in, __current);
+            }
+            case 12:
+            {
+                return ___saveProfile(this, in, __current);
+            }
+            case 13:
+            {
+                return ___sendGameMessage(this, in, __current);
+            }
+            case 14:
+            {
+                return ___sendGeneralMessage(this, in, __current);
+            }
+            case 15:
             {
                 return ___sendPrivateMessage(this, in, __current);
             }

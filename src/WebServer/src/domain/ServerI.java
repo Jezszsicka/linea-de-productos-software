@@ -17,9 +17,8 @@ public class ServerI extends _ServerDisp{
 
 
 	@Override
-	public synchronized void registerUser(String username, String password,
-			String email, Current __current) throws UserAlreadyExistsException {
-		UsersController.getInstance().registerUser(username, password, email);
+	public synchronized void registerUser(User user, Current __current) throws UserAlreadyExistsException {
+		UsersController.getInstance().registerUser(user);
 
 	}
 
@@ -40,8 +39,8 @@ public class ServerI extends _ServerDisp{
 
 	@Override
 	public synchronized void sendPrivateMessage(String sender, String destinatary,
-			String message, Current __current) {
-		
+			String message, Current __current) throws UserNotLoggedException {
+		UsersController.getInstance().sendPrivateMessage(sender,destinatary,message);
 		
 	}
 
@@ -61,8 +60,42 @@ public class ServerI extends _ServerDisp{
 	}
 
 	@Override
-	public List<String> listUsers(Current __current) {
-		return UsersController.getInstance().listUsers();
+	public List<User> listUsers(String username,Current __current) {
+		return UsersController.getInstance().listUsers(username);
+	}
+
+	@Override
+	public void saveProfile(User profile, Current __current) {
+		UsersController.getInstance().saveProfile(profile);
+		
+	}
+
+	@Override
+	public void changeName(String username, String name, String lastname,
+			Current __current) {
+		UsersController.getInstance().changeName(username,name,lastname);
+		
+	}
+
+	@Override
+	public void changeEmail(String username, String email, String password,
+			Current __current) throws InvalidLoggingException {
+		UsersController.getInstance().changeEmail(username,email,password);
+		
+	}
+
+	@Override
+	public void changePassword(String username, String password,
+			String newPassword, Current __current)
+			throws InvalidLoggingException {
+		UsersController.getInstance().changePassword(username,password,newPassword);
+		
+	}
+
+	@Override
+	public void changeAvatar(String username, byte[] avatar, Current __current) {
+		UsersController.getInstance().changeAvatar(username,avatar);
+		
 	}	
 
 }

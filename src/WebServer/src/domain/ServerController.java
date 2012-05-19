@@ -20,10 +20,10 @@ public class ServerController {
 	
 	public void startServer(){
 		if(!online){
+			HibernateUtil.start();
 			server = new ServerThread();
 			server.start();
 			online = true;
-			HibernateUtil.start();
 		}
 			
 	}

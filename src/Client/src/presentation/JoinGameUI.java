@@ -1,6 +1,11 @@
 package presentation;
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 import javax.swing.WindowConstants;
 
@@ -36,6 +41,8 @@ public class JoinGameUI extends javax.swing.JFrame {
 	public JoinGameUI() {
 		super();
 		initGUI();
+		setVisible(true);
+		setLocationRelativeTo(null);
 	}
 	
 	private void initGUI() {
@@ -44,7 +51,7 @@ public class JoinGameUI extends javax.swing.JFrame {
 			getContentPane().setLayout(null);
 			getContentPane().add(getPnlFondo());
 			pack();
-			setSize(400, 300);
+			this.setSize(538, 362);
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
@@ -55,7 +62,7 @@ public class JoinGameUI extends javax.swing.JFrame {
 		if(pnlFondo == null) {
 			pnlFondo = new JPanel();
 			pnlFondo.setLayout(null);
-			pnlFondo.setBounds(0, 0, 384, 262);
+			pnlFondo.setBounds(0, 0, 522, 324);
 			pnlFondo.add(getBtnJoin());
 			pnlFondo.add(getBtnCancel());
 		}
@@ -66,7 +73,7 @@ public class JoinGameUI extends javax.swing.JFrame {
 		if(btnJoin == null) {
 			btnJoin = new JButton();
 			btnJoin.setText("Join game");
-			btnJoin.setBounds(23, 214, 81, 23);
+			btnJoin.setBounds(69, 261, 81, 23);
 		}
 		return btnJoin;
 	}
@@ -75,7 +82,7 @@ public class JoinGameUI extends javax.swing.JFrame {
 		if(btnCancel == null) {
 			btnCancel = new JButton();
 			btnCancel.setText("Cancel");
-			btnCancel.setBounds(258, 214, 65, 23);
+			btnCancel.setBounds(377, 261, 65, 23);
 		}
 		return btnCancel;
 	}

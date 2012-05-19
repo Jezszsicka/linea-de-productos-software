@@ -40,21 +40,39 @@ public interface ClientPrx extends Ice.ObjectPrx
 
     public void end_receiveGeneralMessage(Ice.AsyncResult __result);
 
-    public void userLogged(String username);
+    public void receivePrivateMessage(String sender, String message);
 
-    public void userLogged(String username, java.util.Map<String, String> __ctx);
+    public void receivePrivateMessage(String sender, String message, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_userLogged(String username);
+    public Ice.AsyncResult begin_receivePrivateMessage(String sender, String message);
 
-    public Ice.AsyncResult begin_userLogged(String username, java.util.Map<String, String> __ctx);
+    public Ice.AsyncResult begin_receivePrivateMessage(String sender, String message, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_userLogged(String username, Ice.Callback __cb);
+    public Ice.AsyncResult begin_receivePrivateMessage(String sender, String message, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_userLogged(String username, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+    public Ice.AsyncResult begin_receivePrivateMessage(String sender, String message, java.util.Map<String, String> __ctx, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_userLogged(String username, Callback_Client_userLogged __cb);
+    public Ice.AsyncResult begin_receivePrivateMessage(String sender, String message, Callback_Client_receivePrivateMessage __cb);
 
-    public Ice.AsyncResult begin_userLogged(String username, java.util.Map<String, String> __ctx, Callback_Client_userLogged __cb);
+    public Ice.AsyncResult begin_receivePrivateMessage(String sender, String message, java.util.Map<String, String> __ctx, Callback_Client_receivePrivateMessage __cb);
+
+    public void end_receivePrivateMessage(Ice.AsyncResult __result);
+
+    public void userLogged(User loggedUser);
+
+    public void userLogged(User loggedUser, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_userLogged(User loggedUser);
+
+    public Ice.AsyncResult begin_userLogged(User loggedUser, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_userLogged(User loggedUser, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_userLogged(User loggedUser, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_userLogged(User loggedUser, Callback_Client_userLogged __cb);
+
+    public Ice.AsyncResult begin_userLogged(User loggedUser, java.util.Map<String, String> __ctx, Callback_Client_userLogged __cb);
 
     public void end_userLogged(Ice.AsyncResult __result);
 

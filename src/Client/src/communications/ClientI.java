@@ -2,6 +2,7 @@ package communications;
 
 
 import Ice.Current;
+import ProductLine.User;
 import ProductLine._ClientDisp;
 import domain.Controller;
 
@@ -19,14 +20,21 @@ public class ClientI extends _ClientDisp{
 	}
 
 	@Override
-	public void userLogged(String username, Current __current) {
-		Controller.getInstance().userLogged(username);
+	public void userLogged(User user, Current __current) {
+		Controller.getInstance().userLogged(user);
 		
 	}
 
 	@Override
 	public void userLeave(String username, Current __current) {
 		Controller.getInstance().userLeave(username);	
+	}
+
+	@Override
+	public void receivePrivateMessage(String sender, String message,
+			Current __current) {
+		Controller.getInstance().receivePrivateMessage(sender,message);
+		
 	}
 
 

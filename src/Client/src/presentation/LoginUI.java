@@ -1,6 +1,6 @@
 package presentation;
 
-import java.awt.Dimension;
+import java.awt.BorderLayout;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -16,7 +16,6 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import domain.Controller;
-import java.awt.BorderLayout;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo

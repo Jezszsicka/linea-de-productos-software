@@ -6,10 +6,15 @@ import ProductLine.User;
 
 
 
+
 public class UserDAO extends DAO<User, String> {
 
 	private static UserDAO userDAO;
 
+	private UserDAO (){
+		super();
+	}
+	
 	public static UserDAO getDAO() {
 		if (userDAO == null) {
 			userDAO = new UserDAO();

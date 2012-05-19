@@ -22,12 +22,12 @@ package ProductLine;
 
 public abstract class Callback_Server_listUsers extends Ice.TwowayCallback
 {
-    public abstract void response(java.util.List<java.lang.String> __ret);
+    public abstract void response(java.util.List<User> __ret);
 
     public final void __completed(Ice.AsyncResult __result)
     {
         ServerPrx __proxy = (ServerPrx)__result.getProxy();
-        java.util.List<java.lang.String> __ret = null;
+        java.util.List<User> __ret = null;
         try
         {
             __ret = __proxy.end_listUsers(__result);

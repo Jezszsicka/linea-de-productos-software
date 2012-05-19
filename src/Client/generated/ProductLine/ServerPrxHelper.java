@@ -22,20 +22,457 @@ package ProductLine;
 
 public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements ServerPrx
 {
-    public java.util.List<java.lang.String>
-    listUsers()
+    public void
+    changeAvatar(String username, byte[] avatar)
     {
-        return listUsers(null, false);
+        changeAvatar(username, avatar, null, false);
     }
 
-    public java.util.List<java.lang.String>
-    listUsers(java.util.Map<String, String> __ctx)
+    public void
+    changeAvatar(String username, byte[] avatar, java.util.Map<String, String> __ctx)
     {
-        return listUsers(__ctx, true);
+        changeAvatar(username, avatar, __ctx, true);
     }
 
-    private java.util.List<java.lang.String>
-    listUsers(java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    private void
+    changeAvatar(String username, byte[] avatar, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    {
+        if(__explicitCtx && __ctx == null)
+        {
+            __ctx = _emptyContext;
+        }
+        int __cnt = 0;
+        while(true)
+        {
+            Ice._ObjectDel __delBase = null;
+            try
+            {
+                __delBase = __getDelegate(false);
+                _ServerDel __del = (_ServerDel)__delBase;
+                __del.changeAvatar(username, avatar, __ctx);
+                return;
+            }
+            catch(IceInternal.LocalExceptionWrapper __ex)
+            {
+                __handleExceptionWrapper(__delBase, __ex);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __cnt = __handleException(__delBase, __ex, null, __cnt);
+            }
+        }
+    }
+
+    private static final String __changeAvatar_name = "changeAvatar";
+
+    public Ice.AsyncResult begin_changeAvatar(String username, byte[] avatar)
+    {
+        return begin_changeAvatar(username, avatar, null, false, null);
+    }
+
+    public Ice.AsyncResult begin_changeAvatar(String username, byte[] avatar, java.util.Map<String, String> __ctx)
+    {
+        return begin_changeAvatar(username, avatar, __ctx, true, null);
+    }
+
+    public Ice.AsyncResult begin_changeAvatar(String username, byte[] avatar, Ice.Callback __cb)
+    {
+        return begin_changeAvatar(username, avatar, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_changeAvatar(String username, byte[] avatar, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    {
+        return begin_changeAvatar(username, avatar, __ctx, true, __cb);
+    }
+
+    public Ice.AsyncResult begin_changeAvatar(String username, byte[] avatar, Callback_Server_changeAvatar __cb)
+    {
+        return begin_changeAvatar(username, avatar, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_changeAvatar(String username, byte[] avatar, java.util.Map<String, String> __ctx, Callback_Server_changeAvatar __cb)
+    {
+        return begin_changeAvatar(username, avatar, __ctx, true, __cb);
+    }
+
+    private Ice.AsyncResult begin_changeAvatar(String username, byte[] avatar, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    {
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __changeAvatar_name, __cb);
+        try
+        {
+            __result.__prepare(__changeAvatar_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            IceInternal.BasicStream __os = __result.__os();
+            __os.writeString(username);
+            ImageHelper.write(__os, avatar);
+            __os.endWriteEncaps();
+            __result.__send(true);
+        }
+        catch(Ice.LocalException __ex)
+        {
+            __result.__exceptionAsync(__ex);
+        }
+        return __result;
+    }
+
+    public void end_changeAvatar(Ice.AsyncResult __result)
+    {
+        __end(__result, __changeAvatar_name);
+    }
+
+    public void
+    changeEmail(String username, String email, String password)
+        throws InvalidLoggingException
+    {
+        changeEmail(username, email, password, null, false);
+    }
+
+    public void
+    changeEmail(String username, String email, String password, java.util.Map<String, String> __ctx)
+        throws InvalidLoggingException
+    {
+        changeEmail(username, email, password, __ctx, true);
+    }
+
+    private void
+    changeEmail(String username, String email, String password, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+        throws InvalidLoggingException
+    {
+        if(__explicitCtx && __ctx == null)
+        {
+            __ctx = _emptyContext;
+        }
+        int __cnt = 0;
+        while(true)
+        {
+            Ice._ObjectDel __delBase = null;
+            try
+            {
+                __checkTwowayOnly("changeEmail");
+                __delBase = __getDelegate(false);
+                _ServerDel __del = (_ServerDel)__delBase;
+                __del.changeEmail(username, email, password, __ctx);
+                return;
+            }
+            catch(IceInternal.LocalExceptionWrapper __ex)
+            {
+                __handleExceptionWrapper(__delBase, __ex);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __cnt = __handleException(__delBase, __ex, null, __cnt);
+            }
+        }
+    }
+
+    private static final String __changeEmail_name = "changeEmail";
+
+    public Ice.AsyncResult begin_changeEmail(String username, String email, String password)
+    {
+        return begin_changeEmail(username, email, password, null, false, null);
+    }
+
+    public Ice.AsyncResult begin_changeEmail(String username, String email, String password, java.util.Map<String, String> __ctx)
+    {
+        return begin_changeEmail(username, email, password, __ctx, true, null);
+    }
+
+    public Ice.AsyncResult begin_changeEmail(String username, String email, String password, Ice.Callback __cb)
+    {
+        return begin_changeEmail(username, email, password, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_changeEmail(String username, String email, String password, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    {
+        return begin_changeEmail(username, email, password, __ctx, true, __cb);
+    }
+
+    public Ice.AsyncResult begin_changeEmail(String username, String email, String password, Callback_Server_changeEmail __cb)
+    {
+        return begin_changeEmail(username, email, password, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_changeEmail(String username, String email, String password, java.util.Map<String, String> __ctx, Callback_Server_changeEmail __cb)
+    {
+        return begin_changeEmail(username, email, password, __ctx, true, __cb);
+    }
+
+    private Ice.AsyncResult begin_changeEmail(String username, String email, String password, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    {
+        __checkAsyncTwowayOnly(__changeEmail_name);
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __changeEmail_name, __cb);
+        try
+        {
+            __result.__prepare(__changeEmail_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            IceInternal.BasicStream __os = __result.__os();
+            __os.writeString(username);
+            __os.writeString(email);
+            __os.writeString(password);
+            __os.endWriteEncaps();
+            __result.__send(true);
+        }
+        catch(Ice.LocalException __ex)
+        {
+            __result.__exceptionAsync(__ex);
+        }
+        return __result;
+    }
+
+    public void end_changeEmail(Ice.AsyncResult __result)
+        throws InvalidLoggingException
+    {
+        Ice.AsyncResult.__check(__result, this, __changeEmail_name);
+        if(!__result.__wait())
+        {
+            try
+            {
+                __result.__throwUserException();
+            }
+            catch(InvalidLoggingException __ex)
+            {
+                throw __ex;
+            }
+            catch(Ice.UserException __ex)
+            {
+                throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+            }
+        }
+        IceInternal.BasicStream __is = __result.__is();
+        __is.skipEmptyEncaps();
+    }
+
+    public void
+    changeName(String username, String name, String lastname)
+    {
+        changeName(username, name, lastname, null, false);
+    }
+
+    public void
+    changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx)
+    {
+        changeName(username, name, lastname, __ctx, true);
+    }
+
+    private void
+    changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    {
+        if(__explicitCtx && __ctx == null)
+        {
+            __ctx = _emptyContext;
+        }
+        int __cnt = 0;
+        while(true)
+        {
+            Ice._ObjectDel __delBase = null;
+            try
+            {
+                __delBase = __getDelegate(false);
+                _ServerDel __del = (_ServerDel)__delBase;
+                __del.changeName(username, name, lastname, __ctx);
+                return;
+            }
+            catch(IceInternal.LocalExceptionWrapper __ex)
+            {
+                __handleExceptionWrapper(__delBase, __ex);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __cnt = __handleException(__delBase, __ex, null, __cnt);
+            }
+        }
+    }
+
+    private static final String __changeName_name = "changeName";
+
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname)
+    {
+        return begin_changeName(username, name, lastname, null, false, null);
+    }
+
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx)
+    {
+        return begin_changeName(username, name, lastname, __ctx, true, null);
+    }
+
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, Ice.Callback __cb)
+    {
+        return begin_changeName(username, name, lastname, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    {
+        return begin_changeName(username, name, lastname, __ctx, true, __cb);
+    }
+
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, Callback_Server_changeName __cb)
+    {
+        return begin_changeName(username, name, lastname, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx, Callback_Server_changeName __cb)
+    {
+        return begin_changeName(username, name, lastname, __ctx, true, __cb);
+    }
+
+    private Ice.AsyncResult begin_changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    {
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __changeName_name, __cb);
+        try
+        {
+            __result.__prepare(__changeName_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            IceInternal.BasicStream __os = __result.__os();
+            __os.writeString(username);
+            __os.writeString(name);
+            __os.writeString(lastname);
+            __os.endWriteEncaps();
+            __result.__send(true);
+        }
+        catch(Ice.LocalException __ex)
+        {
+            __result.__exceptionAsync(__ex);
+        }
+        return __result;
+    }
+
+    public void end_changeName(Ice.AsyncResult __result)
+    {
+        __end(__result, __changeName_name);
+    }
+
+    public void
+    changePassword(String username, String password, String newPassword)
+        throws InvalidLoggingException
+    {
+        changePassword(username, password, newPassword, null, false);
+    }
+
+    public void
+    changePassword(String username, String password, String newPassword, java.util.Map<String, String> __ctx)
+        throws InvalidLoggingException
+    {
+        changePassword(username, password, newPassword, __ctx, true);
+    }
+
+    private void
+    changePassword(String username, String password, String newPassword, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+        throws InvalidLoggingException
+    {
+        if(__explicitCtx && __ctx == null)
+        {
+            __ctx = _emptyContext;
+        }
+        int __cnt = 0;
+        while(true)
+        {
+            Ice._ObjectDel __delBase = null;
+            try
+            {
+                __checkTwowayOnly("changePassword");
+                __delBase = __getDelegate(false);
+                _ServerDel __del = (_ServerDel)__delBase;
+                __del.changePassword(username, password, newPassword, __ctx);
+                return;
+            }
+            catch(IceInternal.LocalExceptionWrapper __ex)
+            {
+                __handleExceptionWrapper(__delBase, __ex);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __cnt = __handleException(__delBase, __ex, null, __cnt);
+            }
+        }
+    }
+
+    private static final String __changePassword_name = "changePassword";
+
+    public Ice.AsyncResult begin_changePassword(String username, String password, String newPassword)
+    {
+        return begin_changePassword(username, password, newPassword, null, false, null);
+    }
+
+    public Ice.AsyncResult begin_changePassword(String username, String password, String newPassword, java.util.Map<String, String> __ctx)
+    {
+        return begin_changePassword(username, password, newPassword, __ctx, true, null);
+    }
+
+    public Ice.AsyncResult begin_changePassword(String username, String password, String newPassword, Ice.Callback __cb)
+    {
+        return begin_changePassword(username, password, newPassword, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_changePassword(String username, String password, String newPassword, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    {
+        return begin_changePassword(username, password, newPassword, __ctx, true, __cb);
+    }
+
+    public Ice.AsyncResult begin_changePassword(String username, String password, String newPassword, Callback_Server_changePassword __cb)
+    {
+        return begin_changePassword(username, password, newPassword, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_changePassword(String username, String password, String newPassword, java.util.Map<String, String> __ctx, Callback_Server_changePassword __cb)
+    {
+        return begin_changePassword(username, password, newPassword, __ctx, true, __cb);
+    }
+
+    private Ice.AsyncResult begin_changePassword(String username, String password, String newPassword, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    {
+        __checkAsyncTwowayOnly(__changePassword_name);
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __changePassword_name, __cb);
+        try
+        {
+            __result.__prepare(__changePassword_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            IceInternal.BasicStream __os = __result.__os();
+            __os.writeString(username);
+            __os.writeString(password);
+            __os.writeString(newPassword);
+            __os.endWriteEncaps();
+            __result.__send(true);
+        }
+        catch(Ice.LocalException __ex)
+        {
+            __result.__exceptionAsync(__ex);
+        }
+        return __result;
+    }
+
+    public void end_changePassword(Ice.AsyncResult __result)
+        throws InvalidLoggingException
+    {
+        Ice.AsyncResult.__check(__result, this, __changePassword_name);
+        if(!__result.__wait())
+        {
+            try
+            {
+                __result.__throwUserException();
+            }
+            catch(InvalidLoggingException __ex)
+            {
+                throw __ex;
+            }
+            catch(Ice.UserException __ex)
+            {
+                throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+            }
+        }
+        IceInternal.BasicStream __is = __result.__is();
+        __is.skipEmptyEncaps();
+    }
+
+    public java.util.List<User>
+    listUsers(String username)
+    {
+        return listUsers(username, null, false);
+    }
+
+    public java.util.List<User>
+    listUsers(String username, java.util.Map<String, String> __ctx)
+    {
+        return listUsers(username, __ctx, true);
+    }
+
+    private java.util.List<User>
+    listUsers(String username, java.util.Map<String, String> __ctx, boolean __explicitCtx)
     {
         if(__explicitCtx && __ctx == null)
         {
@@ -50,7 +487,7 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
                 __checkTwowayOnly("listUsers");
                 __delBase = __getDelegate(false);
                 _ServerDel __del = (_ServerDel)__delBase;
-                return __del.listUsers(__ctx);
+                return __del.listUsers(username, __ctx);
             }
             catch(IceInternal.LocalExceptionWrapper __ex)
             {
@@ -65,37 +502,37 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
 
     private static final String __listUsers_name = "listUsers";
 
-    public Ice.AsyncResult begin_listUsers()
+    public Ice.AsyncResult begin_listUsers(String username)
     {
-        return begin_listUsers(null, false, null);
+        return begin_listUsers(username, null, false, null);
     }
 
-    public Ice.AsyncResult begin_listUsers(java.util.Map<String, String> __ctx)
+    public Ice.AsyncResult begin_listUsers(String username, java.util.Map<String, String> __ctx)
     {
-        return begin_listUsers(__ctx, true, null);
+        return begin_listUsers(username, __ctx, true, null);
     }
 
-    public Ice.AsyncResult begin_listUsers(Ice.Callback __cb)
+    public Ice.AsyncResult begin_listUsers(String username, Ice.Callback __cb)
     {
-        return begin_listUsers(null, false, __cb);
+        return begin_listUsers(username, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_listUsers(java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    public Ice.AsyncResult begin_listUsers(String username, java.util.Map<String, String> __ctx, Ice.Callback __cb)
     {
-        return begin_listUsers(__ctx, true, __cb);
+        return begin_listUsers(username, __ctx, true, __cb);
     }
 
-    public Ice.AsyncResult begin_listUsers(Callback_Server_listUsers __cb)
+    public Ice.AsyncResult begin_listUsers(String username, Callback_Server_listUsers __cb)
     {
-        return begin_listUsers(null, false, __cb);
+        return begin_listUsers(username, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_listUsers(java.util.Map<String, String> __ctx, Callback_Server_listUsers __cb)
+    public Ice.AsyncResult begin_listUsers(String username, java.util.Map<String, String> __ctx, Callback_Server_listUsers __cb)
     {
-        return begin_listUsers(__ctx, true, __cb);
+        return begin_listUsers(username, __ctx, true, __cb);
     }
 
-    private Ice.AsyncResult begin_listUsers(java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    private Ice.AsyncResult begin_listUsers(String username, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
     {
         __checkAsyncTwowayOnly(__listUsers_name);
         IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __listUsers_name, __cb);
@@ -103,6 +540,7 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
         {
             __result.__prepare(__listUsers_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
             IceInternal.BasicStream __os = __result.__os();
+            __os.writeString(username);
             __os.endWriteEncaps();
             __result.__send(true);
         }
@@ -113,7 +551,7 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
         return __result;
     }
 
-    public java.util.List<java.lang.String> end_listUsers(Ice.AsyncResult __result)
+    public java.util.List<User> end_listUsers(Ice.AsyncResult __result)
     {
         Ice.AsyncResult.__check(__result, this, __listUsers_name);
         if(!__result.__wait())
@@ -127,10 +565,11 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
                 throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
             }
         }
-        java.util.List<java.lang.String> __ret;
+        java.util.List<User> __ret;
         IceInternal.BasicStream __is = __result.__is();
         __is.startReadEncaps();
-        __ret = StringListHelper.read(__is);
+        __ret = UserListHelper.read(__is);
+        __is.readPendingObjects();
         __is.endReadEncaps();
         return __ret;
     }
@@ -388,21 +827,21 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
     }
 
     public void
-    registerUser(String username, String password, String email)
+    registerUser(User newUser)
         throws UserAlreadyExistsException
     {
-        registerUser(username, password, email, null, false);
+        registerUser(newUser, null, false);
     }
 
     public void
-    registerUser(String username, String password, String email, java.util.Map<String, String> __ctx)
+    registerUser(User newUser, java.util.Map<String, String> __ctx)
         throws UserAlreadyExistsException
     {
-        registerUser(username, password, email, __ctx, true);
+        registerUser(newUser, __ctx, true);
     }
 
     private void
-    registerUser(String username, String password, String email, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    registerUser(User newUser, java.util.Map<String, String> __ctx, boolean __explicitCtx)
         throws UserAlreadyExistsException
     {
         if(__explicitCtx && __ctx == null)
@@ -418,7 +857,7 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
                 __checkTwowayOnly("registerUser");
                 __delBase = __getDelegate(false);
                 _ServerDel __del = (_ServerDel)__delBase;
-                __del.registerUser(username, password, email, __ctx);
+                __del.registerUser(newUser, __ctx);
                 return;
             }
             catch(IceInternal.LocalExceptionWrapper __ex)
@@ -434,37 +873,37 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
 
     private static final String __registerUser_name = "registerUser";
 
-    public Ice.AsyncResult begin_registerUser(String username, String password, String email)
+    public Ice.AsyncResult begin_registerUser(User newUser)
     {
-        return begin_registerUser(username, password, email, null, false, null);
+        return begin_registerUser(newUser, null, false, null);
     }
 
-    public Ice.AsyncResult begin_registerUser(String username, String password, String email, java.util.Map<String, String> __ctx)
+    public Ice.AsyncResult begin_registerUser(User newUser, java.util.Map<String, String> __ctx)
     {
-        return begin_registerUser(username, password, email, __ctx, true, null);
+        return begin_registerUser(newUser, __ctx, true, null);
     }
 
-    public Ice.AsyncResult begin_registerUser(String username, String password, String email, Ice.Callback __cb)
+    public Ice.AsyncResult begin_registerUser(User newUser, Ice.Callback __cb)
     {
-        return begin_registerUser(username, password, email, null, false, __cb);
+        return begin_registerUser(newUser, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_registerUser(String username, String password, String email, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    public Ice.AsyncResult begin_registerUser(User newUser, java.util.Map<String, String> __ctx, Ice.Callback __cb)
     {
-        return begin_registerUser(username, password, email, __ctx, true, __cb);
+        return begin_registerUser(newUser, __ctx, true, __cb);
     }
 
-    public Ice.AsyncResult begin_registerUser(String username, String password, String email, Callback_Server_registerUser __cb)
+    public Ice.AsyncResult begin_registerUser(User newUser, Callback_Server_registerUser __cb)
     {
-        return begin_registerUser(username, password, email, null, false, __cb);
+        return begin_registerUser(newUser, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_registerUser(String username, String password, String email, java.util.Map<String, String> __ctx, Callback_Server_registerUser __cb)
+    public Ice.AsyncResult begin_registerUser(User newUser, java.util.Map<String, String> __ctx, Callback_Server_registerUser __cb)
     {
-        return begin_registerUser(username, password, email, __ctx, true, __cb);
+        return begin_registerUser(newUser, __ctx, true, __cb);
     }
 
-    private Ice.AsyncResult begin_registerUser(String username, String password, String email, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    private Ice.AsyncResult begin_registerUser(User newUser, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
     {
         __checkAsyncTwowayOnly(__registerUser_name);
         IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __registerUser_name, __cb);
@@ -472,9 +911,8 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
         {
             __result.__prepare(__registerUser_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
             IceInternal.BasicStream __os = __result.__os();
-            __os.writeString(username);
-            __os.writeString(password);
-            __os.writeString(email);
+            __os.writeObject(newUser);
+            __os.writePendingObjects();
             __os.endWriteEncaps();
             __result.__send(true);
         }
@@ -802,18 +1240,21 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
 
     public void
     sendPrivateMessage(String sender, String destinatary, String message)
+        throws UserNotLoggedException
     {
         sendPrivateMessage(sender, destinatary, message, null, false);
     }
 
     public void
     sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx)
+        throws UserNotLoggedException
     {
         sendPrivateMessage(sender, destinatary, message, __ctx, true);
     }
 
     private void
     sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+        throws UserNotLoggedException
     {
         if(__explicitCtx && __ctx == null)
         {
@@ -825,6 +1266,7 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
             Ice._ObjectDel __delBase = null;
             try
             {
+                __checkTwowayOnly("sendPrivateMessage");
                 __delBase = __getDelegate(false);
                 _ServerDel __del = (_ServerDel)__delBase;
                 __del.sendPrivateMessage(sender, destinatary, message, __ctx);
@@ -875,6 +1317,7 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
 
     private Ice.AsyncResult begin_sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
     {
+        __checkAsyncTwowayOnly(__sendPrivateMessage_name);
         IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __sendPrivateMessage_name, __cb);
         try
         {
@@ -894,8 +1337,26 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
     }
 
     public void end_sendPrivateMessage(Ice.AsyncResult __result)
+        throws UserNotLoggedException
     {
-        __end(__result, __sendPrivateMessage_name);
+        Ice.AsyncResult.__check(__result, this, __sendPrivateMessage_name);
+        if(!__result.__wait())
+        {
+            try
+            {
+                __result.__throwUserException();
+            }
+            catch(UserNotLoggedException __ex)
+            {
+                throw __ex;
+            }
+            catch(Ice.UserException __ex)
+            {
+                throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+            }
+        }
+        IceInternal.BasicStream __is = __result.__is();
+        __is.skipEmptyEncaps();
     }
 
     public static ServerPrx

@@ -22,7 +22,7 @@ package ProductLine;
 
 public interface _ServerOperations
 {
-    void registerUser(String username, String password, String email, Ice.Current __current)
+    void registerUser(User newUser, Ice.Current __current)
         throws UserAlreadyExistsException;
 
     User loginUser(String username, String password, Ice.Identity client, Ice.Current __current)
@@ -32,11 +32,24 @@ public interface _ServerOperations
     void logoutUser(String username, Ice.Current __current)
         throws UserNotLoggedException;
 
-    java.util.List<java.lang.String> listUsers(Ice.Current __current);
+    void changeName(String username, String name, String lastname, Ice.Current __current);
 
-    void sendPrivateMessage(String sender, String destinatary, String message, Ice.Current __current);
+    void changePassword(String username, String password, String newPassword, Ice.Current __current)
+        throws InvalidLoggingException;
+
+    void changeEmail(String username, String email, String password, Ice.Current __current)
+        throws InvalidLoggingException;
+
+    void changeAvatar(String username, byte[] avatar, Ice.Current __current);
+
+    java.util.List<User> listUsers(String username, Ice.Current __current);
 
     void sendGameMessage(String game, String sender, String message, Ice.Current __current);
 
     void sendGeneralMessage(String sender, String message, Ice.Current __current);
+
+    void sendPrivateMessage(String sender, String destinatary, String message, Ice.Current __current)
+        throws UserNotLoggedException;
+
+    void saveProfile(User profile, Ice.Current __current);
 }

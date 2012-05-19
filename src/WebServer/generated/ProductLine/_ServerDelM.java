@@ -22,13 +22,217 @@ package ProductLine;
 
 public final class _ServerDelM extends Ice._ObjectDelM implements _ServerDel
 {
-    public java.util.List<java.lang.String>
-    listUsers(java.util.Map<String, String> __ctx)
+    public void
+    changeAvatar(String username, byte[] avatar, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        IceInternal.Outgoing __og = __handler.getOutgoing("changeAvatar", Ice.OperationMode.Normal, __ctx);
+        try
+        {
+            try
+            {
+                IceInternal.BasicStream __os = __og.os();
+                __os.writeString(username);
+                ImageHelper.write(__os, avatar);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __og.abort(__ex);
+            }
+            boolean __ok = __og.invoke();
+            if(!__og.is().isEmpty())
+            {
+                try
+                {
+                    if(!__ok)
+                    {
+                        try
+                        {
+                            __og.throwUserException();
+                        }
+                        catch(Ice.UserException __ex)
+                        {
+                            throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                        }
+                    }
+                    __og.is().skipEmptyEncaps();
+                }
+                catch(Ice.LocalException __ex)
+                {
+                    throw new IceInternal.LocalExceptionWrapper(__ex, false);
+                }
+            }
+        }
+        finally
+        {
+            __handler.reclaimOutgoing(__og);
+        }
+    }
+
+    public void
+    changeEmail(String username, String email, String password, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               InvalidLoggingException
+    {
+        IceInternal.Outgoing __og = __handler.getOutgoing("changeEmail", Ice.OperationMode.Normal, __ctx);
+        try
+        {
+            try
+            {
+                IceInternal.BasicStream __os = __og.os();
+                __os.writeString(username);
+                __os.writeString(email);
+                __os.writeString(password);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __og.abort(__ex);
+            }
+            boolean __ok = __og.invoke();
+            try
+            {
+                if(!__ok)
+                {
+                    try
+                    {
+                        __og.throwUserException();
+                    }
+                    catch(InvalidLoggingException __ex)
+                    {
+                        throw __ex;
+                    }
+                    catch(Ice.UserException __ex)
+                    {
+                        throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                    }
+                }
+                __og.is().skipEmptyEncaps();
+            }
+            catch(Ice.LocalException __ex)
+            {
+                throw new IceInternal.LocalExceptionWrapper(__ex, false);
+            }
+        }
+        finally
+        {
+            __handler.reclaimOutgoing(__og);
+        }
+    }
+
+    public void
+    changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        IceInternal.Outgoing __og = __handler.getOutgoing("changeName", Ice.OperationMode.Normal, __ctx);
+        try
+        {
+            try
+            {
+                IceInternal.BasicStream __os = __og.os();
+                __os.writeString(username);
+                __os.writeString(name);
+                __os.writeString(lastname);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __og.abort(__ex);
+            }
+            boolean __ok = __og.invoke();
+            if(!__og.is().isEmpty())
+            {
+                try
+                {
+                    if(!__ok)
+                    {
+                        try
+                        {
+                            __og.throwUserException();
+                        }
+                        catch(Ice.UserException __ex)
+                        {
+                            throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                        }
+                    }
+                    __og.is().skipEmptyEncaps();
+                }
+                catch(Ice.LocalException __ex)
+                {
+                    throw new IceInternal.LocalExceptionWrapper(__ex, false);
+                }
+            }
+        }
+        finally
+        {
+            __handler.reclaimOutgoing(__og);
+        }
+    }
+
+    public void
+    changePassword(String username, String password, String newPassword, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               InvalidLoggingException
+    {
+        IceInternal.Outgoing __og = __handler.getOutgoing("changePassword", Ice.OperationMode.Normal, __ctx);
+        try
+        {
+            try
+            {
+                IceInternal.BasicStream __os = __og.os();
+                __os.writeString(username);
+                __os.writeString(password);
+                __os.writeString(newPassword);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __og.abort(__ex);
+            }
+            boolean __ok = __og.invoke();
+            try
+            {
+                if(!__ok)
+                {
+                    try
+                    {
+                        __og.throwUserException();
+                    }
+                    catch(InvalidLoggingException __ex)
+                    {
+                        throw __ex;
+                    }
+                    catch(Ice.UserException __ex)
+                    {
+                        throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                    }
+                }
+                __og.is().skipEmptyEncaps();
+            }
+            catch(Ice.LocalException __ex)
+            {
+                throw new IceInternal.LocalExceptionWrapper(__ex, false);
+            }
+        }
+        finally
+        {
+            __handler.reclaimOutgoing(__og);
+        }
+    }
+
+    public java.util.List<User>
+    listUsers(String username, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
     {
         IceInternal.Outgoing __og = __handler.getOutgoing("listUsers", Ice.OperationMode.Normal, __ctx);
         try
         {
+            try
+            {
+                IceInternal.BasicStream __os = __og.os();
+                __os.writeString(username);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __og.abort(__ex);
+            }
             boolean __ok = __og.invoke();
             try
             {
@@ -45,8 +249,9 @@ public final class _ServerDelM extends Ice._ObjectDelM implements _ServerDel
                 }
                 IceInternal.BasicStream __is = __og.is();
                 __is.startReadEncaps();
-                java.util.List<java.lang.String> __ret;
-                __ret = StringListHelper.read(__is);
+                java.util.List<User> __ret;
+                __ret = UserListHelper.read(__is);
+                __is.readPendingObjects();
                 __is.endReadEncaps();
                 return __ret;
             }
@@ -171,7 +376,7 @@ public final class _ServerDelM extends Ice._ObjectDelM implements _ServerDel
     }
 
     public void
-    registerUser(String username, String password, String email, java.util.Map<String, String> __ctx)
+    registerUser(User newUser, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper,
                UserAlreadyExistsException
     {
@@ -181,9 +386,8 @@ public final class _ServerDelM extends Ice._ObjectDelM implements _ServerDel
             try
             {
                 IceInternal.BasicStream __os = __og.os();
-                __os.writeString(username);
-                __os.writeString(password);
-                __os.writeString(email);
+                __os.writeObject(newUser);
+                __os.writePendingObjects();
             }
             catch(Ice.LocalException __ex)
             {
@@ -212,6 +416,53 @@ public final class _ServerDelM extends Ice._ObjectDelM implements _ServerDel
             catch(Ice.LocalException __ex)
             {
                 throw new IceInternal.LocalExceptionWrapper(__ex, false);
+            }
+        }
+        finally
+        {
+            __handler.reclaimOutgoing(__og);
+        }
+    }
+
+    public void
+    saveProfile(User profile, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        IceInternal.Outgoing __og = __handler.getOutgoing("saveProfile", Ice.OperationMode.Normal, __ctx);
+        try
+        {
+            try
+            {
+                IceInternal.BasicStream __os = __og.os();
+                __os.writeObject(profile);
+                __os.writePendingObjects();
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __og.abort(__ex);
+            }
+            boolean __ok = __og.invoke();
+            if(!__og.is().isEmpty())
+            {
+                try
+                {
+                    if(!__ok)
+                    {
+                        try
+                        {
+                            __og.throwUserException();
+                        }
+                        catch(Ice.UserException __ex)
+                        {
+                            throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                        }
+                    }
+                    __og.is().skipEmptyEncaps();
+                }
+                catch(Ice.LocalException __ex)
+                {
+                    throw new IceInternal.LocalExceptionWrapper(__ex, false);
+                }
             }
         }
         finally
@@ -317,7 +568,8 @@ public final class _ServerDelM extends Ice._ObjectDelM implements _ServerDel
 
     public void
     sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+        throws IceInternal.LocalExceptionWrapper,
+               UserNotLoggedException
     {
         IceInternal.Outgoing __og = __handler.getOutgoing("sendPrivateMessage", Ice.OperationMode.Normal, __ctx);
         try
@@ -334,27 +586,28 @@ public final class _ServerDelM extends Ice._ObjectDelM implements _ServerDel
                 __og.abort(__ex);
             }
             boolean __ok = __og.invoke();
-            if(!__og.is().isEmpty())
+            try
             {
-                try
+                if(!__ok)
                 {
-                    if(!__ok)
+                    try
                     {
-                        try
-                        {
-                            __og.throwUserException();
-                        }
-                        catch(Ice.UserException __ex)
-                        {
-                            throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
-                        }
+                        __og.throwUserException();
                     }
-                    __og.is().skipEmptyEncaps();
+                    catch(UserNotLoggedException __ex)
+                    {
+                        throw __ex;
+                    }
+                    catch(Ice.UserException __ex)
+                    {
+                        throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                    }
                 }
-                catch(Ice.LocalException __ex)
-                {
-                    throw new IceInternal.LocalExceptionWrapper(__ex, false);
-                }
+                __og.is().skipEmptyEncaps();
+            }
+            catch(Ice.LocalException __ex)
+            {
+                throw new IceInternal.LocalExceptionWrapper(__ex, false);
             }
         }
         finally

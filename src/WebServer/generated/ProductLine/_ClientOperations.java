@@ -24,7 +24,9 @@ public interface _ClientOperations
 {
     void receiveGeneralMessage(String sender, String message, Ice.Current __current);
 
-    void userLogged(String username, Ice.Current __current);
+    void receivePrivateMessage(String sender, String message, Ice.Current __current);
+
+    void userLogged(User loggedUser, Ice.Current __current);
 
     void userLeave(String username, Ice.Current __current);
 }

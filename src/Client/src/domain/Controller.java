@@ -2,17 +2,18 @@ package domain;
 
 import javax.swing.JOptionPane;
 
-import ProductLine.InvalidLoggingException;
-import ProductLine.UserAlreadyExistsException;
-import ProductLine.UserAlreadyLoggedException;
-import ProductLine.UserNotLoggedException;
-
 import model.Session;
 import presentation.CreateGameUI;
+import presentation.JoinGameUI;
 import presentation.LoginUI;
 import presentation.ProfileUI;
 import presentation.RegisterUI;
 import presentation.WaitingRoomUI;
+import ProductLine.InvalidLoggingException;
+import ProductLine.User;
+import ProductLine.UserAlreadyExistsException;
+import ProductLine.UserAlreadyLoggedException;
+import ProductLine.UserNotLoggedException;
 
 import communications.Client;
 
@@ -26,32 +27,30 @@ public class Controller {
 	private WaitingRoomUI waitingRoomUI;
 	private CreateGameUI createGameUI;
 	private ProfileUI profileUI;
-	
+
 	private Session session;
 	private SessionManager sessionManager;
 	private GamesManager gameManager;
-	
+
 	private Controller() {
 		loginUI = new LoginUI();
 		sessionManager = new SessionManager();
-
 	}
 
-	public static void initialize (){
-		if( controller == null){
+	public static void initialize() {
+		if (controller == null) {
 			controller = new Controller();
-		}	
+		}
 	}
-	
+
 	public static Controller getInstance() {
 		return controller;
 	}
 
-	public void registerUser(String username, String password,
-			String retypedPassword, String email, String retypedEmail) {
+	public void registerUser(User user, String retypedPassword,
+			String retypedEmail) {
 		try {
-			sessionManager.registerUser(username, password, retypedPassword,
-					email, retypedEmail);
+			sessionManager.registerUser(user, retypedPassword, retypedEmail);
 			loginUI.setEnabled(true);
 			registerUI.dispose();
 			JOptionPane.showMessageDialog(registerUI,
@@ -82,10 +81,10 @@ public class Controller {
 		try {
 			session = sessionManager.loginUser(username, password);
 			gameManager = new GamesManager(session);
-			waitingRoomUI = new WaitingRoomUI(session.getUser().getUsername(),session.getProxy().listUsers());
+			waitingRoomUI = new WaitingRoomUI(session.getUser(), session
+					.getProxy().listUsers(session.getUser().getUsername()));
 			loginUI.dispose();
 			loginUI = null;
-			
 
 		} catch (WrongInputException e) {
 			JOptionPane.showMessageDialog(registerUI, e.getMessage(),
@@ -117,47 +116,103 @@ public class Controller {
 
 	public void startCreateGame() {
 		createGameUI = new CreateGameUI();
-		waitingRoomUI.setEnabled(false);	
+		waitingRoomUI.setEnabled(false);
 	}
-	
+
 	public void cancelCreateGame() {
 		waitingRoomUI.setEnabled(true);
+		waitingRoomUI.toFront();
 		createGameUI.dispose();
 	}
 
-	public void userLogged(String user) {
+	public void userLogged(User user) {
 		waitingRoomUI.userLogged(user);
 	}
-	
-	public void userLeave(String user){
+
+	public void userLeave(String user) {
 		waitingRoomUI.userLeave(user);
 	}
 
 	public void sendGeneralMessage(String message) {
 		gameManager.sendGeneralMessage(message);
 	}
-	
-	public void receiveGeneralMessage(String sender, String message){
-		waitingRoomUI.receiveMessage(sender,message);
+
+	public void receiveGeneralMessage(String sender, String message) {
+		waitingRoomUI.receiveMessage(sender, message);
+	}
+
+	public void receivePrivateMessage(String sender, String message) {
+		waitingRoomUI.receivePrivateMessage(sender, message);
+
 	}
 
 	public void showProfile() {
 		profileUI = new ProfileUI(session.getUser());
 		waitingRoomUI.setEnabled(false);
 	}
-	
+
 	public void closeProfile(boolean save) {
-		if(save){
+		if (save) {
 			sessionManager.saveProfile();
+			waitingRoomUI.setAvatar(session.getUser().getAvatar());
 		}
 		waitingRoomUI.setEnabled(true);
+		waitingRoomUI.toFront();
 	}
-	
+
 	public void closeConnection() {
 		Client.communicator().destroy();
 		System.exit(0);
 	}
 
-	
+	public void joinGame() {
+		waitingRoomUI.setEnabled(false);
+		new JoinGameUI();
+
+	}
+
+	public void sendPrivateMessage(String sender, String destinatary,
+			String message) throws UserNotLoggedException {
+		gameManager.sendPrivateMessage(sender, destinatary, message);
+
+	}
+
+	public void changeName(String name, String lastname) {
+		sessionManager.changeName(name, lastname);
+
+	}
+
+	public void changeEmail(String email, String confirmEmail, String password) {
+		try {
+			sessionManager.changeEmail(email, confirmEmail, password);
+		} catch (WrongInputException e) {
+			JOptionPane.showMessageDialog(profileUI, e.getMessage(),
+					e.getError(), JOptionPane.WARNING_MESSAGE);
+			e.printStackTrace();
+		} catch (InvalidLoggingException e) {
+			JOptionPane.showMessageDialog(profileUI, "The password is wrong",
+					"Incorrect password", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+
+	}
+
+	public void changePassword(String password, String newPassword,
+			String confirmPassword) {
+		try {
+			sessionManager.changePassword(password, newPassword,
+					confirmPassword);
+		} catch (InvalidLoggingException e) {
+			JOptionPane.showMessageDialog(profileUI, "The password is wrong",
+					"Incorrect password", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+
+	}
+
+	public void changeAvatar() {
+		sessionManager.changeAvatar();
+		waitingRoomUI.setAvatar(session.getUser().getAvatar());
+	}
 
 }
