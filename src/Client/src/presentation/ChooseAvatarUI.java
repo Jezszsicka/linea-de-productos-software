@@ -1,23 +1,18 @@
 package presentation;
 
 import java.awt.BorderLayout;
-import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.BufferedReader;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileFilter;
@@ -45,7 +40,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 		}
 	}
 
-	private JFrame parentUI;
+	private JFrame parent;
 	private ImagePanel pnlBackground;
 	private JButton btnUpload;
 	private JLabel lblAvatar4;
@@ -65,14 +60,19 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	public ChooseAvatarUI(JFrame parentUI) {
 		super();
 		initGUI();
-		this.parentUI = parentUI;
+		this.parent = parentUI;
 		setVisible(true);
 		setLocationRelativeTo(null);
 	}
 
 	private void initGUI() {
 		try {
-			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+			this.addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent evt) {
+					thisWindowClosing(evt);
+				}
+			});
 			getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
 			pack();
 			this.setSize(526, 404);
@@ -84,8 +84,9 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 
 	private ImagePanel getPnlBackground() {
 		if (pnlBackground == null) {
-			//pnlBackground = new ImagePanel(new ImageIcon(getClass().getClassLoader()
-			//		.getResource("images/fondo.png")).getImage());
+			// pnlBackground = new ImagePanel(new
+			// ImageIcon(getClass().getClassLoader()
+			// .getResource("images/fondo.png")).getImage());
 			pnlBackground = new ImagePanel("");
 			pnlBackground.add(getBtnUpload());
 			pnlBackground.add(getLblAvatar1());
@@ -125,14 +126,14 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 		int result = fileChooser.showOpenDialog(this);
 		if (result == JFileChooser.APPROVE_OPTION) {
 			File file = fileChooser.getSelectedFile();
-			if(parentUI instanceof ProfileUI){
-				((ProfileUI)parentUI).setAvatar(file);
-			}else{
-				((RegisterUI)parentUI).setAvatar(file);
+			if (parent instanceof ProfileUI) {
+				((ProfileUI) parent).setAvatar(file);
+			} else {
+				((RegisterUI) parent).setAvatar(file);
 			}
 			dispose();
-			parentUI.setEnabled(true);
-			parentUI.toFront();
+			parent.setEnabled(true);
+			parent.toFront();
 		}
 	}
 
@@ -209,12 +210,15 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					lblAvatar3MouseClicked(evt);
 				}
+
 				public void mouseExited(MouseEvent evt) {
 					lblAvatar3MouseExited(evt);
 				}
+
 				public void mousePressed(MouseEvent evt) {
 					lblAvatar3MousePressed(evt);
 				}
+
 				public void mouseEntered(MouseEvent evt) {
 					lblAvatar3MouseEntered(evt);
 				}
@@ -315,12 +319,12 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private void changeAvatar(int avatar) {
 		File file = new File(getClass().getClassLoader()
 				.getResource("images/" + avatar + ".jpg").getPath());
-		if(parentUI instanceof ProfileUI){
-			((ProfileUI)parentUI).setAvatar(file);
-		}else{
-			((RegisterUI)parentUI).setAvatar(file);
+		if (parent instanceof ProfileUI) {
+			((ProfileUI) parent).setAvatar(file);
+		} else {
+			((RegisterUI) parent).setAvatar(file);
 		}
-		parentUI.setEnabled(true);
+		parent.setEnabled(true);
 		dispose();
 	}
 
@@ -344,27 +348,32 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 
 	private void btnCancelMouseClicked(MouseEvent evt) {
 		dispose();
-		parentUI.setEnabled(true);
-		parentUI.toFront();
+		parent.setEnabled(true);
+		parent.toFront();
 	}
-	
+
 	private void lblAvatar3MouseEntered(MouseEvent evt) {
 		lblAvatar3.setBorder(BorderFactory
 				.createBevelBorder(BevelBorder.RAISED));
 	}
-	
+
 	private void lblAvatar3MousePressed(MouseEvent evt) {
 		lblAvatar3.setBorder(BorderFactory
 				.createBevelBorder(BevelBorder.LOWERED));
 	}
-	
+
 	private void lblAvatar3MouseExited(MouseEvent evt) {
 		lblAvatar3.setBorder(BorderFactory
 				.createBevelBorder(BevelBorder.LOWERED));
 	}
-	
+
 	private void lblAvatar3MouseClicked(MouseEvent evt) {
 		changeAvatar(3);
+	}
+
+	private void thisWindowClosing(WindowEvent evt) {
+		parent.setEnabled(true);
+		dispose();
 	}
 
 }

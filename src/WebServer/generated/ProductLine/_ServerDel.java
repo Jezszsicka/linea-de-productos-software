@@ -35,8 +35,9 @@ public interface _ServerDel extends Ice._ObjectDel
         throws IceInternal.LocalExceptionWrapper,
                UserNotLoggedException;
 
-    void changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper;
+    void changeName(String username, String name, String lastname, String password, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               InvalidLoggingException;
 
     void changePassword(String username, String password, String newPassword, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper,
@@ -61,7 +62,4 @@ public interface _ServerDel extends Ice._ObjectDel
     void sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper,
                UserNotLoggedException;
-
-    void saveProfile(User profile, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper;
 }

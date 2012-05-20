@@ -14,7 +14,7 @@ import javax.swing.SwingConstants;
 
 import ProductLine.GameType;
 import domain.Controller;
-
+import java.awt.BorderLayout;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -34,8 +34,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	{
 		// Set Look & Feel
 		try {
-			javax.swing.UIManager
-					.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+			javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -62,9 +61,10 @@ public class CreateGameUI extends javax.swing.JFrame {
 			// add your error handling code here
 			e.printStackTrace();
 		}
-		getContentPane().setLayout(null);
-		this.setSize(431, 172);
-		getContentPane().add(getPnlBackground());
+		BorderLayout thisLayout = new BorderLayout();
+		getContentPane().setLayout(thisLayout);
+		this.setSize(330, 172);
+		getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
 	}
 
 	private JPanel getPnlBackground() {
@@ -86,7 +86,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 		if(btnCreate == null) {
 			btnCreate = new JButton();
 			btnCreate.setText("Create game");
-			btnCreate.setBounds(17, 96, 95, 23);
+			btnCreate.setBounds(23, 96, 95, 23);
+			btnCreate.setFocusable(false);
 		}
 		return btnCreate;
 	}
@@ -95,9 +96,10 @@ public class CreateGameUI extends javax.swing.JFrame {
 		if(lblGameName == null) {
 			lblGameName = new JLabel();
 			lblGameName.setText("Name");
-			lblGameName.setBounds(23, 50, 33, 14);
+			lblGameName.setBounds(23, 47, 73, 20);
 			lblGameName.setHorizontalAlignment(SwingConstants.CENTER);
 			lblGameName.setHorizontalTextPosition(SwingConstants.CENTER);
+			lblGameName.setFont(new java.awt.Font("Tahoma",1,11));
 		}
 		return lblGameName;
 	}
@@ -114,9 +116,10 @@ public class CreateGameUI extends javax.swing.JFrame {
 		if(lblGame == null) {
 			lblGame = new JLabel();
 			lblGame.setText("Game");
-			lblGame.setBounds(23, 19, 33, 14);
+			lblGame.setBounds(23, 16, 73, 20);
 			lblGame.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblGame.setHorizontalAlignment(SwingConstants.CENTER);
+			lblGame.setFont(new java.awt.Font("Tahoma",1,11));
 		}
 		return lblGame;
 	}
@@ -129,6 +132,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 			lstGames = new JComboBox<GameType>();
 			lstGames.setModel(lstGamesModel);
 			lstGames.setBounds(143, 16, 114, 20);
+			lstGames.setFocusable(false);
 		}
 		return lstGames;
 	}
@@ -136,8 +140,9 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
 			btnCancel = new JButton("Cancel");
-			btnCancel.setBounds(285, 96, 89, 23);
+			btnCancel.setBounds(191, 96, 95, 23);
 			btnCancel.setText("Cancel");
+			btnCancel.setFocusable(false);
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnCancelMouseClicked(evt);

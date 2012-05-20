@@ -65,19 +65,6 @@ public class ServerI extends _ServerDisp{
 	}
 
 	@Override
-	public void saveProfile(User profile, Current __current) {
-		UsersController.getInstance().saveProfile(profile);
-		
-	}
-
-	@Override
-	public void changeName(String username, String name, String lastname,
-			Current __current) {
-		UsersController.getInstance().changeName(username,name,lastname);
-		
-	}
-
-	@Override
 	public void changeEmail(String username, String email, String password,
 			Current __current) throws InvalidLoggingException {
 		UsersController.getInstance().changeEmail(username,email,password);
@@ -95,6 +82,13 @@ public class ServerI extends _ServerDisp{
 	@Override
 	public void changeAvatar(String username, byte[] avatar, Current __current) {
 		UsersController.getInstance().changeAvatar(username,avatar);
+		
+	}
+
+	@Override
+	public void changeName(String username, String name, String lastname,
+			String password, Current __current) throws InvalidLoggingException {
+		UsersController.getInstance().changeName(username, name, lastname,password);
 		
 	}	
 

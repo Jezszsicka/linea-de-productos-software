@@ -1,16 +1,13 @@
 package presentation;
-import java.awt.BorderLayout;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JButton;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
 import javax.swing.WindowConstants;
 
 
@@ -26,6 +23,7 @@ import javax.swing.WindowConstants;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
+@SuppressWarnings("serial")
 public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JPanel pnlBackground;
 	private JLabel lblPlayerName;

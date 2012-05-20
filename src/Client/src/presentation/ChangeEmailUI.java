@@ -2,6 +2,8 @@ package presentation;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -57,12 +59,17 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
-			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 			getContentPane().add(getPnlBackgroun(), BorderLayout.CENTER);
 			pack();
 			this.setSize(400, 200);
 			setVisible(true);
 			setLocationRelativeTo(null);
+			this.addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent evt) {
+					thisWindowClosing(evt);
+				}
+			});
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
@@ -178,8 +185,10 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 	private void btnSaveMouseClicked(MouseEvent evt) {
 		String password = new String(txtPassword.getPassword());
 		Controller.getInstance().changeEmail(txtEmail.getText(),txtConfirmEmail.getText(),password);
+	}
+	
+	private void thisWindowClosing(WindowEvent evt) {
 		parent.setEnabled(true);
-		parent.toFront();
 		dispose();
 	}
 

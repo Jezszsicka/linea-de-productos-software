@@ -18,8 +18,10 @@ import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
@@ -54,7 +56,8 @@ public class ProfileUI extends javax.swing.JFrame {
 	
 	private static final int lblRankingWidth = 75;
 	private static final int lblRankingHeight = 15;
-	
+	private JScrollPane rankingScroll;
+
 	private JPanel pnlBackground;
 	private JLabel lblRate;
 	private JLabel lblPlayed;
@@ -78,6 +81,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel lblAvatar;
 	private JButton btnAvatar;
 	private JLabel lblNickname;
+	private JFrame changeFrame;
 
 	private User user;
 
@@ -155,7 +159,7 @@ public class ProfileUI extends javax.swing.JFrame {
 			pnlBackground.add(getBtnCancel());
 			pnlBackground.add(getBtnChangePassword());
 			pnlBackground.add(getBtnChangeEmail());
-			pnlBackground.add(getJPanel1());
+			pnlBackground.add(getJScrollPane1());
 			pnlBackground.add(getLblAccountInfo());
 			pnlBackground.add(getLblUserEmail());
 			pnlBackground.add(getLblEmail());
@@ -227,7 +231,7 @@ public class ProfileUI extends javax.swing.JFrame {
 		if (btnCancel == null) {
 			btnCancel = new JButton();
 			btnCancel.setText("Back");
-			btnCancel.setBounds(444, 406, 74, 23);
+			btnCancel.setBounds(508, 406, 74, 23);
 			btnCancel.setHorizontalTextPosition(SwingConstants.CENTER);
 			btnCancel.setFocusable(false);
 			btnCancel.addMouseListener(new MouseAdapter() {
@@ -321,25 +325,19 @@ public class ProfileUI extends javax.swing.JFrame {
 			ImageIO.createImageOutputStream(baos); 
 			ImageIO.write(bi, "JPG", baos);
 			baos.flush();
-			user.setAvatar(baos.toByteArray()); 
+			avatar = baos.toByteArray(); 
 			baos.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Controller.getInstance().changeAvatar(avatar);
 		lblAvatar.setIcon(new ImageIcon(user.getAvatar()));
-		Controller.getInstance().changeAvatar();
 	}
 
 	private void btnCancelMouseClicked(MouseEvent evt) {
 		dispose();
-		Controller.getInstance().closeProfile(false);
-	}
-
-	private void btnSaveMouseClicked(MouseEvent evt) {
-		dispose();
-		user.setAvatar(null);
-		Controller.getInstance().closeProfile(true);
+		Controller.getInstance().closeProfile();
 	}
 
 	private JButton getBtnChangePassword() {
@@ -373,7 +371,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	}
 
 	private void thisWindowClosing(WindowEvent evt) {
-		Controller.getInstance().closeProfile(false);
+		Controller.getInstance().closeProfile();
 	}
 	
 	private JPanel getJPanel1() {
@@ -450,7 +448,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	}
 	
 	private void btnChangePasswordMouseClicked(MouseEvent evt) {
-		new ChangePasswordUI(this);
+		changeFrame = new ChangePasswordUI(this);
 		setEnabled(false);
 	}
 	
@@ -489,7 +487,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	}
 	
 	private void btnChangeNameMouseClicked(MouseEvent evt) {
-		new ChangeNameUI(this,user.getName(),user.getLastName());
+		changeFrame = new ChangeNameUI(this,user.getName(),user.getLastName());
 		setEnabled(false);
 	}
 
@@ -500,8 +498,23 @@ public class ProfileUI extends javax.swing.JFrame {
 	}
 	
 	private void btnChangeEmailMouseClicked(MouseEvent evt) {
-		new ChangeEmailUI(this,user.getEmail());
+		changeFrame = new ChangeEmailUI(this,user.getEmail());
 		setEnabled(true);
+	}
+	
+	public void closeChangeFrame(){
+		changeFrame.dispose();
+		setEnabled(true);
+	}
+	
+	private JScrollPane getJScrollPane1() {
+		if(rankingScroll == null) {
+			rankingScroll = new JScrollPane();
+			rankingScroll.setBounds(130, 269, 375, 126);
+			rankingScroll.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+			rankingScroll.setViewportView(getJPanel1());
+		}
+		return rankingScroll;
 	}
 
 }

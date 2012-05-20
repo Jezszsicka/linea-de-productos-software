@@ -103,6 +103,7 @@ public class Controller {
 	}
 
 	public void logoutUser() {
+
 		try {
 			sessionManager.logoutUser();
 			gameManager = null;
@@ -151,11 +152,7 @@ public class Controller {
 		waitingRoomUI.setEnabled(false);
 	}
 
-	public void closeProfile(boolean save) {
-		if (save) {
-			sessionManager.saveProfile();
-			waitingRoomUI.setAvatar(session.getUser().getAvatar());
-		}
+	public void closeProfile() {
 		waitingRoomUI.setEnabled(true);
 		waitingRoomUI.toFront();
 	}
@@ -177,14 +174,26 @@ public class Controller {
 
 	}
 
-	public void changeName(String name, String lastname) {
-		sessionManager.changeName(name, lastname);
+	public void changeName(String name, String lastname, String password) {
+		try {
+			sessionManager.changeName(name, lastname, password);
+			profileUI.closeChangeFrame();
+		} catch (InvalidLoggingException e) {
+			JOptionPane.showMessageDialog(profileUI, "The password is wrong",
+					"Incorrect password", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		} catch (WrongInputException e) {
+			JOptionPane.showMessageDialog(profileUI, e.getMessage(),
+					e.getError(), JOptionPane.WARNING_MESSAGE);
+			e.printStackTrace();
+		}
 
 	}
 
 	public void changeEmail(String email, String confirmEmail, String password) {
 		try {
 			sessionManager.changeEmail(email, confirmEmail, password);
+			profileUI.closeChangeFrame();
 		} catch (WrongInputException e) {
 			JOptionPane.showMessageDialog(profileUI, e.getMessage(),
 					e.getError(), JOptionPane.WARNING_MESSAGE);
@@ -202,17 +211,22 @@ public class Controller {
 		try {
 			sessionManager.changePassword(password, newPassword,
 					confirmPassword);
+			profileUI.closeChangeFrame();
 		} catch (InvalidLoggingException e) {
 			JOptionPane.showMessageDialog(profileUI, "The password is wrong",
 					"Incorrect password", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		} catch (WrongInputException e) {
+			JOptionPane.showMessageDialog(profileUI, e.getMessage(),
+					e.getError(), JOptionPane.WARNING_MESSAGE);
 			e.printStackTrace();
 		}
 
 	}
 
-	public void changeAvatar() {
-		sessionManager.changeAvatar();
-		waitingRoomUI.setAvatar(session.getUser().getAvatar());
+	public void changeAvatar(byte[] avatar) {
+		sessionManager.changeAvatar(avatar);
+		waitingRoomUI.setAvatar(avatar);
 	}
 
 }

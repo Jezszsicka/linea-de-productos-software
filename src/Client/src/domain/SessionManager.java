@@ -47,13 +47,15 @@ public class SessionManager {
 		session = null;
 	}
 
-	public void saveProfile() {
-		session.getProxy().saveProfile(session.getUser());
-	}
-
-	public void changeName(String name, String lastname) {
+	public void changeName(String name, String lastname, String password) throws InvalidLoggingException, WrongInputException {
+		// Check empty fields
+		if(name.isEmpty() || lastname.isEmpty() || password.isEmpty())
+			throw new WrongInputException("Incomplete fields",
+					"Some fields are in blank, please complete all the fields");
+		
+		String encryptedPassword = Utils.hashMD5_Base64(password);
 		session.getProxy().changeName(session.getUser().getUsername(), name,
-				lastname);
+				lastname,encryptedPassword);
 		session.getUser().setName(name);
 		session.getUser().setLastName(lastname);
 	}
@@ -75,18 +77,28 @@ public class SessionManager {
 		if(!email.equals(confirmEmail))
 			throw new WrongInputException("Emails don't match",
 					"The emails must be the same");
-		session.getProxy().changeEmail(session.getUser().getUsername(),email,password);
+		
+		String encryptedPassword = Utils.hashMD5_Base64(password);
+		session.getProxy().changeEmail(session.getUser().getUsername(),email,encryptedPassword);
 		
 	}
 
 	public void changePassword(String password, String newPassword,
-			String confirmPassword) throws InvalidLoggingException {
-		session.getProxy().changePassword(session.getUser().getUsername(),password,newPassword);
+			String confirmPassword) throws InvalidLoggingException, WrongInputException {
+		
+		//Check empty fields
+		if(password.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty())
+			throw new WrongInputException("Incomplete fields", "Some fields are in blank, please complete all the fields");
+		
+		String encryptedPassword = Utils.hashMD5_Base64(password);
+		String encryptedNewPassword = Utils.hashMD5_Base64(newPassword);
+		session.getProxy().changePassword(session.getUser().getUsername(),encryptedPassword,encryptedNewPassword);
 		
 	}
 	
-	public void changeAvatar() {
-		session.getProxy().changeAvatar(session.getUser().getUsername(), session.getUser().getAvatar());
+	public void changeAvatar(byte[] avatar) {
+		session.getProxy().changeAvatar(session.getUser().getUsername(), avatar);
+		session.getUser().setAvatar(avatar);
 	}
 
 	private void validateLoginInput(String username, String password)

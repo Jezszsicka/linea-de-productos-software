@@ -241,19 +241,22 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
     }
 
     public void
-    changeName(String username, String name, String lastname)
+    changeName(String username, String name, String lastname, String password)
+        throws InvalidLoggingException
     {
-        changeName(username, name, lastname, null, false);
+        changeName(username, name, lastname, password, null, false);
     }
 
     public void
-    changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx)
+    changeName(String username, String name, String lastname, String password, java.util.Map<String, String> __ctx)
+        throws InvalidLoggingException
     {
-        changeName(username, name, lastname, __ctx, true);
+        changeName(username, name, lastname, password, __ctx, true);
     }
 
     private void
-    changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    changeName(String username, String name, String lastname, String password, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+        throws InvalidLoggingException
     {
         if(__explicitCtx && __ctx == null)
         {
@@ -265,9 +268,10 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
             Ice._ObjectDel __delBase = null;
             try
             {
+                __checkTwowayOnly("changeName");
                 __delBase = __getDelegate(false);
                 _ServerDel __del = (_ServerDel)__delBase;
-                __del.changeName(username, name, lastname, __ctx);
+                __del.changeName(username, name, lastname, password, __ctx);
                 return;
             }
             catch(IceInternal.LocalExceptionWrapper __ex)
@@ -283,38 +287,39 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
 
     private static final String __changeName_name = "changeName";
 
-    public Ice.AsyncResult begin_changeName(String username, String name, String lastname)
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, String password)
     {
-        return begin_changeName(username, name, lastname, null, false, null);
+        return begin_changeName(username, name, lastname, password, null, false, null);
     }
 
-    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx)
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, String password, java.util.Map<String, String> __ctx)
     {
-        return begin_changeName(username, name, lastname, __ctx, true, null);
+        return begin_changeName(username, name, lastname, password, __ctx, true, null);
     }
 
-    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, Ice.Callback __cb)
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, String password, Ice.Callback __cb)
     {
-        return begin_changeName(username, name, lastname, null, false, __cb);
+        return begin_changeName(username, name, lastname, password, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, String password, java.util.Map<String, String> __ctx, Ice.Callback __cb)
     {
-        return begin_changeName(username, name, lastname, __ctx, true, __cb);
+        return begin_changeName(username, name, lastname, password, __ctx, true, __cb);
     }
 
-    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, Callback_Server_changeName __cb)
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, String password, Callback_Server_changeName __cb)
     {
-        return begin_changeName(username, name, lastname, null, false, __cb);
+        return begin_changeName(username, name, lastname, password, null, false, __cb);
     }
 
-    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx, Callback_Server_changeName __cb)
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, String password, java.util.Map<String, String> __ctx, Callback_Server_changeName __cb)
     {
-        return begin_changeName(username, name, lastname, __ctx, true, __cb);
+        return begin_changeName(username, name, lastname, password, __ctx, true, __cb);
     }
 
-    private Ice.AsyncResult begin_changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    private Ice.AsyncResult begin_changeName(String username, String name, String lastname, String password, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
     {
+        __checkAsyncTwowayOnly(__changeName_name);
         IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __changeName_name, __cb);
         try
         {
@@ -323,6 +328,7 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
             __os.writeString(username);
             __os.writeString(name);
             __os.writeString(lastname);
+            __os.writeString(password);
             __os.endWriteEncaps();
             __result.__send(true);
         }
@@ -334,8 +340,26 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
     }
 
     public void end_changeName(Ice.AsyncResult __result)
+        throws InvalidLoggingException
     {
-        __end(__result, __changeName_name);
+        Ice.AsyncResult.__check(__result, this, __changeName_name);
+        if(!__result.__wait())
+        {
+            try
+            {
+                __result.__throwUserException();
+            }
+            catch(InvalidLoggingException __ex)
+            {
+                throw __ex;
+            }
+            catch(Ice.UserException __ex)
+            {
+                throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+            }
+        }
+        IceInternal.BasicStream __is = __result.__is();
+        __is.skipEmptyEncaps();
     }
 
     public void
@@ -944,103 +968,6 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
         }
         IceInternal.BasicStream __is = __result.__is();
         __is.skipEmptyEncaps();
-    }
-
-    public void
-    saveProfile(User profile)
-    {
-        saveProfile(profile, null, false);
-    }
-
-    public void
-    saveProfile(User profile, java.util.Map<String, String> __ctx)
-    {
-        saveProfile(profile, __ctx, true);
-    }
-
-    private void
-    saveProfile(User profile, java.util.Map<String, String> __ctx, boolean __explicitCtx)
-    {
-        if(__explicitCtx && __ctx == null)
-        {
-            __ctx = _emptyContext;
-        }
-        int __cnt = 0;
-        while(true)
-        {
-            Ice._ObjectDel __delBase = null;
-            try
-            {
-                __delBase = __getDelegate(false);
-                _ServerDel __del = (_ServerDel)__delBase;
-                __del.saveProfile(profile, __ctx);
-                return;
-            }
-            catch(IceInternal.LocalExceptionWrapper __ex)
-            {
-                __handleExceptionWrapper(__delBase, __ex);
-            }
-            catch(Ice.LocalException __ex)
-            {
-                __cnt = __handleException(__delBase, __ex, null, __cnt);
-            }
-        }
-    }
-
-    private static final String __saveProfile_name = "saveProfile";
-
-    public Ice.AsyncResult begin_saveProfile(User profile)
-    {
-        return begin_saveProfile(profile, null, false, null);
-    }
-
-    public Ice.AsyncResult begin_saveProfile(User profile, java.util.Map<String, String> __ctx)
-    {
-        return begin_saveProfile(profile, __ctx, true, null);
-    }
-
-    public Ice.AsyncResult begin_saveProfile(User profile, Ice.Callback __cb)
-    {
-        return begin_saveProfile(profile, null, false, __cb);
-    }
-
-    public Ice.AsyncResult begin_saveProfile(User profile, java.util.Map<String, String> __ctx, Ice.Callback __cb)
-    {
-        return begin_saveProfile(profile, __ctx, true, __cb);
-    }
-
-    public Ice.AsyncResult begin_saveProfile(User profile, Callback_Server_saveProfile __cb)
-    {
-        return begin_saveProfile(profile, null, false, __cb);
-    }
-
-    public Ice.AsyncResult begin_saveProfile(User profile, java.util.Map<String, String> __ctx, Callback_Server_saveProfile __cb)
-    {
-        return begin_saveProfile(profile, __ctx, true, __cb);
-    }
-
-    private Ice.AsyncResult begin_saveProfile(User profile, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
-    {
-        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __saveProfile_name, __cb);
-        try
-        {
-            __result.__prepare(__saveProfile_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
-            IceInternal.BasicStream __os = __result.__os();
-            __os.writeObject(profile);
-            __os.writePendingObjects();
-            __os.endWriteEncaps();
-            __result.__send(true);
-        }
-        catch(Ice.LocalException __ex)
-        {
-            __result.__exceptionAsync(__ex);
-        }
-        return __result;
-    }
-
-    public void end_saveProfile(Ice.AsyncResult __result)
-    {
-        __end(__result, __saveProfile_name);
     }
 
     public void
