@@ -32,7 +32,8 @@ public interface _ServerOperationsNC
     void logoutUser(String username)
         throws UserNotLoggedException;
 
-    void changeName(String username, String name, String lastname);
+    void changeName(String username, String name, String lastname, String password)
+        throws InvalidLoggingException;
 
     void changePassword(String username, String password, String newPassword)
         throws InvalidLoggingException;
@@ -50,6 +51,4 @@ public interface _ServerOperationsNC
 
     void sendPrivateMessage(String sender, String destinatary, String message)
         throws UserNotLoggedException;
-
-    void saveProfile(User profile);
 }

@@ -2,14 +2,14 @@ package presentation;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
 
 import domain.Controller;
 
@@ -57,12 +57,17 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
-			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 			getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
 			pack();
 			this.setSize(400, 200);
 			setVisible(true);
 			setLocationRelativeTo(null);
+			this.addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent evt) {
+					thisWindowClosing(evt);
+				}
+			});
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
@@ -175,14 +180,16 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 		String newPassword = new String(txtNewPassword.getPassword());
 		String confirmPassword = new String(txtConfirmPassword.getPassword());
 		Controller.getInstance().changePassword(password,newPassword,confirmPassword);
-		parent.setEnabled(true);
-		parent.toFront();
-		dispose();
 	}
 	
 	private void btnCancelMouseClicked(MouseEvent evt) {
 		parent.setEnabled(true);
 		parent.toFront();
+		dispose();
+	}
+	
+	private void thisWindowClosing(WindowEvent evt) {
+		parent.setEnabled(true);
 		dispose();
 	}
 

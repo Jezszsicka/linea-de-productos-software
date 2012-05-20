@@ -91,9 +91,10 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
     }
 
     public final void
-    changeName(String username, String name, String lastname)
+    changeName(String username, String name, String lastname, String password)
+        throws InvalidLoggingException
     {
-        changeName(username, name, lastname, null);
+        changeName(username, name, lastname, password, null);
     }
 
     public final void
@@ -129,12 +130,6 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
         throws UserAlreadyExistsException
     {
         registerUser(newUser, null);
-    }
-
-    public final void
-    saveProfile(User profile)
-    {
-        saveProfile(profile, null);
     }
 
     public final void
@@ -247,9 +242,20 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
         name = __is.readString();
         String lastname;
         lastname = __is.readString();
+        String password;
+        password = __is.readString();
         __is.endReadEncaps();
-        __obj.changeName(username, name, lastname, __current);
-        return Ice.DispatchStatus.DispatchOK;
+        IceInternal.BasicStream __os = __inS.os();
+        try
+        {
+            __obj.changeName(username, name, lastname, password, __current);
+            return Ice.DispatchStatus.DispatchOK;
+        }
+        catch(InvalidLoggingException ex)
+        {
+            __os.writeUserException(ex);
+            return Ice.DispatchStatus.DispatchUserException;
+        }
     }
 
     public static Ice.DispatchStatus
@@ -393,20 +399,6 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
         }
     }
 
-    public static Ice.DispatchStatus
-    ___saveProfile(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
-    {
-        __checkMode(Ice.OperationMode.Normal, __current.mode);
-        IceInternal.BasicStream __is = __inS.is();
-        __is.startReadEncaps();
-        UserHolder profile = new UserHolder();
-        __is.readObject(profile);
-        __is.readPendingObjects();
-        __is.endReadEncaps();
-        __obj.saveProfile(profile.value, __current);
-        return Ice.DispatchStatus.DispatchOK;
-    }
-
     private final static String[] __all =
     {
         "changeAvatar",
@@ -421,7 +413,6 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
         "loginUser",
         "logoutUser",
         "registerUser",
-        "saveProfile",
         "sendGameMessage",
         "sendGeneralMessage",
         "sendPrivateMessage"
@@ -488,17 +479,13 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
             }
             case 12:
             {
-                return ___saveProfile(this, in, __current);
+                return ___sendGameMessage(this, in, __current);
             }
             case 13:
             {
-                return ___sendGameMessage(this, in, __current);
-            }
-            case 14:
-            {
                 return ___sendGeneralMessage(this, in, __current);
             }
-            case 15:
+            case 14:
             {
                 return ___sendPrivateMessage(this, in, __current);
             }

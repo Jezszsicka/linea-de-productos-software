@@ -169,12 +169,10 @@ public class UsersController {
 
 	}
 
-	public void saveProfile(ProductLine.User profile) {
-		userDAO.update(profile);
-	}
-
-	public void changeName(String username, String name, String lastname) {
+	public void changeName(String username, String name, String lastname,String password) throws InvalidLoggingException {
 		User user = searchSession(username).getUser();
+		if (!user.getPassword().equals(password))
+			throw new InvalidLoggingException("Incorrect password");
 		user.setName(name);
 		user.setLastName(lastname);
 		userDAO.update(user);

@@ -32,7 +32,8 @@ public interface _ServerOperations
     void logoutUser(String username, Ice.Current __current)
         throws UserNotLoggedException;
 
-    void changeName(String username, String name, String lastname, Ice.Current __current);
+    void changeName(String username, String name, String lastname, String password, Ice.Current __current)
+        throws InvalidLoggingException;
 
     void changePassword(String username, String password, String newPassword, Ice.Current __current)
         throws InvalidLoggingException;
@@ -50,6 +51,4 @@ public interface _ServerOperations
 
     void sendPrivateMessage(String sender, String destinatary, String message, Ice.Current __current)
         throws UserNotLoggedException;
-
-    void saveProfile(User profile, Ice.Current __current);
 }

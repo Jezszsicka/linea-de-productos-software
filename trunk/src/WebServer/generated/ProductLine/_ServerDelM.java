@@ -120,8 +120,9 @@ public final class _ServerDelM extends Ice._ObjectDelM implements _ServerDel
     }
 
     public void
-    changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
+    changeName(String username, String name, String lastname, String password, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               InvalidLoggingException
     {
         IceInternal.Outgoing __og = __handler.getOutgoing("changeName", Ice.OperationMode.Normal, __ctx);
         try
@@ -132,33 +133,35 @@ public final class _ServerDelM extends Ice._ObjectDelM implements _ServerDel
                 __os.writeString(username);
                 __os.writeString(name);
                 __os.writeString(lastname);
+                __os.writeString(password);
             }
             catch(Ice.LocalException __ex)
             {
                 __og.abort(__ex);
             }
             boolean __ok = __og.invoke();
-            if(!__og.is().isEmpty())
+            try
             {
-                try
+                if(!__ok)
                 {
-                    if(!__ok)
+                    try
                     {
-                        try
-                        {
-                            __og.throwUserException();
-                        }
-                        catch(Ice.UserException __ex)
-                        {
-                            throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
-                        }
+                        __og.throwUserException();
                     }
-                    __og.is().skipEmptyEncaps();
+                    catch(InvalidLoggingException __ex)
+                    {
+                        throw __ex;
+                    }
+                    catch(Ice.UserException __ex)
+                    {
+                        throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+                    }
                 }
-                catch(Ice.LocalException __ex)
-                {
-                    throw new IceInternal.LocalExceptionWrapper(__ex, false);
-                }
+                __og.is().skipEmptyEncaps();
+            }
+            catch(Ice.LocalException __ex)
+            {
+                throw new IceInternal.LocalExceptionWrapper(__ex, false);
             }
         }
         finally
@@ -416,53 +419,6 @@ public final class _ServerDelM extends Ice._ObjectDelM implements _ServerDel
             catch(Ice.LocalException __ex)
             {
                 throw new IceInternal.LocalExceptionWrapper(__ex, false);
-            }
-        }
-        finally
-        {
-            __handler.reclaimOutgoing(__og);
-        }
-    }
-
-    public void
-    saveProfile(User profile, java.util.Map<String, String> __ctx)
-        throws IceInternal.LocalExceptionWrapper
-    {
-        IceInternal.Outgoing __og = __handler.getOutgoing("saveProfile", Ice.OperationMode.Normal, __ctx);
-        try
-        {
-            try
-            {
-                IceInternal.BasicStream __os = __og.os();
-                __os.writeObject(profile);
-                __os.writePendingObjects();
-            }
-            catch(Ice.LocalException __ex)
-            {
-                __og.abort(__ex);
-            }
-            boolean __ok = __og.invoke();
-            if(!__og.is().isEmpty())
-            {
-                try
-                {
-                    if(!__ok)
-                    {
-                        try
-                        {
-                            __og.throwUserException();
-                        }
-                        catch(Ice.UserException __ex)
-                        {
-                            throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
-                        }
-                    }
-                    __og.is().skipEmptyEncaps();
-                }
-                catch(Ice.LocalException __ex)
-                {
-                    throw new IceInternal.LocalExceptionWrapper(__ex, false);
-                }
             }
         }
         finally

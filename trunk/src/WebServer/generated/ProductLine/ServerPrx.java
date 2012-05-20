@@ -88,23 +88,26 @@ public interface ServerPrx extends Ice.ObjectPrx
     public void end_logoutUser(Ice.AsyncResult __result)
         throws UserNotLoggedException;
 
-    public void changeName(String username, String name, String lastname);
+    public void changeName(String username, String name, String lastname, String password)
+        throws InvalidLoggingException;
 
-    public void changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx);
+    public void changeName(String username, String name, String lastname, String password, java.util.Map<String, String> __ctx)
+        throws InvalidLoggingException;
 
-    public Ice.AsyncResult begin_changeName(String username, String name, String lastname);
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, String password);
 
-    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx);
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, String password, java.util.Map<String, String> __ctx);
 
-    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, Ice.Callback __cb);
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, String password, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, String password, java.util.Map<String, String> __ctx, Ice.Callback __cb);
 
-    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, Callback_Server_changeName __cb);
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, String password, Callback_Server_changeName __cb);
 
-    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, java.util.Map<String, String> __ctx, Callback_Server_changeName __cb);
+    public Ice.AsyncResult begin_changeName(String username, String name, String lastname, String password, java.util.Map<String, String> __ctx, Callback_Server_changeName __cb);
 
-    public void end_changeName(Ice.AsyncResult __result);
+    public void end_changeName(Ice.AsyncResult __result)
+        throws InvalidLoggingException;
 
     public void changePassword(String username, String password, String newPassword)
         throws InvalidLoggingException;
@@ -240,22 +243,4 @@ public interface ServerPrx extends Ice.ObjectPrx
 
     public void end_sendPrivateMessage(Ice.AsyncResult __result)
         throws UserNotLoggedException;
-
-    public void saveProfile(User profile);
-
-    public void saveProfile(User profile, java.util.Map<String, String> __ctx);
-
-    public Ice.AsyncResult begin_saveProfile(User profile);
-
-    public Ice.AsyncResult begin_saveProfile(User profile, java.util.Map<String, String> __ctx);
-
-    public Ice.AsyncResult begin_saveProfile(User profile, Ice.Callback __cb);
-
-    public Ice.AsyncResult begin_saveProfile(User profile, java.util.Map<String, String> __ctx, Ice.Callback __cb);
-
-    public Ice.AsyncResult begin_saveProfile(User profile, Callback_Server_saveProfile __cb);
-
-    public Ice.AsyncResult begin_saveProfile(User profile, java.util.Map<String, String> __ctx, Callback_Server_saveProfile __cb);
-
-    public void end_saveProfile(Ice.AsyncResult __result);
 }

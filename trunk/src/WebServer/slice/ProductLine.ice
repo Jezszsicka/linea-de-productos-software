@@ -46,7 +46,7 @@ module ProductLine {
     	void registerUser(User newUser) throws UserAlreadyExistsException;
         User loginUser(string username, string password,Ice::Identity client) throws UserAlreadyLoggedException,InvalidLoggingException;
 		void logoutUser(string username) throws UserNotLoggedException;
-		void changeName(string username, string name, string lastname);
+		void changeName(string username, string name, string lastname, string password) throws InvalidLoggingException;
 		void changePassword(string username, string password, string newPassword) throws InvalidLoggingException;
 		void changeEmail(string username, string email, string password) throws InvalidLoggingException;
 		void changeAvatar(string username, Image avatar);
@@ -54,7 +54,6 @@ module ProductLine {
 		void sendGameMessage(string game,string sender, string message);
 		void sendGeneralMessage(string sender,string message);
 		void sendPrivateMessage(string sender, string destinatary, string message) throws UserNotLoggedException;
-		void saveProfile(User profile);
     };
     
     interface Client {

@@ -2,10 +2,13 @@ package presentation;
 import java.awt.BorderLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
@@ -28,6 +31,8 @@ import domain.Controller;
 public class ChangeNameUI extends javax.swing.JFrame {
 	private JPanel pnglBackground;
 	private JTextField txtName;
+	private JPasswordField txtPassword;
+	private JLabel lblPassword;
 	private JButton btnCancel;
 	private JButton btnSave;
 	private JTextField txtLastname;
@@ -45,12 +50,17 @@ public class ChangeNameUI extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
-			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 			getContentPane().add(getPnglBackground(), BorderLayout.CENTER);
 			pack();
-			this.setSize(356, 166);
+			this.setSize(400, 200);
 			setVisible(true);
 			setLocationRelativeTo(null);
+			this.addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent evt) {
+					thisWindowClosing(evt);
+				}
+			});
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
@@ -68,6 +78,8 @@ public class ChangeNameUI extends javax.swing.JFrame {
 			pnglBackground.add(getTxtLastname());
 			pnglBackground.add(getBtnSave());
 			pnglBackground.add(getBtnCancel());
+			pnglBackground.add(getLblPassword());
+			pnglBackground.add(getTxtPassword());
 		}
 		return pnglBackground;
 	}
@@ -76,7 +88,7 @@ public class ChangeNameUI extends javax.swing.JFrame {
 		if(lblName == null) {
 			lblName = new JLabel();
 			lblName.setText("Name");
-			lblName.setBounds(67, 24, 88, 20);
+			lblName.setBounds(73, 21, 88, 20);
 			lblName.setFont(new java.awt.Font("Tahoma",1,11));
 		}
 		return lblName;
@@ -86,7 +98,7 @@ public class ChangeNameUI extends javax.swing.JFrame {
 		if(lblLastName == null) {
 			lblLastName = new JLabel();
 			lblLastName.setText("Last Name");
-			lblLastName.setBounds(67, 55, 88, 20);
+			lblLastName.setBounds(73, 52, 88, 20);
 			lblLastName.setFont(new java.awt.Font("Tahoma",1,11));
 		}
 		return lblLastName;
@@ -95,7 +107,7 @@ public class ChangeNameUI extends javax.swing.JFrame {
 	private JTextField getTxtName() {
 		if(txtName == null) {
 			txtName = new JTextField();
-			txtName.setBounds(173, 24, 123, 20);
+			txtName.setBounds(179, 21, 149, 20);
 		}
 		return txtName;
 	}
@@ -103,7 +115,7 @@ public class ChangeNameUI extends javax.swing.JFrame {
 	private JTextField getTxtLastname() {
 		if(txtLastname == null) {
 			txtLastname = new JTextField();
-			txtLastname.setBounds(173, 55, 123, 20);
+			txtLastname.setBounds(179, 52, 149, 20);
 		}
 		return txtLastname;
 	}
@@ -112,7 +124,7 @@ public class ChangeNameUI extends javax.swing.JFrame {
 		if(btnSave == null) {
 			btnSave = new JButton();
 			btnSave.setText("Save");
-			btnSave.setBounds(67, 94, 68, 23);
+			btnSave.setBounds(73, 123, 68, 23);
 			btnSave.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnSaveMouseClicked(evt);
@@ -126,7 +138,7 @@ public class ChangeNameUI extends javax.swing.JFrame {
 		if(btnCancel == null) {
 			btnCancel = new JButton();
 			btnCancel.setText("Cancel");
-			btnCancel.setBounds(199, 94, 68, 23);
+			btnCancel.setBounds(246, 123, 68, 23);
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnCancelMouseClicked(evt);
@@ -142,8 +154,30 @@ public class ChangeNameUI extends javax.swing.JFrame {
 	}
 	
 	private void btnSaveMouseClicked(MouseEvent evt) {
-		Controller.getInstance().changeName(txtName.getText(),txtLastname.getText());
-		parent.refreshName();
+		String password = new String(txtPassword.getPassword());
+		Controller.getInstance().changeName(txtName.getText(),txtLastname.getText(),password);
+	}
+	
+	private JLabel getLblPassword() {
+		if(lblPassword == null) {
+			lblPassword = new JLabel();
+			lblPassword.setText("Password");
+			lblPassword.setBounds(73, 83, 88, 20);
+			lblPassword.setFont(new java.awt.Font("Tahoma",1,11));
+		}
+		return lblPassword;
+	}
+	
+	private JPasswordField getTxtPassword() {
+		if(txtPassword == null) {
+			txtPassword = new JPasswordField();
+			txtPassword.setBounds(179, 83, 149, 20);
+		}
+		return txtPassword;
+	}
+	
+	private void thisWindowClosing(WindowEvent evt) {
+		parent.setEnabled(true);
 		dispose();
 	}
 
