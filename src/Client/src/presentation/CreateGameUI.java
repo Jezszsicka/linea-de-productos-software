@@ -153,7 +153,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	}
 	
 	private void btnCancelMouseClicked(MouseEvent evt) {
-		Controller.getInstance().cancelCreateGame();
+		Controller.getInstance().closeCreateGameUI();
 	}
 
 }

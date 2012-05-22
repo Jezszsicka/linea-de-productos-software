@@ -337,7 +337,7 @@ public class ProfileUI extends javax.swing.JFrame {
 
 	private void btnCancelMouseClicked(MouseEvent evt) {
 		dispose();
-		Controller.getInstance().closeProfile();
+		Controller.getInstance().closeProfileUI();
 	}
 
 	private JButton getBtnChangePassword() {
@@ -371,7 +371,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	}
 
 	private void thisWindowClosing(WindowEvent evt) {
-		Controller.getInstance().closeProfile();
+		Controller.getInstance().closeProfileUI();
 	}
 	
 	private JPanel getJPanel1() {

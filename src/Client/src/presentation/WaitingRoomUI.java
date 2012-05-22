@@ -285,7 +285,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	}
 
 	private void btnProfileMouseClicked(MouseEvent evt) {
-		Controller.getInstance().showProfile();
+		Controller.getInstance().showProfileUI();
 	}
 
 	private void thisWindowClosing(WindowEvent evt) {
@@ -299,7 +299,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	}
 
 	protected void btnCreateGameMouseClicked(MouseEvent evt) {
-		Controller.getInstance().startCreateGame();
+		Controller.getInstance().showCreateGameUI();
 	}
 
 	protected void btnExitMouseClicked(MouseEvent evt) {
@@ -317,7 +317,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	}
 
 	private void btnJoinGameMouseClicked(MouseEvent evt) {
-		Controller.getInstance().joinGame();
+		Controller.getInstance().showJoinGameUI();
 	}
 
 	public void receivePrivateMessage(String sender, String message) {

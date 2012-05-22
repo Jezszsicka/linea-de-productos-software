@@ -17,7 +17,7 @@ import exceptions.WrongInputException;
 
 public class SessionManager {
 	private Session session;
-
+	
 	public SessionManager() {
 
 	}

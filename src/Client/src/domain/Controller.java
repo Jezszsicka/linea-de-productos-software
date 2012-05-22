@@ -22,11 +22,13 @@ import exceptions.WrongInputException;
 public class Controller {
 	public static Controller controller;
 
-	private LoginUI loginUI;
 	private RegisterUI registerUI;
+	private LoginUI loginUI;
+	private ProfileUI profileUI;
 	private WaitingRoomUI waitingRoomUI;
 	private CreateGameUI createGameUI;
-	private ProfileUI profileUI;
+	private JoinGameUI joinGameUI;
+	
 
 	private Session session;
 	private SessionManager sessionManager;
@@ -66,12 +68,12 @@ public class Controller {
 		}
 	}
 
-	public void startRegister() {
+	public void showRegisterUI() {
 		loginUI.setEnabled(false);
 		registerUI = new RegisterUI();
 	}
 
-	public void cancelRegister() {
+	public void closeRegisterUI() {
 		registerUI.dispose();
 		loginUI.setEnabled(true);
 		loginUI.toFront();
@@ -115,12 +117,12 @@ public class Controller {
 		}
 	}
 
-	public void startCreateGame() {
+	public void showCreateGameUI() {
 		createGameUI = new CreateGameUI();
 		waitingRoomUI.setEnabled(false);
 	}
 
-	public void cancelCreateGame() {
+	public void closeCreateGameUI() {
 		waitingRoomUI.setEnabled(true);
 		waitingRoomUI.toFront();
 		createGameUI.dispose();
@@ -147,12 +149,12 @@ public class Controller {
 
 	}
 
-	public void showProfile() {
+	public void showProfileUI() {
 		profileUI = new ProfileUI(session.getUser());
 		waitingRoomUI.setEnabled(false);
 	}
 
-	public void closeProfile() {
+	public void closeProfileUI() {
 		waitingRoomUI.setEnabled(true);
 		waitingRoomUI.toFront();
 	}
@@ -162,9 +164,9 @@ public class Controller {
 		System.exit(0);
 	}
 
-	public void joinGame() {
+	public void showJoinGameUI() {
 		waitingRoomUI.setEnabled(false);
-		new JoinGameUI();
+		joinGameUI = new JoinGameUI();
 
 	}
 
@@ -227,6 +229,12 @@ public class Controller {
 	public void changeAvatar(byte[] avatar) {
 		sessionManager.changeAvatar(avatar);
 		waitingRoomUI.setAvatar(avatar);
+	}
+
+	public void closeJoinGameUI() {
+		waitingRoomUI.setEnabled(true);
+		waitingRoomUI.toFront();
+		joinGameUI.dispose();
 	}
 
 }

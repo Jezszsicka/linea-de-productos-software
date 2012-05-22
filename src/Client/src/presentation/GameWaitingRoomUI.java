@@ -1,4 +1,5 @@
 package presentation;
+import java.awt.BorderLayout;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -25,6 +26,16 @@ import javax.swing.WindowConstants;
 */
 @SuppressWarnings("serial")
 public class GameWaitingRoomUI extends javax.swing.JFrame {
+
+	{
+		//Set Look & Feel
+		try {
+			javax.swing.UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private JPanel pnlBackground;
 	private JLabel lblPlayerName;
 	private JComboBox lstPlayerType;
@@ -45,10 +56,11 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private void initGUI() {
 		try {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			getContentPane().setLayout(null);
-			getContentPane().add(getPnlBackground(), "Center");
+			BorderLayout thisLayout = new BorderLayout();
+			getContentPane().setLayout(thisLayout);
+			getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
 			pack();
-			this.setSize(774, 456);
+			this.setSize(600, 456);
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
@@ -59,7 +71,6 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		if(pnlBackground == null) {
 			pnlBackground = new JPanel();
 			pnlBackground.setLayout(null);
-			pnlBackground.setBounds(0, 0, 758, 418);
 			pnlBackground.add(getBtnSend());
 			pnlBackground.add(getTxtMessage());
 			pnlBackground.add(getPnlChat());
@@ -73,7 +84,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		if(btnSend == null) {
 			btnSend = new JButton();
 			btnSend.setText("Send");
-			btnSend.setBounds(505, 356, 65, 21);
+			btnSend.setBounds(505, 386, 65, 21);
 		}
 		return btnSend;
 	}
@@ -81,7 +92,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JTextField getTxtMessage() {
 		if(txtMessage == null) {
 			txtMessage = new JTextField();
-			txtMessage.setBounds(15, 356, 475, 20);
+			txtMessage.setBounds(15, 386, 475, 20);
 		}
 		return txtMessage;
 	}
@@ -89,7 +100,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JScrollPane getPnlChat() {
 		if(pnlChat == null) {
 			pnlChat = new JScrollPane();
-			pnlChat.setBounds(15, 210, 730, 126);
+			pnlChat.setBounds(15, 249, 475, 126);
 			pnlChat.setViewportView(getTxtChat());
 		}
 		return pnlChat;
@@ -98,6 +109,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JTextArea getTxtChat() {
 		if(txtChat == null) {
 			txtChat = new JTextArea();
+			txtChat.setPreferredSize(new java.awt.Dimension(470, 124));
 		}
 		return txtChat;
 	}
