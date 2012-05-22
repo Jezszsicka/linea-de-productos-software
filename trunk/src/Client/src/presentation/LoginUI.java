@@ -8,6 +8,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,6 +18,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import domain.Controller;
+import domain.LanguageManager;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -48,10 +51,13 @@ public class LoginUI extends javax.swing.JFrame {
 	private JLabel lblUsername;
 	private JLabel lblPassword;
 	private JButton btnRegister;
+	private LanguageManager language;
 
 	public LoginUI() {
 		super();
+		language = LanguageManager.language();
 		initGUI();
+		
 	}
 
 	private void initGUI() {
@@ -86,7 +92,7 @@ public class LoginUI extends javax.swing.JFrame {
 
 	private JButton getBtnLogin() {
 		if (btnLogin == null) {
-			btnLogin = new JButton("Login");
+			btnLogin = new JButton(language.getString("LoginUI.btnLogin"));
 			btnLogin.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -129,26 +135,26 @@ public class LoginUI extends javax.swing.JFrame {
 
 	private JLabel getLblUsername() {
 		if (lblUsername == null) {
-			lblUsername = new JLabel("Username");
+			lblUsername = new JLabel(language.getString("LoginUI.lblUsername"));
 			lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12));
 			lblUsername.setAlignmentX(0.5f);
-			lblUsername.setBounds(123, 60, 59, 15);
+			lblUsername.setBounds(87, 58, 96, 20);
 		}
 		return lblUsername;
 	}
 
 	private JLabel getLblPassword() {
 		if (lblPassword == null) {
-			lblPassword = new JLabel("Password");
+			lblPassword = new JLabel(language.getString("LoginUI.lblPassword"));
 			lblPassword.setFont(new Font("Tahoma", Font.BOLD, 12));
-			lblPassword.setBounds(125, 99, 59, 15);
+			lblPassword.setBounds(87, 96, 98, 20);
 		}
 		return lblPassword;
 	}
 
 	private JButton getBtnRegister() {
 		if (btnRegister == null) {
-			btnRegister = new JButton("Register");
+			btnRegister = new JButton(language.getString("LoginUI.btnRegister"));
 			btnRegister.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -162,7 +168,7 @@ public class LoginUI extends javax.swing.JFrame {
 	}
 
 	protected void do_btnRegister_mouseClicked(MouseEvent e) {
-		Controller.getInstance().startRegister();
+		Controller.getInstance().showRegisterUI();
 	}
 
 	protected void do_btnLogin_mouseClicked(MouseEvent e) {

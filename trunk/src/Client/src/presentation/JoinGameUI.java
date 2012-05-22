@@ -1,7 +1,11 @@
 package presentation;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+
+import domain.Controller;
 
 
 /**
@@ -77,8 +81,18 @@ public class JoinGameUI extends javax.swing.JFrame {
 			btnCancel = new JButton();
 			btnCancel.setText("Cancel");
 			btnCancel.setBounds(377, 261, 65, 23);
+			btnCancel.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					btnCancelMouseClicked(evt);
+				}
+			});
 		}
 		return btnCancel;
+	}
+	
+	private void btnCancelMouseClicked(MouseEvent evt) {
+		Controller.getInstance().closeJoinGameUI();
+		dispose();
 	}
 
 }

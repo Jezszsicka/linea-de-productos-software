@@ -28,6 +28,7 @@ import javax.swing.border.BevelBorder;
 import ProductLine.RoleType;
 import ProductLine.User;
 import domain.Controller;
+import domain.LanguageManager;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -65,6 +66,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField txtEmailR;
 
 	private byte[] avatar;
+	private LanguageManager language;
 
 	{
 		// Set Look & Feel
@@ -78,6 +80,7 @@ public class RegisterUI extends javax.swing.JFrame {
 
 	public RegisterUI() {
 		super();
+		language = LanguageManager.language();
 		initGUI();
 	}
 
@@ -125,7 +128,7 @@ public class RegisterUI extends javax.swing.JFrame {
 
 	private JButton getBtnRegister() {
 		if (btnRegister == null) {
-			btnRegister = new JButton("Register");
+			btnRegister = new JButton(language.getString("RegisterUI.btnRegister"));
 			btnRegister.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
@@ -140,7 +143,7 @@ public class RegisterUI extends javax.swing.JFrame {
 
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
-			btnCancel = new JButton("Cancel");
+			btnCancel = new JButton(language.getString("RegisterUI.btnCancel"));
 			btnCancel.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -230,7 +233,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	}
 
 	protected void do_btnCancel_mouseClicked(MouseEvent e) {
-		Controller.getInstance().cancelRegister();
+		Controller.getInstance().closeRegisterUI();
 	}
 
 	protected void do_btnRegister_mouseClicked(MouseEvent arg0) {
@@ -249,13 +252,13 @@ public class RegisterUI extends javax.swing.JFrame {
 	}
 
 	private void thisWindowClosing(WindowEvent evt) {
-		Controller.getInstance().cancelRegister();
+		Controller.getInstance().closeRegisterUI();
 	}
 
 	private JLabel getLblName() {
 		if (lblName == null) {
 			lblName = new JLabel();
-			lblName.setText("Name");
+			lblName.setText(language.getString("RegisterUI.lblName"));
 			lblName.setBounds(165, 60, 106, 15);
 			lblName.setFont(new java.awt.Font("Tahoma", 1, 11));
 			lblName.setSize(106, 20);
@@ -266,7 +269,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JLabel getLblLastname() {
 		if (lblLastname == null) {
 			lblLastname = new JLabel();
-			lblLastname.setText("Last name");
+			lblLastname.setText(language.getString("RegisterUI.lblLastname"));
 			lblLastname.setBounds(165, 86, 106, 14);
 			lblLastname.setFont(new java.awt.Font("Tahoma", 1, 11));
 			lblLastname.setSize(106, 20);
