@@ -8,8 +8,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -92,7 +90,8 @@ public class LoginUI extends javax.swing.JFrame {
 
 	private JButton getBtnLogin() {
 		if (btnLogin == null) {
-			btnLogin = new JButton(language.getString("LoginUI.btnLogin"));
+			btnLogin = new JButton("Entrar");
+			btnLogin.setText(language.getString("btnLogin"));
 			btnLogin.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -135,7 +134,8 @@ public class LoginUI extends javax.swing.JFrame {
 
 	private JLabel getLblUsername() {
 		if (lblUsername == null) {
-			lblUsername = new JLabel(language.getString("LoginUI.lblUsername"));
+			lblUsername = new JLabel("Usuario");
+			lblUsername.setText(language.getString("lblUsername"));
 			lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12));
 			lblUsername.setAlignmentX(0.5f);
 			lblUsername.setBounds(87, 58, 96, 20);
@@ -145,7 +145,8 @@ public class LoginUI extends javax.swing.JFrame {
 
 	private JLabel getLblPassword() {
 		if (lblPassword == null) {
-			lblPassword = new JLabel(language.getString("LoginUI.lblPassword"));
+			lblPassword = new JLabel("Contraseña");
+			lblPassword.setText(language.getString("lblPassword"));
 			lblPassword.setFont(new Font("Tahoma", Font.BOLD, 12));
 			lblPassword.setBounds(87, 96, 98, 20);
 		}
@@ -154,7 +155,8 @@ public class LoginUI extends javax.swing.JFrame {
 
 	private JButton getBtnRegister() {
 		if (btnRegister == null) {
-			btnRegister = new JButton(language.getString("LoginUI.btnRegister"));
+			btnRegister = new JButton("Registrar");
+			btnRegister.setText(language.getString("btnRegister"));
 			btnRegister.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {

@@ -17,6 +17,8 @@ import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileFilter;
 
+import domain.LanguageManager;
+
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
  * Builder, which is free for non-commercial use. If Jigloo is being used
@@ -52,15 +54,13 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private JLabel lblAvatar3;
 	private JLabel lblAvatar2;
 	private JLabel lblAvatar1;
-
-	/**
-	 * Auto-generated main method to display this JFrame
-	 */
+	private LanguageManager language;
 
 	public ChooseAvatarUI(JFrame parentUI) {
 		super();
-		initGUI();
 		this.parent = parentUI;
+		this.language = LanguageManager.language();
+		initGUI();
 		setVisible(true);
 		setLocationRelativeTo(null);
 	}
@@ -84,9 +84,6 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 
 	private ImagePanel getPnlBackground() {
 		if (pnlBackground == null) {
-			// pnlBackground = new ImagePanel(new
-			// ImageIcon(getClass().getClassLoader()
-			// .getResource("images/fondo.png")).getImage());
 			pnlBackground = new ImagePanel("");
 			pnlBackground.add(getBtnUpload());
 			pnlBackground.add(getLblAvatar1());
@@ -104,8 +101,8 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 
 	private JButton getBtnUpload() {
 		if (btnUpload == null) {
-			btnUpload = new JButton();
-			btnUpload.setText("Upload image");
+			btnUpload = new JButton("Subir imagen");
+			btnUpload.setText(language.getString("btnUpload"));
 			btnUpload.setBounds(389, 303, 97, 23);
 			btnUpload.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -334,8 +331,8 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
-			btnCancel = new JButton();
-			btnCancel.setText("Cancel");
+			btnCancel = new JButton("Cancelar");
+			btnCancel.setText(language.getString("btnCancel"));
 			btnCancel.setBounds(389, 332, 97, 23);
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {

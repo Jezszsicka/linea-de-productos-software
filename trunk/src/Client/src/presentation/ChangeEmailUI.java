@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 import domain.Controller;
+import domain.LanguageManager;
 
 
 /**
@@ -49,10 +50,12 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 	private JLabel lblPassword;
 	private JLabel lblEmail;
 	private ProfileUI parent;
+	private LanguageManager language;
 
 	public ChangeEmailUI(ProfileUI parent, String email) {
 		super();
 		this.parent = parent;
+		this.language = LanguageManager.language();
 		initGUI();
 		txtEmail.setText(email);
 	}
@@ -94,9 +97,9 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 	
 	private JLabel getLblEmail() {
 		if(lblEmail == null) {
-			lblEmail = new JLabel();
-			lblEmail.setText("Email");
-			lblEmail.setBounds(73, 20, 84, 18);
+			lblEmail = new JLabel("E-mail");
+			lblEmail.setText(language.getString("lblEmail"));
+			lblEmail.setBounds(56, 20, 101, 18);
 			lblEmail.setFont(new java.awt.Font("Tahoma",1,11));
 		}
 		return lblEmail;
@@ -104,9 +107,9 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 	
 	private JLabel getLblConfirmEmail() {
 		if(lblConfirmEmail == null) {
-			lblConfirmEmail = new JLabel();
-			lblConfirmEmail.setText("Confirm email");
-			lblConfirmEmail.setBounds(73, 51, 84, 18);
+			lblConfirmEmail = new JLabel("Confirmar e-mail");
+			lblConfirmEmail.setText(language.getString("lblConfirmEmail"));
+			lblConfirmEmail.setBounds(56, 51, 101, 18);
 			lblConfirmEmail.setFont(new java.awt.Font("Tahoma",1,11));
 		}
 		return lblConfirmEmail;
@@ -114,9 +117,9 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 	
 	private JLabel getLblPassword() {
 		if(lblPassword == null) {
-			lblPassword = new JLabel();
-			lblPassword.setText("Password");
-			lblPassword.setBounds(73, 81, 84, 18);
+			lblPassword = new JLabel("Contraseña");
+			lblPassword.setText(language.getString("lblPassword"));
+			lblPassword.setBounds(56, 81, 101, 18);
 			lblPassword.setFont(new java.awt.Font("Tahoma",1,11));
 		}
 		return lblPassword;
@@ -148,9 +151,9 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 	
 	private JButton getBtnSave() {
 		if(btnSave == null) {
-			btnSave = new JButton();
-			btnSave.setText("Save");
-			btnSave.setBounds(73, 121, 57, 23);
+			btnSave = new JButton("Cambiar");
+			btnSave.setText(language.getString("btnChange"));
+			btnSave.setBounds(16, 125, 80, 23);
 			btnSave.setFocusable(false);
 			btnSave.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -163,9 +166,9 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 	
 	private JButton getBtnCancel() {
 		if(btnCancel == null) {
-			btnCancel = new JButton();
-			btnCancel.setText("Cancel");
-			btnCancel.setBounds(234, 121, 65, 23);
+			btnCancel = new JButton("Cancelar");
+			btnCancel.setText(language.getString("btnCancel"));
+			btnCancel.setBounds(282, 125, 80, 23);
 			btnCancel.setFocusable(false);
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {

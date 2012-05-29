@@ -19,12 +19,12 @@ public class Utils {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		return encoded;
 	}
+	
 	
 	
 }
