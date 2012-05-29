@@ -12,6 +12,7 @@ import javax.swing.JPasswordField;
 import javax.swing.WindowConstants;
 
 import domain.Controller;
+import domain.LanguageManager;
 
 
 /**
@@ -38,6 +39,7 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 	private JButton btnSave;
 	private JButton btnCancel;
 	private ProfileUI parent;
+	private LanguageManager language;
 
 	{
 		//Set Look & Feel
@@ -52,6 +54,7 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 	public ChangePasswordUI(ProfileUI parent) {
 		super();
 		this.parent = parent;
+		this.language = LanguageManager.language();
 		initGUI();
 	}
 	
@@ -93,9 +96,9 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 	
 	private JButton getBtnCancel() {
 		if(btnCancel == null) {
-			btnCancel = new JButton();
-			btnCancel.setText("Cancel");
-			btnCancel.setBounds(234, 121, 65, 23);
+			btnCancel = new JButton("Cancelar");
+			btnCancel.setText(language.getString("btnCancel"));
+			btnCancel.setBounds(290, 121, 84, 23);
 			btnCancel.setFocusable(false);
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -108,9 +111,9 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 	
 	private JButton getBtnSave() {
 		if(btnSave == null) {
-			btnSave = new JButton();
-			btnSave.setText("Save");
-			btnSave.setBounds(73, 121, 57, 23);
+			btnSave = new JButton("Cambiar");
+			btnSave.setText(language.getString("btnChange"));
+			btnSave.setBounds(10, 121, 84, 23);
 			btnSave.setFocusable(false);
 			btnSave.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -131,10 +134,10 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 	
 	private JLabel getLblConfirmPassword() {
 		if(lblConfirmPassword == null) {
-			lblConfirmPassword = new JLabel();
-			lblConfirmPassword.setText("Confirm password");
+			lblConfirmPassword = new JLabel("Confirmar contraseña");
+			lblConfirmPassword.setText(language.getString("lblConfirmPassword"));
 			lblConfirmPassword.setFont(new java.awt.Font("Tahoma",1,11));
-			lblConfirmPassword.setBounds(47, 81, 110, 18);
+			lblConfirmPassword.setBounds(28, 81, 129, 20);
 		}
 		return lblConfirmPassword;
 	}
@@ -149,10 +152,10 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 	
 	private JLabel getLblNewPassword() {
 		if(lblNewPassword == null) {
-			lblNewPassword = new JLabel();
-			lblNewPassword.setText("New password");
+			lblNewPassword = new JLabel("Nueva contraseña");
+			lblNewPassword.setText(language.getString("lblNewPassword"));
 			lblNewPassword.setFont(new java.awt.Font("Tahoma",1,11));
-			lblNewPassword.setBounds(47, 51, 110, 18);
+			lblNewPassword.setBounds(28, 51, 129, 20);
 		}
 		return lblNewPassword;
 	}
@@ -167,10 +170,10 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 	
 	private JLabel getLblPassword() {
 		if(lblPassword == null) {
-			lblPassword = new JLabel();
-			lblPassword.setText("Password");
+			lblPassword = new JLabel("Contraseña");
+			lblPassword.setText(language.getString("lblPassword"));
 			lblPassword.setFont(new java.awt.Font("Tahoma",1,11));
-			lblPassword.setBounds(47, 20, 110, 18);
+			lblPassword.setBounds(28, 20, 129, 20);
 		}
 		return lblPassword;
 	}

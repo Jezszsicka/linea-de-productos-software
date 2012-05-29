@@ -35,6 +35,7 @@ public class Controller {
 	private GamesManager gameManager;
 
 	private Controller() {
+		LanguageManager.language();
 		loginUI = new LoginUI();
 		sessionManager = new SessionManager();
 	}
@@ -82,11 +83,11 @@ public class Controller {
 	public void loginUser(String username, String password) {
 		try {
 			session = sessionManager.loginUser(username, password);
+			LanguageManager.language().loadPreferences(session.getUser());
 			gameManager = new GamesManager(session);
 			waitingRoomUI = new WaitingRoomUI(session.getUser(), session
 					.getProxy().listUsers(session.getUser().getUsername()));
 			loginUI.dispose();
-			loginUI = null;
 
 		} catch (WrongInputException e) {
 			JOptionPane.showMessageDialog(registerUI, e.getMessage(),
@@ -235,6 +236,11 @@ public class Controller {
 		waitingRoomUI.setEnabled(true);
 		waitingRoomUI.toFront();
 		joinGameUI.dispose();
+	}
+
+	public void changeLanguage(int selectedLanguage) {
+		LanguageManager.language().setLanguage(session.getUser().getUsername(),selectedLanguage);
+		waitingRoomUI.languageChanged();
 	}
 
 }

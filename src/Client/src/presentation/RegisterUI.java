@@ -29,6 +29,7 @@ import ProductLine.RoleType;
 import ProductLine.User;
 import domain.Controller;
 import domain.LanguageManager;
+import java.awt.BorderLayout;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -86,9 +87,10 @@ public class RegisterUI extends javax.swing.JFrame {
 
 	private void initGUI() {
 		this.setSize(518, 370);
-		getContentPane().add(getPnlBackground(), "Center");
+		getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
 		setLocationRelativeTo(null);
-		getContentPane().setLayout(null);
+		BorderLayout thisLayout = new BorderLayout();
+		getContentPane().setLayout(thisLayout);
 		setVisible(true);
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
@@ -128,7 +130,8 @@ public class RegisterUI extends javax.swing.JFrame {
 
 	private JButton getBtnRegister() {
 		if (btnRegister == null) {
-			btnRegister = new JButton(language.getString("RegisterUI.btnRegister"));
+			btnRegister = new JButton("Registrar");
+			btnRegister.setText(language.getString("btnRegister"));
 			btnRegister.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
@@ -143,7 +146,8 @@ public class RegisterUI extends javax.swing.JFrame {
 
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
-			btnCancel = new JButton(language.getString("RegisterUI.btnCancel"));
+			btnCancel = new JButton("Cancelar");
+			btnCancel.setText(language.getString("btnCancel"));
 			btnCancel.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -158,31 +162,30 @@ public class RegisterUI extends javax.swing.JFrame {
 
 	private JLabel getLblUsername() {
 		if (lblUsername == null) {
-			lblUsername = new JLabel("Username");
+			lblUsername = new JLabel("Usuario");
+			lblUsername.setText(language.getString("lblUsername"));
 			lblUsername.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblUsername.setBounds(165, 34, 106, 15);
-			lblUsername.setText("Nickname");
-			lblUsername.setSize(106, 20);
+			lblUsername.setBounds(165, 34, 129, 20);
 		}
 		return lblUsername;
 	}
 
 	private JLabel getLblPassword() {
 		if (lblPassword == null) {
-			lblPassword = new JLabel("Password");
+			lblPassword = new JLabel("Contraseña");
+			lblPassword.setText(language.getString("lblPassword"));
 			lblPassword.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblPassword.setBounds(165, 148, 106, 15);
-			lblPassword.setSize(106, 20);
+			lblPassword.setBounds(165, 148, 129, 20);
 		}
 		return lblPassword;
 	}
 
 	private JLabel getLblEmail() {
 		if (lblEmail == null) {
-			lblEmail = new JLabel("Email");
+			lblEmail = new JLabel("E-mail");
+			lblEmail.setText(language.getString("lblEmail"));
 			lblEmail.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblEmail.setBounds(165, 209, 106, 15);
-			lblEmail.setSize(106, 20);
+			lblEmail.setBounds(165, 209, 129, 20);
 		}
 		return lblEmail;
 	}
@@ -190,7 +193,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtUsername() {
 		if (txtUsername == null) {
 			txtUsername = new JTextField();
-			txtUsername.setBounds(306, 34, 120, 20);
+			txtUsername.setBounds(337, 34, 120, 20);
 			txtUsername.setColumns(10);
 		}
 		return txtUsername;
@@ -199,7 +202,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JPasswordField getTxtPassword() {
 		if (txtPassword == null) {
 			txtPassword = new JPasswordField();
-			txtPassword.setBounds(306, 148, 120, 20);
+			txtPassword.setBounds(337, 148, 120, 20);
 			txtPassword.setColumns(10);
 		}
 		return txtPassword;
@@ -208,7 +211,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtEmail() {
 		if (txtEmail == null) {
 			txtEmail = new JTextField();
-			txtEmail.setBounds(306, 209, 120, 20);
+			txtEmail.setBounds(337, 209, 120, 20);
 			txtEmail.setColumns(10);
 		}
 		return txtEmail;
@@ -217,7 +220,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JPasswordField getTxtPasswordR() {
 		if (txtPasswordR == null) {
 			txtPasswordR = new JPasswordField();
-			txtPasswordR.setBounds(306, 178, 120, 20);
+			txtPasswordR.setBounds(337, 178, 120, 20);
 			txtPasswordR.setColumns(10);
 		}
 		return txtPasswordR;
@@ -226,7 +229,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtEmailR() {
 		if (txtEmailR == null) {
 			txtEmailR = new JTextField();
-			txtEmailR.setBounds(306, 240, 120, 20);
+			txtEmailR.setBounds(337, 240, 120, 20);
 			txtEmailR.setColumns(10);
 		}
 		return txtEmailR;
@@ -257,22 +260,20 @@ public class RegisterUI extends javax.swing.JFrame {
 
 	private JLabel getLblName() {
 		if (lblName == null) {
-			lblName = new JLabel();
-			lblName.setText(language.getString("RegisterUI.lblName"));
-			lblName.setBounds(165, 60, 106, 15);
+			lblName = new JLabel("Nombre");
+			lblName.setText(language.getString("lblName"));
+			lblName.setBounds(165, 60, 129, 20);
 			lblName.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblName.setSize(106, 20);
 		}
 		return lblName;
 	}
 
 	private JLabel getLblLastname() {
 		if (lblLastname == null) {
-			lblLastname = new JLabel();
-			lblLastname.setText(language.getString("RegisterUI.lblLastname"));
-			lblLastname.setBounds(165, 86, 106, 14);
+			lblLastname = new JLabel("Apellidos");
+			lblLastname.setText(language.getString("lblLastname"));
+			lblLastname.setBounds(165, 86, 129, 20);
 			lblLastname.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblLastname.setSize(106, 20);
 		}
 		return lblLastname;
 	}
@@ -280,7 +281,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtName() {
 		if (txtName == null) {
 			txtName = new JTextField();
-			txtName.setBounds(306, 60, 120, 20);
+			txtName.setBounds(337, 60, 120, 20);
 		}
 		return txtName;
 	}
@@ -288,18 +289,17 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtLastname() {
 		if (txtLastname == null) {
 			txtLastname = new JTextField();
-			txtLastname.setBounds(306, 86, 120, 20);
+			txtLastname.setBounds(337, 86, 120, 20);
 		}
 		return txtLastname;
 	}
 
 	private JLabel getLblCountry() {
 		if (lblCountry == null) {
-			lblCountry = new JLabel();
-			lblCountry.setText("Country");
-			lblCountry.setBounds(165, 117, 106, 15);
+			lblCountry = new JLabel("Pais");
+			lblCountry.setText(language.getString("lblCountry"));
+			lblCountry.setBounds(165, 117, 129, 20);
 			lblCountry.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblCountry.setSize(106, 20);
 		}
 		return lblCountry;
 	}
@@ -307,11 +307,11 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JComboBox<String> getSelectedCountry() {
 		if (selectedCountry == null) {
 			ComboBoxModel<String> countryModel = new DefaultComboBoxModel<String>(
-					new String[] { "Spain", "United Kingdom", "France",
-							"United States", "Germany" });
+					new String[] { language.getString("UnitedStates"),language.getString("Spain"), language.getString("France"),
+							language.getString("Germany") });
 			selectedCountry = new JComboBox<String>();
 			selectedCountry.setModel(countryModel);
-			selectedCountry.setBounds(306, 117, 120, 20);
+			selectedCountry.setBounds(337, 117, 120, 20);
 			selectedCountry.setFocusable(false);
 		}
 		return selectedCountry;
@@ -329,8 +329,8 @@ public class RegisterUI extends javax.swing.JFrame {
 
 	private JButton getBtnAvatar() {
 		if (btnAvatar == null) {
-			btnAvatar = new JButton();
-			btnAvatar.setText("Select avatar");
+			btnAvatar = new JButton("Seleccionar avatar");
+			btnAvatar.setText(language.getString("btnSelectAvatar"));
 			btnAvatar.setBounds(14, 165, 97, 23);
 			btnAvatar.setFocusable(false);
 			btnAvatar.addMouseListener(new MouseAdapter() {
@@ -344,22 +344,20 @@ public class RegisterUI extends javax.swing.JFrame {
 
 	private JLabel getLblRepeatPassword() {
 		if (lblRepeatPassword == null) {
-			lblRepeatPassword = new JLabel();
-			lblRepeatPassword.setText("Repeat password");
-			lblRepeatPassword.setBounds(165, 178, 106, 14);
+			lblRepeatPassword = new JLabel("Confirmar contraseña");
+			lblRepeatPassword.setText(language.getString("lblConfirmPassword"));
+			lblRepeatPassword.setBounds(165, 178, 129, 20);
 			lblRepeatPassword.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblRepeatPassword.setSize(106, 20);
 		}
 		return lblRepeatPassword;
 	}
 
 	private JLabel getLblRepeatEmail() {
 		if (lblRepeatEmail == null) {
-			lblRepeatEmail = new JLabel();
-			lblRepeatEmail.setText("Repeat email");
-			lblRepeatEmail.setBounds(165, 240, 106, 14);
+			lblRepeatEmail = new JLabel("Confirmar e-mail");
+			lblRepeatEmail.setText(language.getString("lblConfirmEmail"));
+			lblRepeatEmail.setBounds(165, 240, 129, 20);
 			lblRepeatEmail.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblRepeatEmail.setSize(106, 20);
 		}
 		return lblRepeatEmail;
 	}

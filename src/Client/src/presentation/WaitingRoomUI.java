@@ -36,6 +36,7 @@ import javax.swing.text.html.HTMLEditorKit;
 import ProductLine.User;
 import ProductLine.UserNotLoggedException;
 import domain.Controller;
+import domain.LanguageManager;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -58,12 +59,13 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private static final int margin = 5;
 	private List<User> users;
 	private JScrollPane scrollPnlUsers;
+	private JButton btnTopPlayers;
 
 	private JPanel pnlButtons;
 	private User user;
 
 	private JPanel pnlFriends;
-	private JTabbedPane jTabbedPane1;
+	private JTabbedPane tabPanel;
 	private JPanel pnlUsers;
 	private JLabel lblAvatar;
 	private JPanel pnlBackground;
@@ -78,6 +80,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private String destinatary;
 	private HTMLEditorKit htmlEditor;
 	private HTMLDocument chatText;
+	private LanguageManager language;
 
 	{
 		// Set Look & Feel
@@ -91,6 +94,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 	public WaitingRoomUI(User user, List<User> users) {
 		super();
+		language = LanguageManager.language();
 		initGUI();
 		this.user = user;
 		this.users = users;
@@ -138,7 +142,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 	private JButton getBtnSend() {
 		if (btnSend == null) {
-			btnSend = new JButton("Send");
+			btnSend = new JButton("Enviar");
+			btnSend.setText(language.getString("btnSend"));
 			btnSend.setBounds(413, 447, 64, 23);
 			btnSend.setFocusable(false);
 			btnSend.addMouseListener(new MouseAdapter() {
@@ -502,6 +507,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 			pnlButtons.add(getBtnCreateGame());
 			pnlButtons.add(getBtnJoinGame());
 			pnlButtons.add(getBtnProfile());
+			pnlButtons.add(getBtnTopPlayers());
 		}
 		return pnlButtons;
 	}
@@ -533,13 +539,13 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	}
 	
 	private JTabbedPane getJTabbedPane1() {
-		if(jTabbedPane1 == null) {
-			jTabbedPane1 = new JTabbedPane();
-			jTabbedPane1.setBounds(546, 146, 150, 288);
-			jTabbedPane1.addTab("Users", null, getJScrollPane1(), null);
-			jTabbedPane1.addTab("Friends", null, getPnlFriends(), null);
+		if(tabPanel == null) {
+			tabPanel = new JTabbedPane();
+			tabPanel.setBounds(546, 146, 150, 288);
+			tabPanel.addTab(language.getString("tabUsers"), null, getJScrollPane1(), null);
+			tabPanel.addTab(language.getString("tabFriends"), null, getPnlFriends(), null);
 		}
-		return jTabbedPane1;
+		return tabPanel;
 	}
 	
 	private JPanel getPnlFriends() {
@@ -560,4 +566,18 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 		return scrollPnlUsers;
 	}
 
+	public void languageChanged(){
+		btnSend.setText(language.getString("btnSend"));
+		tabPanel.setTitleAt(0, language.getString("tabUsers"));
+		tabPanel.setTitleAt(1, language.getString("tabFriends"));
+	}
+	
+	private JButton getBtnTopPlayers() {
+		if(btnTopPlayers == null) {
+			btnTopPlayers = new JButton();
+			btnTopPlayers.setText("Top Players");
+			btnTopPlayers.setBounds(392, 6, 56, 58);
+		}
+		return btnTopPlayers;
+	}
 }
