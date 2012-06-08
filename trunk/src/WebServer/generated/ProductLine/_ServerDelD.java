@@ -261,6 +261,119 @@ public final class _ServerDelD extends Ice._ObjectDelD implements _ServerDel
         }
     }
 
+    public void
+    createGame(final String user, final String gameName, final GameType type, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        final Ice.Current __current = new Ice.Current();
+        __initCurrent(__current, "createGame", Ice.OperationMode.Normal, __ctx);
+        IceInternal.Direct __direct = null;
+        try
+        {
+            __direct = new IceInternal.Direct(__current)
+            {
+                public Ice.DispatchStatus run(Ice.Object __obj)
+                {
+                    Server __servant = null;
+                    try
+                    {
+                        __servant = (Server)__obj;
+                    }
+                    catch(ClassCastException __ex)
+                    {
+                        throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
+                    }
+                    __servant.createGame(user, gameName, type, __current);
+                    return Ice.DispatchStatus.DispatchOK;
+                }
+            };
+            try
+            {
+                Ice.DispatchStatus __status = __direct.servant().__collocDispatch(__direct);
+                if(__status == Ice.DispatchStatus.DispatchUserException)
+                {
+                    __direct.throwUserException();
+                }
+                assert __status == Ice.DispatchStatus.DispatchOK;
+            }
+            finally
+            {
+                __direct.destroy();
+            }
+        }
+        catch(Ice.SystemException __ex)
+        {
+            throw __ex;
+        }
+        catch(java.lang.Throwable __ex)
+        {
+            IceInternal.LocalExceptionWrapper.throwWrapper(__ex);
+        }
+    }
+
+    public void
+    deleteAccount(final String username, final String password, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               InvalidLoggingException
+    {
+        final Ice.Current __current = new Ice.Current();
+        __initCurrent(__current, "deleteAccount", Ice.OperationMode.Normal, __ctx);
+        IceInternal.Direct __direct = null;
+        try
+        {
+            __direct = new IceInternal.Direct(__current)
+            {
+                public Ice.DispatchStatus run(Ice.Object __obj)
+                {
+                    Server __servant = null;
+                    try
+                    {
+                        __servant = (Server)__obj;
+                    }
+                    catch(ClassCastException __ex)
+                    {
+                        throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
+                    }
+                    try
+                    {
+                        __servant.deleteAccount(username, password, __current);
+                        return Ice.DispatchStatus.DispatchOK;
+                    }
+                    catch(Ice.UserException __ex)
+                    {
+                        setUserException(__ex);
+                        return Ice.DispatchStatus.DispatchUserException;
+                    }
+                }
+            };
+            try
+            {
+                Ice.DispatchStatus __status = __direct.servant().__collocDispatch(__direct);
+                if(__status == Ice.DispatchStatus.DispatchUserException)
+                {
+                    __direct.throwUserException();
+                }
+                assert __status == Ice.DispatchStatus.DispatchOK;
+            }
+            finally
+            {
+                __direct.destroy();
+            }
+        }
+        catch(InvalidLoggingException __ex)
+        {
+            throw __ex;
+        }
+        catch(Ice.SystemException __ex)
+        {
+            throw __ex;
+        }
+        catch(java.lang.Throwable __ex)
+        {
+            IceInternal.LocalExceptionWrapper.throwWrapper(__ex);
+        }
+    }
+
     public java.util.List<User>
     listUsers(final String username, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper
@@ -437,6 +550,56 @@ public final class _ServerDelD extends Ice._ObjectDelD implements _ServerDel
         catch(UserNotLoggedException __ex)
         {
             throw __ex;
+        }
+        catch(Ice.SystemException __ex)
+        {
+            throw __ex;
+        }
+        catch(java.lang.Throwable __ex)
+        {
+            IceInternal.LocalExceptionWrapper.throwWrapper(__ex);
+        }
+    }
+
+    public void
+    probar(final Game prof, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper
+    {
+        final Ice.Current __current = new Ice.Current();
+        __initCurrent(__current, "probar", Ice.OperationMode.Normal, __ctx);
+        IceInternal.Direct __direct = null;
+        try
+        {
+            __direct = new IceInternal.Direct(__current)
+            {
+                public Ice.DispatchStatus run(Ice.Object __obj)
+                {
+                    Server __servant = null;
+                    try
+                    {
+                        __servant = (Server)__obj;
+                    }
+                    catch(ClassCastException __ex)
+                    {
+                        throw new Ice.OperationNotExistException(__current.id, __current.facet, __current.operation);
+                    }
+                    __servant.probar(prof, __current);
+                    return Ice.DispatchStatus.DispatchOK;
+                }
+            };
+            try
+            {
+                Ice.DispatchStatus __status = __direct.servant().__collocDispatch(__direct);
+                if(__status == Ice.DispatchStatus.DispatchUserException)
+                {
+                    __direct.throwUserException();
+                }
+                assert __status == Ice.DispatchStatus.DispatchOK;
+            }
+            finally
+            {
+                __direct.destroy();
+            }
         }
         catch(Ice.SystemException __ex)
         {

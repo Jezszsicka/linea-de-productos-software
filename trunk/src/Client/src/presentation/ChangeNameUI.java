@@ -13,8 +13,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import domain.Controller;
-import domain.LanguageManager;
+import logic.Controller;
+import logic.LanguageManager;
+
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -126,6 +127,7 @@ public class ChangeNameUI extends javax.swing.JFrame {
 			btnSave = new JButton("Cambiar");
 			btnSave.setText(language.getString("btnChange"));
 			btnSave.setBounds(28, 123, 82, 23);
+			btnSave.setFocusable(false);
 			btnSave.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnSaveMouseClicked(evt);
@@ -140,6 +142,7 @@ public class ChangeNameUI extends javax.swing.JFrame {
 			btnCancel = new JButton("Cancelar");
 			btnCancel.setText(language.getString("btnCancel"));
 			btnCancel.setBounds(274, 123, 82, 23);
+			btnCancel.setFocusable(false);
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnCancelMouseClicked(evt);

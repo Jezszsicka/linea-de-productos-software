@@ -1,7 +1,7 @@
 package model;
 
 import ProductLine.ClientPrx;
-import ProductLine.User;
+
 
 
 
@@ -59,21 +59,23 @@ public class Session {
 			if (other.user != null) {
 				return false;
 			}
-		} else if (!user.getUsername().equals(other.user.getUsername())) {
+		} else if (!user.equals(other.user)) {
 			return false;
 		}
 		return true;
-	}
-
-	@Override
-	public String toString() {
-		return "Session [user=" + user + ", callback=" + callback + "]";
 	}
 
 	public void checkConnection() {
 		callback.ice_ping();
 		
 	}
+	
+	@Override
+	public String toString() {
+		return "Session [user=" + user + ", callback=" + callback + "]";
+	}
+
+
 
 	
 }

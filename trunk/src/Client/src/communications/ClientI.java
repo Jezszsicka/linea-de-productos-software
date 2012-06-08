@@ -1,10 +1,10 @@
 package communications;
 
 
+import logic.Controller;
 import Ice.Current;
 import ProductLine.User;
 import ProductLine._ClientDisp;
-import domain.Controller;
 
 public class ClientI extends _ClientDisp{
 

@@ -62,4 +62,14 @@ public interface _ServerDel extends Ice._ObjectDel
     void sendPrivateMessage(String sender, String destinatary, String message, java.util.Map<String, String> __ctx)
         throws IceInternal.LocalExceptionWrapper,
                UserNotLoggedException;
+
+    void deleteAccount(String username, String password, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper,
+               InvalidLoggingException;
+
+    void createGame(String user, String gameName, GameType type, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper;
+
+    void probar(Game prof, java.util.Map<String, String> __ctx)
+        throws IceInternal.LocalExceptionWrapper;
 }

@@ -12,8 +12,9 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-import domain.Controller;
-import domain.LanguageManager;
+import logic.Controller;
+import logic.LanguageManager;
+
 
 
 /**
@@ -153,7 +154,7 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 		if(btnSave == null) {
 			btnSave = new JButton("Cambiar");
 			btnSave.setText(language.getString("btnChange"));
-			btnSave.setBounds(16, 125, 80, 23);
+			btnSave.setBounds(38, 125, 80, 23);
 			btnSave.setFocusable(false);
 			btnSave.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -168,7 +169,7 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 		if(btnCancel == null) {
 			btnCancel = new JButton("Cancelar");
 			btnCancel.setText(language.getString("btnCancel"));
-			btnCancel.setBounds(282, 125, 80, 23);
+			btnCancel.setBounds(267, 125, 80, 23);
 			btnCancel.setFocusable(false);
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {

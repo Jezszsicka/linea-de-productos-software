@@ -3,12 +3,14 @@ import java.util.UUID;
 
 import javax.swing.JOptionPane;
 
-import domain.Controller;
+import logic.Controller;
+import model.User;
 
 import Ice.Application;
 import Ice.Communicator;
 import Ice.Identity;
 import Ice.ObjectAdapter;
+import ProductLine.Game;
 import ProductLine.ServerPrx;
 import ProductLine.ServerPrxHelper;
 
@@ -25,6 +27,7 @@ public class Client extends Application {
         {
             starServerConnection();
             Controller.initialize();
+            
             communicator.waitForShutdown();
         }
         catch (Ice.ConnectionRefusedException e) { 
@@ -42,6 +45,8 @@ public class Client extends Application {
 	private void starServerConnection(){
 		proxy = ServerPrxHelper.checkedCast(communicator().propertyToProxy("Server.Proxy"));
 		communicator = communicator();
+		communicator.addObjectFactory(new ObjectFactory(), Game.ice_staticId());
+		communicator.addObjectFactory(new ObjectFactory(), User.ice_staticId());
 		ObjectAdapter adapter = communicator.createObjectAdapter("");
         callback = new Ice.Identity();
         callback.name = UUID.randomUUID().toString();
@@ -49,6 +54,7 @@ public class Client extends Application {
         adapter.add(new ClientI(), callback);
         adapter.activate();
         proxy.ice_getConnection().setAdapter(adapter);
+        
 	}
 	
 	public static Identity getCallback(){

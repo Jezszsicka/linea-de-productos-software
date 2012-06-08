@@ -4,6 +4,15 @@ module ProductLine {
 	enum RoleType { Player, Admin };
 	enum GameType {	Ludo, Chess, Trivial, Monopoly, Checkers};
 
+
+	class Game {
+		["protected"] string name;
+		["protected"] string creator;
+		["protected"] GameType typeGame;
+		["protected"] void addPlayer(string user);
+		["protected"] void removePlayer(string user);
+	};
+
 	["java:getset"]
 	class Ranking {
 		int wonGames;
@@ -27,8 +36,6 @@ module ProductLine {
 		["protected"] Image avatar;
 		["protected"] StringList friends;	
 		["protected"] RankingList rankings;
-		
-		
 	};
 	
 	["java:type:java.util.ArrayList<User>"] sequence<User> UserList;
@@ -54,6 +61,9 @@ module ProductLine {
 		void sendGameMessage(string game,string sender, string message);
 		void sendGeneralMessage(string sender,string message);
 		void sendPrivateMessage(string sender, string destinatary, string message) throws UserNotLoggedException;
+		void deleteAccount(string username, string password) throws InvalidLoggingException;
+		void createGame(string user,string gameName, GameType type);
+		void probar(Game prof);
     };
     
     interface Client {

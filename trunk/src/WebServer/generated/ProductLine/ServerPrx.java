@@ -243,4 +243,61 @@ public interface ServerPrx extends Ice.ObjectPrx
 
     public void end_sendPrivateMessage(Ice.AsyncResult __result)
         throws UserNotLoggedException;
+
+    public void deleteAccount(String username, String password)
+        throws InvalidLoggingException;
+
+    public void deleteAccount(String username, String password, java.util.Map<String, String> __ctx)
+        throws InvalidLoggingException;
+
+    public Ice.AsyncResult begin_deleteAccount(String username, String password);
+
+    public Ice.AsyncResult begin_deleteAccount(String username, String password, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_deleteAccount(String username, String password, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_deleteAccount(String username, String password, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_deleteAccount(String username, String password, Callback_Server_deleteAccount __cb);
+
+    public Ice.AsyncResult begin_deleteAccount(String username, String password, java.util.Map<String, String> __ctx, Callback_Server_deleteAccount __cb);
+
+    public void end_deleteAccount(Ice.AsyncResult __result)
+        throws InvalidLoggingException;
+
+    public void createGame(String user, String gameName, GameType type);
+
+    public void createGame(String user, String gameName, GameType type, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_createGame(String user, String gameName, GameType type);
+
+    public Ice.AsyncResult begin_createGame(String user, String gameName, GameType type, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_createGame(String user, String gameName, GameType type, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_createGame(String user, String gameName, GameType type, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_createGame(String user, String gameName, GameType type, Callback_Server_createGame __cb);
+
+    public Ice.AsyncResult begin_createGame(String user, String gameName, GameType type, java.util.Map<String, String> __ctx, Callback_Server_createGame __cb);
+
+    public void end_createGame(Ice.AsyncResult __result);
+
+    public void probar(Game prof);
+
+    public void probar(Game prof, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_probar(Game prof);
+
+    public Ice.AsyncResult begin_probar(Game prof, java.util.Map<String, String> __ctx);
+
+    public Ice.AsyncResult begin_probar(Game prof, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_probar(Game prof, java.util.Map<String, String> __ctx, Ice.Callback __cb);
+
+    public Ice.AsyncResult begin_probar(Game prof, Callback_Server_probar __cb);
+
+    public Ice.AsyncResult begin_probar(Game prof, java.util.Map<String, String> __ctx, Callback_Server_probar __cb);
+
+    public void end_probar(Ice.AsyncResult __result);
 }

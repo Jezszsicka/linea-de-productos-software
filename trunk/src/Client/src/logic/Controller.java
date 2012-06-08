@@ -1,7 +1,8 @@
-package domain;
+package logic;
 
 import javax.swing.JOptionPane;
 
+import model.Game;
 import model.Session;
 import presentation.CreateGameUI;
 import presentation.JoinGameUI;
@@ -9,6 +10,7 @@ import presentation.LoginUI;
 import presentation.ProfileUI;
 import presentation.RegisterUI;
 import presentation.WaitingRoomUI;
+import ProductLine.GameType;
 import ProductLine.InvalidLoggingException;
 import ProductLine.User;
 import ProductLine.UserAlreadyExistsException;
@@ -33,9 +35,10 @@ public class Controller {
 	private Session session;
 	private SessionManager sessionManager;
 	private GamesManager gameManager;
+	private LanguageManager language;
 
 	private Controller() {
-		LanguageManager.language();
+		language = LanguageManager.language();
 		loginUI = new LoginUI();
 		sessionManager = new SessionManager();
 	}
@@ -75,27 +78,27 @@ public class Controller {
 	}
 
 	public void closeRegisterUI() {
-		registerUI.dispose();
 		loginUI.setEnabled(true);
 		loginUI.toFront();
+		registerUI.dispose();
+		registerUI = null;
 	}
 
 	public void loginUser(String username, String password) {
 		try {
 			session = sessionManager.loginUser(username, password);
-			LanguageManager.language().loadPreferences(session.getUser());
+			language.loadPreferences(session.getUser());
 			gameManager = new GamesManager(session);
-			waitingRoomUI = new WaitingRoomUI(session.getUser(), session
-					.getProxy().listUsers(session.getUser().getUsername()));
+			waitingRoomUI = new WaitingRoomUI(session.getUser(), session.getUsers());
 			loginUI.dispose();
-
+			loginUI = null;
 		} catch (WrongInputException e) {
 			JOptionPane.showMessageDialog(registerUI, e.getMessage(),
 					e.getError(), JOptionPane.WARNING_MESSAGE);
 			e.printStackTrace();
 		} catch (InvalidLoggingException e) {
 			JOptionPane.showMessageDialog(registerUI,
-					"Wrong username or password", "Incorrect login",
+					language.getString("InvalidLoggingMessage"), language.getString("InvalidLoggingTitle"),
 					JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		} catch (UserAlreadyLoggedException e) {
@@ -111,6 +114,7 @@ public class Controller {
 			sessionManager.logoutUser();
 			gameManager = null;
 			waitingRoomUI.dispose();
+			waitingRoomUI = null;
 			loginUI = new LoginUI();
 		} catch (UserNotLoggedException e) {
 			// TODO Auto-generated catch block
@@ -127,13 +131,16 @@ public class Controller {
 		waitingRoomUI.setEnabled(true);
 		waitingRoomUI.toFront();
 		createGameUI.dispose();
+		createGameUI = null;
 	}
 
 	public void userLogged(User user) {
-		waitingRoomUI.userLogged(user);
+		sessionManager.userLogged(user);
+		waitingRoomUI.userLogged(user.getUsername());
 	}
 
 	public void userLeave(String user) {
+		sessionManager.userLeave(user);
 		waitingRoomUI.userLeave(user);
 	}
 
@@ -158,6 +165,7 @@ public class Controller {
 	public void closeProfileUI() {
 		waitingRoomUI.setEnabled(true);
 		waitingRoomUI.toFront();
+		profileUI.dispose();
 	}
 
 	public void closeConnection() {
@@ -241,6 +249,25 @@ public class Controller {
 	public void changeLanguage(int selectedLanguage) {
 		LanguageManager.language().setLanguage(session.getUser().getUsername(),selectedLanguage);
 		waitingRoomUI.languageChanged();
+	}
+
+	public void deleteAccount(String password) {
+		try {
+			sessionManager.deleteAccount(password);
+		} catch (InvalidLoggingException e) {
+			JOptionPane.showMessageDialog(profileUI, "The password is wrong",
+					"Incorrect password", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		} catch (WrongInputException e) {
+			JOptionPane.showMessageDialog(profileUI, e.getMessage(),
+					e.getError(), JOptionPane.WARNING_MESSAGE);
+			e.printStackTrace();
+		}
+		
+	}
+
+	public void createGame(String gameName, GameType type) {
+		session.getProxy().createGame(session.getUser().getUsername(), gameName, type);
 	}
 
 }

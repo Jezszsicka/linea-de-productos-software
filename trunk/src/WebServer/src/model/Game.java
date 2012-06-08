@@ -1,48 +1,30 @@
-/**
- * 
- */
 package model;
 
-import java.io.Serializable;
-import java.util.Calendar;
-import java.util.List;
+import Ice.Current;
+import ProductLine.GameType;
 
-import javax.persistence.OneToMany;
-
-/**
- * @author Juan
- *
- */
-
-public class Game implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3501954857203872932L;
-	private String name;
-	private GameType gameType;
-	private List<Player> players;
-	private List<Calendar> dates;
+@SuppressWarnings("serial")
+public class Game extends ProductLine.Game {
+	public Game(){
+		super();
+		typeGame = GameType.Checkers;
+	}
 	
+	public Game(String name, String creator,GameType type){
+		this.name = name;
+		this.creator = creator;
+		this.typeGame = type;
+	}
 	
-	
-	public Game() {
+	@Override
+	public void addPlayer(String user, Current __current) {
 		
 	}
 
-
-	public void addPlayer(Player player) {
-		players.add(player);
+	@Override
+	public void removePlayer(String user, Current __current) {
+		// TODO Auto-generated method stub
 		
-	}
-	
-	public boolean isPlaying(String newPlayer){
-		for(Player player : players)
-			if(player.getName().equals(newPlayer))
-				return true;
-		
-		return false;
 	}
 
 }

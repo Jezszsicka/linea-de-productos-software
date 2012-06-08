@@ -1,6 +1,7 @@
 package presentation;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -27,17 +28,19 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 
+import logic.Controller;
+import logic.LanguageManager;
+
 import ProductLine.GameType;
 import ProductLine.Ranking;
 import ProductLine.User;
-import domain.Controller;
-import domain.LanguageManager;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -65,7 +68,8 @@ public class ProfileUI extends javax.swing.JFrame {
 	private static final int lblRankingWidth = 75;
 	private static final int lblRankingHeight = 15;
 	private JScrollPane rankingScroll;
-	private JComboBox<String> lstLanguages;
+	private JButton btnDeleteAccount;
+	private JComboBox lstLanguages;
 	private JLabel lblLanguage;
 
 	private JPanel pnlBackground;
@@ -76,21 +80,21 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel lblGame;
 	private JButton btnBack;
 	private JLabel lblRanking;
-	private JLabel lblPassword;
 	private JLabel lblUserPassword;
+	private JLabel lblPassword;
 	private JButton btnChangeName;
-	private JLabel lblUserNickname;
-	private JLabel lblName;
+	private JLabel lblNickname;
 	private JLabel lblUserName;
-	private JLabel lblEmail;
+	private JLabel lblName;
 	private JLabel lblUserEmail;
+	private JLabel lblEmail;
 	private JLabel lblAccount;
 	private JPanel pnlRanking;
 	private JButton btnChangeEmail;
 	private JButton btnChangePassword;
 	private JLabel lblAvatar;
 	private JButton btnAvatar;
-	private JLabel lblNickname;
+	private JLabel lblUserNickname;
 	private JFrame changeFrame;
 
 	private LanguageManager language;
@@ -101,9 +105,9 @@ public class ProfileUI extends javax.swing.JFrame {
 		this.language = LanguageManager.language();
 		this.user = user;
 		initGUI();
-		lblNickname.setText(user.getUsername());
-		lblName.setText(user.getName() + " " + user.getLastName());
-		lblEmail.setText(user.getEmail());
+		lblUserNickname.setText(user.getUsername());
+		lblUserName.setText(user.getName() + " " + user.getLastName());
+		lblUserEmail.setText(user.getEmail());
 		lblAvatar.setIcon(new ImageIcon(user.getAvatar()));
 		lstLanguages.setSelectedIndex(language.getLanguageCode());
 		// TODO Borrar luego, cuando se recojan los rankings de la base de datos
@@ -155,9 +159,10 @@ public class ProfileUI extends javax.swing.JFrame {
 
 	private void initGUI() {
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		this.setSize(622, 478);
+		this.setSize(650, 500);
 		setLocationRelativeTo(null);
-		getContentPane().setLayout(null);
+		BorderLayout thisLayout = new BorderLayout();
+		getContentPane().setLayout(thisLayout);
 		setVisible(true);
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
@@ -172,7 +177,7 @@ public class ProfileUI extends javax.swing.JFrame {
 			pnlBackground = new JPanel();
 			pnlBackground.setLayout(null);
 			pnlBackground.setBounds(0, 0, 606, 440);
-			pnlBackground.add(getLblNickname());
+			pnlBackground.add(getLblUserNickname());
 			pnlBackground.add(getBtnAvatar());
 			pnlBackground.add(getLblAvatar());
 			pnlBackground.add(getBtnBack());
@@ -180,37 +185,38 @@ public class ProfileUI extends javax.swing.JFrame {
 			pnlBackground.add(getBtnChangeEmail());
 			pnlBackground.add(getJScrollPane1());
 			pnlBackground.add(getLblAccount());
-			pnlBackground.add(getLblUserEmail());
 			pnlBackground.add(getLblEmail());
-			pnlBackground.add(getLblUserName());
+			pnlBackground.add(getLblUserEmail());
 			pnlBackground.add(getLblName());
-			pnlBackground.add(getLblUserNickname());
+			pnlBackground.add(getLblUserName());
+			pnlBackground.add(getLblNickname());
 			pnlBackground.add(getBtnChangeName());
-			pnlBackground.add(getLblUserPassword());
 			pnlBackground.add(getLblPassword());
+			pnlBackground.add(getLblUserPassword());
 			pnlBackground.add(getLblRanking());
 			pnlBackground.add(getLblLanguage());
 			pnlBackground.add(getLstLanguages());
+			pnlBackground.add(getBtnDeleteAccount());
 		}
 		return pnlBackground;
 	}
 
-	private JLabel getLblNickname() {
-		if (lblNickname == null) {
-			lblNickname = new JLabel();
-			lblNickname.setBounds(264, 47, 159, 20);
-			lblNickname.setHorizontalTextPosition(SwingConstants.CENTER);
-			lblNickname.setHorizontalAlignment(SwingConstants.LEFT);
-			lblNickname.setText("Juan");
+	private JLabel getLblUserNickname() {
+		if (lblUserNickname == null) {
+			lblUserNickname = new JLabel();
+			lblUserNickname.setBounds(264, 47, 159, 20);
+			lblUserNickname.setHorizontalTextPosition(SwingConstants.CENTER);
+			lblUserNickname.setHorizontalAlignment(SwingConstants.LEFT);
+			lblUserNickname.setText("Juan");
 		}
-		return lblNickname;
+		return lblUserNickname;
 	}
 
 	private JButton getBtnAvatar() {
 		if (btnAvatar == null) {
 			btnAvatar = new JButton("Seleccionar avatar");
 			btnAvatar.setText(language.getString("btnSelectAvatar"));
-			btnAvatar.setBounds(10, 170, 114, 23);
+			btnAvatar.setBounds(10, 177, 132, 23);
 			btnAvatar.setFocusable(false);
 			btnAvatar.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -229,7 +235,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblAvatar() {
 		if (lblAvatar == null) {
 			lblAvatar = new JLabel();
-			lblAvatar.setBounds(16, 47, 98, 117);
+			lblAvatar.setBounds(20, 49, 105, 117);
 			lblAvatar.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
 		}
@@ -240,7 +246,7 @@ public class ProfileUI extends javax.swing.JFrame {
 		if (lblRanking == null) {
 			lblRanking = new JLabel("Ranking");
 			lblRanking.setText(language.getString("lblRanking"));
-			lblRanking.setBounds(16, 246, 98, 14);
+			lblRanking.setBounds(15, 238, 98, 20);
 			lblRanking.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblRanking.setHorizontalAlignment(SwingConstants.CENTER);
 			lblRanking.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -252,7 +258,7 @@ public class ProfileUI extends javax.swing.JFrame {
 		if (btnBack == null) {
 			btnBack = new JButton("Volver");
 			btnBack.setText(language.getString("btnBack"));
-			btnBack.setBounds(508, 406, 74, 23);
+			btnBack.setBounds(522, 420, 74, 23);
 			btnBack.setHorizontalTextPosition(SwingConstants.CENTER);
 			btnBack.setFocusable(false);
 			btnBack.addMouseListener(new MouseAdapter() {
@@ -358,7 +364,8 @@ public class ProfileUI extends javax.swing.JFrame {
 
 	private JButton getBtnChangePassword() {
 		if (btnChangePassword == null) {
-			btnChangePassword = new JButton(language.getString("btnChangePassword"));
+			btnChangePassword = new JButton("Cambiar contraseña");
+			btnChangePassword.setText(language.getString("btnChangePassword"));
 			btnChangePassword.setBounds(458, 114, 138, 23);
 			btnChangePassword.setFocusable(false);
 			btnChangePassword.addMouseListener(new MouseAdapter() {
@@ -372,7 +379,8 @@ public class ProfileUI extends javax.swing.JFrame {
 
 	private JButton getBtnChangeEmail() {
 		if (btnChangeEmail == null) {
-			btnChangeEmail = new JButton(language.getString("btnChangeEmail"));
+			btnChangeEmail = new JButton("Cambiar e-mail");
+			btnChangeEmail.setText(language.getString("btnChangeEmail"));
 			btnChangeEmail.setBounds(458, 148, 138, 23);
 			btnChangeEmail.setFocusable(false);
 			btnChangeEmail.addMouseListener(new MouseAdapter() {
@@ -413,52 +421,52 @@ public class ProfileUI extends javax.swing.JFrame {
 		return lblAccount;
 	}
 
-	private JLabel getLblUserEmail() {
-		if (lblUserEmail == null) {
-			lblUserEmail = new JLabel("E-mail");
-			lblUserEmail.setText(language.getString("lblEmail"));
-			lblUserEmail.setBounds(164, 146, 82, 20);
-			lblUserEmail.setFont(new java.awt.Font("Tahoma", 1, 11));
-		}
-		return lblUserEmail;
-	}
-
 	private JLabel getLblEmail() {
 		if (lblEmail == null) {
-			lblEmail = new JLabel();
-			lblEmail.setBounds(264, 146, 159, 20);
-			lblEmail.setText("juanyanezgc");
+			lblEmail = new JLabel("E-mail");
+			lblEmail.setText(language.getString("lblEmail"));
+			lblEmail.setBounds(164, 146, 82, 20);
+			lblEmail.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblEmail;
 	}
 
-	private JLabel getLblUserName() {
-		if (lblUserName == null) {
-			lblUserName = new JLabel("Nombre");
-			lblUserName.setText(language.getString("lblName"));
-			lblUserName.setBounds(164, 78, 82, 23);
-			lblUserName.setFont(new java.awt.Font("Tahoma", 1, 11));
+	private JLabel getLblUserEmail() {
+		if (lblUserEmail == null) {
+			lblUserEmail = new JLabel();
+			lblUserEmail.setBounds(264, 146, 159, 20);
+			lblUserEmail.setText("juanyanezgc");
 		}
-		return lblUserName;
+		return lblUserEmail;
 	}
 
 	private JLabel getLblName() {
 		if (lblName == null) {
-			lblName = new JLabel();
-			lblName.setText("Juan Yáñez García-Catalán");
-			lblName.setBounds(264, 78, 159, 23);
+			lblName = new JLabel("Nombre");
+			lblName.setText(language.getString("lblName"));
+			lblName.setBounds(164, 78, 82, 23);
+			lblName.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblName;
 	}
 
-	private JLabel getLblUserNickname() {
-		if (lblUserNickname == null) {
-			lblUserNickname = new JLabel("Usuario");
-			lblUserNickname.setText(language.getString("lblUsername"));
-			lblUserNickname.setBounds(164, 47, 82, 20);
-			lblUserNickname.setFont(new java.awt.Font("Tahoma", 1, 11));
+	private JLabel getLblUserName() {
+		if (lblUserName == null) {
+			lblUserName = new JLabel();
+			lblUserName.setText("Juan Yáñez García-Catalán");
+			lblUserName.setBounds(264, 78, 159, 23);
 		}
-		return lblUserNickname;
+		return lblUserName;
+	}
+
+	private JLabel getLblNickname() {
+		if (lblNickname == null) {
+			lblNickname = new JLabel("Usuario");
+			lblNickname.setText(language.getString("lblUsername"));
+			lblNickname.setBounds(164, 47, 82, 20);
+			lblNickname.setFont(new java.awt.Font("Tahoma", 1, 11));
+		}
+		return lblNickname;
 	}
 
 	private void btnChangePasswordMouseClicked(MouseEvent evt) {
@@ -481,22 +489,23 @@ public class ProfileUI extends javax.swing.JFrame {
 		return btnChangeName;
 	}
 
-	private JLabel getLblUserPassword() {
-		if (lblUserPassword == null) {
-			lblUserPassword = new JLabel(language.getString("lblPassword"));
-			lblUserPassword.setBounds(164, 112, 82, 20);
-			lblUserPassword.setFont(new java.awt.Font("Tahoma", 1, 11));
-		}
-		return lblUserPassword;
-	}
-
 	private JLabel getLblPassword() {
 		if (lblPassword == null) {
-			lblPassword = new JLabel();
-			lblPassword.setText("********");
-			lblPassword.setBounds(264, 115, 159, 20);
+			lblPassword = new JLabel("Contraseña");
+			lblPassword.setText(language.getString("lblPassword"));
+			lblPassword.setBounds(164, 112, 82, 20);
+			lblPassword.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblPassword;
+	}
+
+	private JLabel getLblUserPassword() {
+		if (lblUserPassword == null) {
+			lblUserPassword = new JLabel();
+			lblUserPassword.setText("********");
+			lblUserPassword.setBounds(264, 115, 159, 20);
+		}
+		return lblUserPassword;
 	}
 
 	private void btnChangeNameMouseClicked(MouseEvent evt) {
@@ -505,7 +514,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	}
 
 	public void refreshName() {
-		lblName.setText(user.getName() + " " + user.getLastName());
+		lblUserName.setText(user.getName() + " " + user.getLastName());
 		setEnabled(true);
 		toFront();
 	}
@@ -523,7 +532,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JScrollPane getJScrollPane1() {
 		if (rankingScroll == null) {
 			rankingScroll = new JScrollPane();
-			rankingScroll.setBounds(130, 269, 375, 126);
+			rankingScroll.setBounds(130, 269, 375, 143);
 			rankingScroll
 					.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 			rankingScroll.setViewportView(getJPanel1());
@@ -535,10 +544,10 @@ public class ProfileUI extends javax.swing.JFrame {
 	private void changeLanguage(int selectedLanguage){
 		Controller.getInstance().changeLanguage(selectedLanguage);
 		lblAccount.setText(language.getString("lblAccount"));
-		lblUserNickname.setText(language.getString("lblUsername"));
-		lblUserName.setText(language.getString("lblName"));
-		lblUserEmail.setText(language.getString("lblEmail"));
-		lblUserPassword.setText(language.getString("lblPassword"));
+		lblNickname.setText(language.getString("lblUsername"));
+		lblName.setText(language.getString("lblName"));
+		lblEmail.setText(language.getString("lblEmail"));
+		lblPassword.setText(language.getString("lblPassword"));
 		lblLanguage.setText(language.getString("lblLanguage"));
 		lblRanking.setText(language.getString("lblRanking"));
 		lblGame.setText(language.getString("lblGame"));
@@ -551,11 +560,13 @@ public class ProfileUI extends javax.swing.JFrame {
 		btnChangeEmail.setText(language.getString("btnChangeEmail"));
 		btnBack.setText(language.getString("btnBack"));
 		btnAvatar.setText(language.getString("btnSelectAvatar"));
+		btnDeleteAccount.setText(language.getString("btnDeleteAccount"));
 	}
 	
 	private JLabel getLblLanguage() {
 		if(lblLanguage == null) {
-			lblLanguage = new JLabel(language.getString("lblLanguage"));
+			lblLanguage = new JLabel("País");
+			lblLanguage.setText(language.getString("lblLanguage"));
 			lblLanguage.setBounds(164, 178, 82, 20);
 			lblLanguage.setFont(new java.awt.Font("Tahoma",1,11));
 		}
@@ -564,14 +575,29 @@ public class ProfileUI extends javax.swing.JFrame {
 	
 	private JComboBox<String> getLstLanguages() {
 		if(lstLanguages == null) {
-			ComboBoxModel<String> lstLanguagesModel = 
-					new DefaultComboBoxModel<String>(
-							new String[] { language.getString("UnitedStates"),language.getString("Spain"), language.getString("France"),
-									language.getString("Germany") });
-			lstLanguages = new JComboBox<String>();
-			lstLanguages.setModel(lstLanguagesModel);
-			lstLanguages.setBounds(264, 178, 107, 20);
+			ImageIcon[] icons = {
+					new ImageIcon(getClass().getClassLoader().getResource(
+							"images/us_small.png")),
+					new ImageIcon(getClass().getClassLoader().getResource(
+							"images/es_small.png")),
+					new ImageIcon(getClass().getClassLoader().getResource(
+							"images/fr_small.png")),
+					new ImageIcon(getClass().getClassLoader().getResource(
+							"images/de_small.png")) };
+			String[] description = new String[] { language.getString("US"), language.getString("Spanish"),language.getString("French"),language.getString("German") };
+			Integer[] intArray = new Integer[description.length];
+			for (int i = 0; i < icons.length; i++) {
+				intArray[i] = new Integer(i);
+				if (icons[i] != null) {
+					icons[i].setDescription(description[i]);
+				}
+			}
+			ComboBoxRenderer renderer = new ComboBoxRenderer(icons, description);
+			renderer.setPreferredSize(new Dimension(120, 24));
+			lstLanguages = new JComboBox(intArray);
+			lstLanguages.setBounds(264, 178, 140, 20);
 			lstLanguages.setFocusable(false);
+			lstLanguages.setRenderer(renderer);
 			lstLanguages.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent evt) {
 					lstLanguagesActionPerformed(evt);
@@ -592,11 +618,45 @@ public class ProfileUI extends javax.swing.JFrame {
 	}
 	
 	private void lstLanguagesActionPerformed(ActionEvent evt) {
-		ComboBoxModel<String> lstLanguagesModel = 
-				new DefaultComboBoxModel<String>(
-						new String[] { language.getString("UnitedStates"),language.getString("Spain"), language.getString("France"),
-								language.getString("Germany") });
-		lstLanguages.setModel(lstLanguagesModel);
+		ImageIcon[] icons = {
+				new ImageIcon(getClass().getClassLoader().getResource(
+						"images/us_small.png")),
+				new ImageIcon(getClass().getClassLoader().getResource(
+						"images/es_small.png")),
+				new ImageIcon(getClass().getClassLoader().getResource(
+						"images/fr_small.png")),
+				new ImageIcon(getClass().getClassLoader().getResource(
+						"images/de_small.png")) };
+		String[] description = new String[] { language.getString("US"), language.getString("Spanish"),language.getString("French"),language.getString("German") };
+		Integer[] intArray = new Integer[description.length];
+		for (int i = 0; i < icons.length; i++) {
+			intArray[i] = new Integer(i);
+			if (icons[i] != null) {
+				icons[i].setDescription(description[i]);
+			}
+		}
+		ComboBoxRenderer renderer = new ComboBoxRenderer(icons, description);
+		renderer.setPreferredSize(new Dimension(120, 24));
+		lstLanguages.setRenderer(renderer);
 		lstLanguages.setSelectedIndex(language.getLanguageCode());
+	}
+	
+	private JButton getBtnDeleteAccount() {
+		if(btnDeleteAccount == null) {
+			btnDeleteAccount = new JButton("Borrar cuenta");
+			btnDeleteAccount.setText(language.getString("btnDeleteAccount"));
+			btnDeleteAccount.setBounds(458, 177, 138, 23);
+			btnDeleteAccount.setFocusable(false);
+			btnDeleteAccount.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					btnDeleteAccountMouseClicked(evt);
+				}
+			});
+		}
+		return btnDeleteAccount;
+	}
+	
+	private void btnDeleteAccountMouseClicked(MouseEvent evt) {
+		new DeleteAccountUI(this);
 	}
 }

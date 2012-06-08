@@ -1,12 +1,12 @@
 #Fat Jar Configuration File
-#Sun Apr 15 00:07:26 CEST 2012
+#Tue Jun 05 17:22:44 CEST 2012
 onejar.license.required=false
 manifest.classpath=
 manifest.removesigners=true
 onejar.checkbox=false
 jarname=Client_fat.jar
 manifest.mergeall=true
-manifest.mainclass=domain.Controller
+manifest.mainclass=communications.Client
 manifest.file=<createnew>
 jarname.isextern=false
 onejar.expand=

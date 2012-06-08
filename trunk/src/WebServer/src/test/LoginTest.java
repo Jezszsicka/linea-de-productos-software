@@ -6,6 +6,8 @@ package test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import logic.ServerThread;
+import logic.UsersController;
 import model.Session;
 
 import org.junit.After;
@@ -15,8 +17,6 @@ import org.junit.Test;
 import ProductLine.InvalidLoggingException;
 import ProductLine.UserAlreadyLoggedException;
 
-import domain.ServerThread;
-import domain.UsersController;
 
 /**
  * @author Juan

@@ -8,6 +8,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.ImageIcon;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,8 +16,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import domain.Controller;
-import domain.LanguageManager;
+import logic.Controller;
+import logic.LanguageManager;
+
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -66,6 +68,7 @@ public class LoginUI extends javax.swing.JFrame {
 		BorderLayout thisLayout = new BorderLayout();
 		getContentPane().setLayout(thisLayout);
 		setVisible(true);
+		this.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("images/icon.png")).getImage());
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
 				thisWindowClosing(evt);
