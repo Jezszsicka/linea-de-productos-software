@@ -11,8 +11,9 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.WindowConstants;
 
-import domain.Controller;
-import domain.LanguageManager;
+import logic.Controller;
+import logic.LanguageManager;
+
 
 
 /**
@@ -98,7 +99,7 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 		if(btnCancel == null) {
 			btnCancel = new JButton("Cancelar");
 			btnCancel.setText(language.getString("btnCancel"));
-			btnCancel.setBounds(290, 121, 84, 23);
+			btnCancel.setBounds(259, 121, 84, 23);
 			btnCancel.setFocusable(false);
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -113,7 +114,7 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 		if(btnSave == null) {
 			btnSave = new JButton("Cambiar");
 			btnSave.setText(language.getString("btnChange"));
-			btnSave.setBounds(10, 121, 84, 23);
+			btnSave.setBounds(38, 121, 84, 23);
 			btnSave.setFocusable(false);
 			btnSave.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {

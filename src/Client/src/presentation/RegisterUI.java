@@ -1,5 +1,9 @@
 package presentation;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -20,16 +24,20 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.ListCellRenderer;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 
 import ProductLine.RoleType;
 import ProductLine.User;
-import domain.Controller;
-import domain.LanguageManager;
 import java.awt.BorderLayout;
+
+import logic.Controller;
+import logic.LanguageManager;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -54,7 +62,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JLabel lblRepeatPassword;
 	private JButton btnAvatar;
 	private JLabel lblAvatar;
-	private JComboBox<String> selectedCountry;
+	private JComboBox selectedCountry;
 	private JLabel lblCountry;
 	private JTextField txtLastname;
 	private JLabel lblUsername;
@@ -138,7 +146,7 @@ public class RegisterUI extends javax.swing.JFrame {
 					do_btnRegister_mouseClicked(arg0);
 				}
 			});
-			btnRegister.setBounds(82, 285, 89, 23);
+			btnRegister.setBounds(82, 292, 89, 23);
 			btnRegister.setFocusable(false);
 		}
 		return btnRegister;
@@ -154,7 +162,7 @@ public class RegisterUI extends javax.swing.JFrame {
 					do_btnCancel_mouseClicked(e);
 				}
 			});
-			btnCancel.setBounds(320, 285, 89, 23);
+			btnCancel.setBounds(320, 292, 89, 23);
 			btnCancel.setFocusable(false);
 		}
 		return btnCancel;
@@ -175,7 +183,7 @@ public class RegisterUI extends javax.swing.JFrame {
 			lblPassword = new JLabel("Contraseña");
 			lblPassword.setText(language.getString("lblPassword"));
 			lblPassword.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblPassword.setBounds(165, 148, 129, 20);
+			lblPassword.setBounds(165, 154, 129, 20);
 		}
 		return lblPassword;
 	}
@@ -185,7 +193,7 @@ public class RegisterUI extends javax.swing.JFrame {
 			lblEmail = new JLabel("E-mail");
 			lblEmail.setText(language.getString("lblEmail"));
 			lblEmail.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblEmail.setBounds(165, 209, 129, 20);
+			lblEmail.setBounds(165, 215, 129, 20);
 		}
 		return lblEmail;
 	}
@@ -202,7 +210,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JPasswordField getTxtPassword() {
 		if (txtPassword == null) {
 			txtPassword = new JPasswordField();
-			txtPassword.setBounds(337, 148, 120, 20);
+			txtPassword.setBounds(337, 154, 120, 20);
 			txtPassword.setColumns(10);
 		}
 		return txtPassword;
@@ -211,7 +219,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtEmail() {
 		if (txtEmail == null) {
 			txtEmail = new JTextField();
-			txtEmail.setBounds(337, 209, 120, 20);
+			txtEmail.setBounds(337, 215, 120, 20);
 			txtEmail.setColumns(10);
 		}
 		return txtEmail;
@@ -220,7 +228,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JPasswordField getTxtPasswordR() {
 		if (txtPasswordR == null) {
 			txtPasswordR = new JPasswordField();
-			txtPasswordR.setBounds(337, 178, 120, 20);
+			txtPasswordR.setBounds(337, 184, 120, 20);
 			txtPasswordR.setColumns(10);
 		}
 		return txtPasswordR;
@@ -229,7 +237,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtEmailR() {
 		if (txtEmailR == null) {
 			txtEmailR = new JTextField();
-			txtEmailR.setBounds(337, 240, 120, 20);
+			txtEmailR.setBounds(337, 246, 120, 20);
 			txtEmailR.setColumns(10);
 		}
 		return txtEmailR;
@@ -248,8 +256,8 @@ public class RegisterUI extends javax.swing.JFrame {
 		String email = txtEmail.getText();
 		String retypedEmail = txtEmailR.getText();
 		int country = selectedCountry.getSelectedIndex();
-		User user = new User (username, name, lastName, password, email,RoleType.Player,
-				country, avatar,null,null);
+		User user = new model.User(username, name, lastName, password, email,
+				RoleType.Player, country, avatar);
 		Controller.getInstance().registerUser(user, retypedPassword,
 				retypedEmail);
 	}
@@ -298,21 +306,39 @@ public class RegisterUI extends javax.swing.JFrame {
 		if (lblCountry == null) {
 			lblCountry = new JLabel("Pais");
 			lblCountry.setText(language.getString("lblCountry"));
-			lblCountry.setBounds(165, 117, 129, 20);
+			lblCountry.setBounds(165, 119, 129, 20);
 			lblCountry.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblCountry;
 	}
 
-	private JComboBox<String> getSelectedCountry() {
+	private JComboBox getSelectedCountry() {
 		if (selectedCountry == null) {
-			ComboBoxModel<String> countryModel = new DefaultComboBoxModel<String>(
-					new String[] { language.getString("UnitedStates"),language.getString("Spain"), language.getString("France"),
-							language.getString("Germany") });
-			selectedCountry = new JComboBox<String>();
-			selectedCountry.setModel(countryModel);
+			ImageIcon[] icons = {
+					new ImageIcon(getClass().getClassLoader().getResource(
+							"images/us_small.png")),
+					new ImageIcon(getClass().getClassLoader().getResource(
+							"images/es_small.png")),
+					new ImageIcon(getClass().getClassLoader().getResource(
+							"images/fr_small.png")),
+					new ImageIcon(getClass().getClassLoader().getResource(
+							"images/de_small.png")) };
+			String[] description = new String[] { language.getString("UnitedStates"), language.getString("Spain"),language.getString("France"),language.getString("Germany") };
+			Integer[] intArray = new Integer[description.length];
+			for (int i = 0; i < icons.length; i++) {
+				intArray[i] = new Integer(i);
+				if (icons[i] != null) {
+					icons[i].setDescription(description[i]);
+				}
+			}
+			ComboBoxRenderer renderer = new ComboBoxRenderer(icons, description);
+			renderer.setPreferredSize(new Dimension(120, 24));
+			selectedCountry = new JComboBox(intArray);
+			selectedCountry.setRenderer(renderer);
 			selectedCountry.setBounds(337, 117, 120, 20);
 			selectedCountry.setFocusable(false);
+			selectedCountry.setSize(120, 24);
+
 		}
 		return selectedCountry;
 	}
@@ -346,7 +372,7 @@ public class RegisterUI extends javax.swing.JFrame {
 		if (lblRepeatPassword == null) {
 			lblRepeatPassword = new JLabel("Confirmar contraseña");
 			lblRepeatPassword.setText(language.getString("lblConfirmPassword"));
-			lblRepeatPassword.setBounds(165, 178, 129, 20);
+			lblRepeatPassword.setBounds(165, 184, 129, 20);
 			lblRepeatPassword.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblRepeatPassword;
@@ -356,7 +382,7 @@ public class RegisterUI extends javax.swing.JFrame {
 		if (lblRepeatEmail == null) {
 			lblRepeatEmail = new JLabel("Confirmar e-mail");
 			lblRepeatEmail.setText(language.getString("lblConfirmEmail"));
-			lblRepeatEmail.setBounds(165, 240, 129, 20);
+			lblRepeatEmail.setBounds(165, 246, 129, 20);
 			lblRepeatEmail.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblRepeatEmail;

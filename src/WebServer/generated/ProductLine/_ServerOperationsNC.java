@@ -51,4 +51,11 @@ public interface _ServerOperationsNC
 
     void sendPrivateMessage(String sender, String destinatary, String message)
         throws UserNotLoggedException;
+
+    void deleteAccount(String username, String password)
+        throws InvalidLoggingException;
+
+    void createGame(String user, String gameName, GameType type);
+
+    void probar(Game prof);
 }

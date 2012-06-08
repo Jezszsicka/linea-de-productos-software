@@ -2,7 +2,11 @@ package persistence;
 
 import java.util.List;
 
-import ProductLine.User;
+import org.hibernate.Query;
+
+import model.User;
+
+
 
 
 
@@ -51,8 +55,7 @@ public class UserDAO extends DAO<User, String> {
 	}
 
 	public User checkLogin(String username, String password) {
-		User user = null;
-		
+		User user = null;	
 		begin();
 		@SuppressWarnings("unchecked")
 		List<User> query = session.createQuery("from User as user where user.username = '"+ username +"' and password = '"+password +"'" ).list();
@@ -64,5 +67,15 @@ public class UserDAO extends DAO<User, String> {
 		
 		return user;
 	}
+	
+	public boolean userAvailable(String user){
+		begin();
+		 List<Long> query = session.createQuery("select count(*) from User as user where user.username = '"+user+"'").list();
+		 if(query.get(0).intValue() == 0)
+			 return true;
+		 else 
+			 return false;
+	}
+	
 
 }

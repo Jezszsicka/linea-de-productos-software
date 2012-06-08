@@ -1,4 +1,4 @@
-package domain;
+package logic;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,16 +22,6 @@ public class SessionManager {
 
 	}
 
-	public Session loginUser(String username, String password)
-			throws WrongInputException, InvalidLoggingException,
-			UserAlreadyLoggedException {
-		validateLoginInput(username, password);
-		Identity callback = Client.getCallback();
-		User user = Client.getProxy().loginUser(username, Utils.hashMD5_Base64(password), callback);
-		session = new Session(user, callback, Client.getProxy());
-		return session;
-	}
-
 	public void registerUser(User user, String retypedPassword,
 			String retypedEmail) throws WrongInputException,
 			UserAlreadyExistsException {
@@ -40,6 +30,16 @@ public class SessionManager {
 		user.setPassword(Utils.hashMD5_Base64(user.getPassword()));
 		Client.getProxy().registerUser((ProductLine.User) user);
 
+	}
+	
+	public Session loginUser(String username, String password)
+			throws WrongInputException, InvalidLoggingException,
+			UserAlreadyLoggedException {
+		validateLoginInput(username, password);
+		Identity callback = Client.getCallback();
+		User user = Client.getProxy().loginUser(username, Utils.hashMD5_Base64(password), callback);
+		session = new Session(user, Client.getProxy().listUsers(username),callback, Client.getProxy());
+		return session;
 	}
 
 	public void logoutUser() throws UserNotLoggedException {
@@ -140,5 +140,23 @@ public class SessionManager {
 				.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 		Matcher matcher = pattern.matcher(email);
 		return matcher.matches();
+	}
+
+	public void deleteAccount(String password) throws InvalidLoggingException, WrongInputException {
+		
+		if(password.isEmpty())
+			throw new WrongInputException("Incomplete fields","You must introduce the password");
+		
+		session.getProxy().deleteAccount(session.getUser().getUsername(), Utils.hashMD5_Base64(password));
+		
+	}
+
+	public void userLogged(User user) {
+		session.addUser(user);
+	}
+
+	public void userLeave(String user) {
+		session.removeUser(user);
+		
 	}
 }

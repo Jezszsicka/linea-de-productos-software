@@ -17,7 +17,8 @@ import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileFilter;
 
-import domain.LanguageManager;
+import logic.LanguageManager;
+
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI

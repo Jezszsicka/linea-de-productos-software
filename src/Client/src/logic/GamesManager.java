@@ -1,4 +1,4 @@
-package domain;
+package logic;
 
 import ProductLine.UserNotLoggedException;
 import model.Session;

@@ -483,6 +483,224 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
         __is.skipEmptyEncaps();
     }
 
+    public void
+    createGame(String user, String gameName, GameType type)
+    {
+        createGame(user, gameName, type, null, false);
+    }
+
+    public void
+    createGame(String user, String gameName, GameType type, java.util.Map<String, String> __ctx)
+    {
+        createGame(user, gameName, type, __ctx, true);
+    }
+
+    private void
+    createGame(String user, String gameName, GameType type, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    {
+        if(__explicitCtx && __ctx == null)
+        {
+            __ctx = _emptyContext;
+        }
+        int __cnt = 0;
+        while(true)
+        {
+            Ice._ObjectDel __delBase = null;
+            try
+            {
+                __delBase = __getDelegate(false);
+                _ServerDel __del = (_ServerDel)__delBase;
+                __del.createGame(user, gameName, type, __ctx);
+                return;
+            }
+            catch(IceInternal.LocalExceptionWrapper __ex)
+            {
+                __handleExceptionWrapper(__delBase, __ex);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __cnt = __handleException(__delBase, __ex, null, __cnt);
+            }
+        }
+    }
+
+    private static final String __createGame_name = "createGame";
+
+    public Ice.AsyncResult begin_createGame(String user, String gameName, GameType type)
+    {
+        return begin_createGame(user, gameName, type, null, false, null);
+    }
+
+    public Ice.AsyncResult begin_createGame(String user, String gameName, GameType type, java.util.Map<String, String> __ctx)
+    {
+        return begin_createGame(user, gameName, type, __ctx, true, null);
+    }
+
+    public Ice.AsyncResult begin_createGame(String user, String gameName, GameType type, Ice.Callback __cb)
+    {
+        return begin_createGame(user, gameName, type, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_createGame(String user, String gameName, GameType type, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    {
+        return begin_createGame(user, gameName, type, __ctx, true, __cb);
+    }
+
+    public Ice.AsyncResult begin_createGame(String user, String gameName, GameType type, Callback_Server_createGame __cb)
+    {
+        return begin_createGame(user, gameName, type, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_createGame(String user, String gameName, GameType type, java.util.Map<String, String> __ctx, Callback_Server_createGame __cb)
+    {
+        return begin_createGame(user, gameName, type, __ctx, true, __cb);
+    }
+
+    private Ice.AsyncResult begin_createGame(String user, String gameName, GameType type, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    {
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __createGame_name, __cb);
+        try
+        {
+            __result.__prepare(__createGame_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            IceInternal.BasicStream __os = __result.__os();
+            __os.writeString(user);
+            __os.writeString(gameName);
+            type.__write(__os);
+            __os.endWriteEncaps();
+            __result.__send(true);
+        }
+        catch(Ice.LocalException __ex)
+        {
+            __result.__exceptionAsync(__ex);
+        }
+        return __result;
+    }
+
+    public void end_createGame(Ice.AsyncResult __result)
+    {
+        __end(__result, __createGame_name);
+    }
+
+    public void
+    deleteAccount(String username, String password)
+        throws InvalidLoggingException
+    {
+        deleteAccount(username, password, null, false);
+    }
+
+    public void
+    deleteAccount(String username, String password, java.util.Map<String, String> __ctx)
+        throws InvalidLoggingException
+    {
+        deleteAccount(username, password, __ctx, true);
+    }
+
+    private void
+    deleteAccount(String username, String password, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+        throws InvalidLoggingException
+    {
+        if(__explicitCtx && __ctx == null)
+        {
+            __ctx = _emptyContext;
+        }
+        int __cnt = 0;
+        while(true)
+        {
+            Ice._ObjectDel __delBase = null;
+            try
+            {
+                __checkTwowayOnly("deleteAccount");
+                __delBase = __getDelegate(false);
+                _ServerDel __del = (_ServerDel)__delBase;
+                __del.deleteAccount(username, password, __ctx);
+                return;
+            }
+            catch(IceInternal.LocalExceptionWrapper __ex)
+            {
+                __handleExceptionWrapper(__delBase, __ex);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __cnt = __handleException(__delBase, __ex, null, __cnt);
+            }
+        }
+    }
+
+    private static final String __deleteAccount_name = "deleteAccount";
+
+    public Ice.AsyncResult begin_deleteAccount(String username, String password)
+    {
+        return begin_deleteAccount(username, password, null, false, null);
+    }
+
+    public Ice.AsyncResult begin_deleteAccount(String username, String password, java.util.Map<String, String> __ctx)
+    {
+        return begin_deleteAccount(username, password, __ctx, true, null);
+    }
+
+    public Ice.AsyncResult begin_deleteAccount(String username, String password, Ice.Callback __cb)
+    {
+        return begin_deleteAccount(username, password, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_deleteAccount(String username, String password, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    {
+        return begin_deleteAccount(username, password, __ctx, true, __cb);
+    }
+
+    public Ice.AsyncResult begin_deleteAccount(String username, String password, Callback_Server_deleteAccount __cb)
+    {
+        return begin_deleteAccount(username, password, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_deleteAccount(String username, String password, java.util.Map<String, String> __ctx, Callback_Server_deleteAccount __cb)
+    {
+        return begin_deleteAccount(username, password, __ctx, true, __cb);
+    }
+
+    private Ice.AsyncResult begin_deleteAccount(String username, String password, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    {
+        __checkAsyncTwowayOnly(__deleteAccount_name);
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __deleteAccount_name, __cb);
+        try
+        {
+            __result.__prepare(__deleteAccount_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            IceInternal.BasicStream __os = __result.__os();
+            __os.writeString(username);
+            __os.writeString(password);
+            __os.endWriteEncaps();
+            __result.__send(true);
+        }
+        catch(Ice.LocalException __ex)
+        {
+            __result.__exceptionAsync(__ex);
+        }
+        return __result;
+    }
+
+    public void end_deleteAccount(Ice.AsyncResult __result)
+        throws InvalidLoggingException
+    {
+        Ice.AsyncResult.__check(__result, this, __deleteAccount_name);
+        if(!__result.__wait())
+        {
+            try
+            {
+                __result.__throwUserException();
+            }
+            catch(InvalidLoggingException __ex)
+            {
+                throw __ex;
+            }
+            catch(Ice.UserException __ex)
+            {
+                throw new Ice.UnknownUserException(__ex.ice_name(), __ex);
+            }
+        }
+        IceInternal.BasicStream __is = __result.__is();
+        __is.skipEmptyEncaps();
+    }
+
     public java.util.List<User>
     listUsers(String username)
     {
@@ -848,6 +1066,103 @@ public final class ServerPrxHelper extends Ice.ObjectPrxHelperBase implements Se
         }
         IceInternal.BasicStream __is = __result.__is();
         __is.skipEmptyEncaps();
+    }
+
+    public void
+    probar(Game prof)
+    {
+        probar(prof, null, false);
+    }
+
+    public void
+    probar(Game prof, java.util.Map<String, String> __ctx)
+    {
+        probar(prof, __ctx, true);
+    }
+
+    private void
+    probar(Game prof, java.util.Map<String, String> __ctx, boolean __explicitCtx)
+    {
+        if(__explicitCtx && __ctx == null)
+        {
+            __ctx = _emptyContext;
+        }
+        int __cnt = 0;
+        while(true)
+        {
+            Ice._ObjectDel __delBase = null;
+            try
+            {
+                __delBase = __getDelegate(false);
+                _ServerDel __del = (_ServerDel)__delBase;
+                __del.probar(prof, __ctx);
+                return;
+            }
+            catch(IceInternal.LocalExceptionWrapper __ex)
+            {
+                __handleExceptionWrapper(__delBase, __ex);
+            }
+            catch(Ice.LocalException __ex)
+            {
+                __cnt = __handleException(__delBase, __ex, null, __cnt);
+            }
+        }
+    }
+
+    private static final String __probar_name = "probar";
+
+    public Ice.AsyncResult begin_probar(Game prof)
+    {
+        return begin_probar(prof, null, false, null);
+    }
+
+    public Ice.AsyncResult begin_probar(Game prof, java.util.Map<String, String> __ctx)
+    {
+        return begin_probar(prof, __ctx, true, null);
+    }
+
+    public Ice.AsyncResult begin_probar(Game prof, Ice.Callback __cb)
+    {
+        return begin_probar(prof, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_probar(Game prof, java.util.Map<String, String> __ctx, Ice.Callback __cb)
+    {
+        return begin_probar(prof, __ctx, true, __cb);
+    }
+
+    public Ice.AsyncResult begin_probar(Game prof, Callback_Server_probar __cb)
+    {
+        return begin_probar(prof, null, false, __cb);
+    }
+
+    public Ice.AsyncResult begin_probar(Game prof, java.util.Map<String, String> __ctx, Callback_Server_probar __cb)
+    {
+        return begin_probar(prof, __ctx, true, __cb);
+    }
+
+    private Ice.AsyncResult begin_probar(Game prof, java.util.Map<String, String> __ctx, boolean __explicitCtx, IceInternal.CallbackBase __cb)
+    {
+        IceInternal.OutgoingAsync __result = new IceInternal.OutgoingAsync(this, __probar_name, __cb);
+        try
+        {
+            __result.__prepare(__probar_name, Ice.OperationMode.Normal, __ctx, __explicitCtx);
+            IceInternal.BasicStream __os = __result.__os();
+            __os.writeObject(prof);
+            __os.writePendingObjects();
+            __os.endWriteEncaps();
+            __result.__send(true);
+        }
+        catch(Ice.LocalException __ex)
+        {
+            __result.__exceptionAsync(__ex);
+        }
+        return __result;
+    }
+
+    public void end_probar(Ice.AsyncResult __result)
+    {
+        __end(__result, __probar_name);
     }
 
     public void

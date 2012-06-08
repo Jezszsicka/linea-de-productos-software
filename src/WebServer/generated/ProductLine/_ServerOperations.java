@@ -51,4 +51,11 @@ public interface _ServerOperations
 
     void sendPrivateMessage(String sender, String destinatary, String message, Ice.Current __current)
         throws UserNotLoggedException;
+
+    void deleteAccount(String username, String password, Ice.Current __current)
+        throws InvalidLoggingException;
+
+    void createGame(String user, String gameName, GameType type, Ice.Current __current);
+
+    void probar(Game prof, Ice.Current __current);
 }

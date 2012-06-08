@@ -1,11 +1,14 @@
 package presentation;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import domain.Controller;
+import logic.Controller;
+
 
 
 /**
@@ -45,8 +48,13 @@ public class JoinGameUI extends javax.swing.JFrame {
 	
 	private void initGUI() {
 		try {
-			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 			getContentPane().setLayout(null);
+			this.addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent evt) {
+					thisWindowClosing(evt);
+				}
+			});
 			getContentPane().add(getPnlFondo());
 			pack();
 			this.setSize(538, 362);
@@ -92,7 +100,10 @@ public class JoinGameUI extends javax.swing.JFrame {
 	
 	private void btnCancelMouseClicked(MouseEvent evt) {
 		Controller.getInstance().closeJoinGameUI();
-		dispose();
+	}
+	
+	private void thisWindowClosing(WindowEvent evt) {
+		Controller.getInstance().closeJoinGameUI();
 	}
 
 }

@@ -1,4 +1,4 @@
-package domain;
+package logic;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -25,6 +25,24 @@ public class Utils {
 		return encoded;
 	}
 	
+	public static String countryImg(int country){
+		String path = "images/";
+		switch(country){
+		case 0:
+			path += "us";
+			break;
+		case 1:
+			path += "es";
+			break;
+		case 2:
+			path += "fr";
+			break;
+		case 3:
+			path += "de";
+			break;
+		}
+		return path+".png";
+	}
 	
 	
 }

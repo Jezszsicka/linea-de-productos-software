@@ -104,6 +104,19 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
         changePassword(username, password, newPassword, null);
     }
 
+    public final void
+    createGame(String user, String gameName, GameType type)
+    {
+        createGame(user, gameName, type, null);
+    }
+
+    public final void
+    deleteAccount(String username, String password)
+        throws InvalidLoggingException
+    {
+        deleteAccount(username, password, null);
+    }
+
     public final java.util.List<User>
     listUsers(String username)
     {
@@ -123,6 +136,12 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
         throws UserNotLoggedException
     {
         logoutUser(username, null);
+    }
+
+    public final void
+    probar(Game prof)
+    {
+        probar(prof, null);
     }
 
     public final void
@@ -399,12 +418,69 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
         }
     }
 
+    public static Ice.DispatchStatus
+    ___deleteAccount(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.is();
+        __is.startReadEncaps();
+        String username;
+        username = __is.readString();
+        String password;
+        password = __is.readString();
+        __is.endReadEncaps();
+        IceInternal.BasicStream __os = __inS.os();
+        try
+        {
+            __obj.deleteAccount(username, password, __current);
+            return Ice.DispatchStatus.DispatchOK;
+        }
+        catch(InvalidLoggingException ex)
+        {
+            __os.writeUserException(ex);
+            return Ice.DispatchStatus.DispatchUserException;
+        }
+    }
+
+    public static Ice.DispatchStatus
+    ___createGame(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.is();
+        __is.startReadEncaps();
+        String user;
+        user = __is.readString();
+        String gameName;
+        gameName = __is.readString();
+        GameType type;
+        type = GameType.__read(__is);
+        __is.endReadEncaps();
+        __obj.createGame(user, gameName, type, __current);
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
+    public static Ice.DispatchStatus
+    ___probar(Server __obj, IceInternal.Incoming __inS, Ice.Current __current)
+    {
+        __checkMode(Ice.OperationMode.Normal, __current.mode);
+        IceInternal.BasicStream __is = __inS.is();
+        __is.startReadEncaps();
+        GameHolder prof = new GameHolder();
+        __is.readObject(prof);
+        __is.readPendingObjects();
+        __is.endReadEncaps();
+        __obj.probar(prof.value, __current);
+        return Ice.DispatchStatus.DispatchOK;
+    }
+
     private final static String[] __all =
     {
         "changeAvatar",
         "changeEmail",
         "changeName",
         "changePassword",
+        "createGame",
+        "deleteAccount",
         "ice_id",
         "ice_ids",
         "ice_isA",
@@ -412,6 +488,7 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
         "listUsers",
         "loginUser",
         "logoutUser",
+        "probar",
         "registerUser",
         "sendGameMessage",
         "sendGeneralMessage",
@@ -447,45 +524,57 @@ public abstract class _ServerDisp extends Ice.ObjectImpl implements Server
             }
             case 4:
             {
-                return ___ice_id(this, in, __current);
+                return ___createGame(this, in, __current);
             }
             case 5:
             {
-                return ___ice_ids(this, in, __current);
+                return ___deleteAccount(this, in, __current);
             }
             case 6:
             {
-                return ___ice_isA(this, in, __current);
+                return ___ice_id(this, in, __current);
             }
             case 7:
             {
-                return ___ice_ping(this, in, __current);
+                return ___ice_ids(this, in, __current);
             }
             case 8:
             {
-                return ___listUsers(this, in, __current);
+                return ___ice_isA(this, in, __current);
             }
             case 9:
             {
-                return ___loginUser(this, in, __current);
+                return ___ice_ping(this, in, __current);
             }
             case 10:
             {
-                return ___logoutUser(this, in, __current);
+                return ___listUsers(this, in, __current);
             }
             case 11:
             {
-                return ___registerUser(this, in, __current);
+                return ___loginUser(this, in, __current);
             }
             case 12:
             {
-                return ___sendGameMessage(this, in, __current);
+                return ___logoutUser(this, in, __current);
             }
             case 13:
             {
-                return ___sendGeneralMessage(this, in, __current);
+                return ___probar(this, in, __current);
             }
             case 14:
+            {
+                return ___registerUser(this, in, __current);
+            }
+            case 15:
+            {
+                return ___sendGameMessage(this, in, __current);
+            }
+            case 16:
+            {
+                return ___sendGeneralMessage(this, in, __current);
+            }
+            case 17:
             {
                 return ___sendPrivateMessage(this, in, __current);
             }

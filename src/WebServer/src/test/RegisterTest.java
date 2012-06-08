@@ -4,13 +4,13 @@
 package test;
 
 import static org.junit.Assert.*;
+import logic.ServerThread;
+import logic.UsersController;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import domain.ServerThread;
-import domain.UsersController;
 
 /**
  * @author Juan

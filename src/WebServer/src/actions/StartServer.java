@@ -1,8 +1,9 @@
 package actions;
 
 
+import logic.ServerController;
+
 import com.opensymphony.xwork2.ActionSupport;
-import domain.ServerController;
 
 public class StartServer extends ActionSupport {
 	
