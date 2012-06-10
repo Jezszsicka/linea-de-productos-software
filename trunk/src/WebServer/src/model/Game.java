@@ -1,30 +1,37 @@
 package model;
 
+import java.util.ArrayList;
+
 import Ice.Current;
 import ProductLine.GameType;
 
 @SuppressWarnings("serial")
 public class Game extends ProductLine.Game {
-	public Game(){
+	public Game() {
 		super();
 		typeGame = GameType.Checkers;
 	}
-	
-	public Game(String name, String creator,GameType type){
+
+	public Game(String name, String creator, GameType type) {
 		this.name = name;
-		this.creator = creator;
 		this.typeGame = type;
-	}
-	
-	@Override
-	public void addPlayer(String user, Current __current) {
-		
+		switch (typeGame) {
+		case Checkers:
+			maxPlayers = 2;
+			break;
+		}
+		this.players = new ArrayList<String>();
+		players.add(creator);
 	}
 
 	@Override
-	public void removePlayer(String user, Current __current) {
-		// TODO Auto-generated method stub
-		
+	public void addPlayer(String player, Current __current) {
+		players.add(player);
+	}
+
+	@Override
+	public void removePlayer(String player, Current __current) {
+		players.add(player);
 	}
 
 }

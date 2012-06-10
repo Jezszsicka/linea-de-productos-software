@@ -85,7 +85,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 		lblUserName.setText(user.getName()+" "+user.getLastName());
 		lblUserEmail.setText(user.getEmail());
 		lblAvatar.setIcon(new ImageIcon(user.getAvatar()));
-		lblFlag.setIcon(new ImageIcon(getClass().getClassLoader().getResource(Utils.countryImg(user.getCountry()))));
+		lblFlag.setIcon(new ImageIcon(getClass().getClassLoader().getResource(Utils.countryImgPath(user.getCountry()))));
 		setVisible(true);
 		setLocationRelativeTo(null);
 		

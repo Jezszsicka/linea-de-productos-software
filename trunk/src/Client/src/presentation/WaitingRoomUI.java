@@ -6,8 +6,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -38,8 +36,7 @@ import javax.swing.text.html.HTMLEditorKit;
 
 import logic.Controller;
 import logic.LanguageManager;
-
-import ProductLine.User;
+import model.User;
 import ProductLine.UserNotLoggedException;
 
 /**
@@ -338,10 +335,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 							+ "</font>", 0, 0, null);
 			txtChat.setCaretPosition(txtChat.getDocument().getLength());
 		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -353,10 +348,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 					+ sender + ":</b> " + message, 0, 0, null);
 			txtChat.setCaretPosition(txtChat.getDocument().getLength());
 		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -368,10 +361,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 							"<b>" + username + " has joined</b> ", 0,
 							0, null);
 		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		refreshUsersList();
@@ -382,10 +373,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 			htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>" + user
 					+ " has left</b> ", 0, 0, null);
 		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		refreshUsersList();
@@ -461,10 +450,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 										+ ":</b>" + privateMessage + "</font>",
 								0, 0, null);
 					} catch (BadLocationException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				} catch (UserNotLoggedException e1) {
@@ -473,10 +460,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 								"<font color=\"gray\"><b>" + destinatary
 										+ " is offline</b></font>", 0, 0, null);
 					} catch (BadLocationException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -489,10 +474,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 									"<font color=\"gray\"><b>You can't send a message to yourself</b></font>",
 									0, 0, null);
 				} catch (BadLocationException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -502,10 +485,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 				htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
 						+ user.getUsername() + ":</b> " + message, 0, 0, null);
 			} catch (BadLocationException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

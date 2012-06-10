@@ -1,20 +1,26 @@
 package logic;
 
+import java.util.Hashtable;
+import java.util.List;
+
 import javax.swing.JOptionPane;
 
 import model.Game;
 import model.Session;
+import model.User;
 import presentation.CreateGameUI;
+import presentation.GameWaitingRoomUI;
 import presentation.JoinGameUI;
 import presentation.LoginUI;
 import presentation.ProfileUI;
 import presentation.RegisterUI;
 import presentation.WaitingRoomUI;
+import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
 import ProductLine.InvalidLoggingException;
-import ProductLine.User;
 import ProductLine.UserAlreadyExistsException;
 import ProductLine.UserAlreadyLoggedException;
+import ProductLine.UserNotInGameException;
 import ProductLine.UserNotLoggedException;
 
 import communications.Client;
@@ -24,11 +30,13 @@ import exceptions.WrongInputException;
 public class Controller {
 	public static Controller controller;
 
+	/**UI**/
 	private RegisterUI registerUI;
 	private LoginUI loginUI;
 	private ProfileUI profileUI;
 	private WaitingRoomUI waitingRoomUI;
 	private CreateGameUI createGameUI;
+	private Hashtable<String,GameWaitingRoomUI> gameWaitingRooms; 
 	private JoinGameUI joinGameUI;
 	
 
@@ -41,6 +49,7 @@ public class Controller {
 		language = LanguageManager.language();
 		loginUI = new LoginUI();
 		sessionManager = new SessionManager();
+		gameWaitingRooms = new Hashtable<String,GameWaitingRoomUI>();
 	}
 
 	public static void initialize() {
@@ -267,7 +276,56 @@ public class Controller {
 	}
 
 	public void createGame(String gameName, GameType type) {
-		session.getProxy().createGame(session.getUser().getUsername(), gameName, type);
+		try {
+			Game game = gameManager.createGame(gameName,type);
+			createGameUI.dispose();
+			waitingRoomUI.setEnabled(true);
+			gameWaitingRooms.put(game.getName(),new GameWaitingRoomUI(session.getUser(),game));
+		} catch (GameAlreadyExistsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+	public List<ProductLine.Game> listGames() {
+		return session.getProxy().listGames(session.getUser().getUsername());
+	}
+
+	public void sendGameMessage(String game,String message) {
+		session.getProxy().sendGameMessage(game, session.getUser().getUsername(), message);
+	}
+
+	public void receiveGameMessage(String game, String sender, String message) {
+		if(gameManager.searchGame(game).isStarted()){
+			
+		}else
+			gameWaitingRooms.get(game).receiveMessage(sender,message);	
+	}
+
+	public void sendGamePrivateMessage(String game,String sender, String destinatary,
+			String message) throws UserNotInGameException {
+		session.getProxy().sendGamePrivateMessage(game, sender, destinatary, message);
+		
+	}
+
+	public void receiveGamePrivateMessage(String game, String sender,
+			String message) {
+		if(gameManager.searchGame(game).isStarted()){
+			
+		}else
+			gameWaitingRooms.get(game).receivePrivateMessage(sender,message);
+		
+	}
+
+	public void cancelGame(String gameName) {
+		gameManager.cancelGame(gameName);
+		gameWaitingRooms.get(gameName).dispose();
+		gameWaitingRooms.remove(gameName);
+	}
+
+	public void joinGame() {
+		session.getProxy().joinGame("partida", session.getUser().getUsername());
 	}
 
 }

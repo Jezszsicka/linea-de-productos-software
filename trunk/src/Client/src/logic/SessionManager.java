@@ -1,12 +1,14 @@
 package logic;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import model.Session;
+import model.User;
 import Ice.Identity;
 import ProductLine.InvalidLoggingException;
-import ProductLine.User;
 import ProductLine.UserAlreadyExistsException;
 import ProductLine.UserAlreadyLoggedException;
 import ProductLine.UserNotLoggedException;
@@ -29,16 +31,19 @@ public class SessionManager {
 				retypedPassword, user.getEmail(), retypedEmail);
 		user.setPassword(Utils.hashMD5_Base64(user.getPassword()));
 		Client.getProxy().registerUser((ProductLine.User) user);
-
 	}
 	
 	public Session loginUser(String username, String password)
 			throws WrongInputException, InvalidLoggingException,
 			UserAlreadyLoggedException {
 		validateLoginInput(username, password);
-		Identity callback = Client.getCallback();
-		User user = Client.getProxy().loginUser(username, Utils.hashMD5_Base64(password), callback);
-		session = new Session(user, Client.getProxy().listUsers(username),callback, Client.getProxy());
+		Identity callback = Client.getCallback( );
+		User user = (User) Client.getProxy().loginUser(username, Utils.hashMD5_Base64(password), callback);
+		List<ProductLine.User> serverUsers = Client.getProxy().listUsers(username);
+		List<User> users = new ArrayList<User>();
+		for(ProductLine.User aux : serverUsers)
+			users.add((User)aux);
+		session = new Session(user, users,callback, Client.getProxy());
 		return session;
 	}
 

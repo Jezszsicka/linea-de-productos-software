@@ -24,10 +24,10 @@ public class Utils {
 
 		return encoded;
 	}
-	
-	public static String countryImg(int country){
+
+	public static String countryImgPath(int country) {
 		String path = "images/";
-		switch(country){
+		switch (country) {
 		case 0:
 			path += "us";
 			break;
@@ -41,8 +41,26 @@ public class Utils {
 			path += "de";
 			break;
 		}
-		return path+".png";
+		return path + ".png";
 	}
-	
-	
+
+	public static String countrySmallImgPath(int country) {
+		String path = "images/";
+		switch (country) {
+		case 0:
+			path += "us_small";
+			break;
+		case 1:
+			path += "es_small";
+			break;
+		case 2:
+			path += "fr_small";
+			break;
+		case 3:
+			path += "de_small";
+			break;
+		}
+		return path + ".png";
+	}
+
 }
