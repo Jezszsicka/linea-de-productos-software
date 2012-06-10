@@ -1,16 +1,19 @@
 package logic;
 
 import java.util.List;
+
 import Ice.Current;
 import Ice.Identity;
 import ProductLine.ClientPrx;
 import ProductLine.ClientPrxHelper;
 import ProductLine.Game;
+import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
 import ProductLine.InvalidLoggingException;
 import ProductLine.User;
 import ProductLine.UserAlreadyExistsException;
 import ProductLine.UserAlreadyLoggedException;
+import ProductLine.UserNotInGameException;
 import ProductLine.UserNotLoggedException;
 import ProductLine._ServerDisp;
 
@@ -42,7 +45,7 @@ public class ServerI extends _ServerDisp{
 	@Override
 	public synchronized void sendPrivateMessage(String sender, String destinatary,
 			String message, Current __current) throws UserNotLoggedException {
-		UsersController.getInstance().sendPrivateMessage(sender,destinatary,message);
+		MessagesController.getInstance().sendPrivateMessage(sender,destinatary,message);
 		
 	}
 
@@ -50,16 +53,21 @@ public class ServerI extends _ServerDisp{
 	@Override
 	public void sendGameMessage(String game, String sender, String message,
 			Current __current) {
-		// TODO Auto-generated method stub
+		MessagesController.getInstance().sendGameMessage(game,sender,message);
 		
 	}
 
 	@Override
 	public void sendGeneralMessage(String sender, String message,
 			Current __current) {
-		UsersController.getInstance().sendGeneralMessage(sender, message);
-		
+		MessagesController.getInstance().sendGeneralMessage(sender,message);
 	}
+	
+	@Override
+	public void sendGamePrivateMessage(String game, String sender,
+			String destinatary, String message, Current __current) throws UserNotInGameException {
+		MessagesController.getInstance().sendGamePrivateMessage(game,sender,destinatary,message);
+	}	
 
 	@Override
 	public List<User> listUsers(String username,Current __current) {
@@ -102,15 +110,30 @@ public class ServerI extends _ServerDisp{
 	}
 
 	@Override
-	public void createGame(String user,String gameName, GameType type, Current __current) {
+	public void createGame(String user,String gameName, GameType type, Current __current) throws GameAlreadyExistsException {
 		GamesController.getInstance().createGame(user,gameName,type);
+	}
+
+	@Override
+	public void joinGame(String game, String player, Current __current) {
+		GamesController.getInstance().joinGame(game,player);
 		
 	}
 
 	@Override
-	public void probar(Game prof, Current __current) {
-		((model.Game)prof).addPlayer("");
+	public List<Game> listGames(String user,Current __current) {
+		return GamesController.getInstance().listGames(user);
+	}
+
+	@Override
+	public void deleteGame(String game, String creator, Current __current) {
+		GamesController.getInstance().deleteGame(game,creator);	
+	}
+
+	@Override
+	public void kickPlayer(String game, String player, Current __current) {
+		GamesController.getInstance().kickPlayer(game,player);
 		
-	}	
+	}
 
 }

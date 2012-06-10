@@ -80,6 +80,11 @@ public class JoinGameUI extends javax.swing.JFrame {
 			btnJoin = new JButton();
 			btnJoin.setText("Join game");
 			btnJoin.setBounds(69, 261, 81, 23);
+			btnJoin.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					btnJoinMouseClicked(evt);
+				}
+			});
 		}
 		return btnJoin;
 	}
@@ -104,6 +109,10 @@ public class JoinGameUI extends javax.swing.JFrame {
 	
 	private void thisWindowClosing(WindowEvent evt) {
 		Controller.getInstance().closeJoinGameUI();
+	}
+	
+	private void btnJoinMouseClicked(MouseEvent evt) {
+		Controller.getInstance().joinGame();
 	}
 
 }

@@ -21,7 +21,7 @@ public class ClientI extends _ClientDisp{
 
 	@Override
 	public void userLogged(User user, Current __current) {
-		Controller.getInstance().userLogged(user);
+		Controller.getInstance().userLogged((model.User)user);
 		
 	}
 
@@ -34,6 +34,38 @@ public class ClientI extends _ClientDisp{
 	public void receivePrivateMessage(String sender, String message,
 			Current __current) {
 		Controller.getInstance().receivePrivateMessage(sender,message);
+		
+	}
+
+	@Override
+	public void receiveGameMessage(String game, String sender, String message,
+			Current __current) {
+		Controller.getInstance().receiveGameMessage(game,sender,message);
+		
+	}
+
+	@Override
+	public void userJoinGame(String user, String game, Current __current) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void userLeaveGame(String user, String game, Current __current) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void receiveGamePrivateMessage(String game, String sender,
+			String message, Current __current) {
+		Controller.getInstance().receiveGamePrivateMessage(game,sender,message);
+		
+	}
+
+	@Override
+	public void kickedFromGame(String game, Current __current) {
+		// TODO Auto-generated method stub
 		
 	}
 

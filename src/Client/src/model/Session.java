@@ -1,12 +1,10 @@
 package model;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import Ice.Identity;
 import ProductLine.ServerPrx;
-import ProductLine.User;
+
 
 public class Session {
 	private User user;
@@ -20,8 +18,6 @@ public class Session {
 		this.users = users;
 		this.callback = callback;
 		this.proxy = proxy;
-		Set<String> set = new HashSet<String>();
-		set.add("asfd");
 	}
 
 	/**

@@ -137,26 +137,6 @@ public class UsersController {
 		return users;
 	}
 
-	public void sendGeneralMessage(String sender, String message) {
-		for (Session session : sessions) {
-			if (!session.getUser().getUsername().equalsIgnoreCase(sender)) {
-				session.getCallback().receiveGeneralMessage(sender, message);
-			}
-		}
-
-	}
-
-	public void sendPrivateMessage(String sender, String destinatary,
-			String message) throws UserNotLoggedException {
-		Session session = searchSession(destinatary);
-		if (session != null) {
-			session.getCallback().receivePrivateMessage(sender, message);
-		} else {
-			throw new UserNotLoggedException();
-		}
-
-	}
-
 	public void changeName(String username, String name, String lastname,
 			String password) throws InvalidLoggingException {
 		User user = searchSession(username).getUser();

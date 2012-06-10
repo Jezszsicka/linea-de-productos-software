@@ -1,9 +1,7 @@
 package presentation;
 
-import java.awt.Color;
-import java.awt.Component;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
@@ -18,26 +16,19 @@ import java.nio.file.Files;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.ListCellRenderer;
-import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
-
-import ProductLine.RoleType;
-import ProductLine.User;
-import java.awt.BorderLayout;
 
 import logic.Controller;
 import logic.LanguageManager;
+import model.User;
+import ProductLine.RoleType;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -256,7 +247,7 @@ public class RegisterUI extends javax.swing.JFrame {
 		String email = txtEmail.getText();
 		String retypedEmail = txtEmailR.getText();
 		int country = selectedCountry.getSelectedIndex();
-		User user = new model.User(username, name, lastName, password, email,
+		User user = new User(username, name, lastName, password, email,
 				RoleType.Player, country, avatar);
 		Controller.getInstance().registerUser(user, retypedPassword,
 				retypedEmail);
@@ -396,7 +387,6 @@ public class RegisterUI extends javax.swing.JFrame {
 		try {
 			this.avatar = Files.readAllBytes(file.toPath());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		ImageIcon icon = new ImageIcon(avatar);
@@ -417,7 +407,6 @@ public class RegisterUI extends javax.swing.JFrame {
 			avatar = baos.toByteArray();
 			baos.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		lblAvatar.setIcon(new ImageIcon(avatar));
