@@ -4,11 +4,9 @@
 package logic;
 
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.List;
 
 import model.Game;
-
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
 
@@ -33,16 +31,20 @@ public class GamesController {
 		return controller;
 	}
 
-	public void joinGame(String game, String player) {
+	public Game joinGame(String game, String player) {
 		Game currentGame = searchGame(game);
-		if (currentGame.getPlayers().size() < currentGame.getMaxPlayers())
+		if (currentGame.getPlayers().size() < currentGame.getMaxPlayers()){
+			for(String auxPlayer : currentGame.getPlayers())
+				UsersController.getInstance().searchSession(auxPlayer).getCallback().userJoinGame(game,player);
 			currentGame.addPlayer(player);
+		}
+		return currentGame;
 		// TODO throw new FullGameException
 	}
 
-	public void createGame(String user, String gameName, GameType type)
+	public void createGame(String gameName,String creator, GameType type)
 			throws GameAlreadyExistsException {
-		Game game = new Game(user, gameName, type);
+		Game game = new Game(gameName,creator,type);
 		if (games.contains(game))
 			throw new GameAlreadyExistsException();
 		games.add(game);

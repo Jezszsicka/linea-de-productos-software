@@ -74,8 +74,8 @@ module ProductLine {
 		void sendGameMessage(string game,string sender, string message);
 		void sendGamePrivateMessage(string game, string sender, string destinatary, string message) throws UserNotInGameException;
 		
-		void createGame(string user,string game, GameType type) throws GameAlreadyExistsException;
-		void joinGame(string game, string player);
+		void createGame(string game,string creator, GameType type) throws GameAlreadyExistsException;
+		Game joinGame(string game, string player);
 		void deleteGame(string game,string creator);
 		void kickPlayer(string game, string player);
 		GameList listGames(string user);

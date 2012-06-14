@@ -185,6 +185,7 @@ public class Controller {
 	public void showJoinGameUI() {
 		waitingRoomUI.setEnabled(false);
 		joinGameUI = new JoinGameUI();
+		System.out.println(listGames().toString());
 
 	}
 
@@ -309,12 +310,13 @@ public class Controller {
 		
 	}
 
-	public void receiveGamePrivateMessage(String game, String sender,
+	public void receiveGamePrivateMessage(String gameName, String sender,
 			String message) {
-		if(gameManager.searchGame(game).isStarted()){
+		
+		if(gameManager.searchGame(gameName).isStarted()){
 			
 		}else
-			gameWaitingRooms.get(game).receivePrivateMessage(sender,message);
+			gameWaitingRooms.get(gameName).receivePrivateMessage(sender,message);
 		
 	}
 
@@ -324,8 +326,14 @@ public class Controller {
 		gameWaitingRooms.remove(gameName);
 	}
 
-	public void joinGame() {
-		session.getProxy().joinGame("partida", session.getUser().getUsername());
+	public void joinGame(String gameName) {
+		Game game = gameManager.joinGame(gameName);
+		gameWaitingRooms.put(game.getName(),new GameWaitingRoomUI(session.getUser(),game));
+	}
+
+	public void userJoinGame(String game, String player) {
+		// TODO Auto-generated method stub
+		gameManager.userJoinGame(game,player);
 	}
 
 }

@@ -22,7 +22,6 @@ import logic.Controller;
 
 import ProductLine.GameType;
 
-
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
  * Builder, which is free for non-commercial use. If Jigloo is being used
@@ -58,7 +57,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JTextField txtGameName;
 	private JLabel jLabel2;
 	private JLabel jLabel3;
-	private JLabel jLabel4;
+	private JLabel lblGameTitle;
 	private JLabel lblDescription;
 	private JPanel pnlGameSelection;
 	private JLabel lblGamePlayers;
@@ -209,6 +208,11 @@ public class CreateGameUI extends javax.swing.JFrame {
 			pnlCheckers.setLayout(null);
 			pnlCheckers.setBounds(10, 98, 230, 38);
 			pnlCheckers.setSize(230, 40);
+			pnlCheckers.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					pnlCheckersMouseClicked(evt);
+				}
+			});
 			pnlCheckers.add(getLblIconCheckers());
 			pnlCheckers.add(getLblCheckers());
 			pnlCheckers.add(getLblCheckersPlayers());
@@ -222,6 +226,11 @@ public class CreateGameUI extends javax.swing.JFrame {
 			jPanel1.setLayout(null);
 			jPanel1.setBounds(12, 142, 230, 32);
 			jPanel1.setSize(230, 40);
+			jPanel1.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					jPanel1MouseClicked(evt);
+				}
+			});
 			jPanel1.add(getJLabel1());
 			jPanel1.add(getJLabel2());
 			jPanel1.add(getJLabel3());
@@ -232,7 +241,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getJLabel1() {
 		if (jLabel1 == null) {
 			jLabel1 = new JLabel();
-			jLabel1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/trivial_small_icon.png")));
+			jLabel1.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/trivial_small_icon.png")));
 			jLabel1.setBounds(153, 6, 25, 25);
 		}
 		return jLabel1;
@@ -261,7 +271,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblGameImage() {
 		if (lblGameImage == null) {
 			lblGameImage = new JLabel();
-			lblGameImage.setBounds(12, 36, 234, 60);
+			lblGameImage.setBounds(2, 36, 254, 60);
 			lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/3D_Checkers_icon.png")));
 			lblGameImage.setHorizontalAlignment(SwingConstants.CENTER);
@@ -270,14 +280,14 @@ public class CreateGameUI extends javax.swing.JFrame {
 	}
 
 	private JLabel getJLabel4() {
-		if (jLabel4 == null) {
-			jLabel4 = new JLabel();
-			jLabel4.setText("Damas");
-			jLabel4.setBounds(12, 11, 234, 19);
-			jLabel4.setHorizontalAlignment(SwingConstants.CENTER);
-			jLabel4.setFont(new java.awt.Font("Tahoma",1,11));
+		if (lblGameTitle == null) {
+			lblGameTitle = new JLabel();
+			lblGameTitle.setText("Damas");
+			lblGameTitle.setBounds(2, 13, 253, 16);
+			lblGameTitle.setHorizontalAlignment(SwingConstants.CENTER);
+			lblGameTitle.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
-		return jLabel4;
+		return lblGameTitle;
 	}
 
 	private JPanel getPnlGame() {
@@ -321,8 +331,10 @@ public class CreateGameUI extends javax.swing.JFrame {
 			SimpleAttributeSet style = new SimpleAttributeSet();
 			StyleConstants.setAlignment(style, StyleConstants.ALIGN_JUSTIFIED);
 			txtGameDescription = new JTextPane();
-			txtGameDescription.getStyledDocument().setParagraphAttributes(0,txtGameDescription.getDocument().getLength(),style,false);
-			txtGameDescription.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+			txtGameDescription.getStyledDocument().setParagraphAttributes(0,
+					txtGameDescription.getDocument().getLength(), style, false);
+			txtGameDescription
+					.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
 			txtGameDescription.setBounds(12, 178, 234, 108);
 			txtGameDescription.setEditable(false);
 			txtGameDescription.setBackground(new java.awt.Color(240, 240, 240));
@@ -358,9 +370,24 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private void thisWindowClosing(WindowEvent evt) {
 		Controller.getInstance().closeCreateGameUI();
 	}
-	
+
 	private void btnCreateMouseClicked(MouseEvent evt) {
-		Controller.getInstance().createGame(txtGameName.getText(),GameType.Checkers);
+		Controller.getInstance().createGame(txtGameName.getText(),
+				GameType.Checkers);
+	}
+
+	private void pnlCheckersMouseClicked(MouseEvent evt) {
+		lblGameTitle.setText("Damas");
+		txtGameDescription.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
+				.getResource("images/3D_Checkers_icon.png")));
+	}
+	
+	private void jPanel1MouseClicked(MouseEvent evt) {
+		lblGameTitle.setText("Trivial");
+		txtGameDescription.setText("El trivial es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
+				.getResource("images/trivial_icon.png")));
 	}
 
 }

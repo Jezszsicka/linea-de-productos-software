@@ -110,13 +110,13 @@ public class ServerI extends _ServerDisp{
 	}
 
 	@Override
-	public void createGame(String user,String gameName, GameType type, Current __current) throws GameAlreadyExistsException {
-		GamesController.getInstance().createGame(user,gameName,type);
+	public void createGame(String gameName,String creator, GameType type, Current __current) throws GameAlreadyExistsException {
+		GamesController.getInstance().createGame(gameName,creator,type);
 	}
 
 	@Override
-	public void joinGame(String game, String player, Current __current) {
-		GamesController.getInstance().joinGame(game,player);
+	public Game joinGame(String game, String player, Current __current) {
+		return GamesController.getInstance().joinGame(game,player);
 		
 	}
 

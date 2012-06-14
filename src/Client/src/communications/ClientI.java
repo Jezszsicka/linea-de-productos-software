@@ -7,10 +7,6 @@ import ProductLine.User;
 import ProductLine._ClientDisp;
 
 public class ClientI extends _ClientDisp{
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -817742229741007859L;
 
 	@Override
@@ -45,13 +41,12 @@ public class ClientI extends _ClientDisp{
 	}
 
 	@Override
-	public void userJoinGame(String user, String game, Current __current) {
-		// TODO Auto-generated method stub
-		
+	public void userJoinGame(String game, String player, Current __current) {
+		Controller.getInstance().userJoinGame(game,player);
 	}
 
 	@Override
-	public void userLeaveGame(String user, String game, Current __current) {
+	public void userLeaveGame(String game, String player, Current __current) {
 		// TODO Auto-generated method stub
 		
 	}
