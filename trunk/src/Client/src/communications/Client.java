@@ -27,7 +27,6 @@ public class Client extends Application {
         {
             starServerConnection();
             Controller.initialize();
-            
             communicator.waitForShutdown();
         }
         catch (Ice.ConnectionRefusedException e) { 

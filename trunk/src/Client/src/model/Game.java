@@ -34,4 +34,12 @@ public class Game extends ProductLine.Game {
 		players.remove(player);
 	}
 
+	@Override
+	public String toString() {
+		return "Game [name=" + name + ", typeGame=" + typeGame
+				+ ", maxPlayers=" + maxPlayers + ", players=" + players
+				+ ", started=" + started + "]";
+	}
+
+	
 }

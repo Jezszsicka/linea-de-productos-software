@@ -3,9 +3,22 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.List;
+
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
+import ProductLine.Game;
+
+
 
 import logic.Controller;
 
@@ -28,6 +41,11 @@ public class JoinGameUI extends javax.swing.JFrame {
 	private JPanel pnlFondo;
 	private JButton btnJoin;
 	private JButton btnCancel;
+	private JTable tblGames;
+	private JScrollPane scrollGames;
+	private JButton btnFilter;
+	private JTextField txtGameSearch;
+	private DefaultTableModel tblGamesModel;
 
 	{
 		//Set Look & Feel
@@ -44,8 +62,17 @@ public class JoinGameUI extends javax.swing.JFrame {
 		initGUI();
 		setVisible(true);
 		setLocationRelativeTo(null);
+		refreshGames();
 	}
 	
+	private void refreshGames() {
+		List<Game> games = Controller.getInstance().listGames();
+		for(Game game : games){
+			tblGamesModel.addRow(new String[]{game.getName(), String.valueOf(game.getTypeGame()), String.valueOf(game.getPlayers().size())+"/"+game.getMaxPlayers()});
+		}
+		
+	}
+
 	private void initGUI() {
 		try {
 			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -71,6 +98,9 @@ public class JoinGameUI extends javax.swing.JFrame {
 			pnlFondo.setBounds(0, 0, 522, 324);
 			pnlFondo.add(getBtnJoin());
 			pnlFondo.add(getBtnCancel());
+			pnlFondo.add(getJScrollPane1());
+			pnlFondo.add(getTxtGameSearch());
+			pnlFondo.add(getBtnFilter());
 		}
 		return pnlFondo;
 	}
@@ -79,7 +109,7 @@ public class JoinGameUI extends javax.swing.JFrame {
 		if(btnJoin == null) {
 			btnJoin = new JButton();
 			btnJoin.setText("Join game");
-			btnJoin.setBounds(69, 261, 81, 23);
+			btnJoin.setBounds(431, 249, 81, 23);
 			btnJoin.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnJoinMouseClicked(evt);
@@ -93,7 +123,7 @@ public class JoinGameUI extends javax.swing.JFrame {
 		if(btnCancel == null) {
 			btnCancel = new JButton();
 			btnCancel.setText("Cancel");
-			btnCancel.setBounds(377, 261, 65, 23);
+			btnCancel.setBounds(431, 278, 81, 23);
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnCancelMouseClicked(evt);
@@ -112,7 +142,58 @@ public class JoinGameUI extends javax.swing.JFrame {
 	}
 	
 	private void btnJoinMouseClicked(MouseEvent evt) {
-		Controller.getInstance().joinGame();
+		int gameRow = tblGames.getSelectedRow();
+		String game =(String) tblGamesModel.getValueAt(gameRow, 0);
+		Controller.getInstance().joinGame(game);
+	}
+
+	private JTextField getTxtGameSearch() {
+		if(txtGameSearch == null) {
+			txtGameSearch = new JTextField();
+			txtGameSearch.setBounds(15, 20, 192, 20);
+		}
+		return txtGameSearch;
+	}
+	
+	private JButton getBtnFilter() {
+		if(btnFilter == null) {
+			btnFilter = new JButton();
+			btnFilter.setText("Filtro");
+			btnFilter.setBounds(284, 20, 68, 21);
+		}
+		return btnFilter;
+	}
+	
+	private JScrollPane getJScrollPane1() {
+		if(scrollGames == null) {
+			scrollGames = new JScrollPane();
+			scrollGames.setBounds(15, 57, 406, 244);
+			scrollGames.setBorder(BorderFactory.createTitledBorder(""));
+			scrollGames.setViewportView(getTblGames());
+		}
+		return scrollGames;
+	}
+	
+	private JTable getTblGames() {
+		if(tblGames == null) {
+			tblGamesModel = 
+					new presentation.TableModel(new String[][] {},new String[] { "Nombre","Juego","Jugadores"});
+			tblGames = new JTable();
+			tblGames.setModel(tblGamesModel);
+			DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+			tcr.setHorizontalAlignment(SwingConstants.CENTER);
+			tblGames.getColumnModel().getColumn(0).setCellRenderer(tcr);
+			tblGames.getColumnModel().getColumn(1).setCellRenderer(tcr);
+			tblGames.getColumnModel().getColumn(2).setCellRenderer(tcr);
+			((DefaultTableCellRenderer)tblGames.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+			getTblGames().getTableHeader().setVisible(true);
+			tblGames.setPreferredSize(new java.awt.Dimension(406, 211));
+			tblGames.setOpaque(false);
+			tblGames.setFocusable(false);
+			tblGames.getTableHeader().setReorderingAllowed(false);
+			tblGames.getTableHeader().setResizingAllowed(false);
+		}
+		return tblGames;
 	}
 
 }

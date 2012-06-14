@@ -32,7 +32,7 @@ public class GamesManager {
 		String username = session.getUser().getUsername();
 		session.getProxy().createGame(gameName,username, type);
 		Game game = new Game(gameName,username,type);
-		games.put(username, game);	
+		games.put(gameName, game);	
 		return game;
 	}
 
@@ -43,5 +43,16 @@ public class GamesManager {
 	public void cancelGame(String gameName) {
 		session.getProxy().deleteGame(gameName, session.getUser().getUsername());
 		games.remove(gameName);
+	}
+
+	public Game joinGame(String gameName) {
+		Game game = (Game) session.getProxy().joinGame(gameName, session.getUser().getUsername());
+		games.put("partida", game);
+		return game;
+		
+	}
+
+	public void userJoinGame(String game, String player) {
+		searchGame(game).addPlayer(player);
 	}
 }
