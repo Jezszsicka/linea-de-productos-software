@@ -68,7 +68,7 @@ public class JoinGameUI extends javax.swing.JFrame {
 	private void refreshGames() {
 		List<Game> games = Controller.getInstance().listGames();
 		for(Game game : games){
-			tblGamesModel.addRow(new String[]{game.getName(), String.valueOf(game.getTypeGame()), String.valueOf(game.getPlayers().size())+"/"+game.getMaxPlayers()});
+			tblGamesModel.addRow(new String[]{game.getName(), String.valueOf(game.getTypeGame()), String.valueOf(game.getSlots().size())+"/"+game.getSlots().size()});
 		}
 		
 	}

@@ -47,7 +47,7 @@ public class ClientI extends _ClientDisp{
 
 	@Override
 	public void userLeaveGame(String game, String player, Current __current) {
-		// TODO Auto-generated method stub
+		Controller.getInstance().userLeaveGame(game,player);
 		
 	}
 
@@ -60,7 +60,7 @@ public class ClientI extends _ClientDisp{
 
 	@Override
 	public void kickedFromGame(String game, Current __current) {
-		// TODO Auto-generated method stub
+		Controller.getInstance().kickedFromGame(game);
 		
 	}
 

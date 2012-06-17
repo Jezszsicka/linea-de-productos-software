@@ -2,17 +2,26 @@
 
 module ProductLine {
 	enum RoleType { Player, Admin };
+	enum PlayerType {Human,Computer,Empty};
 	enum GameType {	Ludo, Chess, Trivial, Monopoly, Checkers};
+	
+	
+	["java:getset"]
+	class Slot{
+		string player;
+		PlayerType type;
+	};
+	
 	["java:type:java.util.ArrayList<String>"] sequence<string> StringList;
+	["java:type:java.util.ArrayList<Slot>"] sequence<Slot> SlotList;
 	
 	["java:getset"]
 	class Game {
 		["protected"] string name;
 		["protected"] GameType typeGame;
-		["protected"] int maxPlayers;
-		["protected"] StringList players;
 		["protected"] bool started;
-		void addPlayer(string user);
+		["protected"] SlotList slots;
+		bool addPlayer(string user);
 		void removePlayer(string user);
 		
 	};
@@ -55,6 +64,7 @@ module ProductLine {
 	exception InvalidLoggingException extends genericException{};
 	exception GameAlreadyExistsException extends genericException{};
 	exception UserNotInGameException extends genericException{};
+	exception FullGameException extends genericException{};
 
     interface Server {
     	void registerUser(User newUser) throws UserAlreadyExistsException;
@@ -75,9 +85,12 @@ module ProductLine {
 		void sendGamePrivateMessage(string game, string sender, string destinatary, string message) throws UserNotInGameException;
 		
 		void createGame(string game,string creator, GameType type) throws GameAlreadyExistsException;
-		Game joinGame(string game, string player);
+		Game joinGame(string game, string player) throws FullGameException;
+		void leaveGame(string game, string player);
 		void deleteGame(string game,string creator);
 		void kickPlayer(string game, string player);
+		void openGameSlot(string game, int slot);
+		void closeGameSlot(string game, int slot);
 		GameList listGames(string user);
     };
     
@@ -89,8 +102,8 @@ module ProductLine {
     	
     	void userLogged(User loggedUser);
     	void userLeave(string username);
-    	void userJoinGame(string user, string game);
-    	void userLeaveGame(string user, string game);
+    	void userJoinGame(string game, string user);
+    	void userLeaveGame(string game, string user);
     	void kickedFromGame(string game);
     };
     

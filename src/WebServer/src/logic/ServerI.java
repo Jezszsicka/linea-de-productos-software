@@ -6,6 +6,7 @@ import Ice.Current;
 import Ice.Identity;
 import ProductLine.ClientPrx;
 import ProductLine.ClientPrxHelper;
+import ProductLine.FullGameException;
 import ProductLine.Game;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
@@ -115,7 +116,7 @@ public class ServerI extends _ServerDisp{
 	}
 
 	@Override
-	public Game joinGame(String game, String player, Current __current) {
+	public Game joinGame(String game, String player, Current __current) throws FullGameException {
 		return GamesController.getInstance().joinGame(game,player);
 		
 	}
@@ -133,6 +134,24 @@ public class ServerI extends _ServerDisp{
 	@Override
 	public void kickPlayer(String game, String player, Current __current) {
 		GamesController.getInstance().kickPlayer(game,player);
+		
+	}
+
+	@Override
+	public void openGameSlot(String game, int slot, Current __current) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void closeGameSlot(String game, int slot, Current __current) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void leaveGame(String game, String player, Current __current) {
+		GamesController.getInstance().leaveGame(game,player);
 		
 	}
 

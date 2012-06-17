@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import Ice.Current;
 import ProductLine.GameType;
+import ProductLine.PlayerType;
+import ProductLine.Slot;
 
 @SuppressWarnings("serial")
 public class Game extends ProductLine.Game {
@@ -15,23 +17,43 @@ public class Game extends ProductLine.Game {
 	public Game(String name, String creator, GameType type) {
 		this.name = name;
 		this.typeGame = type;
+		this.slots = new ArrayList<Slot>();
 		switch (typeGame) {
 		case Checkers:
-			maxPlayers = 2;
+			slots.add(new Slot(creator,PlayerType.Human));
+			slots.add(new Slot("",PlayerType.Empty));
 			break;
 		}
-		this.players = new ArrayList<String>();
-		players.add(creator);
+		
 	}
 
 	@Override
-	public void addPlayer(String player, Current __current) {
-		players.add(player);
+	public boolean addPlayer(String player, Current __current) {
+		for(Slot slot : slots){
+			if(slot.getType().equals(PlayerType.Empty)){
+				slot.setPlayer(player);
+				slot.setType(PlayerType.Human);
+				return true;
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public void removePlayer(String player, Current __current) {
-		players.add(player);
+		for(Slot slot : slots){
+			if(slot.getPlayer().equalsIgnoreCase(player)){
+				slot.setPlayer("");
+				slot.setType(PlayerType.Empty);
+			}
+		}
 	}
 
+	@Override
+	public String toString() {
+		return "Game [name=" + name + ", typeGame=" + typeGame
+				+ ", started=" + started + "]";
+	}
+
+	
 }

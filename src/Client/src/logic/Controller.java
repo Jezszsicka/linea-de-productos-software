@@ -15,6 +15,7 @@ import presentation.LoginUI;
 import presentation.ProfileUI;
 import presentation.RegisterUI;
 import presentation.WaitingRoomUI;
+import ProductLine.FullGameException;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
 import ProductLine.InvalidLoggingException;
@@ -30,15 +31,14 @@ import exceptions.WrongInputException;
 public class Controller {
 	public static Controller controller;
 
-	/**UI**/
+	/** UI **/
 	private RegisterUI registerUI;
 	private LoginUI loginUI;
 	private ProfileUI profileUI;
 	private WaitingRoomUI waitingRoomUI;
 	private CreateGameUI createGameUI;
-	private Hashtable<String,GameWaitingRoomUI> gameWaitingRooms; 
+	private Hashtable<String, GameWaitingRoomUI> gameWaitingRooms;
 	private JoinGameUI joinGameUI;
-	
 
 	private Session session;
 	private SessionManager sessionManager;
@@ -49,7 +49,7 @@ public class Controller {
 		language = LanguageManager.language();
 		loginUI = new LoginUI();
 		sessionManager = new SessionManager();
-		gameWaitingRooms = new Hashtable<String,GameWaitingRoomUI>();
+		gameWaitingRooms = new Hashtable<String, GameWaitingRoomUI>();
 	}
 
 	public static void initialize() {
@@ -98,7 +98,8 @@ public class Controller {
 			session = sessionManager.loginUser(username, password);
 			language.loadPreferences(session.getUser());
 			gameManager = new GamesManager(session);
-			waitingRoomUI = new WaitingRoomUI(session.getUser(), session.getUsers());
+			waitingRoomUI = new WaitingRoomUI(session.getUser(),
+					session.getUsers());
 			loginUI.dispose();
 			loginUI = null;
 		} catch (WrongInputException e) {
@@ -107,7 +108,8 @@ public class Controller {
 			e.printStackTrace();
 		} catch (InvalidLoggingException e) {
 			JOptionPane.showMessageDialog(registerUI,
-					language.getString("InvalidLoggingMessage"), language.getString("InvalidLoggingTitle"),
+					language.getString("InvalidLoggingMessage"),
+					language.getString("InvalidLoggingTitle"),
 					JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		} catch (UserAlreadyLoggedException e) {
@@ -257,7 +259,8 @@ public class Controller {
 	}
 
 	public void changeLanguage(int selectedLanguage) {
-		LanguageManager.language().setLanguage(session.getUser().getUsername(),selectedLanguage);
+		LanguageManager.language().setLanguage(session.getUser().getUsername(),
+				selectedLanguage);
 		waitingRoomUI.languageChanged();
 	}
 
@@ -273,15 +276,16 @@ public class Controller {
 					e.getError(), JOptionPane.WARNING_MESSAGE);
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void createGame(String gameName, GameType type) {
 		try {
-			Game game = gameManager.createGame(gameName,type);
+			Game game = gameManager.createGame(gameName, type);
 			createGameUI.dispose();
 			waitingRoomUI.setEnabled(true);
-			gameWaitingRooms.put(game.getName(),new GameWaitingRoomUI(session.getUser(),game));
+			gameWaitingRooms.put(game.getName(), new GameWaitingRoomUI(session
+					.getUser().getUsername(), game,true));
 		} catch (GameAlreadyExistsException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -293,47 +297,91 @@ public class Controller {
 		return session.getProxy().listGames(session.getUser().getUsername());
 	}
 
-	public void sendGameMessage(String game,String message) {
-		session.getProxy().sendGameMessage(game, session.getUser().getUsername(), message);
+	public void sendGameMessage(String game, String message) {
+		session.getProxy().sendGameMessage(game,
+				session.getUser().getUsername(), message);
 	}
 
 	public void receiveGameMessage(String game, String sender, String message) {
-		if(gameManager.searchGame(game).isStarted()){
-			
-		}else
-			gameWaitingRooms.get(game).receiveMessage(sender,message);	
+		if (gameManager.searchGame(game).isStarted()) {
+
+		} else
+			gameWaitingRooms.get(game).receiveMessage(sender, message);
 	}
 
-	public void sendGamePrivateMessage(String game,String sender, String destinatary,
-			String message) throws UserNotInGameException {
-		session.getProxy().sendGamePrivateMessage(game, sender, destinatary, message);
-		
+	public void sendGamePrivateMessage(String game, String sender,
+			String destinatary, String message) throws UserNotInGameException {
+		session.getProxy().sendGamePrivateMessage(game, sender, destinatary,
+				message);
+
 	}
 
 	public void receiveGamePrivateMessage(String gameName, String sender,
 			String message) {
-		
-		if(gameManager.searchGame(gameName).isStarted()){
-			
-		}else
-			gameWaitingRooms.get(gameName).receivePrivateMessage(sender,message);
-		
+		Game game = gameManager.searchGame(gameName);
+		if (gameManager.searchGame(gameName).isStarted()) {
+
+		} else
+			gameWaitingRooms.get(gameName).receivePrivateMessage(sender,
+					message);
+
 	}
 
-	public void cancelGame(String gameName) {
-		gameManager.cancelGame(gameName);
-		gameWaitingRooms.get(gameName).dispose();
+	public void deleteGame(String gameName) {
+		gameManager.deleteGame(gameName);
 		gameWaitingRooms.remove(gameName);
 	}
 
 	public void joinGame(String gameName) {
-		Game game = gameManager.joinGame(gameName);
-		gameWaitingRooms.put(game.getName(),new GameWaitingRoomUI(session.getUser(),game));
+		try {
+			Game game = gameManager.joinGame(gameName);
+			gameWaitingRooms.put(game.getName(), new GameWaitingRoomUI(session
+					.getUser().getUsername(), game,false));
+		} catch (FullGameException e) {
+			JOptionPane.showMessageDialog(joinGameUI, "The game is full",
+					"Full game", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void leaveGame(String game) {
+		gameManager.leaveGame(game);
+		gameWaitingRooms.remove(game);
 	}
 
 	public void userJoinGame(String game, String player) {
-		// TODO Auto-generated method stub
-		gameManager.userJoinGame(game,player);
+		gameManager.userJoinGame(game, player);
+		GameWaitingRoomUI gameUI = gameWaitingRooms.get(game);
+		gameUI.userJoinGame(player);
+
 	}
 
+	public void openGameSlot(String gameName, int slot) {
+		session.getProxy().openGameSlot(gameName, slot);
+
+	}
+
+	public void userLeaveGame(String game, String player) {
+		gameManager.userLeaveGame(game,player);
+		GameWaitingRoomUI gameUI = gameWaitingRooms.get(game);
+		gameUI.userLeaveGame(player);
+	}
+	
+	public User searchUser(String username) {
+		if (session.getUser().getUsername().equalsIgnoreCase(username))
+			return session.getUser();
+		else {
+			for (User user : session.getUsers())
+				if (user.getUsername().equalsIgnoreCase(username))
+					return user;
+		}
+		return null;
+
+	}
+
+	public void kickedFromGame(String game) {
+		// TODO Auto-generated method stub
+		
+	}	
 }

@@ -2,6 +2,7 @@ package logic;
 
 import java.util.Hashtable;
 
+import ProductLine.FullGameException;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
 import ProductLine.UserNotLoggedException;
@@ -40,19 +41,27 @@ public class GamesManager {
 		return games.get(game);
 	}
 
-	public void cancelGame(String gameName) {
+	public void deleteGame(String gameName) {
 		session.getProxy().deleteGame(gameName, session.getUser().getUsername());
 		games.remove(gameName);
 	}
 
-	public Game joinGame(String gameName) {
+	public Game joinGame(String gameName) throws FullGameException {
 		Game game = (Game) session.getProxy().joinGame(gameName, session.getUser().getUsername());
-		games.put("partida", game);
+		games.put(gameName, game);
 		return game;
 		
 	}
 
 	public void userJoinGame(String game, String player) {
 		searchGame(game).addPlayer(player);
+	}
+
+	public void userLeaveGame(String game, String player) {
+		searchGame(game).removePlayer(player);
+	}
+
+	public void leaveGame(String game) {
+		session.getProxy().leaveGame(game,session.getUser().getUsername());
 	}
 }
