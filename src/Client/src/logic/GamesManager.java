@@ -5,6 +5,8 @@ import java.util.Hashtable;
 import ProductLine.FullGameException;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
+import ProductLine.Slot;
+import ProductLine.SlotState;
 import ProductLine.UserNotLoggedException;
 import model.Game;
 import model.Session;
@@ -63,5 +65,12 @@ public class GamesManager {
 
 	public void leaveGame(String game) {
 		session.getProxy().leaveGame(game,session.getUser().getUsername());
+	}
+
+	public void changeSlotState(String gameName, int slot, SlotState slotState) {
+		session.getProxy().changeSlotState(gameName, slot, slotState);
+		Game game = searchGame(gameName);
+		game.setSlot(slot, new Slot("",slotState));
+		//TODO
 	}
 }

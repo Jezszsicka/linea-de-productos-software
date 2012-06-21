@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import Ice.Current;
 import ProductLine.GameType;
-import ProductLine.PlayerType;
+import ProductLine.SlotState;
 import ProductLine.Slot;
 
 @SuppressWarnings("serial")
@@ -20,8 +20,8 @@ public class Game extends ProductLine.Game {
 		this.slots = new ArrayList<Slot>();
 		switch (typeGame) {
 		case Checkers:
-			slots.add(new Slot(creator,PlayerType.Human));
-			slots.add(new Slot("",PlayerType.Empty));
+			slots.add(new Slot(creator,SlotState.Human));
+			slots.add(new Slot("",SlotState.Empty));
 			break;
 		}
 		
@@ -30,9 +30,9 @@ public class Game extends ProductLine.Game {
 	@Override
 	public boolean addPlayer(String player, Current __current) {
 		for(Slot slot : slots){
-			if(slot.getType().equals(PlayerType.Empty)){
+			if(slot.getType().equals(SlotState.Empty)){
 				slot.setPlayer(player);
-				slot.setType(PlayerType.Human);
+				slot.setType(SlotState.Human);
 				return true;
 			}
 		}
@@ -44,11 +44,23 @@ public class Game extends ProductLine.Game {
 		for(Slot slot : slots){
 			if(slot.getPlayer().equalsIgnoreCase(player)){
 				slot.setPlayer("");
-				slot.setType(PlayerType.Empty);
+				slot.setType(SlotState.Empty);
 			}
 		}
 	}
 
+	@Override
+	public Slot getSlot(int slot, Current __current) {
+		return slots.get(slot);
+	}
+
+	@Override
+	public void setSlot(int slotIndex, Slot newSlot, Current __current) {
+		Slot slot = slots.get(slotIndex);
+		slot.setPlayer(newSlot.getPlayer());
+		slot.setType(newSlot.getType());
+	}
+	
 	@Override
 	public String toString() {
 		return "Game [name=" + name + ", typeGame=" + typeGame

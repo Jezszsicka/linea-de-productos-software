@@ -11,6 +11,7 @@ import ProductLine.Game;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
 import ProductLine.InvalidLoggingException;
+import ProductLine.SlotState;
 import ProductLine.User;
 import ProductLine.UserAlreadyExistsException;
 import ProductLine.UserAlreadyLoggedException;
@@ -138,20 +139,15 @@ public class ServerI extends _ServerDisp{
 	}
 
 	@Override
-	public void openGameSlot(String game, int slot, Current __current) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void closeGameSlot(String game, int slot, Current __current) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void leaveGame(String game, String player, Current __current) {
 		GamesController.getInstance().leaveGame(game,player);
+		
+	}
+
+	@Override
+	public void changeSlotState(String game, int slot, SlotState state,
+			Current __current) {
+		GamesController.getInstance().changeSlotState(game,slot,state);
 		
 	}
 

@@ -61,7 +61,6 @@ public class ClientI extends _ClientDisp{
 	@Override
 	public void kickedFromGame(String game, Current __current) {
 		Controller.getInstance().kickedFromGame(game);
-		
 	}
 
 

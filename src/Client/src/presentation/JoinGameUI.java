@@ -17,6 +17,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import ProductLine.Game;
+import ProductLine.Slot;
+import ProductLine.SlotState;
 
 
 
@@ -68,7 +70,11 @@ public class JoinGameUI extends javax.swing.JFrame {
 	private void refreshGames() {
 		List<Game> games = Controller.getInstance().listGames();
 		for(Game game : games){
-			tblGamesModel.addRow(new String[]{game.getName(), String.valueOf(game.getTypeGame()), String.valueOf(game.getSlots().size())+"/"+game.getSlots().size()});
+			int freeSlots = 0;
+			for(Slot slot : game.getSlots())
+				if(slot.getType().equals(SlotState.Empty))
+					freeSlots++;
+			tblGamesModel.addRow(new String[]{game.getName(), String.valueOf(game.getTypeGame()), String.valueOf(game.getSlots().size()-freeSlots)+"/"+game.getSlots().size()});
 		}
 		
 	}
