@@ -36,7 +36,7 @@ import model.Game;
 import model.User;
 import ProductLine.Slot;
 import ProductLine.UserNotInGameException;
-import ProductLine.PlayerType;
+import ProductLine.SlotState;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -198,6 +198,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			chatText = new HTMLDocument();
 			txtChat.setEditorKit(htmlEditor);
 			txtChat.setDocument(chatText);
+			txtChat.setEditable(false);
 		}
 		return txtChat;
 	}
@@ -473,13 +474,18 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			add(getLblAvatar());
 			add(getLblCountry());
 			add(getLblPlayer());
-			add(getPlayerType());
+			if(!(creator && slot == 0)){
+				add(getPlayerType());
+			}
 			lblAvatar.setIcon(new ImageIcon(player.getAvatar()));
 			lblPlayer.setText(player.getUsername());
 			lblCountry.setIcon(new ImageIcon(
 					getClass().getClassLoader().getResource(
 							Utils.countrySmallImgPath(player.getCountry()))));
 			setLayout(null);
+			if(!creator)
+				playerType.setEnabled(false);
+			
 		}
 
 		private JLabel getLblAvatar() {
@@ -527,18 +533,25 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		private void playerTypeItemStateChanged(ItemEvent evt) {
 			int type = playerType.getSelectedIndex();
 			switch (type) {
-			case 0: // Player
-				Controller.getInstance().openGameSlot(game.getName(), slot);
+			case 0: // Empty
+				Controller.getInstance().changeSlotState(game.getName(), slot,SlotState.Empty);
+				lblAvatar.setIcon(null);
+				lblPlayer.setText("Free");
 				break;
 			case 1: // Computer
-
+				Controller.getInstance().changeSlotState(game.getName(), slot,SlotState.Computer);
+				lblAvatar.setIcon(null);
+				lblPlayer.setText("Computer");
 				break;
 			case 2: // Closed
-
+				Controller.getInstance().changeSlotState(game.getName(), slot,SlotState.Computer);
+				lblAvatar.setIcon(null);
+				lblPlayer.setText("Closed");
 				break;
 			}
 
 		}
+		
 	}
 
 }

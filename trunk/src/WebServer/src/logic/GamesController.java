@@ -11,7 +11,7 @@ import model.Session;
 import ProductLine.FullGameException;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
-import ProductLine.PlayerType;
+import ProductLine.SlotState;
 import ProductLine.Slot;
 
 /**
@@ -47,7 +47,7 @@ public class GamesController {
 		Game currentGame = searchGame(game);
 		if(currentGame.addPlayer(player)){
 			for(Slot slot : currentGame.getSlots()){
-				if(!slot.getPlayer().equals(player) && slot.getType().equals(PlayerType.Human))
+				if(!slot.getPlayer().equals(player) && slot.getType().equals(SlotState.Human))
 					UsersController.getInstance().searchSession(slot.getPlayer()).getCallback().userJoinGame(game,player);
 			}
 			return currentGame;
@@ -59,7 +59,7 @@ public class GamesController {
 		Game currentGame = searchGame(game);
 		currentGame.removePlayer(player);
 		for(Slot slot : currentGame.getSlots()){
-			if(slot.getType().equals(PlayerType.Human)){
+			if(slot.getType().equals(SlotState.Human)){
 				Session userSession = UsersController.getInstance().searchSession(slot.getPlayer());
 				userSession.getCallback().userLeaveGame(game, player);
 			}
@@ -83,7 +83,7 @@ public class GamesController {
 	public void deleteGame(String game, String creator) {
 		Game currentGame = searchGame(game);
 		for (Slot slot : currentGame.getSlots())
-			if (!slot.getPlayer().equalsIgnoreCase(creator) && slot.getType().equals(PlayerType.Human))
+			if (!slot.getPlayer().equalsIgnoreCase(creator) && slot.getType().equals(SlotState.Human))
 				UsersController.getInstance().searchSession(slot.getPlayer())
 						.getCallback().kickedFromGame(game);
 		games.remove(searchGame(game));
@@ -100,5 +100,19 @@ public class GamesController {
 			if (auxGame.getName().equalsIgnoreCase(game))
 				return auxGame;
 		return null;
+	}
+
+	public void changeSlotState(String gameName, int slot, SlotState state) {
+		final Game game = searchGame(gameName);
+		Slot gameSlot = game.getSlot(slot);
+		if(gameSlot.getType().equals(SlotState.Human)){
+			final String player = gameSlot.getPlayer();
+			new Thread(){
+			public void run(){
+				UsersController.getInstance().searchSession(player).getCallback().kickedFromGame(game.getName());
+			}
+		}.start();			
+		}
+		game.setSlot(slot, new Slot("",state));
 	}
 }

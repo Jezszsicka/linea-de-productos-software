@@ -19,6 +19,7 @@ import ProductLine.FullGameException;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
 import ProductLine.InvalidLoggingException;
+import ProductLine.SlotState;
 import ProductLine.UserAlreadyExistsException;
 import ProductLine.UserAlreadyLoggedException;
 import ProductLine.UserNotInGameException;
@@ -187,8 +188,6 @@ public class Controller {
 	public void showJoinGameUI() {
 		waitingRoomUI.setEnabled(false);
 		joinGameUI = new JoinGameUI();
-		System.out.println(listGames().toString());
-
 	}
 
 	public void sendPrivateMessage(String sender, String destinatary,
@@ -330,6 +329,7 @@ public class Controller {
 	public void deleteGame(String gameName) {
 		gameManager.deleteGame(gameName);
 		gameWaitingRooms.remove(gameName);
+		waitingRoomUI.toFront();
 	}
 
 	public void joinGame(String gameName) {
@@ -337,6 +337,8 @@ public class Controller {
 			Game game = gameManager.joinGame(gameName);
 			gameWaitingRooms.put(game.getName(), new GameWaitingRoomUI(session
 					.getUser().getUsername(), game,false));
+			joinGameUI.dispose();
+			waitingRoomUI.setEnabled(true);
 		} catch (FullGameException e) {
 			JOptionPane.showMessageDialog(joinGameUI, "The game is full",
 					"Full game", JOptionPane.ERROR_MESSAGE);
@@ -354,11 +356,6 @@ public class Controller {
 		gameManager.userJoinGame(game, player);
 		GameWaitingRoomUI gameUI = gameWaitingRooms.get(game);
 		gameUI.userJoinGame(player);
-
-	}
-
-	public void openGameSlot(String gameName, int slot) {
-		session.getProxy().openGameSlot(gameName, slot);
 
 	}
 
@@ -381,7 +378,12 @@ public class Controller {
 	}
 
 	public void kickedFromGame(String game) {
-		// TODO Auto-generated method stub
-		
+		JOptionPane.showMessageDialog(gameWaitingRooms.get(game), "You haven been kicked from game",
+				"Kicked from game", JOptionPane.INFORMATION_MESSAGE);
+		gameWaitingRooms.get(game).dispose();
+	}
+	
+	public void changeSlotState(String gameName, int slot, SlotState slotState) {
+		gameManager.changeSlotState(gameName,slot,slotState);
 	}	
 }

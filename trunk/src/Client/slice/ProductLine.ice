@@ -2,14 +2,14 @@
 
 module ProductLine {
 	enum RoleType { Player, Admin };
-	enum PlayerType {Human,Computer,Empty};
+	enum SlotState {Human,Computer,Empty,Closed};
 	enum GameType {	Ludo, Chess, Trivial, Monopoly, Checkers};
 	
 	
 	["java:getset"]
 	class Slot{
 		string player;
-		PlayerType type;
+		SlotState type;
 	};
 	
 	["java:type:java.util.ArrayList<String>"] sequence<string> StringList;
@@ -23,6 +23,9 @@ module ProductLine {
 		["protected"] SlotList slots;
 		bool addPlayer(string user);
 		void removePlayer(string user);
+		Slot getSlot(int slot);
+		void setSlot(int slotIndex,Slot newSlot);
+		
 		
 	};
 
@@ -89,8 +92,7 @@ module ProductLine {
 		void leaveGame(string game, string player);
 		void deleteGame(string game,string creator);
 		void kickPlayer(string game, string player);
-		void openGameSlot(string game, int slot);
-		void closeGameSlot(string game, int slot);
+		void changeSlotState(string game, int slot, SlotState state);
 		GameList listGames(string user);
     };
     
