@@ -5,7 +5,7 @@ package test;
 
 import static org.junit.Assert.*;
 import logic.ServerThread;
-import logic.UsersController;
+import logic.UsersManager;
 
 import org.junit.After;
 import org.junit.Before;
@@ -25,7 +25,7 @@ public class RegisterTest {
 	public void setUp() throws Exception {
 		ServerThread thread = new ServerThread();
 		thread.start();
-		UsersController.getInstance().registerUser("testUser", "testUser", "testEmail");	
+		UsersManager.getInstance().registerUser("testUser", "testUser", "testEmail");	
 	}
 
 	/**

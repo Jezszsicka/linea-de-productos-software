@@ -2,19 +2,19 @@ package logic;
 
 import persistence.HibernateUtil;
 
-public class ServerController {
+public class ServerManager {
 	
-	private static ServerController controller;
+	private static ServerManager controller;
 	private boolean online;
 	private ServerThread server;
 	
-	private ServerController(){
+	private ServerManager(){
 		online = false;
 	}
 	
-	public static ServerController getInstance(){
+	public static ServerManager getInstance(){
 		if(controller == null)
-			controller = new ServerController();
+			controller = new ServerManager();
 		return controller;
 	}
 	

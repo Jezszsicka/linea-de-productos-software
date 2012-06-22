@@ -2,6 +2,7 @@ package logic;
 
 import model.User;
 import communications.ObjectFactory;
+import communications.ServerI;
 
 import Ice.Communicator;
 import ProductLine.Game;
