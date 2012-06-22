@@ -1,6 +1,8 @@
 package presentation;
 
 import java.awt.BorderLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -137,6 +139,11 @@ public class CreateGameUI extends javax.swing.JFrame {
 		if (txtGameName == null) {
 			txtGameName = new JTextField();
 			txtGameName.setBounds(101, 13, 141, 20);
+			txtGameName.addKeyListener(new KeyAdapter() {
+				public void keyPressed(KeyEvent evt) {
+					txtGameNameKeyPressed(evt);
+				}
+			});
 		}
 		return txtGameName;
 	}
@@ -388,6 +395,13 @@ public class CreateGameUI extends javax.swing.JFrame {
 		txtGameDescription.setText("El trivial es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
 		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
 				.getResource("images/trivial_icon.png")));
+	}
+	
+	private void txtGameNameKeyPressed(KeyEvent evt) {
+		if(evt.getKeyCode() == 10){
+			Controller.getInstance().createGame(txtGameName.getText(),
+					GameType.Checkers);
+		}
 	}
 
 }
