@@ -16,9 +16,9 @@ import ProductLine.UserAlreadyExistsException;
 import ProductLine.UserAlreadyLoggedException;
 import ProductLine.UserNotLoggedException;
 
-public class UsersController {
+public class UsersManager {
 
-	private static UsersController controller;
+	private static UsersManager controller;
 	private List<Session> sessions;
 	private UserDAO userDAO;
 
@@ -26,14 +26,14 @@ public class UsersController {
 		return sessions;
 	}
 
-	private UsersController() {
+	private UsersManager() {
 		sessions = new ArrayList<Session>();
 		userDAO = UserDAO.getDAO();
 	}
 
-	public static UsersController getInstance() {
+	public static UsersManager getInstance() {
 		if (controller == null)
-			controller = new UsersController();
+			controller = new UsersManager();
 		return controller;
 	}
 

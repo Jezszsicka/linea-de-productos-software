@@ -7,7 +7,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import logic.ServerThread;
-import logic.UsersController;
+import logic.UsersManager;
 import model.Session;
 
 import org.junit.After;
@@ -31,7 +31,7 @@ public class LoginTest {
 	public void setUp() throws Exception {
 		ServerThread thread = new ServerThread();
 		thread.start();
-		UsersController.getInstance().registerUser("testUser", "testUser", "testEmail");	
+		UsersManager.getInstance().registerUser("testUser", "testUser", "testEmail");	
 	}
 
 	/**
@@ -39,13 +39,13 @@ public class LoginTest {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		UsersController.getInstance().deleteUser("testUser");
+		UsersManager.getInstance().deleteUser("testUser");
 	}
 
 	@Test
 	public void test() {
 		try {
-			UsersController controller = UsersController.getInstance();
+			UsersManager controller = UsersManager.getInstance();
 			int sessions = controller.getSessions().size();
 			controller.loginUser("testUser","testUser",null);
 			Session newSession = controller.getSessions().get(0);

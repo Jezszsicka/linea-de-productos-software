@@ -1,6 +1,10 @@
-package logic;
+package communications;
 
 import java.util.List;
+
+import logic.GamesManager;
+import logic.MessagesManager;
+import logic.UsersManager;
 
 import Ice.Current;
 import Ice.Identity;
@@ -25,7 +29,7 @@ public class ServerI extends _ServerDisp{
 
 	@Override
 	public synchronized void registerUser(User user, Current __current) throws UserAlreadyExistsException {
-		UsersController.getInstance().registerUser((model.User)user);
+		UsersManager.getInstance().registerUser((model.User)user);
 
 	}
 
@@ -35,19 +39,19 @@ public class ServerI extends _ServerDisp{
 			throws UserAlreadyLoggedException, InvalidLoggingException {
 		Ice.ObjectPrx base = __current.con.createProxy(client);
 		ClientPrx callback = ClientPrxHelper.uncheckedCast(base);
-		return UsersController.getInstance().loginUser(username, password, callback);
+		return UsersManager.getInstance().loginUser(username, password, callback);
 	}
 	
 	@Override
 	public void logoutUser(String username, Current __current)
 			throws UserNotLoggedException {
-		UsersController.getInstance().logoutUser(username);
+		UsersManager.getInstance().logoutUser(username);
 	}
 
 	@Override
 	public synchronized void sendPrivateMessage(String sender, String destinatary,
 			String message, Current __current) throws UserNotLoggedException {
-		MessagesController.getInstance().sendPrivateMessage(sender,destinatary,message);
+		MessagesManager.getInstance().sendPrivateMessage(sender,destinatary,message);
 		
 	}
 
@@ -55,31 +59,31 @@ public class ServerI extends _ServerDisp{
 	@Override
 	public void sendGameMessage(String game, String sender, String message,
 			Current __current) {
-		MessagesController.getInstance().sendGameMessage(game,sender,message);
+		MessagesManager.getInstance().sendGameMessage(game,sender,message);
 		
 	}
 
 	@Override
 	public void sendGeneralMessage(String sender, String message,
 			Current __current) {
-		MessagesController.getInstance().sendGeneralMessage(sender,message);
+		MessagesManager.getInstance().sendGeneralMessage(sender,message);
 	}
 	
 	@Override
 	public void sendGamePrivateMessage(String game, String sender,
 			String destinatary, String message, Current __current) throws UserNotInGameException {
-		MessagesController.getInstance().sendGamePrivateMessage(game,sender,destinatary,message);
+		MessagesManager.getInstance().sendGamePrivateMessage(game,sender,destinatary,message);
 	}	
 
 	@Override
 	public List<User> listUsers(String username,Current __current) {
-		return UsersController.getInstance().listUsers(username);
+		return UsersManager.getInstance().listUsers(username);
 	}
 
 	@Override
 	public void changeEmail(String username, String email, String password,
 			Current __current) throws InvalidLoggingException {
-		UsersController.getInstance().changeEmail(username,email,password);
+		UsersManager.getInstance().changeEmail(username,email,password);
 		
 	}
 
@@ -87,67 +91,67 @@ public class ServerI extends _ServerDisp{
 	public void changePassword(String username, String password,
 			String newPassword, Current __current)
 			throws InvalidLoggingException {
-		UsersController.getInstance().changePassword(username,password,newPassword);
+		UsersManager.getInstance().changePassword(username,password,newPassword);
 		
 	}
 
 	@Override
 	public void changeAvatar(String username, byte[] avatar, Current __current) {
-		UsersController.getInstance().changeAvatar(username,avatar);
+		UsersManager.getInstance().changeAvatar(username,avatar);
 		
 	}
 
 	@Override
 	public void changeName(String username, String name, String lastname,
 			String password, Current __current) throws InvalidLoggingException {
-		UsersController.getInstance().changeName(username, name, lastname,password);
+		UsersManager.getInstance().changeName(username, name, lastname,password);
 		
 	}
 
 	@Override
 	public void deleteAccount(String username, String password,
 			Current __current) throws InvalidLoggingException {
-		UsersController.getInstance().deleteAccount(username,password);
+		UsersManager.getInstance().deleteAccount(username,password);
 		
 	}
 
 	@Override
 	public void createGame(String gameName,String creator, GameType type, Current __current) throws GameAlreadyExistsException {
-		GamesController.getInstance().createGame(gameName,creator,type);
+		GamesManager.getInstance().createGame(gameName,creator,type);
 	}
 
 	@Override
 	public Game joinGame(String game, String player, Current __current) throws FullGameException {
-		return GamesController.getInstance().joinGame(game,player);
+		return GamesManager.getInstance().joinGame(game,player);
 		
 	}
 
 	@Override
 	public List<Game> listGames(String user,Current __current) {
-		return GamesController.getInstance().listGames(user);
+		return GamesManager.getInstance().listGames(user);
 	}
 
 	@Override
 	public void deleteGame(String game, String creator, Current __current) {
-		GamesController.getInstance().deleteGame(game,creator);	
+		GamesManager.getInstance().deleteGame(game,creator);	
 	}
 
 	@Override
 	public void kickPlayer(String game, String player, Current __current) {
-		GamesController.getInstance().kickPlayer(game,player);
+		GamesManager.getInstance().kickPlayer(game,player);
 		
 	}
 
 	@Override
 	public void leaveGame(String game, String player, Current __current) {
-		GamesController.getInstance().leaveGame(game,player);
+		GamesManager.getInstance().leaveGame(game,player);
 		
 	}
 
 	@Override
 	public void changeSlotState(String game, int slot, SlotState state,
 			Current __current) {
-		GamesController.getInstance().changeSlotState(game,slot,state);
+		GamesManager.getInstance().changeSlotState(game,slot,state);
 		
 	}
 

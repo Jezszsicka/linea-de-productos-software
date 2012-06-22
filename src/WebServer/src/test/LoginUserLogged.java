@@ -5,7 +5,7 @@ package test;
 
 import static org.junit.Assert.fail;
 import logic.ServerThread;
-import logic.UsersController;
+import logic.UsersManager;
 
 import org.junit.After;
 import org.junit.Before;
@@ -28,7 +28,7 @@ public class LoginUserLogged {
 	public void setUp() throws Exception {
 		ServerThread thread = new ServerThread();
 		thread.start();
-		UsersController.getInstance().registerUser("testUser", "testUser", "testEmail");
+		UsersManager.getInstance().registerUser("testUser", "testUser", "testEmail");
 	}
 
 	/**
@@ -36,13 +36,13 @@ public class LoginUserLogged {
 	 */
 	@After
 	public void tearDown() throws Exception {
-		UsersController.getInstance().deleteUser("testUser");
+		UsersManager.getInstance().deleteUser("testUser");
 	}
 
 	@Test
 	public void test() {
 		try {
-			UsersController controller = UsersController.getInstance();
+			UsersManager controller = UsersManager.getInstance();
 			controller.loginUser("testUser","testUser",null);
 			controller.loginUser("testUser","testUser",null);
 		} catch (UserAlreadyLoggedException e) {
