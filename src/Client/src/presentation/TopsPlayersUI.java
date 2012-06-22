@@ -1,10 +1,9 @@
 package presentation;
 import java.awt.BorderLayout;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
-
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
 
 
 /**
@@ -19,6 +18,7 @@ import javax.swing.SwingUtilities;
 * THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
 * LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
 */
+@SuppressWarnings("serial")
 public class TopsPlayersUI extends javax.swing.JFrame {
 	private JPanel pnlBackground;
 	private JButton btnClose;
