@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import model.Filter;
 import model.Game;
 import model.Session;
 import model.User;
@@ -286,14 +287,15 @@ public class Controller {
 			gameWaitingRooms.put(game.getName(), new GameWaitingRoomUI(session
 					.getUser().getUsername(), game,true));
 		} catch (GameAlreadyExistsException e) {
-			// TODO Auto-generated catch block
+			JOptionPane.showMessageDialog(createGameUI, "Please, choose anothe name for the game",
+					"Game already exists", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}
 
 	}
 
-	public List<ProductLine.Game> listGames() {
-		return session.getProxy().listGames(session.getUser().getUsername());
+	public List<ProductLine.Game> listGames(String game, Filter filter) {
+		return gameManager.listGames(game,filter);
 	}
 
 	public void sendGameMessage(String game, String message) {

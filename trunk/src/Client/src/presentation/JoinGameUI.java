@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -17,12 +19,14 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import ProductLine.Game;
+import ProductLine.GameType;
 import ProductLine.Slot;
 import ProductLine.SlotState;
-
-
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import logic.Controller;
+import model.Filter;
 
 
 
@@ -48,6 +52,15 @@ public class JoinGameUI extends javax.swing.JFrame {
 	private JButton btnFilter;
 	private JTextField txtGameSearch;
 	private DefaultTableModel tblGamesModel;
+	private JCheckBox checkCheckers;
+	private JCheckBox checkTrivial;
+	private JLabel Players;
+	private JCheckBox check2Players;
+	private JCheckBox check3orMore;
+	private JPanel pnlFilter;
+	private JLabel lblFilter;
+	private JLabel lblGame;
+	private Filter filter;
 
 	{
 		//Set Look & Feel
@@ -58,9 +71,9 @@ public class JoinGameUI extends javax.swing.JFrame {
 		}
 	}
 
-		
 	public JoinGameUI() {
 		super();
+		filter = new Filter();
 		initGUI();
 		setVisible(true);
 		setLocationRelativeTo(null);
@@ -68,7 +81,9 @@ public class JoinGameUI extends javax.swing.JFrame {
 	}
 	
 	private void refreshGames() {
-		List<Game> games = Controller.getInstance().listGames();
+		List<Game> games = Controller.getInstance().listGames(txtGameSearch.getText(),filter);
+		System.out.println(games.toString());
+		clearList();
 		for(Game game : games){
 			int freeSlots = 0;
 			for(Slot slot : game.getSlots())
@@ -77,6 +92,23 @@ public class JoinGameUI extends javax.swing.JFrame {
 			tblGamesModel.addRow(new String[]{game.getName(), String.valueOf(game.getTypeGame()), String.valueOf(game.getSlots().size()-freeSlots)+"/"+game.getSlots().size()});
 		}
 		
+	}
+	
+	private void clearList(){
+		tblGamesModel = 
+				new presentation.TableModel(new String[][] {},new String[] { "Nombre","Juego","Jugadores"});
+		tblGames.setModel(tblGamesModel);
+		tblGames.setFocusable(false);
+		tblGames.getTableHeader().setReorderingAllowed(false);
+		tblGames.getTableHeader().setResizingAllowed(false);
+		tblGames.getTableHeader().setFont(new java.awt.Font("Dialog",3,12));
+		DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
+		tcr.setHorizontalAlignment(SwingConstants.CENTER);
+		tblGames.getColumnModel().getColumn(0).setCellRenderer(tcr);
+		tblGames.getColumnModel().getColumn(1).setCellRenderer(tcr);
+		tblGames.getColumnModel().getColumn(2).setCellRenderer(tcr);
+		((DefaultTableCellRenderer)tblGames.getTableHeader().getDefaultRenderer()).setHorizontalAlignment(SwingConstants.CENTER);
+		tblGames.setOpaque(false);
 	}
 
 	private void initGUI() {
@@ -90,7 +122,7 @@ public class JoinGameUI extends javax.swing.JFrame {
 			});
 			getContentPane().add(getPnlFondo());
 			pack();
-			this.setSize(538, 362);
+			this.setSize(635, 362);
 		} catch (Exception e) {
 		    //add your error handling code here
 			e.printStackTrace();
@@ -101,12 +133,13 @@ public class JoinGameUI extends javax.swing.JFrame {
 		if(pnlFondo == null) {
 			pnlFondo = new JPanel();
 			pnlFondo.setLayout(null);
-			pnlFondo.setBounds(0, 0, 522, 324);
+			pnlFondo.setBounds(0, 0, 619, 324);
 			pnlFondo.add(getBtnJoin());
 			pnlFondo.add(getBtnCancel());
 			pnlFondo.add(getJScrollPane1());
 			pnlFondo.add(getTxtGameSearch());
 			pnlFondo.add(getBtnFilter());
+			pnlFondo.add(getPnlFilter());
 		}
 		return pnlFondo;
 	}
@@ -115,7 +148,8 @@ public class JoinGameUI extends javax.swing.JFrame {
 		if(btnJoin == null) {
 			btnJoin = new JButton();
 			btnJoin.setText("Join game");
-			btnJoin.setBounds(431, 249, 81, 23);
+			btnJoin.setBounds(528, 261, 81, 23);
+			btnJoin.setFocusable(false);
 			btnJoin.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnJoinMouseClicked(evt);
@@ -129,7 +163,8 @@ public class JoinGameUI extends javax.swing.JFrame {
 		if(btnCancel == null) {
 			btnCancel = new JButton();
 			btnCancel.setText("Cancel");
-			btnCancel.setBounds(431, 278, 81, 23);
+			btnCancel.setBounds(528, 290, 81, 23);
+			btnCancel.setFocusable(false);
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnCancelMouseClicked(evt);
@@ -156,7 +191,12 @@ public class JoinGameUI extends javax.swing.JFrame {
 	private JTextField getTxtGameSearch() {
 		if(txtGameSearch == null) {
 			txtGameSearch = new JTextField();
-			txtGameSearch.setBounds(15, 20, 192, 20);
+			txtGameSearch.setBounds(15, 20, 251, 20);
+			txtGameSearch.addKeyListener(new KeyAdapter() {
+				public void keyPressed(KeyEvent evt) {
+					txtGameSearchKeyPressed(evt);
+				}
+			});
 		}
 		return txtGameSearch;
 	}
@@ -164,8 +204,14 @@ public class JoinGameUI extends javax.swing.JFrame {
 	private JButton getBtnFilter() {
 		if(btnFilter == null) {
 			btnFilter = new JButton();
-			btnFilter.setText("Filtro");
-			btnFilter.setBounds(284, 20, 68, 21);
+			btnFilter.setText("Buscar");
+			btnFilter.setBounds(276, 20, 70, 21);
+			btnFilter.setFocusable(false);
+			btnFilter.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					btnFilterMouseClicked(evt);
+				}
+			});
 		}
 		return btnFilter;
 	}
@@ -173,7 +219,7 @@ public class JoinGameUI extends javax.swing.JFrame {
 	private JScrollPane getJScrollPane1() {
 		if(scrollGames == null) {
 			scrollGames = new JScrollPane();
-			scrollGames.setBounds(15, 57, 406, 244);
+			scrollGames.setBounds(15, 57, 331, 256);
 			scrollGames.setBorder(BorderFactory.createTitledBorder(""));
 			scrollGames.setViewportView(getTblGames());
 		}
@@ -200,6 +246,157 @@ public class JoinGameUI extends javax.swing.JFrame {
 			tblGames.getTableHeader().setResizingAllowed(false);
 		}
 		return tblGames;
+	}
+	
+	private JCheckBox getCheck3orMore() {
+		if(check3orMore == null) {
+			check3orMore = new JCheckBox();
+			check3orMore.setText("3 o más jugadores");
+			check3orMore.setBounds(115, 103, 115, 23);
+			check3orMore.setFocusable(false);
+			check3orMore.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					check3orMoreMouseClicked(evt);
+				}
+			});
+		}
+		return check3orMore;
+	}
+	
+	private JCheckBox getCheck2Players() {
+		if(check2Players == null) {
+			check2Players = new JCheckBox();
+			check2Players.setText("2 jugadores");
+			check2Players.setBounds(115, 77, 115, 23);
+			check2Players.setFocusable(false);
+			check2Players.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					check2PlayersMouseClicked(evt);
+				}
+			});
+		}
+		return check2Players;
+	}
+	
+	private JLabel getPlayers() {
+		if(Players == null) {
+			Players = new JLabel();
+			Players.setText("Players");
+			Players.setFont(new java.awt.Font("Tahoma",1,11));
+			Players.setBounds(114, 42, 112, 21);
+			Players.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return Players;
+	}
+	
+	private JCheckBox getCheckTrivial() {
+		if(checkTrivial == null) {
+			checkTrivial = new JCheckBox();
+			checkTrivial.setText("Trivial");
+			checkTrivial.setBounds(23, 103, 94, 23);
+			checkTrivial.setFocusable(false);
+			checkTrivial.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					checkTrivialMouseClicked(evt);
+				}
+			});
+		}
+		return checkTrivial;
+	}
+	
+	private JCheckBox getCheckCheckers() {
+		if(checkCheckers == null) {
+			checkCheckers = new JCheckBox();
+			checkCheckers.setText("Damas");
+			checkCheckers.setBounds(23, 78, 92, 21);
+			checkCheckers.setFocusable(false);
+			checkCheckers.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					checkCheckersMouseClicked(evt);
+				}
+			});
+		}
+		return checkCheckers;
+	}
+	
+	private JLabel getLblGame() {
+		if(lblGame == null) {
+			lblGame = new JLabel();
+			lblGame.setText("Games");
+			lblGame.setFont(new java.awt.Font("Tahoma",1,11));
+			lblGame.setBounds(2, 42, 102, 21);
+			lblGame.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return lblGame;
+	}
+	
+	private JLabel getLblFilter() {
+		if(lblFilter == null) {
+			lblFilter = new JLabel();
+			lblFilter.setText("Filtro");
+			lblFilter.setBounds(12, 5, 214, 19);
+			lblFilter.setHorizontalAlignment(SwingConstants.CENTER);
+			lblFilter.setFont(new java.awt.Font("Tahoma",1,11));
+		}
+		return lblFilter;
+	}
+	
+	private JPanel getPnlFilter() {
+		if(pnlFilter == null) {
+			pnlFilter = new JPanel();
+			pnlFilter.setLayout(null);
+			pnlFilter.setBounds(371, 57, 238, 167);
+			pnlFilter.setBorder(BorderFactory.createTitledBorder(""));
+			pnlFilter.add(getLblFilter());
+			pnlFilter.add(getLblGame());
+			pnlFilter.add(getCheckCheckers());
+			pnlFilter.add(getCheckTrivial());
+			pnlFilter.add(getPlayers());
+			pnlFilter.add(getCheck2Players());
+			pnlFilter.add(getCheck3orMore());
+		}
+		return pnlFilter;
+	}
+	
+	private void checkCheckersMouseClicked(MouseEvent evt) {
+		if(checkCheckers.isSelected()){
+			filter.addGame(GameType.Checkers);
+		}else{
+			filter.removeGame(GameType.Checkers);
+		}
+	}
+	
+	private void checkTrivialMouseClicked(MouseEvent evt) {
+		if(checkTrivial.isSelected()){
+			filter.addGame(GameType.Trivial);
+		}else{
+			filter.removeGame(GameType.Trivial);
+		}
+	}
+	
+	private void check2PlayersMouseClicked(MouseEvent evt) {
+		if(check2Players.isSelected()){
+			filter.addPlayers(ProductLine.Players.TwoPlayers);
+		}else{
+			filter.removePlayers(ProductLine.Players.TwoPlayers);
+		}
+	}
+	
+	private void check3orMoreMouseClicked(MouseEvent evt) {
+		if(check3orMore.isSelected()){
+			filter.addPlayers(ProductLine.Players.ThreeOrMore);
+		}else{
+			filter.removePlayers(ProductLine.Players.ThreeOrMore);
+		}
+	}
+	
+	private void txtGameSearchKeyPressed(KeyEvent evt) {
+		if(evt.getKeyCode() == 10)
+			refreshGames();
+	}
+	
+	private void btnFilterMouseClicked(MouseEvent evt) {
+			refreshGames();
 	}
 
 }

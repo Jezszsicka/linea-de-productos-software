@@ -1,6 +1,7 @@
 package logic;
 
 import java.util.Hashtable;
+import java.util.List;
 
 import ProductLine.FullGameException;
 import ProductLine.GameAlreadyExistsException;
@@ -8,6 +9,7 @@ import ProductLine.GameType;
 import ProductLine.Slot;
 import ProductLine.SlotState;
 import ProductLine.UserNotLoggedException;
+import model.Filter;
 import model.Game;
 import model.Session;
 
@@ -55,6 +57,10 @@ public class GamesManager {
 		
 	}
 
+	public List<ProductLine.Game> listGames(String game, Filter filter) {
+		return session.getProxy().listGames(session.getUser().getUsername(), game, filter);
+	}
+	
 	public void userJoinGame(String game, String player) {
 		searchGame(game).addPlayer(player);
 	}

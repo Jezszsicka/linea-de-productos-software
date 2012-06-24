@@ -18,11 +18,15 @@ public class Game extends ProductLine.Game {
 		this.name = name;
 		this.typeGame = type;
 		this.slots = new ArrayList<Slot>();
+		slots.add(new Slot(creator,SlotState.Human));
 		switch (typeGame) {
 		case Checkers:
-			slots.add(new Slot(creator,SlotState.Human));
+		case Chess:
 			slots.add(new Slot("",SlotState.Empty));
 			break;
+		case Trivial:
+			for(int i = 0; i<7; i++)
+				slots.add(new Slot("",SlotState.Empty));
 		}
 		
 	}

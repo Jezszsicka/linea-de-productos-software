@@ -48,8 +48,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 	}
 
 	private JPanel pnlBackground;
-	private JLabel jLabel1;
-	private JPanel jPanel1;
+	private JLabel lblTrivialIcon;
+	private JPanel pnlTrivial;
 	private JPanel pnlCheckers;
 	private JLabel lblIconCheckers;
 	private JLabel lblCheckers;
@@ -57,10 +57,14 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JButton btnCancel;
 	private JLabel lblGame;
 	private JTextField txtGameName;
-	private JLabel jLabel2;
-	private JLabel jLabel3;
+	private JLabel lblChessPlayers;
+	private JLabel lblTrivial;
+	private JLabel lblTrivialPlayers;
 	private JLabel lblGameTitle;
 	private JLabel lblDescription;
+	private JLabel lblIconChess;
+	private JLabel lblChess;
+	private JPanel pnlChess;
 	private JPanel pnlGameSelection;
 	private JLabel lblGamePlayers;
 	private JTextPane txtGameDescription;
@@ -69,9 +73,11 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel lblGameImage;
 	private JLabel lblGameName;
 	private JButton btnCreate;
+	private GameType selectedGame;
 
 	public CreateGameUI() {
 		super();
+		selectedGame = GameType.Checkers;
 		initGUI();
 		setVisible(true);
 		setLocationRelativeTo(null);
@@ -112,7 +118,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 		if (btnCreate == null) {
 			btnCreate = new JButton();
 			btnCreate.setText("Create game");
-			btnCreate.setBounds(450, 346, 95, 23);
+			btnCreate.setBounds(450, 362, 95, 23);
 			btnCreate.setFocusable(false);
 			btnCreate.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -138,7 +144,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JTextField getTxtGameName() {
 		if (txtGameName == null) {
 			txtGameName = new JTextField();
-			txtGameName.setBounds(101, 13, 141, 20);
+			txtGameName.setBounds(101, 13, 152, 20);
 			txtGameName.addKeyListener(new KeyAdapter() {
 				public void keyPressed(KeyEvent evt) {
 					txtGameNameKeyPressed(evt);
@@ -152,9 +158,9 @@ public class CreateGameUI extends javax.swing.JFrame {
 		if (lblGame == null) {
 			lblGame = new JLabel();
 			lblGame.setText("Games");
-			lblGame.setBounds(0, 72, 73, 20);
+			lblGame.setBounds(12, 50, 61, 20);
 			lblGame.setHorizontalTextPosition(SwingConstants.CENTER);
-			lblGame.setHorizontalAlignment(SwingConstants.CENTER);
+			lblGame.setHorizontalAlignment(SwingConstants.LEFT);
 			lblGame.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblGame;
@@ -163,7 +169,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
 			btnCancel = new JButton("Cancel");
-			btnCancel.setBounds(450, 380, 95, 23);
+			btnCancel.setBounds(450, 391, 95, 23);
 			btnCancel.setText("Cancel");
 			btnCancel.setFocusable(false);
 			btnCancel.addMouseListener(new MouseAdapter() {
@@ -213,8 +219,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 		if (pnlCheckers == null) {
 			pnlCheckers = new JPanel();
 			pnlCheckers.setLayout(null);
-			pnlCheckers.setBounds(10, 98, 230, 38);
-			pnlCheckers.setSize(230, 40);
+			pnlCheckers.setBounds(10, 76, 243, 40);
+			pnlCheckers.setBorder(BorderFactory.createTitledBorder(""));
 			pnlCheckers.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					pnlCheckersMouseClicked(evt);
@@ -228,51 +234,51 @@ public class CreateGameUI extends javax.swing.JFrame {
 	}
 
 	private JPanel getJPanel1() {
-		if (jPanel1 == null) {
-			jPanel1 = new JPanel();
-			jPanel1.setLayout(null);
-			jPanel1.setBounds(12, 142, 230, 32);
-			jPanel1.setSize(230, 40);
-			jPanel1.addMouseListener(new MouseAdapter() {
+		if (pnlTrivial == null) {
+			pnlTrivial = new JPanel();
+			pnlTrivial.setLayout(null);
+			pnlTrivial.setBounds(10, 173, 243, 40);
+			pnlTrivial.setBorder(BorderFactory.createTitledBorder(""));
+			pnlTrivial.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
-					jPanel1MouseClicked(evt);
+					pnlTrivialMouseClicked(evt);
 				}
 			});
-			jPanel1.add(getJLabel1());
-			jPanel1.add(getJLabel2());
-			jPanel1.add(getJLabel3());
+			pnlTrivial.add(getJLabel1());
+			pnlTrivial.add(getJLabel2());
+			pnlTrivial.add(getJLabel3());
 		}
-		return jPanel1;
+		return pnlTrivial;
 	}
 
 	private JLabel getJLabel1() {
-		if (jLabel1 == null) {
-			jLabel1 = new JLabel();
-			jLabel1.setIcon(new ImageIcon(getClass().getClassLoader()
+		if (lblTrivialIcon == null) {
+			lblTrivialIcon = new JLabel();
+			lblTrivialIcon.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/trivial_small_icon.png")));
-			jLabel1.setBounds(153, 6, 25, 25);
+			lblTrivialIcon.setBounds(153, 6, 25, 25);
 		}
-		return jLabel1;
+		return lblTrivialIcon;
 	}
 
 	private JLabel getJLabel2() {
-		if (jLabel2 == null) {
-			jLabel2 = new JLabel();
-			jLabel2.setText("Trivial");
-			jLabel2.setHorizontalAlignment(SwingConstants.CENTER);
-			jLabel2.setBounds(67, 6, 58, 25);
+		if (lblTrivial == null) {
+			lblTrivial = new JLabel();
+			lblTrivial.setText("Trivial");
+			lblTrivial.setHorizontalAlignment(SwingConstants.CENTER);
+			lblTrivial.setBounds(70, 6, 59, 25);
 		}
-		return jLabel2;
+		return lblTrivial;
 	}
 
 	private JLabel getJLabel3() {
-		if (jLabel3 == null) {
-			jLabel3 = new JLabel();
-			jLabel3.setText("8");
-			jLabel3.setHorizontalAlignment(SwingConstants.CENTER);
-			jLabel3.setBounds(10, 6, 21, 25);
+		if (lblTrivialPlayers == null) {
+			lblTrivialPlayers = new JLabel();
+			lblTrivialPlayers.setText("8");
+			lblTrivialPlayers.setHorizontalAlignment(SwingConstants.CENTER);
+			lblTrivialPlayers.setBounds(10, 6, 21, 25);
 		}
-		return jLabel3;
+		return lblTrivialPlayers;
 	}
 
 	private JLabel getLblGameImage() {
@@ -301,7 +307,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 		if (pnlGame == null) {
 			pnlGame = new JPanel();
 			pnlGame.setLayout(null);
-			pnlGame.setBounds(292, 21, 258, 295);
+			pnlGame.setBounds(292, 21, 258, 330);
 			pnlGame.setBorder(BorderFactory.createTitledBorder(""));
 			pnlGame.add(getJLabel4());
 			pnlGame.add(getLblGameImage());
@@ -342,7 +348,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 					txtGameDescription.getDocument().getLength(), style, false);
 			txtGameDescription
 					.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
-			txtGameDescription.setBounds(12, 178, 234, 108);
+			txtGameDescription.setBounds(12, 178, 234, 138);
 			txtGameDescription.setEditable(false);
 			txtGameDescription.setBackground(new java.awt.Color(240, 240, 240));
 			txtGameDescription.setFocusable(false);
@@ -353,7 +359,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblGamePlayers() {
 		if (lblGamePlayers == null) {
 			lblGamePlayers = new JLabel();
-			lblGamePlayers.setText("Dos jugadores");
+			lblGamePlayers.setText("2 jugadores");
 			lblGamePlayers.setBounds(85, 129, 161, 18);
 		}
 		return lblGamePlayers;
@@ -363,45 +369,119 @@ public class CreateGameUI extends javax.swing.JFrame {
 		if (pnlGameSelection == null) {
 			pnlGameSelection = new JPanel();
 			pnlGameSelection.setLayout(null);
-			pnlGameSelection.setBounds(10, 21, 265, 295);
+			pnlGameSelection.setBounds(10, 21, 265, 330);
 			pnlGameSelection.setBorder(BorderFactory.createTitledBorder(""));
 			pnlGameSelection.add(getJPanel1());
 			pnlGameSelection.add(getPnlCheckers());
 			pnlGameSelection.add(getLblGame());
 			pnlGameSelection.add(getTxtGameName());
 			pnlGameSelection.add(getLblGameName());
+			pnlGameSelection.add(getPnlChess());
 		}
 		return pnlGameSelection;
 	}
 
+	private JPanel getPnlChess() {
+		if(pnlChess == null) {
+			pnlChess = new JPanel();
+			pnlChess.setLayout(null);
+			pnlChess.setBounds(10, 124, 243, 40);
+			pnlChess.setBorder(BorderFactory.createTitledBorder(""));
+			pnlChess.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					pnlChessMouseClicked(evt);
+				}
+			});
+			pnlChess.add(getLblIconChess());
+			pnlChess.add(getLblChess());
+			pnlChess.add(getLblChessPlayers());
+		}
+		return pnlChess;
+	}
+	
+	private JLabel getLblIconChess() {
+		if(lblIconChess == null) {
+			lblIconChess = new JLabel();
+			lblIconChess.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/chess_small_icon.png")));
+			lblIconChess.setBounds(153, 8, 25, 25);
+		}
+		return lblIconChess;
+	}
+	
+	private JLabel getLblChess() {
+		if(lblChess == null) {
+			lblChess = new JLabel();
+			lblChess.setText("Ajedrez");
+			lblChess.setHorizontalAlignment(SwingConstants.CENTER);
+			lblChess.setBounds(70, 8, 59, 25);
+		}
+		return lblChess;
+	}
+	
+	private JLabel getLblChessPlayers() {
+		if(lblChessPlayers == null) {
+			lblChessPlayers = new JLabel();
+			lblChessPlayers.setText("2");
+			lblChessPlayers.setHorizontalAlignment(SwingConstants.CENTER);
+			lblChessPlayers.setBounds(9, 8, 21, 25);
+		}
+		return lblChessPlayers;
+	}
+	
 	private void thisWindowClosing(WindowEvent evt) {
 		Controller.getInstance().closeCreateGameUI();
 	}
 
 	private void btnCreateMouseClicked(MouseEvent evt) {
-		Controller.getInstance().createGame(txtGameName.getText(),
-				GameType.Checkers);
-	}
-
-	private void pnlCheckersMouseClicked(MouseEvent evt) {
-		lblGameTitle.setText("Damas");
-		txtGameDescription.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
-		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/3D_Checkers_icon.png")));
-	}
-	
-	private void jPanel1MouseClicked(MouseEvent evt) {
-		lblGameTitle.setText("Trivial");
-		txtGameDescription.setText("El trivial es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
-		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/trivial_icon.png")));
+		createGame();
 	}
 	
 	private void txtGameNameKeyPressed(KeyEvent evt) {
 		if(evt.getKeyCode() == 10){
-			Controller.getInstance().createGame(txtGameName.getText(),
-					GameType.Checkers);
+			createGame();
 		}
 	}
 
+	private void createGame(){
+		Controller.getInstance().createGame(txtGameName.getText(),
+				selectedGame);
+	}
+	private void pnlCheckersMouseClicked(MouseEvent evt) {
+		checkersSelected();
+	}
+	
+	private void pnlChessMouseClicked(MouseEvent evt) {
+		chessSelected();
+	}
+	
+	private void pnlTrivialMouseClicked(MouseEvent evt) {
+		trivialSelected();
+	}	
+
+	private void checkersSelected(){
+		lblGameTitle.setText("Damas");
+		txtGameDescription.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
+				.getResource("images/3D_Checkers_icon.png")));
+		lblGamePlayers.setText("2 jugadores");
+		selectedGame = GameType.Checkers;
+	}
+	
+	private void chessSelected(){
+		lblGameTitle.setText("Ajedrez");
+		txtGameDescription.setText("El ajedrez es un juego competitivo entre dos personas, cada una de las cuales dispone de 16 piezas móviles que se colocan sobre un tablero dividido en 64 escaques.");
+		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
+				.getResource("images/chess_icon.png")));
+		lblGamePlayers.setText("2 jugadores");
+		selectedGame = GameType.Chess;
+	}
+	
+	private void trivialSelected(){
+		lblGameTitle.setText("Trivial");
+		txtGameDescription.setText("El trivial es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
+				.getResource("images/trivial_icon.png")));
+		lblGamePlayers.setText("2-8 jugadores");
+		selectedGame = GameType.Trivial;
+	}
 }

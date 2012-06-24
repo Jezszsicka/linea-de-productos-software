@@ -4,15 +4,17 @@ import java.util.UUID;
 import javax.swing.JOptionPane;
 
 import logic.Controller;
-import model.User;
+
 
 import Ice.Application;
 import Ice.Communicator;
 import Ice.Identity;
 import Ice.ObjectAdapter;
+import ProductLine.Filter;
 import ProductLine.Game;
 import ProductLine.ServerPrx;
 import ProductLine.ServerPrxHelper;
+import ProductLine.User;
 
 
 public class Client extends Application {
@@ -46,6 +48,7 @@ public class Client extends Application {
 		communicator = communicator();
 		communicator.addObjectFactory(new ObjectFactory(), Game.ice_staticId());
 		communicator.addObjectFactory(new ObjectFactory(), User.ice_staticId());
+		communicator.addObjectFactory(new ObjectFactory(), Filter.ice_staticId());
 		ObjectAdapter adapter = communicator.createObjectAdapter("");
         callback = new Ice.Identity();
         callback.name = UUID.randomUUID().toString();

@@ -55,7 +55,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private static final int pnlUserHeight = 55;
 	private static final int userNameLabelWidth = 80;
 	private static final int userNameLabelHeight = 45;
-	private static final int userIconLabelWidth = 45;
+	private static final int userIconLabelWidth = 38;
 	private static final int userIconLabelHeight = 45;
 	private static final int margin = 5;
 	private List<User> users;
@@ -411,8 +411,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 			userNameLabel.setText(users.get(i).getUsername());
 			userNameLabel.setBounds(60, margin, userNameLabelWidth,
 					userNameLabelHeight);
-			userNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			userNameLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+			userNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+			userNameLabel.setHorizontalTextPosition(SwingConstants.LEFT);
 			userNameLabel.setFont(new Font("Courier New", Font.BOLD, 15));
 			pnlUser.add(userNameLabel);
 			size += margin + pnlUserHeight;

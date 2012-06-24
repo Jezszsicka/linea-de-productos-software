@@ -1,11 +1,13 @@
 package logic;
 
-import model.User;
+
 import communications.ObjectFactory;
 import communications.ServerI;
 
 import Ice.Communicator;
+import ProductLine.Filter;
 import ProductLine.Game;
+import ProductLine.User;
 
 
 
@@ -18,6 +20,7 @@ public class Server extends Ice.Application{
 		Server.communicator = communicator();
 		communicator.addObjectFactory(new ObjectFactory(), Game.ice_staticId());
 		communicator.addObjectFactory(new ObjectFactory(), User.ice_staticId());
+		communicator.addObjectFactory(new ObjectFactory(), Filter.ice_staticId());
 		Ice.ObjectAdapter adapter = communicator().createObjectAdapter(
 				"ProductLine.Server");
 		ServerI server = new ServerI();
