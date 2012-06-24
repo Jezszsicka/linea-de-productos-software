@@ -10,6 +10,7 @@ import Ice.Current;
 import Ice.Identity;
 import ProductLine.ClientPrx;
 import ProductLine.ClientPrxHelper;
+import ProductLine.Filter;
 import ProductLine.FullGameException;
 import ProductLine.Game;
 import ProductLine.GameAlreadyExistsException;
@@ -127,8 +128,9 @@ public class ServerI extends _ServerDisp{
 	}
 
 	@Override
-	public List<Game> listGames(String user,Current __current) {
-		return GamesManager.getInstance().listGames(user);
+	public List<Game> listGames(String user, String gameName,
+			Filter gamesFilter, Current __current) {
+		return GamesManager.getInstance().listGames(user,gameName,gamesFilter);
 	}
 
 	@Override

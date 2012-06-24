@@ -2,6 +2,7 @@ package communications;
 
 
 import Ice.Object;
+import ProductLine.Filter;
 import ProductLine.Game;
 import ProductLine.User;
 
@@ -16,7 +17,11 @@ public class ObjectFactory implements Ice.ObjectFactory {
 		if (type.equals(User.ice_staticId())){
 			return new model.User();
 		}
-        //assert(false);
+
+		if (type.equals(Filter.ice_staticId())){
+			return new model.Filter();
+		}
+			
         return null;
 	}
 

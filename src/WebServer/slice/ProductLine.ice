@@ -4,6 +4,7 @@ module ProductLine {
 	enum RoleType { Player, Admin };
 	enum SlotState {Human,Computer,Empty,Closed};
 	enum GameType {	Ludo, Chess, Trivial, Monopoly, Checkers};
+	enum Players { TwoPlayers, ThreeOrMore};
 	
 	
 	["java:getset"]
@@ -14,6 +15,8 @@ module ProductLine {
 	
 	["java:type:java.util.ArrayList<String>"] sequence<string> StringList;
 	["java:type:java.util.ArrayList<Slot>"] sequence<Slot> SlotList;
+	["java:type:java.util.ArrayList<GameType>"] sequence<GameType> GameTypeList;
+	["java:type:java.util.ArrayList<Players>"] sequence<Players> PlayersList;
 	
 	["java:getset"]
 	class Game {
@@ -27,6 +30,16 @@ module ProductLine {
 		void setSlot(int slotIndex,Slot newSlot);
 		
 		
+	};
+
+	["java:getset"]
+	class Filter{
+		["protected"] GameTypeList gamesFilter;
+		["protected"] PlayersList playersFilter;
+		void addGame(GameType game);
+		void removeGame(GameType game);
+		void addPlayers(Players numPlayers);
+		void removePlayers(Players numPlayers);
 	};
 
 	["java:getset"]
@@ -93,7 +106,7 @@ module ProductLine {
 		void deleteGame(string game,string creator);
 		void kickPlayer(string game, string player);
 		void changeSlotState(string game, int slot, SlotState state);
-		GameList listGames(string user);
+		GameList listGames(string user, string gameName, Filter gamesFilter);
     };
     
     interface Client {

@@ -8,11 +8,12 @@ import java.util.List;
 
 import model.Game;
 import model.Session;
+import ProductLine.Filter;
 import ProductLine.FullGameException;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
-import ProductLine.SlotState;
 import ProductLine.Slot;
+import ProductLine.SlotState;
 
 /**
  * @author Juan Yáñez García-Catalán
@@ -33,7 +34,7 @@ public class GamesManager {
 	/**
 	 * Returns the GamesController instance
 	 * 
-	 * @retun The only GamesController instance
+	 * @return The only GamesController instance
 	 **/
 	public static GamesManager getInstance() {
 		if (controller == null) {
@@ -77,9 +78,8 @@ public class GamesManager {
 			for (Slot slot : currentGame.getSlots()) {
 				if (!slot.getPlayer().equals(player)
 						&& slot.getType().equals(SlotState.Human))
-					UsersManager.getInstance()
-							.searchSession(slot.getPlayer()).getCallback()
-							.userJoinGame(game, player);
+					UsersManager.getInstance().searchSession(slot.getPlayer())
+							.getCallback().userJoinGame(game, player);
 			}
 			return currentGame;
 		}
@@ -99,8 +99,8 @@ public class GamesManager {
 		currentGame.removePlayer(player);
 		for (Slot slot : currentGame.getSlots()) {
 			if (slot.getType().equals(SlotState.Human)) {
-				Session userSession = UsersManager.getInstance()
-						.searchSession(slot.getPlayer());
+				Session userSession = UsersManager.getInstance().searchSession(
+						slot.getPlayer());
 				userSession.getCallback().userLeaveGame(game, player);
 			}
 		}
@@ -112,23 +112,69 @@ public class GamesManager {
 	 * 
 	 * @param user
 	 *            User that wants to list the games
+	 * @param gamesFilter
+	 * @param gameName
 	 * @return A list of games to join
 	 **/
-	public List<ProductLine.Game> listGames(String user) {
+	public List<ProductLine.Game> listGames(String user, String gameName,
+			Filter gamesFilter) {
 		List<ProductLine.Game> list = new ArrayList<ProductLine.Game>();
 		for (Game game : games) {
 			boolean toList = true;
-			if (!game.isStarted()) {
-				for (Slot slot : game.getSlots()) {
-					if (slot.getPlayer().equalsIgnoreCase(user)) {
+			// Only game filters
+			if (gamesFilter.getGamesFilter().size() > 0
+					&& gamesFilter.getPlayersFilter().size() == 0) {
+				for (GameType gameType : gamesFilter.getGamesFilter()) {
+					if (!game.isStarted() && game.getName().contains(gameName)
+							&& game.getTypeGame().equals(gameType)) {
+						for (Slot slot : game.getSlots()) {
+							if (slot.getPlayer().equalsIgnoreCase(user)) {
+								toList = false;
+								break;
+							}
+						}
+					} else
 						toList = false;
-						break;
-					}
+
+					if (toList)
+						list.add(game);
+				}
+				// TODO
+			} /*else if (gamesFilter.getGamesFilter().size() == 0
+					&& gamesFilter.getPlayersFilter().size() > 0) {
+				for (Players players : gamesFilter.getPlayersFilter()) {
+					if (!game.isStarted() && game.getName().contains(gameName)) {
+						for (Slot slot : game.getSlots()) {
+							if (slot.getPlayer().equalsIgnoreCase(user)) {
+								toList = false;
+								break;
+							}
+						}
+					} else
+						toList = false;
+
+					if (toList)
+						list.add(game);
+				}
+			} */else {
+				// No filter
+				if (gamesFilter.getGamesFilter().size() == 0
+						&& gamesFilter.getPlayersFilter().size() == 0) {
+					if (!game.isStarted() && game.getName().contains(gameName)) {
+						for (Slot slot : game.getSlots()) {
+							if (slot.getPlayer().equalsIgnoreCase(user)) {
+								toList = false;
+								break;
+							}
+						}
+					} else
+						toList = false;
+
+					if (toList)
+						list.add(game);
 				}
 			}
-			if (toList) {
-				list.add(game);
-			}
+
 		}
 		return list;
 	}
@@ -141,13 +187,18 @@ public class GamesManager {
 	 * @param creator
 	 *            Creator user of the game
 	 * **/
-	public void deleteGame(String game, String creator) {
+	public void deleteGame(final String game, String creator) {
 		Game currentGame = searchGame(game);
-		for (Slot slot : currentGame.getSlots())
+		for (final Slot slot : currentGame.getSlots())
 			if (!slot.getPlayer().equalsIgnoreCase(creator)
 					&& slot.getType().equals(SlotState.Human))
-				UsersManager.getInstance().searchSession(slot.getPlayer())
+				new Thread(){
+					public void run(){
+						UsersManager.getInstance().searchSession(slot.getPlayer())
 						.getCallback().kickedFromGame(game);
+					}
+				}.start();
+				
 		games.remove(searchGame(game));
 	}
 
