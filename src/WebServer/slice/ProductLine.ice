@@ -5,6 +5,7 @@ module ProductLine {
 	enum SlotState {Human,Computer,Empty,Closed};
 	enum GameType {	Ludo, Chess, Trivial, Monopoly, Checkers};
 	enum Players { TwoPlayers, ThreeOrMore};
+	enum MessageType {Normal,Invitation};
 	
 	
 	["java:getset"]
@@ -41,6 +42,16 @@ module ProductLine {
 		void addPlayers(Players numPlayers);
 		void removePlayers(Players numPlayers);
 	};
+	
+	["java:getset"]
+	class Message{
+		["protected"] string from;
+		["protected"] string to;
+		["protected"] string subject;
+		["protected"] string content;
+		["protected"] MessageType type;
+		["protected"] bool read;
+	};
 
 	["java:getset"]
 	class Ranking {
@@ -51,7 +62,7 @@ module ProductLine {
 	
 	["java:type:java.util.ArrayList<Ranking>"] sequence<Ranking> RankingList;
 	["java:type:java.util.ArrayList<Game>"] sequence<Game> GameList;
-	
+	["java:type:java.util.ArrayList<Message>"] sequence<Message> MessageList;
 	sequence<byte> Image;
 	
 	["java:getset"]
@@ -66,6 +77,7 @@ module ProductLine {
 		["protected"] Image avatar;
 		["protected"] StringList friends;	
 		["protected"] RankingList rankings;
+		["protected"] MessageList messages;
 	};
 	
 	["java:type:java.util.ArrayList<User>"] sequence<User> UserList;
@@ -85,8 +97,9 @@ module ProductLine {
     interface Server {
     	void registerUser(User newUser) throws UserAlreadyExistsException;
         User loginUser(string username, string password,Ice::Identity client) throws UserAlreadyLoggedException,InvalidLoggingException;
-		void logoutUser(string username) throws UserNotLoggedException;
+		void logoutUser(string username);
 		UserList listUsers(string username);
+		void resetPassword(string identifier) throws InvalidLoggingException;
 		
 		void changeName(string username, string name, string lastname, string password) throws InvalidLoggingException;
 		void changePassword(string username, string password, string newPassword) throws InvalidLoggingException;
@@ -96,9 +109,10 @@ module ProductLine {
 		
 		
 		void sendGeneralMessage(string sender,string message);
-		void sendPrivateMessage(string sender, string destinatary, string message) throws UserNotLoggedException;
+		void sendPrivateMessage(string sender, string receiver, string message) throws UserNotLoggedException;
 		void sendGameMessage(string game,string sender, string message);
-		void sendGamePrivateMessage(string game, string sender, string destinatary, string message) throws UserNotInGameException;
+		void sendGamePrivateMessage(string game, string sender, string receiver, string message) throws UserNotInGameException;
+		void sendMessage(Message msg);
 		
 		void createGame(string game,string creator, GameType type) throws GameAlreadyExistsException;
 		Game joinGame(string game, string player) throws FullGameException;
@@ -119,6 +133,7 @@ module ProductLine {
     	void userLeave(string username);
     	void userJoinGame(string game, string user);
     	void userLeaveGame(string game, string user);
+    	void slotStateChanged(string game, int slot, SlotState state);
     	void kickedFromGame(string game);
     };
     
