@@ -3,6 +3,7 @@ package communications;
 
 import logic.Controller;
 import Ice.Current;
+import ProductLine.SlotState;
 import ProductLine.User;
 import ProductLine._ClientDisp;
 
@@ -61,6 +62,13 @@ public class ClientI extends _ClientDisp{
 	@Override
 	public void kickedFromGame(String game, Current __current) {
 		Controller.getInstance().kickedFromGame(game);
+	}
+
+	@Override
+	public void slotStateChanged(String game, int slot, SlotState state,
+			Current __current) {
+		System.out.println("Cambio de slot "+state);
+		Controller.getInstance().slotStateChanged(game,slot,state);
 	}
 
 

@@ -11,7 +11,6 @@ import Ice.Identity;
 import ProductLine.InvalidLoggingException;
 import ProductLine.UserAlreadyExistsException;
 import ProductLine.UserAlreadyLoggedException;
-import ProductLine.UserNotLoggedException;
 
 import communications.Client;
 
@@ -24,13 +23,22 @@ public class SessionManager {
 
 	}
 
-	public void registerUser(User user, String retypedPassword,
+	public void registerUser(final User user, String retypedPassword,
 			String retypedEmail) throws WrongInputException,
 			UserAlreadyExistsException {
 		validateRegisterInput(user.getUsername(), user.getPassword(),
 				retypedPassword, user.getEmail(), retypedEmail);
+		final String password = user.getPassword();
 		user.setPassword(Utils.hashMD5_Base64(user.getPassword()));
 		Client.getProxy().registerUser((ProductLine.User) user);
+		new Thread(){
+			public void run(){
+				String content = "Bienvenido a a Board Games \n\nSus datos de registro son:\n\nUsuario: "+user.getUsername()+"\nPassword: "+password;
+				String subject = "Datos de registro";
+				MailSender.getMailSender().sendMessage(content, subject, user.getEmail());
+			}
+		}.start();
+		
 	}
 	
 	public Session loginUser(String username, String password)
@@ -47,7 +55,7 @@ public class SessionManager {
 		return session;
 	}
 
-	public void logoutUser() throws UserNotLoggedException {
+	public void logoutUser(){
 		session.getProxy().logoutUser(session.getUser().getUsername());
 		session = null;
 	}

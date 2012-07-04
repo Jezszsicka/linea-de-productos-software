@@ -26,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
+import javax.swing.border.BevelBorder;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
@@ -65,7 +66,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 
 	private static final int userIconLabelWidth = 38;
 	private static final int userIconLabelHeight = 45;
-	
+
 	private JPanel pnlBackground;
 	private JTextPane txtGameDescription;
 	private JLabel lblDescription;
@@ -90,10 +91,6 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private List<PlayerPanel> playerPanels;
 	private boolean creator;
 
-	public GameWaitingRoomUI(Game game) {
-		super();
-	}
-
 	public GameWaitingRoomUI(String username, Game game, boolean creator) {
 		super();
 		this.username = username;
@@ -104,9 +101,9 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		setVisible(true);
 		setLocationRelativeTo(null);
 		destinatary = "";
-		refreshUsers();
+		refreshPlayers();
 		lblName.setText(game.getName());
-		switch(game.getTypeGame()){
+		switch (game.getTypeGame()) {
 		case Checkers:
 			checkersSelected();
 			break;
@@ -122,60 +119,69 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 
 	private void checkersSelected() {
 		lblGame.setText("Damas");
-		txtGameDescription.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+		txtGameDescription
+				.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
 		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
 				.getResource("images/3D_Checkers_icon.png")));
-		
-	}
-	
-	
-	private void chessSelected() {
-		lblGame.setText("Ajedrez");
-		txtGameDescription.setText("El ajedrez es un juego competitivo entre dos personas, cada una de las cuales dispone de 16 piezas móviles que se colocan sobre un tablero dividido en 64 escaques.");
-		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/chess_icon.png")));
-		
+
 	}
 
-	private void trivialSelected(){
+	private void chessSelected() {
+		lblGame.setText("Ajedrez");
+		txtGameDescription
+				.setText("El ajedrez es un juego competitivo entre dos personas, cada una de las cuales dispone de 16 piezas móviles que se colocan sobre un tablero dividido en 64 escaques.");
+		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
+				.getResource("images/chess_icon.png")));
+
+	}
+
+	private void trivialSelected() {
 		lblGame.setText("Trivial");
-		txtGameDescription.setText("El trivial es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+		txtGameDescription
+				.setText("El trivial es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
 		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
 				.getResource("images/trivial_icon.png")));
 	}
-	
-	private void refreshUsers() {
+
+	private void refreshPlayers() {
 		pnlPlayers.removeAll();
+		playerPanels.removeAll(playerPanels);
 		int size = 0;
 		PlayerPanel playerPanel = null;
 		for (int i = 0; i < game.getSlots().size(); i++) {
 			Slot slot = game.getSlots().get(i);
-			switch (slot.type) {
+			switch (slot.getType()) {
 			case Human:
 				User user = Controller.getInstance().searchUser(
 						slot.getPlayer());
 				playerPanel = new PlayerPanel(user, i);
-				playerPanel.setLocation(2, 2+i*55);
-				pnlPlayers.add(playerPanel);
 				break;
 			case Empty:
-				playerPanel = new PlayerPanel(i);
-				playerPanel.setLocation(2, 2+i*55);
-				pnlPlayers.add(playerPanel);
+				playerPanel = new PlayerPanel(i, SlotState.Empty);
 				break;
 			case Computer:
-				playerPanel = new PlayerPanel(i);
-				playerPanel.setLocation(2, 2+i*55);
-				pnlPlayers.add(playerPanel);
+				playerPanel = new PlayerPanel(i, SlotState.Computer);
 				break;
 			case Closed:
-				playerPanel = new PlayerPanel(i);
-				playerPanel.setLocation(2, 2+i*55);
-				pnlPlayers.add(playerPanel);
+				playerPanel = new PlayerPanel(i, SlotState.Closed);
 				break;
 			}
+			playerPanel.setLocation(2, 2 + i * 57);
 			playerPanel.setBorder(BorderFactory.createTitledBorder(""));
-			size += playerPanel.getHeight();
+			pnlPlayers.add(playerPanel);
+			playerPanels.add(playerPanel);
+			size += 57;
+		}
+
+		if (size > pnlPlayersScroll.getHeight()) {
+			for(PlayerPanel panel : playerPanels){
+				panel.setPreferredSize(new Dimension(panel.getWidth()-15,panel.getHeight()));
+				panel.setSize(panel.getWidth()-15,panel.getHeight());
+				JComboBox<String> playerType = panel.getPlayerType();
+				playerType.setLocation(playerType.getX()-15, playerType.getY());
+				panel.repaint();
+			}
+				
 		}
 		
 		pnlPlayers.setPreferredSize(new Dimension(pnlPlayers.getWidth(), size));
@@ -189,9 +195,10 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 			BorderLayout thisLayout = new BorderLayout();
 			getContentPane().setLayout(thisLayout);
+			this.setResizable(false);
 			getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
 			pack();
-			this.setSize(677, 456);
+			this.setSize(677, 450);
 		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();
@@ -490,7 +497,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		refreshUsers();
+		refreshPlayers();
 	}
 
 	public void userLeaveGame(String player) {
@@ -502,15 +509,20 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		refreshUsers();
+		refreshPlayers();
 	}
-	
+
+	public void slotStateChanged() {
+		refreshPlayers();
+	}
+
 	private JScrollPane getJScrollPane1() {
-		if(pnlPlayersScroll == null) {
+		if (pnlPlayersScroll == null) {
 			pnlPlayersScroll = new JScrollPane();
 			pnlPlayersScroll.setBounds(10, 16, 365, 246);
 			pnlPlayersScroll.setBorder(BorderFactory.createTitledBorder(""));
-			pnlPlayersScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+			pnlPlayersScroll
+					.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			pnlPlayersScroll.setViewportView(getPnlPlayers());
 		}
 		return pnlPlayersScroll;
@@ -522,55 +534,86 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		private JLabel lblCountry;
 		private JComboBox<String> playerType;
 		private int slot;
+		private boolean changeState;
 
-		public PlayerPanel(int slot) {
+		public PlayerPanel(int slot, SlotState state) {
 			super();
 			this.slot = slot;
+			setSize(pnlPlayers.getWidth() - 5, userIconLabelHeight + 10);
 			add(getLblAvatar());
 			add(getLblCountry());
 			add(getLblPlayer());
 			add(getPlayerType());
 			setLayout(null);
-			setSize(pnlPlayers.getWidth()-5, userIconLabelHeight+5);
-			lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/contact.png")));
+			lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/contact_icon.png")));
+			if (!creator)
+				playerType.setEnabled(false);
+			switch (state) {
+			case Empty: // Empty
+				lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
+						.getResource("images/contact_icon.png")));
+				lblPlayer.setText("Free");
+				lblCountry.setIcon(null);
+				playerType.setSelectedIndex(0);
+				break;
+			case Computer: // Computer
+				lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
+						.getResource("images/contact_icon.png")));
+				lblPlayer.setText("Computer");
+				lblCountry.setIcon(null);
+				playerType.setSelectedIndex(1);
+				break;
+			case Closed: // Closed
+				lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
+						.getResource("images/contact_icon.png")));
+				lblPlayer.setText("Closed");
+				lblCountry.setIcon(null);
+				playerType.setSelectedIndex(2);
+				break;
+			}
 		}
 
 		public PlayerPanel(User player, int slot) {
 			super();
 			this.slot = slot;
+			setSize(pnlPlayers.getWidth() - 5, userIconLabelHeight + 10);
 			add(getLblAvatar());
 			add(getLblCountry());
 			add(getLblPlayer());
-			if(!(creator && slot == 0)){
+			if (!(creator && slot == 0)) {
 				add(getPlayerType());
 			}
 			ImageIcon image = new ImageIcon(player.getAvatar());
-			image = new ImageIcon(image.getImage().getScaledInstance(
-					userIconLabelWidth, userIconLabelHeight,
-					Image.SCALE_SMOOTH));
+			image = new ImageIcon(image.getImage()
+					.getScaledInstance(userIconLabelWidth, userIconLabelHeight,
+							Image.SCALE_SMOOTH));
 			lblAvatar.setIcon(image);
 			lblPlayer.setText(player.getUsername());
 			lblCountry.setIcon(new ImageIcon(
 					getClass().getClassLoader().getResource(
 							Utils.countrySmallImgPath(player.getCountry()))));
 			setLayout(null);
-			if(!creator)
+			if (!creator)
 				playerType.setEnabled(false);
-			setSize(pnlPlayers.getWidth()-5, userIconLabelHeight+5);
+			
 		}
 
 		private JLabel getLblAvatar() {
 			if (lblAvatar == null) {
 				lblAvatar = new JLabel();
-				lblAvatar.setBounds(19, 5, userIconLabelWidth, userIconLabelWidth);
+				lblAvatar.setBounds(5, 5, userIconLabelWidth,
+						userIconLabelHeight);
+				lblAvatar.setBorder(BorderFactory
+						.createBevelBorder(BevelBorder.LOWERED));
 			}
 			return lblAvatar;
 		}
 
 		private JLabel getLblPlayer() {
 			if (lblPlayer == null) {
-				lblPlayer = new JLabel("Vacío");
-				lblPlayer.setBounds(79, 10, 81, 20);
+				lblPlayer = new JLabel();
+				lblPlayer.setBounds(80, userIconLabelHeight/2-5, 80, 20);
 			}
 			return lblPlayer;
 		}
@@ -578,7 +621,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		private JLabel getLblCountry() {
 			if (lblCountry == null) {
 				lblCountry = new JLabel();
-				lblCountry.setBounds(178, 10, 26, 20);
+				lblCountry.setBounds(180, userIconLabelHeight/2-5, 80, 20);
 			}
 			return lblCountry;
 		}
@@ -589,42 +632,53 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 						new String[] { "Jugador", "Ordenador", "Cerrada" });
 				playerType = new JComboBox<String>();
 				playerType.setModel(playerTypeModel);
-				playerType.setBounds(230, 10, 97, 20);
+				playerType.setBounds(getWidth()-105, userIconLabelHeight/2-5, 100, 20);
 				playerType.setFocusable(false);
-				playerType.addItemListener(new ItemListener() {
-					public void itemStateChanged(ItemEvent evt) {
-						playerTypeItemStateChanged(evt);
-					}
-				});
+				if (creator) {
+					playerType.addItemListener(new ItemListener() {
+						public void itemStateChanged(ItemEvent evt) {
+							playerTypeItemStateChanged(evt);
+						}
+					});
+				}
 			}
 			return playerType;
 		}
 
 		private void playerTypeItemStateChanged(ItemEvent evt) {
-			int type = playerType.getSelectedIndex();
-			switch (type) {
-			case 0: // Empty
-				Controller.getInstance().changeSlotState(game.getName(), slot,SlotState.Empty);
-				lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/contact.png")));
-				lblPlayer.setText("Free");
-				lblCountry.setIcon(null);
-				break;
-			case 1: // Computer
-				Controller.getInstance().changeSlotState(game.getName(), slot,SlotState.Computer);
-				lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/contact.png")));
-				lblPlayer.setText("Computer");
-				lblCountry.setIcon(null);
-				break;
-			case 2: // Closed
-				Controller.getInstance().changeSlotState(game.getName(), slot,SlotState.Computer);
-				lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/contact.png")));
-				lblPlayer.setText("Closed");
-				lblCountry.setIcon(null);
-				break;
+			if (changeState) {
+				int type = playerType.getSelectedIndex();
+				switch (type) {
+				case 0: // Empty
+					Controller.getInstance().changeSlotState(game.getName(),
+							slot, SlotState.Empty);
+					lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
+							.getResource("images/contact_icon.png")));
+					lblPlayer.setText("Free");
+					lblCountry.setIcon(null);
+					break;
+				case 1: // Computer
+					Controller.getInstance().changeSlotState(game.getName(),
+							slot, SlotState.Computer);
+					lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
+							.getResource("images/contact_icon.png")));
+					lblPlayer.setText("Computer");
+					lblCountry.setIcon(null);
+					break;
+				case 2: // Closed
+					Controller.getInstance().changeSlotState(game.getName(),
+							slot, SlotState.Closed);
+					lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
+							.getResource("images/contact_icon.png")));
+					lblPlayer.setText("Closed");
+					lblCountry.setIcon(null);
+					break;
+				}
+				changeState = false;
+			} else {
+				changeState = true;
 			}
-
 		}
-		
-	}
 
+	}
 }
