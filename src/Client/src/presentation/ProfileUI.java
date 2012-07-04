@@ -155,7 +155,7 @@ public class ProfileUI extends javax.swing.JFrame {
 
 	private void initGUI() {
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		this.setSize(650, 500);
+		this.setSize(635, 500);
 		setLocationRelativeTo(null);
 		BorderLayout thisLayout = new BorderLayout();
 		getContentPane().setLayout(thisLayout);

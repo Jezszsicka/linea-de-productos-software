@@ -1,6 +1,6 @@
 package presentation;
 
-import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -8,8 +8,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.ImageIcon;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,19 +19,16 @@ import javax.swing.JTextField;
 import logic.Controller;
 import logic.LanguageManager;
 
-
 /**
-* This code was edited or generated using CloudGarden's Jigloo
-* SWT/Swing GUI Builder, which is free for non-commercial
-* use. If Jigloo is being used commercially (ie, by a corporation,
-* company or business for any purpose whatever) then you
-* should purchase a license for each developer using Jigloo.
-* Please visit www.cloudgarden.com for details.
-* Use of Jigloo implies acceptance of these licensing terms.
-* A COMMERCIAL LICENSE HAS NOT BEEN PURCHASED FOR
-* THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED
-* LEGALLY FOR ANY CORPORATE OR COMMERCIAL PURPOSE.
-*/
+ * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
+ * Builder, which is free for non-commercial use. If Jigloo is being used
+ * commercially (ie, by a corporation, company or business for any purpose
+ * whatever) then you should purchase a license for each developer using Jigloo.
+ * Please visit www.cloudgarden.com for details. Use of Jigloo implies
+ * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
+ * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
+ * ANY CORPORATE OR COMMERCIAL PURPOSE.
+ */
 @SuppressWarnings("serial")
 public class LoginUI extends javax.swing.JFrame {
 	{
@@ -45,6 +42,7 @@ public class LoginUI extends javax.swing.JFrame {
 	}
 
 	private JPanel pnlBackground;
+	private JLabel lblRemember;
 	private JButton btnLogin;
 	private JTextField txtUsername;
 	private JPasswordField txtPassword;
@@ -57,18 +55,18 @@ public class LoginUI extends javax.swing.JFrame {
 		super();
 		language = LanguageManager.language();
 		initGUI();
-		
+
 	}
 
 	private void initGUI() {
 		setResizable(false);
-		this.setSize(482, 272);
-		getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
+		this.setSize(466, 272);
+		getContentPane().setLayout(null);
+		getContentPane().add(getPnlBackground());
 		setLocationRelativeTo(null);
-		BorderLayout thisLayout = new BorderLayout();
-		getContentPane().setLayout(thisLayout);
 		setVisible(true);
-		this.setIconImage(new ImageIcon(getClass().getClassLoader().getResource("images/icon.png")).getImage());
+		this.setIconImage(new ImageIcon(getClass().getClassLoader()
+				.getResource("images/icon.png")).getImage());
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
 				thisWindowClosing(evt);
@@ -79,7 +77,7 @@ public class LoginUI extends javax.swing.JFrame {
 	private JPanel getPnlBackground() {
 		if (pnlBackground == null) {
 			pnlBackground = new JPanel();
-			pnlBackground.setBounds(0, 0, 514, 234);
+			pnlBackground.setBounds(0, 0, 460, 244);
 			pnlBackground.setLayout(null);
 			pnlBackground.add(getBtnLogin());
 			pnlBackground.add(getTxtUsername());
@@ -87,6 +85,7 @@ public class LoginUI extends javax.swing.JFrame {
 			pnlBackground.add(getLblUsername());
 			pnlBackground.add(getLblPassword());
 			pnlBackground.add(getBtnRegister());
+			pnlBackground.add(getLblRemember());
 		}
 		return pnlBackground;
 	}
@@ -102,7 +101,7 @@ public class LoginUI extends javax.swing.JFrame {
 				}
 			});
 			btnLogin.setFocusable(false);
-			btnLogin.setBounds(243, 143, 89, 23);
+			btnLogin.setBounds(244, 132, 89, 23);
 		}
 		return btnLogin;
 	}
@@ -167,7 +166,7 @@ public class LoginUI extends javax.swing.JFrame {
 				}
 			});
 			btnRegister.setFocusable(false);
-			btnRegister.setBounds(243, 177, 89, 23);
+			btnRegister.setBounds(244, 166, 89, 23);
 		}
 		return btnRegister;
 	}
@@ -179,25 +178,58 @@ public class LoginUI extends javax.swing.JFrame {
 	protected void do_btnLogin_mouseClicked(MouseEvent e) {
 		loginUser();
 	}
-	
+
 	private void txtPasswordKeyPressed(KeyEvent evt) {
-		if(evt.getKeyCode() == 10){
+		if (evt.getKeyCode() == 10) {
 			loginUser();
 		}
 	}
-	
+
 	private void txtUsernameKeyPressed(KeyEvent evt) {
-		if(evt.getKeyCode() == 10){
+		if (evt.getKeyCode() == 10) {
 			loginUser();
 		}
 	}
-	
-	private void loginUser(){
+
+	private void loginUser() {
 		String password = new String(txtPassword.getPassword());
 		Controller.getInstance().loginUser(txtUsername.getText(), password);
 	}
-	
+
 	private void thisWindowClosing(WindowEvent evt) {
 		Controller.getInstance().closeConnection();
+	}
+	
+	private JLabel getLblRemember() {
+		if(lblRemember == null) {
+			lblRemember = new JLabel();
+			lblRemember.setText("¿Has olvidado tu contraseña?");
+			lblRemember.setBounds(87, 207, 170, 14);
+			lblRemember.setFont(new java.awt.Font("Tahoma",1,11));
+			lblRemember.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					lblRememberMouseClicked(evt);
+				}
+				public void mouseExited(MouseEvent evt) {
+					lblRememberMouseExited(evt);
+				}
+				public void mouseEntered(MouseEvent evt) {
+					lblRememberMouseEntered(evt);
+				}
+			});
+		}
+		return lblRemember;
+	}
+	
+	private void lblRememberMouseEntered(MouseEvent evt) {
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+	
+	private void lblRememberMouseExited(MouseEvent evt) {
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+	
+	private void lblRememberMouseClicked(MouseEvent evt) {
+		Controller.getInstance().showResetPasswordUI();
 	}
 }

@@ -19,7 +19,6 @@ import javax.swing.filechooser.FileFilter;
 
 import logic.LanguageManager;
 
-
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
  * Builder, which is free for non-commercial use. If Jigloo is being used
@@ -67,20 +66,15 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	}
 
 	private void initGUI() {
-		try {
-			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-			this.addWindowListener(new WindowAdapter() {
-				public void windowClosing(WindowEvent evt) {
-					thisWindowClosing(evt);
-				}
-			});
-			getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
-			pack();
-			this.setSize(526, 404);
-		} catch (Exception e) {
-			// add your error handling code here
-			e.printStackTrace();
-		}
+		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent evt) {
+				thisWindowClosing(evt);
+			}
+		});
+		getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
+		pack();
+		this.setSize(526, 404);
 	}
 
 	private ImagePanel getPnlBackground() {

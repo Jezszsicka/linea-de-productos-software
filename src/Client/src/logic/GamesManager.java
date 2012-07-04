@@ -3,6 +3,8 @@ package logic;
 import java.util.Hashtable;
 import java.util.List;
 
+import exceptions.WrongInputException;
+
 import ProductLine.FullGameException;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
@@ -23,17 +25,10 @@ public class GamesManager {
 		this.session = session;
 		games = new Hashtable<String,Game>();
 	}
-	
-	public void sendGeneralMessage(String message){
-		session.getProxy().sendGeneralMessage(session.getUser().getUsername(), message);
-	}
 
-	public void sendPrivateMessage(String sender, String destinatary,
-			String message) throws UserNotLoggedException {
-		session.getProxy().sendPrivateMessage(sender, destinatary, message);	
-	}
-
-	public Game createGame(String gameName, GameType type) throws GameAlreadyExistsException {
+	public Game createGame(String gameName, GameType type) throws GameAlreadyExistsException, WrongInputException {
+		if(gameName.isEmpty())
+			throw new WrongInputException("Name is empty","Please, introduce a name for the game");
 		String username = session.getUser().getUsername();
 		session.getProxy().createGame(gameName,username, type);
 		Game game = new Game(gameName,username,type);
@@ -77,6 +72,10 @@ public class GamesManager {
 		session.getProxy().changeSlotState(gameName, slot, slotState);
 		Game game = searchGame(gameName);
 		game.setSlot(slot, new Slot("",slotState));
-		//TODO
+	}
+
+	public void slotStateChanged(String gameName, int slot, SlotState state) {
+		Game game = searchGame(gameName);
+		game.setSlot(slot, new Slot("",state));
 	}
 }

@@ -14,7 +14,6 @@ import javax.swing.WindowConstants;
 import logic.Controller;
 import logic.LanguageManager;
 
-
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
  * Builder, which is free for non-commercial use. If Jigloo is being used
@@ -45,14 +44,10 @@ public class DeleteAccountUI extends javax.swing.JFrame {
 	}
 
 	private void initGUI() {
-		try {
-			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-			getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
-			pack();
-			this.setSize(360, 156);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
+		pack();
+		this.setSize(360, 156);
 	}
 
 	private JPanel getPnlBackground() {
@@ -126,7 +121,7 @@ public class DeleteAccountUI extends javax.swing.JFrame {
 			dispose();
 		}
 	}
-	
+
 	private void btnCancelMouseClicked(MouseEvent evt) {
 		parent.setEnabled(true);
 		dispose();

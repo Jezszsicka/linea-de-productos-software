@@ -13,8 +13,10 @@ import presentation.CreateGameUI;
 import presentation.GameWaitingRoomUI;
 import presentation.JoinGameUI;
 import presentation.LoginUI;
+import presentation.MessagesUI;
 import presentation.ProfileUI;
 import presentation.RegisterUI;
+import presentation.ResetPasswordUI;
 import presentation.WaitingRoomUI;
 import ProductLine.FullGameException;
 import ProductLine.GameAlreadyExistsException;
@@ -33,19 +35,25 @@ import exceptions.WrongInputException;
 public class Controller {
 	public static Controller controller;
 
-	/** UI **/
+	//UI
 	private RegisterUI registerUI;
+	private ResetPasswordUI resetPasswordUI;
 	private LoginUI loginUI;
 	private ProfileUI profileUI;
 	private WaitingRoomUI waitingRoomUI;
 	private CreateGameUI createGameUI;
+	private MessagesUI messagesUI;
 	private Hashtable<String, GameWaitingRoomUI> gameWaitingRooms;
 	private JoinGameUI joinGameUI;
 
+	//Managers
 	private Session session;
 	private SessionManager sessionManager;
 	private GamesManager gameManager;
 	private LanguageManager language;
+	private MessagesManager messagesManager;
+
+	
 
 	private Controller() {
 		language = LanguageManager.language();
@@ -94,12 +102,13 @@ public class Controller {
 		registerUI.dispose();
 		registerUI = null;
 	}
-
+	
 	public void loginUser(String username, String password) {
 		try {
 			session = sessionManager.loginUser(username, password);
 			language.loadPreferences(session.getUser());
 			gameManager = new GamesManager(session);
+			messagesManager = new MessagesManager(session);
 			waitingRoomUI = new WaitingRoomUI(session.getUser(),
 					session.getUsers());
 			loginUI.dispose();
@@ -122,17 +131,11 @@ public class Controller {
 	}
 
 	public void logoutUser() {
-
-		try {
 			sessionManager.logoutUser();
 			gameManager = null;
 			waitingRoomUI.dispose();
 			waitingRoomUI = null;
 			loginUI = new LoginUI();
-		} catch (UserNotLoggedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	public void showCreateGameUI() {
@@ -158,9 +161,27 @@ public class Controller {
 	}
 
 	public void sendGeneralMessage(String message) {
-		gameManager.sendGeneralMessage(message);
+		messagesManager.sendGeneralMessage(message);
 	}
 
+	public void sendPrivateMessage(String sender, String destinatary,
+			String message) throws UserNotLoggedException {
+		messagesManager.sendPrivateMessage(sender, destinatary, message);
+	}
+	
+	public void sendGameMessage(String game, String message) {
+		messagesManager.sendGameMessage(game,message);
+	}
+	
+	public void sendGamePrivateMessage(String game, String sender,
+			String destinatary, String message) throws UserNotInGameException {
+		messagesManager.sendGamePrivateMessage(game,sender,destinatary,message);
+	}
+	
+	public void sendMessage(String to, String subject, String content) throws WrongInputException {
+		messagesManager.sendMessage(to, subject, content);
+	}
+	
 	public void receiveGeneralMessage(String sender, String message) {
 		waitingRoomUI.receiveMessage(sender, message);
 	}
@@ -168,6 +189,23 @@ public class Controller {
 	public void receivePrivateMessage(String sender, String message) {
 		waitingRoomUI.receivePrivateMessage(sender, message);
 
+	}
+
+	public void receiveGameMessage(String game, String sender, String message) {
+		if (gameManager.searchGame(game).isStarted()) {
+
+		} else
+			gameWaitingRooms.get(game).receiveMessage(sender, message);
+	}
+
+	public void receiveGamePrivateMessage(String gameName, String sender,
+			String message) {
+		Game game = gameManager.searchGame(gameName);
+		if (gameManager.searchGame(gameName).isStarted()) {
+
+		} else
+			gameWaitingRooms.get(gameName).receivePrivateMessage(sender,
+					message);
 	}
 
 	public void showProfileUI() {
@@ -189,12 +227,6 @@ public class Controller {
 	public void showJoinGameUI() {
 		waitingRoomUI.setEnabled(false);
 		joinGameUI = new JoinGameUI();
-	}
-
-	public void sendPrivateMessage(String sender, String destinatary,
-			String message) throws UserNotLoggedException {
-		gameManager.sendPrivateMessage(sender, destinatary, message);
-
 	}
 
 	public void changeName(String name, String lastname, String password) {
@@ -287,45 +319,18 @@ public class Controller {
 			gameWaitingRooms.put(game.getName(), new GameWaitingRoomUI(session
 					.getUser().getUsername(), game,true));
 		} catch (GameAlreadyExistsException e) {
-			JOptionPane.showMessageDialog(createGameUI, "Please, choose anothe name for the game",
+			JOptionPane.showMessageDialog(createGameUI, "Please, choose another name for the game",
 					"Game already exists", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
+		} catch (WrongInputException e) {
+			JOptionPane.showMessageDialog(createGameUI, e.getMessage(),
+					e.getError(), JOptionPane.WARNING_MESSAGE);
 		}
 
 	}
 
 	public List<ProductLine.Game> listGames(String game, Filter filter) {
 		return gameManager.listGames(game,filter);
-	}
-
-	public void sendGameMessage(String game, String message) {
-		session.getProxy().sendGameMessage(game,
-				session.getUser().getUsername(), message);
-	}
-
-	public void receiveGameMessage(String game, String sender, String message) {
-		if (gameManager.searchGame(game).isStarted()) {
-
-		} else
-			gameWaitingRooms.get(game).receiveMessage(sender, message);
-	}
-
-	public void sendGamePrivateMessage(String game, String sender,
-			String destinatary, String message) throws UserNotInGameException {
-		session.getProxy().sendGamePrivateMessage(game, sender, destinatary,
-				message);
-
-	}
-
-	public void receiveGamePrivateMessage(String gameName, String sender,
-			String message) {
-		Game game = gameManager.searchGame(gameName);
-		if (gameManager.searchGame(gameName).isStarted()) {
-
-		} else
-			gameWaitingRooms.get(gameName).receivePrivateMessage(sender,
-					message);
-
 	}
 
 	public void deleteGame(String gameName) {
@@ -387,5 +392,42 @@ public class Controller {
 	
 	public void changeSlotState(String gameName, int slot, SlotState slotState) {
 		gameManager.changeSlotState(gameName,slot,slotState);
+	}
+
+	public void slotStateChanged(String gameName, int slot, SlotState state) {
+		gameManager.slotStateChanged(gameName, slot, state);
+		GameWaitingRoomUI gameWaitingRoomUI = gameWaitingRooms.get(gameName);
+		gameWaitingRoomUI.slotStateChanged();
+	}
+
+	public void showMessagesUI() {
+		messagesUI = new MessagesUI();
+		waitingRoomUI.setEnabled(false);
+	}
+
+	public void closeMessagesUI() {
+		messagesUI.dispose();
+		messagesUI = null;
+		waitingRoomUI.setEnabled(true);
+		waitingRoomUI.toFront();
+		
+	}
+
+	public void showResetPasswordUI() {
+		resetPasswordUI = new ResetPasswordUI();
 	}	
+	
+	public void resetPassword(String identifier) {
+		try {
+			Client.getProxy().resetPassword(identifier);
+			JOptionPane.showMessageDialog(resetPasswordUI, "Su contraseña ha sido reseteada en breve recibirá un email",
+					"A la mierdaaa!", JOptionPane.INFORMATION_MESSAGE);
+			resetPasswordUI.dispose();
+		} catch (InvalidLoggingException e) {
+			JOptionPane.showMessageDialog(resetPasswordUI, "El usuario no existe",
+					"A la mierdaaa!", JOptionPane.INFORMATION_MESSAGE);
+		}	
+	}
+
+
 }

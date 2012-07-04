@@ -16,7 +16,6 @@ import javax.swing.WindowConstants;
 import logic.Controller;
 import logic.LanguageManager;
 
-
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
  * Builder, which is free for non-commercial use. If Jigloo is being used
@@ -51,22 +50,17 @@ public class ChangeNameUI extends javax.swing.JFrame {
 	}
 
 	private void initGUI() {
-		try {
-			this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-			getContentPane().add(getPnglBackground(), BorderLayout.CENTER);
-			pack();
-			this.setSize(400, 200);
-			setVisible(true);
-			setLocationRelativeTo(null);
-			this.addWindowListener(new WindowAdapter() {
-				public void windowClosing(WindowEvent evt) {
-					thisWindowClosing(evt);
-				}
-			});
-		} catch (Exception e) {
-			// add your error handling code here
-			e.printStackTrace();
-		}
+		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		getContentPane().add(getPnglBackground(), BorderLayout.CENTER);
+		pack();
+		this.setSize(400, 200);
+		setVisible(true);
+		setLocationRelativeTo(null);
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent evt) {
+				thisWindowClosing(evt);
+			}
+		});
 	}
 
 	private JPanel getPnglBackground() {

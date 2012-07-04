@@ -38,6 +38,7 @@ import logic.Controller;
 import logic.LanguageManager;
 import model.User;
 import ProductLine.UserNotLoggedException;
+import java.awt.Rectangle;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -60,6 +61,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private static final int margin = 5;
 	private List<User> users;
 	private JScrollPane scrollPnlUsers;
+	private JButton btnMessages;
 	private JButton btnTopPlayers;
 
 	private JPanel pnlButtons;
@@ -95,6 +97,12 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 	public WaitingRoomUI(User user, List<User> users) {
 		super();
+		setBounds(new Rectangle(0, 0, 710, 517));
+		getContentPane().setBounds(new Rectangle(0, 0, 710, 517));
+		setSize(new Dimension(710, 517));
+		getContentPane().setPreferredSize(new Dimension(710, 517));
+		getContentPane().setSize(new Dimension(710, 517));
+		setPreferredSize(new Dimension(710, 517));
 		language = LanguageManager.language();
 		initGUI();
 		this.user = user;
@@ -110,14 +118,13 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	}
 
 	private void initGUI() {
-		this.setSize(734, 527);
-		this.setBounds(0, 0, 734, 527);
-		getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
+		this.setBounds(0, 0, 720, 517);
+		getContentPane().setLayout(null);
+		getContentPane().add(getPnlBackground());
 		setLocationRelativeTo(null);
 		setVisible(true);
-		BorderLayout thisLayout = new BorderLayout();
-		getContentPane().setLayout(thisLayout);
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		this.setResizable(false);
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
 				thisWindowClosing(evt);
@@ -128,7 +135,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private JPanel getPnlBackground() {
 		if (pnlBackground == null) {
 			pnlBackground = new JPanel();
-			pnlBackground.setBounds(0, 0, 684, 462);
+			pnlBackground.setBounds(0, 0, 714, 489);
 			pnlBackground.setLayout(null);
 			pnlBackground.add(getBtnSend());
 			pnlBackground.add(getBtnExit());
@@ -144,8 +151,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private JButton getBtnSend() {
 		if (btnSend == null) {
 			btnSend = new JButton("Enviar");
-			btnSend.setText(language.getString("btnSend"));
 			btnSend.setBounds(413, 447, 64, 23);
+			btnSend.setText(language.getString("btnSend"));
 			btnSend.setFocusable(false);
 			btnSend.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -158,8 +165,9 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 	private JButton getBtnCreateGame() {
 		if (btnCreateGame == null) {
-			btnCreateGame = new JButton("Create game");
+			btnCreateGame = new JButton("Crear partida");
 			btnCreateGame.setBounds(11, 6, 66, 53);
+			btnCreateGame.setText(language.getString("btnCreateGame"));
 			btnCreateGame.setFocusable(false);
 			btnCreateGame.addMouseListener(new MouseAdapter() {
 				@Override
@@ -174,7 +182,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private JButton getBtnExit() {
 		if (btnExit == null) {
 			btnExit = new JButton("Exit");
-			btnExit.setBounds(607, 447, 89, 23);
+			btnExit.setBounds(615, 447, 89, 23);
+			btnExit.setText(language.getString("btnExit"));
 			btnExit.setFocusable(false);
 			btnExit.addMouseListener(new MouseAdapter() {
 				@Override
@@ -206,8 +215,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private JScrollPane getPnlChat() {
 		if (pnlChat == null) {
 			pnlChat = new JScrollPane();
-			pnlChat.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			pnlChat.setBounds(24, 146, 451, 289);
+			pnlChat.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			pnlChat.setAutoscrolls(true);
 			pnlChat.setViewportView(getTxtChat());
 		}
@@ -247,7 +256,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private JButton getBtnProfile() {
 		if (btnProfile == null) {
 			btnProfile = new JButton();
-			btnProfile.setBounds(470, 6, 56, 58);
+			btnProfile.setBounds(482, 6, 56, 58);
 			btnProfile.setFocusable(false);
 			btnProfile.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/profile_icon.png")));
@@ -273,12 +282,11 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private JLabel getLblAvatar() {
 		if (lblAvatar == null) {
 			lblAvatar = new JLabel();
-			lblAvatar.setBounds(23, 15, 82, 89);
+			lblAvatar.setBounds(23, 15, 100, 120);
 			lblAvatar.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
 			lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/2.jpg")));
-			lblAvatar.setSize(100, 120);
 		}
 		return lblAvatar;
 	}
@@ -297,7 +305,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 	private void thisWindowClosing(WindowEvent evt) {
 		int option = JOptionPane.showConfirmDialog(this,
-				"Are you sure you want to exit?", "Are you sure?",
+				language.getString("ExitDialogMessage"), language.getString("ExitDialogTitle"),
 				JOptionPane.YES_NO_OPTION);
 		if (option == JOptionPane.YES_OPTION) {
 			Controller.getInstance().logoutUser();
@@ -311,7 +319,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 	protected void btnExitMouseClicked(MouseEvent evt) {
 		int option = JOptionPane.showConfirmDialog(this,
-				"Are you sure you want to exit?", "Are you sure?",
+				language.getString("ExitDialogMessage"), language.getString("ExitDialogTitle"),
 				JOptionPane.YES_NO_OPTION);
 		if (option == JOptionPane.YES_OPTION) {
 			Controller.getInstance().logoutUser();
@@ -356,10 +364,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 	public void userLogged(String username) {
 		try {
-			htmlEditor
-					.insertHTML(chatText, chatText.getLength(),
-							"<b>" + username + " has joined</b> ", 0,
-							0, null);
+			htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
+					+ username + " has joined</b> ", 0, 0, null);
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -497,13 +503,14 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private JPanel getPnlButtons() {
 		if (pnlButtons == null) {
 			pnlButtons = new JPanel();
+			pnlButtons.setBounds(156, 15, 548, 70);
 			pnlButtons.setLayout(null);
-			pnlButtons.setBounds(156, 15, 540, 70);
 			pnlButtons.setBorder(BorderFactory.createTitledBorder(""));
 			pnlButtons.add(getBtnCreateGame());
 			pnlButtons.add(getBtnJoinGame());
 			pnlButtons.add(getBtnProfile());
 			pnlButtons.add(getBtnTopPlayers());
+			pnlButtons.add(getBtnMessages());
 		}
 		return pnlButtons;
 	}
@@ -537,7 +544,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private JTabbedPane getJTabbedPane1() {
 		if (tabPanel == null) {
 			tabPanel = new JTabbedPane();
-			tabPanel.setBounds(546, 146, 150, 288);
+			tabPanel.setBounds(554, 146, 150, 288);
 			tabPanel.addTab(language.getString("tabUsers"), null,
 					getJScrollPane1(), null);
 			tabPanel.addTab(language.getString("tabFriends"), null,
@@ -560,6 +567,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 			scrollPnlUsers.setPreferredSize(new java.awt.Dimension(143, 260));
 			scrollPnlUsers.setBorder(BorderFactory
 					.createEmptyBorder(0, 0, 0, 0));
+			scrollPnlUsers.setForeground(new java.awt.Color(0,0,0));
 			scrollPnlUsers.setViewportView(getPnlUsers());
 		}
 		return scrollPnlUsers;
@@ -567,6 +575,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 	public void languageChanged() {
 		btnSend.setText(language.getString("btnSend"));
+		btnExit.setText(language.getString("btnExit"));
 		tabPanel.setTitleAt(0, language.getString("tabUsers"));
 		tabPanel.setTitleAt(1, language.getString("tabFriends"));
 	}
@@ -575,7 +584,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 		if (btnTopPlayers == null) {
 			btnTopPlayers = new JButton();
 			btnTopPlayers.setText("Top Players");
-			btnTopPlayers.setBounds(392, 6, 56, 58);
+			btnTopPlayers.setBounds(418, 6, 56, 58);
 			btnTopPlayers.setFocusable(false);
 		}
 		return btnTopPlayers;
@@ -590,15 +599,34 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 					break;
 				}
 			new UserInfoUI(this, user);
-		}else{
+		} else {
 			JPanel userPanel = (JPanel) evt.getComponent();
-			for(Component aux :evt.getComponent().getParent().getComponents() )
-				if(aux != evt.getComponent())
-					((JPanel) aux).setBorder(new LineBorder(Color.BLACK, 1, false));
-			
+			for (Component aux : evt.getComponent().getParent().getComponents())
+				if (aux != evt.getComponent())
+					((JPanel) aux).setBorder(new LineBorder(Color.BLACK, 1,
+							false));
+
 			userPanel.setBorder(new LineBorder(Color.BLACK, 2, false));
-			
 
 		}
+	}
+	
+	private JButton getBtnMessages() {
+		if(btnMessages == null) {
+			btnMessages = new JButton();
+			btnMessages.setText("Messages");
+			btnMessages.setBounds(329, 8, 66, 53);
+			btnMessages.setFocusable(false);
+			btnMessages.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					btnMessagesMouseClicked(evt);
+				}
+			});
+		}
+		return btnMessages;
+	}
+	
+	private void btnMessagesMouseClicked(MouseEvent evt) {
+		Controller.getInstance().showMessagesUI();
 	}
 }
