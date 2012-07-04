@@ -16,6 +16,7 @@ import ProductLine.Game;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
 import ProductLine.InvalidLoggingException;
+import ProductLine.Message;
 import ProductLine.SlotState;
 import ProductLine.User;
 import ProductLine.UserAlreadyExistsException;
@@ -29,13 +30,12 @@ public class ServerI extends _ServerDisp{
 
 
 	@Override
-	public synchronized void registerUser(User user, Current __current) throws UserAlreadyExistsException {
+	public void registerUser(User user, Current __current) throws UserAlreadyExistsException {
 		UsersManager.getInstance().registerUser((model.User)user);
-
 	}
 
 	@Override
-	public synchronized User loginUser(String username, String password,
+	public User loginUser(String username, String password,
 			Identity client, Current __current)
 			throws UserAlreadyLoggedException, InvalidLoggingException {
 		Ice.ObjectPrx base = __current.con.createProxy(client);
@@ -44,24 +44,8 @@ public class ServerI extends _ServerDisp{
 	}
 	
 	@Override
-	public void logoutUser(String username, Current __current)
-			throws UserNotLoggedException {
+	public void logoutUser(String username, Current __current) {
 		UsersManager.getInstance().logoutUser(username);
-	}
-
-	@Override
-	public synchronized void sendPrivateMessage(String sender, String destinatary,
-			String message, Current __current) throws UserNotLoggedException {
-		MessagesManager.getInstance().sendPrivateMessage(sender,destinatary,message);
-		
-	}
-
-
-	@Override
-	public void sendGameMessage(String game, String sender, String message,
-			Current __current) {
-		MessagesManager.getInstance().sendGameMessage(game,sender,message);
-		
 	}
 
 	@Override
@@ -70,16 +54,26 @@ public class ServerI extends _ServerDisp{
 		MessagesManager.getInstance().sendGeneralMessage(sender,message);
 	}
 	
+	
+	@Override
+	public void sendPrivateMessage(String sender, String receiver,
+			String message, Current __current) throws UserNotLoggedException {
+		MessagesManager.getInstance().sendPrivateMessage(sender,receiver,message);
+		
+	}
+	
+	@Override
+	public void sendGameMessage(String game, String sender, String message,
+			Current __current) {
+		MessagesManager.getInstance().sendGameMessage(game,sender,message);
+		
+	}
+	
 	@Override
 	public void sendGamePrivateMessage(String game, String sender,
-			String destinatary, String message, Current __current) throws UserNotInGameException {
-		MessagesManager.getInstance().sendGamePrivateMessage(game,sender,destinatary,message);
+			String receiver, String message, Current __current) throws UserNotInGameException {
+		MessagesManager.getInstance().sendGamePrivateMessage(game,sender,receiver,message);
 	}	
-
-	@Override
-	public List<User> listUsers(String username,Current __current) {
-		return UsersManager.getInstance().listUsers(username);
-	}
 
 	@Override
 	public void changeEmail(String username, String email, String password,
@@ -116,6 +110,11 @@ public class ServerI extends _ServerDisp{
 		
 	}
 
+	@Override
+	public List<User> listUsers(String username,Current __current) {
+		return UsersManager.getInstance().listUsers(username);
+	}
+	
 	@Override
 	public void createGame(String gameName,String creator, GameType type, Current __current) throws GameAlreadyExistsException {
 		GamesManager.getInstance().createGame(gameName,creator,type);
@@ -154,7 +153,16 @@ public class ServerI extends _ServerDisp{
 	public void changeSlotState(String game, int slot, SlotState state,
 			Current __current) {
 		GamesManager.getInstance().changeSlotState(game,slot,state);
-		
+	}
+
+	@Override
+	public void sendMessage(Message msg, Current __current) {
+		MessagesManager.getInstance().sendMessage(msg);
+	}
+
+	@Override
+	public void resetPassword(String identifier, Current __current) throws InvalidLoggingException {
+		UsersManager.getInstance().resetPassword(identifier);
 	}
 
 }

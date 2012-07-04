@@ -58,7 +58,7 @@ public class UserDAO extends DAO<User, String> {
 		User user = null;	
 		begin();
 		@SuppressWarnings("unchecked")
-		List<User> query = session.createQuery("from User as user where user.username = '"+ username +"' and password = '"+password +"'" ).list();
+		List<User> query = session.createQuery("from User as user where (username = '"+ username +"' or email = '"+username+"') and password = '"+password +"'" ).list();
 		commit();
 		
 		if(query.size() > 0){

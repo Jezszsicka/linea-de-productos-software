@@ -35,7 +35,7 @@
    <key column="user"/>
    <element column="friendName" type="java.lang.String"/>
   </bag>
-  <!--<bag name="rankings"> <key column="user" /> <one-to-many class="ProductLine.Ranking" 
-			/> </bag> -->
+  <bag name="rankings"> <key column="user" /> <one-to-many class="ProductLine.Ranking" 
+			/> </bag>
  </class>
 </hibernate-mapping>

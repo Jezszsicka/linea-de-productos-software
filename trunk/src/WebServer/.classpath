@@ -13,5 +13,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Hibernate"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/MSQL"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/Users/Juan/Desktop/Proyecto/Proyecto/src/WebServer/lib/mail.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

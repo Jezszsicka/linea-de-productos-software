@@ -14,7 +14,6 @@ import ProductLine.InvalidLoggingException;
 import ProductLine.RoleType;
 import ProductLine.UserAlreadyExistsException;
 import ProductLine.UserAlreadyLoggedException;
-import ProductLine.UserNotLoggedException;
 
 public class UsersManager {
 
@@ -49,13 +48,11 @@ public class UsersManager {
 	 * **/
 	public void registerUser(User user) throws UserAlreadyExistsException {
 		try {
-			//User loadedUser = userDAO.loadByID(user.getUsername());
 			if (userDAO.userAvailable(user.getUsername())) {
 				userDAO.create(user);
 			} else {
 				throw new UserAlreadyExistsException();
 			}
-
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
@@ -109,18 +106,15 @@ public class UsersManager {
 
 	}
 
-	public void logoutUser(String username) throws UserNotLoggedException {
+	public void logoutUser(String username) {
 		Session leaveSession = searchSession(username);
-		if (leaveSession == null)
-			throw new UserNotLoggedException("User not logged, session expired");
-		else {
-			for (Session session : sessions) {
-				if (!session.getUser().getUsername().equalsIgnoreCase(username)) {
-					session.getCallback().userLeave(username);
-				}
+		for (Session session : sessions) {
+			if (!session.getUser().getUsername().equalsIgnoreCase(username)) {
+				session.getCallback().userLeave(username);
 			}
-			sessions.remove(leaveSession);
 		}
+		sessions.remove(leaveSession);
+
 	}
 
 	public void deleteUser(String username) {
@@ -187,6 +181,24 @@ public class UsersManager {
 				return session;
 		}
 		return null;
+	}
+
+	public void resetPassword(String identifier) throws InvalidLoggingException {
+		User user = userDAO.loadByID(identifier);
+		if(user != null){
+			String newPassword = Utils.getPassword();
+			user.setPassword(Utils.hashMD5_Base64(newPassword));
+			userDAO.update(user);
+			final String content = "Su nueva contraseña es: "+newPassword;
+			new Thread(){
+				public void run(){
+					MailSender.getMailSender().sendMessage(content, "Cambio de contraseña","juanyanezgc@gmail.com");
+				}
+			}.start();
+		}else{
+			throw new InvalidLoggingException();
+		}
+		
 	}
 
 }
