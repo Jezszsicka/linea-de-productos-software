@@ -136,7 +136,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 			lblAvatar1.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
 			lblAvatar1.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/1.jpg")));
+					.getResource("images/Avatars/1.jpg")));
 			lblAvatar1.setFocusable(false);
 			lblAvatar1.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -166,7 +166,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 			lblAvatar2.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
 			lblAvatar2.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/2.jpg")));
+					.getResource("images/Avatars/2.jpg")));
 			lblAvatar2.setFocusable(false);
 			lblAvatar2.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -196,7 +196,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 			lblAvatar3.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
 			lblAvatar3.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/3.jpg")));
+					.getResource("images/Avatars/3.jpg")));
 			lblAvatar3.setFocusable(false);
 			lblAvatar3.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -310,7 +310,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 
 	private void changeAvatar(int avatar) {
 		File file = new File(getClass().getClassLoader()
-				.getResource("images/" + avatar + ".jpg").getPath());
+				.getResource("images/Avatars/" + avatar + ".jpg").getPath());
 		if (parent instanceof ProfileUI) {
 			((ProfileUI) parent).setAvatar(file);
 		} else {

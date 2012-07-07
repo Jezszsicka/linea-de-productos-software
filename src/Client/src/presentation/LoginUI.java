@@ -42,6 +42,7 @@ public class LoginUI extends javax.swing.JFrame {
 	}
 
 	private JPanel pnlBackground;
+	private JButton jButton1;
 	private JLabel lblRemember;
 	private JButton btnLogin;
 	private JTextField txtUsername;
@@ -86,6 +87,7 @@ public class LoginUI extends javax.swing.JFrame {
 			pnlBackground.add(getLblPassword());
 			pnlBackground.add(getBtnRegister());
 			pnlBackground.add(getLblRemember());
+			pnlBackground.add(getJButton1());
 		}
 		return pnlBackground;
 	}
@@ -231,5 +233,23 @@ public class LoginUI extends javax.swing.JFrame {
 	
 	private void lblRememberMouseClicked(MouseEvent evt) {
 		Controller.getInstance().showResetPasswordUI();
+	}
+	
+	private JButton getJButton1() {
+		if(jButton1 == null) {
+			jButton1 = new JButton();
+			jButton1.setText("jButton1");
+			jButton1.setBounds(361, 203, 73, 23);
+			jButton1.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					jButton1MouseClicked(evt);
+				}
+			});
+		}
+		return jButton1;
+	}
+	
+	private void jButton1MouseClicked(MouseEvent evt) {
+		new Z();
 	}
 }

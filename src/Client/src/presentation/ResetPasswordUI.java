@@ -79,7 +79,7 @@ public class ResetPasswordUI extends javax.swing.JFrame {
 	private JTextField getTxtAccount() {
 		if (txtAccount == null) {
 			txtAccount = new JTextField();
-			txtAccount.setBounds(64, 90, 259, 20);
+			txtAccount.setBounds(64, 90, 270, 20);
 		}
 		return txtAccount;
 	}
@@ -87,7 +87,7 @@ public class ResetPasswordUI extends javax.swing.JFrame {
 	private JLabel getLblAccount() {
 		if (lblAccount == null) {
 			lblAccount = new JLabel();
-			lblAccount.setText("Email or username");
+			lblAccount.setText("Usuario o email");
 			lblAccount.setBounds(20, 60, 128, 14);
 			lblAccount.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}

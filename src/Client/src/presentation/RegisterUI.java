@@ -307,13 +307,13 @@ public class RegisterUI extends javax.swing.JFrame {
 		if (selectedCountry == null) {
 			ImageIcon[] icons = {
 					new ImageIcon(getClass().getClassLoader().getResource(
-							"images/us_small.png")),
+							"images/Flags/us_small.png")),
 					new ImageIcon(getClass().getClassLoader().getResource(
-							"images/es_small.png")),
+							"images/Flags/es_small.png")),
 					new ImageIcon(getClass().getClassLoader().getResource(
-							"images/fr_small.png")),
+							"images/Flags/fr_small.png")),
 					new ImageIcon(getClass().getClassLoader().getResource(
-							"images/de_small.png")) };
+							"images/Flags/de_small.png")) };
 			String[] description = new String[] { language.getString("UnitedStates"), language.getString("Spain"),language.getString("France"),language.getString("Germany") };
 			Integer[] intArray = new Integer[description.length];
 			for (int i = 0; i < icons.length; i++) {

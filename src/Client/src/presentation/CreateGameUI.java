@@ -46,8 +46,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 	}
 
 	private JPanel pnlBackground;
-	private JLabel lblTrivialIcon;
-	private JPanel pnlTrivial;
+	private JLabel lblConnect4lIcon;
+	private JPanel pnlConnect4;
 	private JPanel pnlCheckers;
 	private JLabel lblIconCheckers;
 	private JLabel lblCheckers;
@@ -56,8 +56,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel lblGame;
 	private JTextField txtGameName;
 	private JLabel lblChessPlayers;
-	private JLabel lblTrivial;
-	private JLabel lblTrivialPlayers;
+	private JLabel lblConnect4;
+	private JLabel lblConnect4Players;
 	private JLabel lblGameTitle;
 	private JLabel lblDescription;
 	private JLabel lblIconChess;
@@ -203,7 +203,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 			lblIconCheckers = new JLabel();
 			lblIconCheckers.setBounds(154, 8, 25, 25);
 			lblIconCheckers.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/checkers_small_icon.png")));
+					.getResource("images/Games/checkers_small_icon.png")));
 		}
 		return lblIconCheckers;
 	}
@@ -226,52 +226,51 @@ public class CreateGameUI extends javax.swing.JFrame {
 		return pnlCheckers;
 	}
 
-	private JPanel getJPanel1() {
-		if (pnlTrivial == null) {
-			pnlTrivial = new JPanel();
-			pnlTrivial.setLayout(null);
-			pnlTrivial.setBounds(10, 173, 243, 40);
-			pnlTrivial.setBorder(BorderFactory.createTitledBorder(""));
-			pnlTrivial.addMouseListener(new MouseAdapter() {
+	private JPanel getConnect4() {
+		if (pnlConnect4 == null) {
+			pnlConnect4 = new JPanel();
+			pnlConnect4.setLayout(null);
+			pnlConnect4.setBounds(10, 173, 243, 40);
+			pnlConnect4.setBorder(BorderFactory.createTitledBorder(""));
+			pnlConnect4.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
-					pnlTrivialMouseClicked(evt);
+					pnlConnect4MouseClicked(evt);
 				}
 			});
-			pnlTrivial.add(getJLabel1());
-			pnlTrivial.add(getJLabel2());
-			pnlTrivial.add(getJLabel3());
+			pnlConnect4.add(getJLabel1());
+			pnlConnect4.add(getJLabel2());
+			pnlConnect4.add(getJLabel3());
 		}
-		return pnlTrivial;
+		return pnlConnect4;
 	}
 
 	private JLabel getJLabel1() {
-		if (lblTrivialIcon == null) {
-			lblTrivialIcon = new JLabel();
-			lblTrivialIcon.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/trivial_small_icon.png")));
-			lblTrivialIcon.setBounds(153, 6, 25, 25);
+		if (lblConnect4lIcon == null) {
+			lblConnect4lIcon = new JLabel();
+			lblConnect4lIcon.setBounds(153, 6, 25, 25);
+			lblConnect4lIcon.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/Games/connect4_small_icon.png")));
 		}
-		return lblTrivialIcon;
+		return lblConnect4lIcon;
 	}
 
 	private JLabel getJLabel2() {
-		if (lblTrivial == null) {
-			lblTrivial = new JLabel();
-			lblTrivial.setText("Trivial");
-			lblTrivial.setHorizontalAlignment(SwingConstants.CENTER);
-			lblTrivial.setBounds(70, 6, 59, 25);
+		if (lblConnect4 == null) {
+			lblConnect4 = new JLabel();
+			lblConnect4.setText("Conecta 4");
+			lblConnect4.setHorizontalAlignment(SwingConstants.CENTER);
+			lblConnect4.setBounds(70, 6, 59, 25);
 		}
-		return lblTrivial;
+		return lblConnect4;
 	}
 
 	private JLabel getJLabel3() {
-		if (lblTrivialPlayers == null) {
-			lblTrivialPlayers = new JLabel();
-			lblTrivialPlayers.setText("8");
-			lblTrivialPlayers.setHorizontalAlignment(SwingConstants.CENTER);
-			lblTrivialPlayers.setBounds(10, 6, 21, 25);
+		if (lblConnect4Players == null) {
+			lblConnect4Players = new JLabel();
+			lblConnect4Players.setText("2");
+			lblConnect4Players.setHorizontalAlignment(SwingConstants.CENTER);
+			lblConnect4Players.setBounds(10, 6, 21, 25);
 		}
-		return lblTrivialPlayers;
+		return lblConnect4Players;
 	}
 
 	private JLabel getLblGameImage() {
@@ -279,7 +278,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 			lblGameImage = new JLabel();
 			lblGameImage.setBounds(2, 36, 254, 60);
 			lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/3D_Checkers_icon.png")));
+					.getResource("images/Games/checkers_icon.png")));
 			lblGameImage.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		return lblGameImage;
@@ -364,12 +363,12 @@ public class CreateGameUI extends javax.swing.JFrame {
 			pnlGameSelection.setLayout(null);
 			pnlGameSelection.setBounds(10, 21, 265, 330);
 			pnlGameSelection.setBorder(BorderFactory.createTitledBorder(""));
-			pnlGameSelection.add(getJPanel1());
-			pnlGameSelection.add(getPnlCheckers());
 			pnlGameSelection.add(getLblGame());
 			pnlGameSelection.add(getTxtGameName());
 			pnlGameSelection.add(getLblGameName());
+			pnlGameSelection.add(getPnlCheckers());
 			pnlGameSelection.add(getPnlChess());
+			pnlGameSelection.add(getConnect4());
 		}
 		return pnlGameSelection;
 	}
@@ -396,7 +395,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 		if (lblIconChess == null) {
 			lblIconChess = new JLabel();
 			lblIconChess.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/chess_small_icon.png")));
+					.getResource("images/Games/chess_small_icon.png")));
 			lblIconChess.setBounds(153, 8, 25, 25);
 		}
 		return lblIconChess;
@@ -449,8 +448,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 		chessSelected();
 	}
 
-	private void pnlTrivialMouseClicked(MouseEvent evt) {
-		trivialSelected();
+	private void pnlConnect4MouseClicked(MouseEvent evt) {
+		connect4Selected();
 	}
 
 	private void checkersSelected() {
@@ -458,7 +457,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 		txtGameDescription
 				.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
 		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/3D_Checkers_icon.png")));
+				.getResource("images/Games/checkers_icon.png")));
 		lblGamePlayers.setText("2 jugadores");
 		selectedGame = GameType.Checkers;
 	}
@@ -468,18 +467,18 @@ public class CreateGameUI extends javax.swing.JFrame {
 		txtGameDescription
 				.setText("El ajedrez es un juego competitivo entre dos personas, cada una de las cuales dispone de 16 piezas móviles que se colocan sobre un tablero dividido en 64 escaques.");
 		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/chess_icon.png")));
+				.getResource("images/Games/chess_icon.png")));
 		lblGamePlayers.setText("2 jugadores");
 		selectedGame = GameType.Chess;
 	}
 
-	private void trivialSelected() {
-		lblGameTitle.setText("Trivial");
+	private void connect4Selected() {
+		lblGameTitle.setText("Conecta 4");
 		txtGameDescription
-				.setText("El trivial es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+				.setText("Conecta 4 es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
 		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/trivial_icon.png")));
+				.getResource("images/Games/connect4_icon.png")));
 		lblGamePlayers.setText("2-8 jugadores");
-		selectedGame = GameType.Trivial;
+		selectedGame = GameType.Connect4;
 	}
 }

@@ -165,4 +165,17 @@ public class ServerI extends _ServerDisp{
 		UsersManager.getInstance().resetPassword(identifier);
 	}
 
+	@Override
+	public void startGame(String game, Current __current) {
+		GamesManager.getInstance().startGame(game);
+		
+	}
+
+	@Override
+	public void updateGame(String game, String player, int[][] board,
+			Current __current) {
+		GamesManager.getInstance().updateGame(game,player,board);
+		
+	}
+
 }

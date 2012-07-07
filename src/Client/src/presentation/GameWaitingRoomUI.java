@@ -20,6 +20,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -33,10 +34,13 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
+import connect4.Interfaz;
+
 import logic.Controller;
 import logic.Utils;
 import model.Game;
 import model.User;
+import ProductLine.NotEnoughPlayersException;
 import ProductLine.Slot;
 import ProductLine.UserNotInGameException;
 import ProductLine.SlotState;
@@ -110,8 +114,8 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		case Chess:
 			chessSelected();
 			break;
-		case Trivial:
-			trivialSelected();
+		case Connect4:
+			connect4Selected();
 			break;
 		}
 
@@ -122,7 +126,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		txtGameDescription
 				.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
 		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/3D_Checkers_icon.png")));
+				.getResource("images/Games/checkers_icon.png")));
 
 	}
 
@@ -131,16 +135,16 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		txtGameDescription
 				.setText("El ajedrez es un juego competitivo entre dos personas, cada una de las cuales dispone de 16 piezas móviles que se colocan sobre un tablero dividido en 64 escaques.");
 		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/chess_icon.png")));
+				.getResource("images/Games/chess_icon.png")));
 
 	}
 
-	private void trivialSelected() {
-		lblGame.setText("Trivial");
+	private void connect4Selected() {
+		lblGame.setText("Conecta 4");
 		txtGameDescription
-				.setText("El trivial es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+				.setText("Conecta 4 es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
 		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/trivial_icon.png")));
+				.getResource("images/Games/connect4_icon.png")));
 	}
 
 	private void refreshPlayers() {
@@ -298,7 +302,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			lblGameImage = new JLabel();
 			lblGameImage.setHorizontalAlignment(SwingConstants.CENTER);
 			lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/3D_Checkers_icon.png")));
+					.getResource("images/Games/checkers_icon.png")));
 			lblGameImage.setBounds(2, 57, 261, 60);
 		}
 		return lblGameImage;
@@ -384,17 +388,83 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	}
 
 	private void btnCancelMouseClicked(MouseEvent evt) {
-		if (creator)
-			Controller.getInstance().deleteGame(game.getName());
-		else
-			Controller.getInstance().leaveGame(game.getName());
-		dispose();
+		if(btnCancel.isEnabled()){
+			if (creator)
+				Controller.getInstance().deleteGame(game.getName());
+			else
+				Controller.getInstance().leaveGame(game.getName());
+			dispose();
+		}
 	}
 
 	private void btnStartGameMouseClicked(MouseEvent evt) {
-		// TODO
+		if(btnStartGame.isEnabled()){
+			try {
+				Controller.getInstance().startGame(game.getName());
+				btnCancel.setEnabled(false);
+				btnStartGame.setEnabled(false);
+				new Thread(){
+					public void run(){
+						for(int i = 5;i>0;i--){
+							try {
+								htmlEditor.insertHTML(chatText, chatText.getLength(),
+										"<b>La partida empezará en "+i+" </b>",
+										0, 0, null);
+								txtChat.setCaretPosition(txtChat.getDocument().getLength());
+								try {
+									sleep(1000);
+								} catch (InterruptedException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							} catch (BadLocationException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}	
+						}
+						Controller.getInstance().closeGameWaitingRoomUI(game.getName());		
+					}
+				}.start();
+			} catch (NotEnoughPlayersException e1) {
+				JOptionPane.showMessageDialog(this, "Que vas a jugar tu solo gañán!",
+						"Echandome un solitario", JOptionPane.INFORMATION_MESSAGE);
+				e1.printStackTrace();
+			}
+		}
 	}
 
+	public void gameStarted() {
+		btnCancel.setEnabled(false);
+		new Thread(){
+			public void run(){
+				for(int i = 5;i>0;i--){
+					try {
+						htmlEditor.insertHTML(chatText, chatText.getLength(),
+								"<b>La partida empezará en "+i+" </b>",
+								0, 0, null);
+						txtChat.setCaretPosition(txtChat.getDocument().getLength());
+						try {
+							sleep(1000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					} catch (BadLocationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
+				}
+				Controller.getInstance().closeGameWaitingRoomUI(game.getName());
+			}
+		}.start();
+	}
+	
 	private void txtMessageKeyPressed(KeyEvent evt) {
 		if (evt.getKeyCode() == 10 && txtMessage.getText().length() > 0)
 			sendMessage();

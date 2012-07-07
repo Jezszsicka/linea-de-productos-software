@@ -573,13 +573,13 @@ public class ProfileUI extends javax.swing.JFrame {
 		if(lstLanguages == null) {
 			ImageIcon[] icons = {
 					new ImageIcon(getClass().getClassLoader().getResource(
-							"images/us_small.png")),
+							"images/Flags/us_small.png")),
 					new ImageIcon(getClass().getClassLoader().getResource(
-							"images/es_small.png")),
+							"images/Flags/es_small.png")),
 					new ImageIcon(getClass().getClassLoader().getResource(
-							"images/fr_small.png")),
+							"images/Flags/fr_small.png")),
 					new ImageIcon(getClass().getClassLoader().getResource(
-							"images/de_small.png")) };
+							"images/Flags/de_small.png")) };
 			String[] description = new String[] { language.getString("US"), language.getString("Spanish"),language.getString("French"),language.getString("German") };
 			Integer[] intArray = new Integer[description.length];
 			for (int i = 0; i < icons.length; i++) {
@@ -616,13 +616,13 @@ public class ProfileUI extends javax.swing.JFrame {
 	private void lstLanguagesActionPerformed(ActionEvent evt) {
 		ImageIcon[] icons = {
 				new ImageIcon(getClass().getClassLoader().getResource(
-						"images/us_small.png")),
+						"images/Flags/us_small.png")),
 				new ImageIcon(getClass().getClassLoader().getResource(
-						"images/es_small.png")),
+						"images/Flags/es_small.png")),
 				new ImageIcon(getClass().getClassLoader().getResource(
-						"images/fr_small.png")),
+						"images/Flags/fr_small.png")),
 				new ImageIcon(getClass().getClassLoader().getResource(
-						"images/de_small.png")) };
+						"images/Flags/de_small.png")) };
 		String[] description = new String[] { language.getString("US"), language.getString("Spanish"),language.getString("French"),language.getString("German") };
 		Integer[] intArray = new Integer[description.length];
 		for (int i = 0; i < icons.length; i++) {

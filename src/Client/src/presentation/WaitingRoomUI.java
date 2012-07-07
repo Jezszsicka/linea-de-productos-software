@@ -3,6 +3,7 @@ package presentation;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
@@ -61,7 +62,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private static final int margin = 5;
 	private List<User> users;
 	private JScrollPane scrollPnlUsers;
-	private JButton btnMessages;
+	private JLabel btnMessages;
 	private JButton btnTopPlayers;
 
 	private JPanel pnlButtons;
@@ -286,7 +287,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 			lblAvatar.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
 			lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/2.jpg")));
+					.getResource("images/Avatars/2.jpg")));
 		}
 		return lblAvatar;
 	}
@@ -611,13 +612,20 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 		}
 	}
 	
-	private JButton getBtnMessages() {
+	private JLabel getBtnMessages() {
 		if(btnMessages == null) {
-			btnMessages = new JButton();
+			btnMessages = new JLabel();
 			btnMessages.setText("Messages");
-			btnMessages.setBounds(329, 8, 66, 53);
+			btnMessages.setBounds(338, 7, 57, 56);
 			btnMessages.setFocusable(false);
+			btnMessages.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/mailIcon.png")));
 			btnMessages.addMouseListener(new MouseAdapter() {
+				public void mouseExited(MouseEvent evt) {
+					btnMessagesMouseExited(evt);
+				}
+				public void mouseEntered(MouseEvent evt) {
+					btnMessagesMouseEntered(evt);
+				}
 				public void mouseClicked(MouseEvent evt) {
 					btnMessagesMouseClicked(evt);
 				}
@@ -628,5 +636,21 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	
 	private void btnMessagesMouseClicked(MouseEvent evt) {
 		Controller.getInstance().showMessagesUI();
+	}
+	
+	private void setHandCursor(){
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+	
+	private void setDefaultCursor(){
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+	
+	private void btnMessagesMouseEntered(MouseEvent evt) {
+		setHandCursor();
+	}
+	
+	private void btnMessagesMouseExited(MouseEvent evt) {
+		setDefaultCursor();
 	}
 }
