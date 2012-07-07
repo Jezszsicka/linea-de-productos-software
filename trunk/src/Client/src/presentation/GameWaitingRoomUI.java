@@ -34,8 +34,6 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
-import connect4.Interfaz;
-
 import logic.Controller;
 import logic.Utils;
 import model.Game;

@@ -6,7 +6,6 @@ package logic;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Connect4Game;
 import model.Game;
 import model.Session;
 import ProductLine.Filter;
@@ -58,7 +57,7 @@ public class GamesManager {
 	public void createGame(String gameName, String creator, GameType type)
 			throws GameAlreadyExistsException {
 		//TODO crear el juego correspodniente al tipo
-		Game game = new Connect4Game(gameName, creator, type);
+		Game game = new Game(gameName, creator, type);
 		if (games.contains(game))
 			throw new GameAlreadyExistsException();
 		games.add(game);
@@ -88,9 +87,7 @@ public class GamesManager {
 					}.start();
 				}
 			}
-			//TODO devolver el tipo que sea
-			Connect4Game returned = (Connect4Game)currentGame; 
-			return returned;
+			return currentGame;
 		}
 		throw new FullGameException();
 	}
@@ -291,10 +288,10 @@ public class GamesManager {
 
 	public void startGame(String gameName) {
 		Game game = searchGame(gameName);
+		game.setStarted(true);
 		List<Slot> slots = game.getSlots();
 		for(int i = 1; i< slots.size();i++){
 			Slot slot = slots.get(i);
-			System.out.println("El jugador del slot es "+slot.getPlayer()+" de tipo "+slot.getType());
 			if(slot.getType() == SlotState.Human){
 				Session playerSession = UsersManager.getInstance().searchSession(slot.getPlayer());
 				playerSession.getCallback().gameStarted(gameName);
@@ -309,17 +306,28 @@ public class GamesManager {
 		Game game = searchGame(gameName);
 		switch(game.getTypeGame()){
 		case Connect4:
-			Connect4Game connect4 =(Connect4Game) game;
-			connect4.getBoard().setTablero(board);
+			game.setBoard(board);
 			String turn;
-			if(connect4.getSlot(0).getPlayer().equals(player))
-				turn = connect4.getSlot(1).getPlayer();
+			if(game.getSlot(0).getPlayer().equals(player))
+				turn = game.getSlot(1).getPlayer();
 			else
-				turn = connect4.getSlot(0).getPlayer();
+				turn = game.getSlot(0).getPlayer();
 			Session turnSession = UsersManager.getInstance().searchSession(turn);
 			turnSession.getCallback().gameUpdated(gameName,board);
 			break;
 		}
 		
+	}
+
+	public void finishGame(String gameName, String winnerPlayer) {
+		Game game = searchGame(gameName);
+		String turn;
+		if(game.getSlot(0).getPlayer().equals(winnerPlayer))
+			turn = game.getSlot(1).getPlayer();
+		else
+			turn = game.getSlot(0).getPlayer();
+		Session turnSession = UsersManager.getInstance().searchSession(turn);
+		turnSession.getCallback().gameFinished(gameName);
+		games.remove(game);
 	}
 }

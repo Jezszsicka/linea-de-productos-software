@@ -9,12 +9,12 @@ import ProductLine.Slot;
 
 @SuppressWarnings("serial")
 public class Game extends ProductLine.Game {
-	public Game() {
-		super();
+	public Game() {;
 		typeGame = GameType.Checkers;
 	}
 
 	public Game(String name, String creator, GameType type) {
+		super();
 		this.name = name;
 		this.typeGame = type;
 		this.slots = new ArrayList<Slot>();

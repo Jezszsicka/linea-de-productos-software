@@ -1,16 +1,13 @@
 package logic;
 
-import java.util.ArrayList;
 import java.util.Date;
-
-import exceptions.WrongInputException;
-
-import ProductLine.MessageType;
-import ProductLine.UserNotInGameException;
-import ProductLine.UserNotLoggedException;
 
 import model.Message;
 import model.Session;
+import ProductLine.MessageType;
+import ProductLine.UserNotInGameException;
+import ProductLine.UserNotLoggedException;
+import exceptions.WrongInputException;
 
 public class MessagesManager {
 	private Session session;

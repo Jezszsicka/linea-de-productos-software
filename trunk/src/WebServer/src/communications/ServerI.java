@@ -178,4 +178,9 @@ public class ServerI extends _ServerDisp{
 		
 	}
 
+	@Override
+	public void finishGame(String game, String player, Current __current) {
+		GamesManager.getInstance().finishGame(game,player);
+	}
+
 }

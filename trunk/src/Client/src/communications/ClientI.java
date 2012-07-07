@@ -81,6 +81,11 @@ public class ClientI extends _ClientDisp{
 		Controller.getInstance().gameUpdated(game,board);	
 	}
 
+	@Override
+	public void gameFinished(String game, Current __current) {
+		Controller.getInstance().gameFinished(game);
+	}
+
 
 
 }

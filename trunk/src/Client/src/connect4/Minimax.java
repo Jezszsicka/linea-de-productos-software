@@ -12,16 +12,16 @@ public class Minimax {
 	}
 	
 	/**Realiza la b�squeda minimax
-	 * @param estado Tablero con la situacion actual del juego
+	 * @param tablero Tablero con la situacion actual del juego
 	 * @param jugador Jugador para el que se desea saber el mejor movimiento
 	 * @return Un entero que representa la columna encontrada como mejor opci�n**/
-	public int minimax(Tablero estado,int jugador){
+	public int minimax(int [][] tablero,int jugador){
 		int mejorMovimiento=-1;
 		int mejorSucesor=Integer.MIN_VALUE;
-		for(int i=0;i<estado.getTablero()[0].length;i++){
-			Tablero aux=estado.clonar();
+		for(int i=0;i<tablero.length;i++){
+			int [][] aux=clonar(tablero);
 			int valorSucesor=Integer.MIN_VALUE;
-			if(aux.ponerFicha(i, jugador)){
+			if(Connect4.ponerFicha(aux,i, jugador)){
 				valorSucesor=Min_Valor(aux,Integer.MIN_VALUE,Integer.MAX_VALUE,cambiarJugador(jugador),i,1);
 				if(valorSucesor>=mejorSucesor){
 					mejorSucesor=valorSucesor;
@@ -33,33 +33,33 @@ public class Minimax {
 	}
 	
 	/**Funcion max valor del algortimo minimax
-	 * @param estado Tablero con la situacion del juego
+	 * @param tablero Tablero con la situacion del juego
 	 * @param alpha Parametro alpha del algoritmo minimax
 	 * @param beta Parametro beta del algoritmo minimax
 	 * @param jugador Jugador que debe realizar el siguiente movimiento
 	 * @param columna Columna donde se coloc� la ultima ficha
 	 * @param profundidad Profundidad en la que se encuentra el algoritmo**/
-	public int Max_Valor(Tablero estado,int alpha,int beta,int jugador,int columna,int profundidad){
-		if(ganador(jugador,estado,columna))return Integer.MAX_VALUE;
-		else if(ganador(cambiarJugador(jugador),estado,columna))return Integer.MIN_VALUE;
-		else if(hayEmpate(estado))
-			if(tresEnRaya(estado.getTablero(),jugador)>tresEnRaya(estado.getTablero(),cambiarJugador(jugador)))
+	public int Max_Valor(int [][] tablero,int alpha,int beta,int jugador,int columna,int profundidad){
+		if(ganador(jugador,tablero,columna))return Integer.MAX_VALUE;
+		else if(ganador(cambiarJugador(jugador),tablero,columna))return Integer.MIN_VALUE;
+		else if(hayEmpate(tablero))
+			if(tresEnRaya(tablero,jugador)>tresEnRaya(tablero,cambiarJugador(jugador)))
 				return Integer.MAX_VALUE;
-			else if(tresEnRaya(estado.getTablero(),jugador)<tresEnRaya(estado.getTablero(),cambiarJugador(jugador)))
+			else if(tresEnRaya(tablero,jugador)<tresEnRaya(tablero,cambiarJugador(jugador)))
 				return Integer.MIN_VALUE;
-			else if(dosEnRaya(estado.getTablero(),jugador)>dosEnRaya(estado.getTablero(),cambiarJugador(jugador)))
+			else if(dosEnRaya(tablero,jugador)>dosEnRaya(tablero,cambiarJugador(jugador)))
 				return Integer.MAX_VALUE;
-			else if(dosEnRaya(estado.getTablero(),jugador)<dosEnRaya(estado.getTablero(),cambiarJugador(jugador)))
+			else if(dosEnRaya(tablero,jugador)<dosEnRaya(tablero,cambiarJugador(jugador)))
 				return Integer.MIN_VALUE;
 			else return 0;
 		else if(profundidad>=maximo)
-			return utilidad(estado,jugador);
+			return utilidad(tablero,jugador);
 		
 		int valor=Integer.MIN_VALUE;
-		Tablero aux;
-		for(int i=0;i<estado.getTablero()[0].length;i++){
-			aux=estado.clonar();
-			if(aux.ponerFicha(i, jugador)){
+		int [][] aux;
+		for(int i=0;i<tablero[0].length;i++){
+			aux=clonar(tablero);
+			if(Connect4.ponerFicha(aux,i, jugador)){
 				valor=Math.max(valor, Min_Valor(aux,alpha,beta,cambiarJugador(jugador),i,profundidad+1));
 				if(valor>=beta){
 					return valor;
@@ -72,37 +72,37 @@ public class Minimax {
 	
 	
 	/**Funcion min valor del algortimo minimax
-	 * @param estado Tablero con la situacion del juego
+	 * @param tablero Tablero con la situacion del juego
 	 * @param alpha Parametro alpha del algoritmo minimax
 	 * @param beta Parametro beta del algoritmo minimax
 	 * @param jugador Jugador que debe realizar el siguiente movimiento
 	 * @param columna Columna donde se coloc� la ultima ficha
 	 * @param profundidad Profundidad en la que se encuentra el algoritmo**/
-	public int Min_Valor(Tablero estado,int alpha,int beta,int jugador,int columna,int profundidad){
-		if(ganador(jugador,estado,columna)){
+	public int Min_Valor(int [][] tablero,int alpha,int beta,int jugador,int columna,int profundidad){
+		if(ganador(jugador,tablero,columna)){
 			return Integer.MIN_VALUE;
 		}
-		else if(ganador(cambiarJugador(jugador),estado,columna)){
+		else if(ganador(cambiarJugador(jugador),tablero,columna)){
 			return Integer.MAX_VALUE;
 		}
-		else if(hayEmpate(estado))
-			if(tresEnRaya(estado.getTablero(),jugador)>tresEnRaya(estado.getTablero(),cambiarJugador(jugador)))
+		else if(hayEmpate(tablero))
+			if(tresEnRaya(tablero,jugador)>tresEnRaya(tablero,cambiarJugador(jugador)))
 				return Integer.MIN_VALUE;
-			else if(tresEnRaya(estado.getTablero(),jugador)<tresEnRaya(estado.getTablero(),cambiarJugador(jugador)))
+			else if(tresEnRaya(tablero,jugador)<tresEnRaya(tablero,cambiarJugador(jugador)))
 				return Integer.MAX_VALUE;
-			else if(dosEnRaya(estado.getTablero(),jugador)>dosEnRaya(estado.getTablero(),cambiarJugador(jugador)))
+			else if(dosEnRaya(tablero,jugador)>dosEnRaya(tablero,cambiarJugador(jugador)))
 				return Integer.MIN_VALUE;
-			else if(dosEnRaya(estado.getTablero(),jugador)<dosEnRaya(estado.getTablero(),cambiarJugador(jugador)))
+			else if(dosEnRaya(tablero,jugador)<dosEnRaya(tablero,cambiarJugador(jugador)))
 				return Integer.MAX_VALUE;
 			else return 0;
 		else if(profundidad>=maximo)
-			return utilidad(estado,jugador);
+			return utilidad(tablero,jugador);
 		
 		int valor=Integer.MAX_VALUE;
-		Tablero aux;
-		for(int i=0;i<estado.getTablero()[0].length;i++){
-			aux=estado.clonar();
-			if(aux.ponerFicha(i, jugador)){
+		int [][] aux;
+		for(int i=0;i<tablero[0].length;i++){
+			aux=clonar(tablero);
+			if(Connect4.ponerFicha(aux,i, jugador)){
 				valor=Math.min(valor,Max_Valor(aux,alpha,beta,cambiarJugador(jugador),i,profundidad+1));
 				if(valor<=alpha){
 					return valor;
@@ -118,16 +118,16 @@ public class Minimax {
 	 * @param tablero Tablero con la situacion actual del juego
 	 * @param columna Columna donde se coloco la ultima ficha
 	 * @return Devuelve TRUE si el jugador ha ganado y FALSE en caso contrario**/
-	public boolean ganador(int jugador,Tablero tablero,int columna){
+	public boolean ganador(int jugador,int[][] tablero,int columna){
 		int fila=0;
 		try{
-		while(tablero.getTablero()[fila][columna]!=jugador)
+		while(tablero[fila][columna]!=jugador)
 			fila++;
 		}catch(IndexOutOfBoundsException e){
 			return false;
 		}
-		return vertical(jugador,tablero.getTablero(),fila,columna)|| horizontal(jugador,tablero.getTablero(),fila,columna)||
-		ascenDer(jugador,tablero.getTablero(),fila,columna) || ascenIzq(jugador,tablero.getTablero(),fila,columna);
+		return vertical(jugador,tablero,fila,columna)|| horizontal(jugador,tablero,fila,columna)||
+		ascenDer(jugador,tablero,fila,columna) || ascenIzq(jugador,tablero,fila,columna);
 	}
 	
 	/**Comprueba si existe cuatro en raya en diagonal ascendente hacia la derecha
@@ -254,22 +254,22 @@ public class Minimax {
 	
 	/**Funcion de utilidad que devuelve un valor de utilidad en funcion de la situacion
 	 * del juego
-	 * @param estado Tablero con la situacion del juego
+	 * @param tablero Tablero con la situacion del juego
 	 * @param jugador Jugador del que se desea saber su valor de utilidad
 	 * @return El valor de la funcion de utilidad**/
-	public int utilidad(Tablero estado,int jugador){
-		int tres=tresEnRaya(estado.getTablero(),jugador);
-		int dos=dosEnRaya(estado.getTablero(),jugador);
+	public int utilidad(int [][] tablero,int jugador){
+		int tres=tresEnRaya(tablero,jugador);
+		int dos=dosEnRaya(tablero,jugador);
 		return tres*60+dos*40;
 	}
 	
 	/**Comprueba si el juego ha terminado en empate
-	 * @param estado Tablero con la situacion del juego
+	 * @param tablero Tablero con la situacion del juego
 	 * @return Devuelve TRUE si existe empate y FALSE en caso contrario**/
-	public boolean hayEmpate(Tablero estado){
+	public boolean hayEmpate(int[][] tablero){
 		boolean empate=true;
-		for(int i=0;i<estado.getTablero()[0].length;i++)
-			if(estado.getTablero()[0][i]==0)
+		for(int i=0;i<tablero[0].length;i++)
+			if(tablero[0][i]==0)
 				empate=false;
 		return empate;
 	}
@@ -418,4 +418,14 @@ public class Minimax {
 		else return 1;
 	}
 	
+	
+	/**Realiza una copia del tablero actual
+	 * @return Devuelve la copia del tablero**/
+	private int [][]  clonar(int [][] tablero){
+		int [][] copia = new int [6][7];
+		for(int i=0;i<tablero.length;i++)
+			for(int j=0;j<tablero[0].length;j++)
+				copia[i][j]=tablero[i][j];
+		return copia;
+	}
 }
