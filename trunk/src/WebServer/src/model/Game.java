@@ -22,11 +22,13 @@ public class Game extends ProductLine.Game {
 		switch (typeGame) {
 		case Checkers:
 		case Chess:
+		case Connect4:
 			slots.add(new Slot("",SlotState.Empty));
 			break;
 		case Trivial:
 			for(int i = 0; i<7; i++)
 				slots.add(new Slot("",SlotState.Empty));
+			break;
 		}
 		
 	}
@@ -69,6 +71,26 @@ public class Game extends ProductLine.Game {
 	public String toString() {
 		return "Game [name=" + name + ", typeGame=" + typeGame
 				+ ", started=" + started + "]";
+	}
+
+	@Override
+	public int freeSlots(Current __current) {
+		int freeSlots = 0;
+		for(Slot slot : slots)
+			if(slot.getType().equals(SlotState.Empty))
+				freeSlots++;
+		
+		return freeSlots;
+	}
+
+	@Override
+	public int players(Current __current) {
+		int players = 0;
+		for(Slot slot : slots)
+			if(slot.getType().equals(SlotState.Human) || slot.getType().equals(SlotState.Computer) )
+				players++;
+		
+		return players;
 	}
 
 	

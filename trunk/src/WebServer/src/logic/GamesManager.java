@@ -6,6 +6,7 @@ package logic;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Connect4Game;
 import model.Game;
 import model.Session;
 import ProductLine.Filter;
@@ -56,7 +57,8 @@ public class GamesManager {
 	 * **/
 	public void createGame(String gameName, String creator, GameType type)
 			throws GameAlreadyExistsException {
-		Game game = new Game(gameName, creator, type);
+		//TODO crear el juego correspodniente al tipo
+		Game game = new Connect4Game(gameName, creator, type);
 		if (games.contains(game))
 			throw new GameAlreadyExistsException();
 		games.add(game);
@@ -86,7 +88,9 @@ public class GamesManager {
 					}.start();
 				}
 			}
-			return currentGame;
+			//TODO devolver el tipo que sea
+			Connect4Game returned = (Connect4Game)currentGame; 
+			return returned;
 		}
 		throw new FullGameException();
 	}
@@ -283,5 +287,39 @@ public class GamesManager {
 			if (auxGame.getName().equalsIgnoreCase(game))
 				return auxGame;
 		return null;
+	}
+
+	public void startGame(String gameName) {
+		Game game = searchGame(gameName);
+		List<Slot> slots = game.getSlots();
+		for(int i = 1; i< slots.size();i++){
+			Slot slot = slots.get(i);
+			System.out.println("El jugador del slot es "+slot.getPlayer()+" de tipo "+slot.getType());
+			if(slot.getType() == SlotState.Human){
+				Session playerSession = UsersManager.getInstance().searchSession(slot.getPlayer());
+				playerSession.getCallback().gameStarted(gameName);
+			}
+		}
+		
+		
+	}
+
+	public void updateGame(String gameName, String player, int[][] board) {
+		// TODO Auto-generated method stub
+		Game game = searchGame(gameName);
+		switch(game.getTypeGame()){
+		case Connect4:
+			Connect4Game connect4 =(Connect4Game) game;
+			connect4.getBoard().setTablero(board);
+			String turn;
+			if(connect4.getSlot(0).getPlayer().equals(player))
+				turn = connect4.getSlot(1).getPlayer();
+			else
+				turn = connect4.getSlot(0).getPlayer();
+			Session turnSession = UsersManager.getInstance().searchSession(turn);
+			turnSession.getCallback().gameUpdated(gameName,board);
+			break;
+		}
+		
 	}
 }

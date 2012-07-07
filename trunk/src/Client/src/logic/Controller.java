@@ -22,6 +22,7 @@ import ProductLine.FullGameException;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
 import ProductLine.InvalidLoggingException;
+import ProductLine.NotEnoughPlayersException;
 import ProductLine.SlotState;
 import ProductLine.UserAlreadyExistsException;
 import ProductLine.UserAlreadyLoggedException;
@@ -29,6 +30,8 @@ import ProductLine.UserNotInGameException;
 import ProductLine.UserNotLoggedException;
 
 import communications.Client;
+import connect4.Connect4UI;
+import connect4.Interfaz;
 
 import exceptions.WrongInputException;
 
@@ -45,6 +48,7 @@ public class Controller {
 	private MessagesUI messagesUI;
 	private Hashtable<String, GameWaitingRoomUI> gameWaitingRooms;
 	private JoinGameUI joinGameUI;
+	private Connect4UI connect4UI;
 
 	//Managers
 	private Session session;
@@ -192,17 +196,19 @@ public class Controller {
 	}
 
 	public void receiveGameMessage(String game, String sender, String message) {
+		//TODO
 		if (gameManager.searchGame(game).isStarted()) {
-
+			connect4UI.receiveMessage(sender, message);
 		} else
 			gameWaitingRooms.get(game).receiveMessage(sender, message);
 	}
 
 	public void receiveGamePrivateMessage(String gameName, String sender,
 			String message) {
+		//TODO
 		Game game = gameManager.searchGame(gameName);
 		if (gameManager.searchGame(gameName).isStarted()) {
-
+			connect4UI.receivePrivateMessage(sender, message);
 		} else
 			gameWaitingRooms.get(gameName).receivePrivateMessage(sender,
 					message);
@@ -421,12 +427,42 @@ public class Controller {
 		try {
 			Client.getProxy().resetPassword(identifier);
 			JOptionPane.showMessageDialog(resetPasswordUI, "Su contraseña ha sido reseteada en breve recibirá un email",
-					"A la mierdaaa!", JOptionPane.INFORMATION_MESSAGE);
+					"Contraseña reseteada", JOptionPane.INFORMATION_MESSAGE);
 			resetPasswordUI.dispose();
 		} catch (InvalidLoggingException e) {
-			JOptionPane.showMessageDialog(resetPasswordUI, "El usuario no existe",
-					"A la mierdaaa!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(resetPasswordUI, "El usuario introducido no existe",
+					"Cuenta errónea", JOptionPane.INFORMATION_MESSAGE);
 		}	
+	}
+
+	public void startGame(String game) throws NotEnoughPlayersException {
+		gameManager.startGame(game);
+	}
+
+	public void gameStarted(String game) {
+		gameManager.gameStarted(game);
+		GameWaitingRoomUI gameUI = gameWaitingRooms.get(game);
+		gameUI.gameStarted();
+	}
+
+	public void closeGameWaitingRoomUI(String gameName) {
+		Game game = gameManager.searchGame(gameName);
+		GameWaitingRoomUI gameUI = gameWaitingRooms.get(gameName);
+		gameUI.dispose();
+		gameWaitingRooms.remove(game);
+		connect4UI = new Connect4UI(session.getUser().getUsername(),game);
+		
+	}
+
+	public void gameUpdated(String gameName, int[][] board) {
+		gameManager.gameUpdated(gameName,board);
+		connect4UI.updateBoard();
+		
+	}
+
+	public void updateGame(String game) {
+		gameManager.updateGame(game);
+		
 	}
 
 

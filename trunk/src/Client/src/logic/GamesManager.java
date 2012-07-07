@@ -8,9 +8,11 @@ import exceptions.WrongInputException;
 import ProductLine.FullGameException;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
+import ProductLine.NotEnoughPlayersException;
 import ProductLine.Slot;
 import ProductLine.SlotState;
 import ProductLine.UserNotLoggedException;
+import model.Connect4Game;
 import model.Filter;
 import model.Game;
 import model.Session;
@@ -31,7 +33,8 @@ public class GamesManager {
 			throw new WrongInputException("Name is empty","Please, introduce a name for the game");
 		String username = session.getUser().getUsername();
 		session.getProxy().createGame(gameName,username, type);
-		Game game = new Game(gameName,username,type);
+		//TODO crear el juego con polimorfismo que corresponda
+		Game game = new Connect4Game(gameName,username,type);
 		games.put(gameName, game);	
 		return game;
 	}
@@ -46,7 +49,8 @@ public class GamesManager {
 	}
 
 	public Game joinGame(String gameName) throws FullGameException {
-		Game game = (Game) session.getProxy().joinGame(gameName, session.getUser().getUsername());
+		//TODO casting a lo que tenga que ser
+		Game game = (Connect4Game) session.getProxy().joinGame(gameName, session.getUser().getUsername());
 		games.put(gameName, game);
 		return game;
 		
@@ -77,5 +81,44 @@ public class GamesManager {
 	public void slotStateChanged(String gameName, int slot, SlotState state) {
 		Game game = searchGame(gameName);
 		game.setSlot(slot, new Slot("",state));
+	}
+
+	public void startGame(String gameName) throws NotEnoughPlayersException {
+		Game game = searchGame(gameName);
+		if(game.players() > 1){
+			session.getProxy().startGame(gameName);
+			game.setStarted(true);
+		}else{
+			throw new NotEnoughPlayersException();
+		}
+	}
+
+	public void gameStarted(String gameName) {
+		Game game = searchGame(gameName);
+		game.setStarted(true);
+	}
+
+	public void gameUpdated(String gameName, int[][] board) {
+		Game game = searchGame(gameName);
+		switch(game.getTypeGame()){
+		case Connect4:
+			Connect4Game connect4 = (Connect4Game) game;
+			connect4.getBoard().setTablero(board);
+			break;
+		}
+		
+	}
+
+	public void updateGame(String gameName) {
+		Game game = searchGame(gameName);
+		switch(game.getTypeGame()){
+		case Connect4:
+			Connect4Game connect4 = (Connect4Game) game;
+			String player = session.getUser().getUsername();
+			session.getProxy().updateGame(gameName, player, connect4.getBoard().getTablero());
+			break;
+		}
+		
+		
 	}
 }

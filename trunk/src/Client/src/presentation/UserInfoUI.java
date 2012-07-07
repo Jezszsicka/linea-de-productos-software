@@ -360,7 +360,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 			lblFlag = new JLabel();
 			lblFlag.setBounds(440, 35, 131, 117);
 			lblFlag.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/es.png")));
+					.getResource("images/Flags/es.png")));
 		}
 		return lblFlag;
 	}

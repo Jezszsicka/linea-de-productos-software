@@ -71,6 +71,16 @@ public class ClientI extends _ClientDisp{
 		Controller.getInstance().slotStateChanged(game,slot,state);
 	}
 
+	@Override
+	public void gameStarted(String game, Current __current) {
+		Controller.getInstance().gameStarted(game);		
+	}
+
+	@Override
+	public void gameUpdated(String game, int[][] board, Current __current) {
+		Controller.getInstance().gameUpdated(game,board);	
+	}
+
 
 
 }

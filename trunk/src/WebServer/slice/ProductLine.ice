@@ -3,7 +3,7 @@
 module ProductLine {
 	enum RoleType { Player, Admin };
 	enum SlotState {Human,Computer,Empty,Closed};
-	enum GameType {	Ludo, Chess, Trivial, Monopoly, Checkers};
+	enum GameType {	Ludo, Chess, Trivial, Monopoly, Checkers, Connect4};
 	enum Players { TwoPlayers, ThreeOrMore};
 	enum MessageType {Normal,Invitation};
 	
@@ -18,6 +18,8 @@ module ProductLine {
 	["java:type:java.util.ArrayList<Slot>"] sequence<Slot> SlotList;
 	["java:type:java.util.ArrayList<GameType>"] sequence<GameType> GameTypeList;
 	["java:type:java.util.ArrayList<Players>"] sequence<Players> PlayersList;
+	sequence<int> intArray;
+	sequence<intArray> bidimensionalIntArray;
 	
 	["java:getset"]
 	class Game {
@@ -29,8 +31,8 @@ module ProductLine {
 		void removePlayer(string user);
 		Slot getSlot(int slot);
 		void setSlot(int slotIndex,Slot newSlot);
-		
-		
+		int freeSlots();
+		int players();
 	};
 
 	["java:getset"]
@@ -93,6 +95,7 @@ module ProductLine {
 	exception GameAlreadyExistsException extends genericException{};
 	exception UserNotInGameException extends genericException{};
 	exception FullGameException extends genericException{};
+	exception NotEnoughPlayersException extends genericException{};
 
     interface Server {
     	void registerUser(User newUser) throws UserAlreadyExistsException;
@@ -121,6 +124,8 @@ module ProductLine {
 		void kickPlayer(string game, string player);
 		void changeSlotState(string game, int slot, SlotState state);
 		GameList listGames(string user, string gameName, Filter gamesFilter);
+		void startGame(string game);
+		void updateGame(string game, string player,bidimensionalIntArray board);
     };
     
     interface Client {
@@ -135,6 +140,8 @@ module ProductLine {
     	void userLeaveGame(string game, string user);
     	void slotStateChanged(string game, int slot, SlotState state);
     	void kickedFromGame(string game);
+    	void gameStarted(string game);
+    	void gameUpdated(string game,bidimensionalIntArray board);
     };
     
 };
