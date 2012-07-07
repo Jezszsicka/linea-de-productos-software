@@ -27,6 +27,7 @@ module ProductLine {
 		["protected"] GameType typeGame;
 		["protected"] bool started;
 		["protected"] SlotList slots;
+		["protected"] bidimensionalIntArray board;
 		bool addPlayer(string user);
 		void removePlayer(string user);
 		Slot getSlot(int slot);
@@ -52,7 +53,7 @@ module ProductLine {
 		["protected"] string subject;
 		["protected"] string content;
 		["protected"] MessageType type;
-		["protected"] bool read;
+		["protected"] bool read; 
 	};
 
 	["java:getset"]
@@ -126,6 +127,7 @@ module ProductLine {
 		GameList listGames(string user, string gameName, Filter gamesFilter);
 		void startGame(string game);
 		void updateGame(string game, string player,bidimensionalIntArray board);
+		void finishGame(string game, string player);
     };
     
     interface Client {
@@ -142,6 +144,7 @@ module ProductLine {
     	void kickedFromGame(string game);
     	void gameStarted(string game);
     	void gameUpdated(string game,bidimensionalIntArray board);
+    	void gameFinished(string game);
     };
     
 };

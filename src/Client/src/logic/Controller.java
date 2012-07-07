@@ -3,13 +3,18 @@ package logic;
 import java.util.Hashtable;
 import java.util.List;
 
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+
+import checkers.CheckersUI;
+import chess.ChessUI;
 
 import model.Filter;
 import model.Game;
 import model.Session;
 import model.User;
 import presentation.CreateGameUI;
+import presentation.GameUI;
 import presentation.GameWaitingRoomUI;
 import presentation.JoinGameUI;
 import presentation.LoginUI;
@@ -30,9 +35,8 @@ import ProductLine.UserNotInGameException;
 import ProductLine.UserNotLoggedException;
 
 import communications.Client;
-import connect4.Connect4UI;
-import connect4.Interfaz;
 
+import connect4.Connect4UI;
 import exceptions.WrongInputException;
 
 public class Controller {
@@ -44,11 +48,12 @@ public class Controller {
 	private LoginUI loginUI;
 	private ProfileUI profileUI;
 	private WaitingRoomUI waitingRoomUI;
-	private CreateGameUI createGameUI;
 	private MessagesUI messagesUI;
-	private Hashtable<String, GameWaitingRoomUI> gameWaitingRooms;
+	private CreateGameUI createGameUI;
 	private JoinGameUI joinGameUI;
-	private Connect4UI connect4UI;
+	
+	private Hashtable<String, GameWaitingRoomUI> gameWaitingRooms;
+	private Hashtable<String, GameUI> gamesUI;
 
 	//Managers
 	private Session session;
@@ -64,6 +69,7 @@ public class Controller {
 		loginUI = new LoginUI();
 		sessionManager = new SessionManager();
 		gameWaitingRooms = new Hashtable<String, GameWaitingRoomUI>();
+		gamesUI = new Hashtable<String,GameUI>();
 	}
 
 	public static void initialize() {
@@ -195,20 +201,21 @@ public class Controller {
 
 	}
 
-	public void receiveGameMessage(String game, String sender, String message) {
-		//TODO
-		if (gameManager.searchGame(game).isStarted()) {
-			connect4UI.receiveMessage(sender, message);
+	public void receiveGameMessage(String gameName, String sender, String message) {
+		Game game = gameManager.searchGame(gameName);
+		if (game.isStarted()) {
+			GameUI gameUI = gamesUI.get(gameName);
+			gameUI.receiveMessage(sender, message);
 		} else
 			gameWaitingRooms.get(game).receiveMessage(sender, message);
 	}
 
 	public void receiveGamePrivateMessage(String gameName, String sender,
 			String message) {
-		//TODO
 		Game game = gameManager.searchGame(gameName);
-		if (gameManager.searchGame(gameName).isStarted()) {
-			connect4UI.receivePrivateMessage(sender, message);
+		if (game.isStarted()) {
+			GameUI gameUI = gamesUI.get(gameName);
+			gameUI.receivePrivateMessage(sender, message);
 		} else
 			gameWaitingRooms.get(gameName).receivePrivateMessage(sender,
 					message);
@@ -440,7 +447,6 @@ public class Controller {
 	}
 
 	public void gameStarted(String game) {
-		gameManager.gameStarted(game);
 		GameWaitingRoomUI gameUI = gameWaitingRooms.get(game);
 		gameUI.gameStarted();
 	}
@@ -449,20 +455,41 @@ public class Controller {
 		Game game = gameManager.searchGame(gameName);
 		GameWaitingRoomUI gameUI = gameWaitingRooms.get(gameName);
 		gameUI.dispose();
-		gameWaitingRooms.remove(game);
-		connect4UI = new Connect4UI(session.getUser().getUsername(),game);
-		
+		gameWaitingRooms.remove(game.getName());
+		game.setStarted(true);
+		switch(game.getTypeGame()){
+		case Connect4:
+			GameUI connect4UI = new Connect4UI(session.getUser().getUsername(),game);
+			gamesUI.put(gameName,connect4UI);
+			break;
+		case Checkers:
+			GameUI checkersUI = new CheckersUI(session.getUser().getUsername(),game);
+			gamesUI.put(gameName, checkersUI);
+			break;
+		case Chess:
+			GameUI chessUI = new ChessUI(session.getUser().getUsername(),game);
+			gamesUI.put(gameName, chessUI);
+		}
 	}
 
 	public void gameUpdated(String gameName, int[][] board) {
+		GameUI gameUI = gamesUI.get(gameName);
 		gameManager.gameUpdated(gameName,board);
-		connect4UI.updateBoard();
-		
+		gameUI.updateBoard();
 	}
 
 	public void updateGame(String game) {
 		gameManager.updateGame(game);
-		
+	}
+
+	public void gameFinished(String game) {
+		GameUI gameUI = gamesUI.get(game);
+		gameManager.finishGame(game);
+		gameUI.lostGame();
+	}
+
+	public void finishGame(String game, String winnerPlayer) {
+		gameManager.finishGame(game,winnerPlayer);
 	}
 
 

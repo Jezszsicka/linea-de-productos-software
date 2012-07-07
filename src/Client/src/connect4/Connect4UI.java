@@ -6,7 +6,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -15,7 +14,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
-
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
@@ -23,8 +21,9 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
+import presentation.GameUI;
+
 import logic.Controller;
-import model.Connect4Game;
 import model.Game;
 import model.User;
 import ProductLine.Slot;
@@ -42,10 +41,10 @@ import ProductLine.UserNotInGameException;
  * ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
 @SuppressWarnings("serial")
-public class Connect4UI extends javax.swing.JFrame {
+public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JPanel pnlBackground;
 	private JLabel lbl75;
-	private JLabel lblEstado;
+	private JLabel lblState;
 	private JLabel lblOpponentName;
 	private JButton btnQuit;
 	private JButton btn1;
@@ -109,22 +108,30 @@ public class Connect4UI extends javax.swing.JFrame {
 
 	private String destinatary;
 	private String username;
-	private Connect4Game game;
+	private Game game;
 
-	private int jugador = 1;
+	private int playerTurn;
+	private int myPlayer;
 	private Minimax minimax;
-	private boolean maquina;
+	private boolean computer;
 
 	public Connect4UI(String username, Game game) {
 		super();
 		this.username = username;
-		this.game = (Connect4Game) game;
+		this.game = game;
+		playerTurn = 1;
 		boardUI = new JLabel[6][7];
 		minimax = new Minimax(4);
 		destinatary = "";
+		
 		Slot opponentSlot = game.getSlot(0);
-		if (opponentSlot.getPlayer().equals(username))
+		myPlayer = 2;
+		
+		if (opponentSlot.getPlayer().equalsIgnoreCase(username)){
 			opponentSlot = game.getSlot(1);
+			myPlayer = 1;
+		}
+		
 
 		if (opponentSlot.getType() == SlotState.Human) {
 			User opponent = Controller.getInstance().searchUser(
@@ -132,17 +139,24 @@ public class Connect4UI extends javax.swing.JFrame {
 			lblOpponentAvatar.setIcon(new ImageIcon(opponent.getAvatar()));
 			lblOpponentName.setText(opponent.getUsername());
 		} else { // Against computer
-			maquina = true;
+			computer = true;
 		}
-
+				
 		initGUI();
 
-		if (maquina) {
+		if (computer) {
+			lblOpponentAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Computer.png")));
 			lblOpponentName.setText("Computer");
 			setSize(762, 500);
 			pnlBackground.setSize(762, 480);
-			btnQuit.setLocation(btnQuit.getX(), lblEstado.getY());
+			btnQuit.setLocation(btnQuit.getX(), lblState.getY());
 		}
+		
+		if(playerTurn != myPlayer)
+			activateButtons(false);
+		else
+			activateButtons(true);
 
 	}
 
@@ -163,13 +177,13 @@ public class Connect4UI extends javax.swing.JFrame {
 			pnlBackground.setBounds(0, 0, 746, 623);
 			pnlBackground.add(getPnlBoard());
 			pnlBackground.add(getLblOpponentAvatar());
-			if (!maquina) {
+			if (!computer) {
 				pnlBackground.add(getPnlChat());
 				pnlBackground.add(getTxtMessage());
 			}
 			pnlBackground.add(getBtnQuit());
 			pnlBackground.add(getLblOpponentName());
-			pnlBackground.add(getLblEstado());
+			pnlBackground.add(getLblState());
 		}
 		return pnlBackground;
 	}
@@ -177,10 +191,9 @@ public class Connect4UI extends javax.swing.JFrame {
 	private JLabel getLblOpponentAvatar() {
 		if (lblOpponentAvatar == null) {
 			lblOpponentAvatar = new JLabel();
-			lblOpponentAvatar.setBounds(635, 13, 101, 124);
+			lblOpponentAvatar.setBounds(635, 13, 100, 120);
 			lblOpponentAvatar.setBorder(new SoftBevelBorder(
 					BevelBorder.LOWERED, null, null, null, null));
-			lblOpponentAvatar.setSize(100, 120);
 		}
 		return lblOpponentAvatar;
 	}
@@ -1130,86 +1143,84 @@ public class Connect4UI extends javax.swing.JFrame {
 	}
 
 	private int libre(int columna) {
-		return game.getBoard().libre(columna);
+		return Connect4.libre(game.getBoard(), columna);
 	}
 
 	private void ponerFicha(int columna) {
 		int fila = libre(columna);
-		boolean ganador = false;
+		boolean winner = false;
 		if (fila != -1) {
-			game.getBoard().ponerFicha(columna, jugador);
-			if (jugador == 1) {
+			Connect4.ponerFicha(game.getBoard(), columna, playerTurn);
+			if (playerTurn == 1) {
 				boardUI[fila][columna].setIcon(new ImageIcon(getClass()
 						.getClassLoader().getResource(
 								"images/ConnectFour/Red.jpg")));
 			} else {
-				// lblEstado.setText("Turno del jugador rojo");
 				boardUI[fila][columna].setIcon(new ImageIcon(getClass()
 						.getClassLoader().getResource(
 								"images/ConnectFour/Blue.jpg")));
 			}
-			if (minimax.ganador(1, game.getBoard(), columna)) {
-				ganador = true;
-				// desactivar(false);
-				lblEstado.setText("El jugador rojo ha ganado");
-				// Ganador gana=new Ganador(this,"El jugado rojo ha ganado");
-			} else if (minimax.ganador(2, game.getBoard(), columna)) {
-				// desactivar(false);
-				ganador = true;
-				// lblEstado.setText("El jugador azul ha ganado");
-				// consejo=false;
-				// Ganador gana=new Ganador(this,"El jugador azul ha ganado");
-			} else if (minimax.hayEmpate(game.getBoard())) {
-				int[][] board = game.getBoard().getTablero();
-				if (minimax.tresEnRaya(board, jugador) > minimax.tresEnRaya(
-						board, cambiarJugador(jugador)))
-					lblEstado.setText("El jugador azul ha ganado");
-				else if (minimax.tresEnRaya(board, jugador) < minimax
-						.tresEnRaya(board, cambiarJugador(jugador)))
-					lblEstado.setText("El jugador rojo ha ganado");
-				else if (minimax.dosEnRaya(board, jugador) > minimax.dosEnRaya(
-						board, cambiarJugador(jugador)))
-					lblEstado.setText("El jugador azul ha ganado");
-				else if (minimax.tresEnRaya(board, jugador) < minimax
-						.tresEnRaya(board, cambiarJugador(jugador)))
-					lblEstado.setText("El jugador rojo ha ganado");
-				else
-					lblEstado.setText("El juego ha terminado en empate");
-				// desactivar(false);
-				ganador = true;
-				// Ganador gana=new
-				// Ganador(this,"El juego ha terminado en empate");
-			}
-			jugador = cambiarJugador(jugador);
-
-			if (maquina && !ganador) {
-				juegaMaquina();
-			}
 			
-			if(!maquina){
-				Controller.getInstance().updateGame(game.getName());
+			
+			//Checks winner
+			if (minimax.ganador(playerTurn, game.getBoard(), columna)) {
+				winner = true;
+				lblState.setText("Has ganado el juego");
+			} else if (minimax.hayEmpate(game.getBoard())) {
+				int[][] board = game.getBoard();
+				if (minimax.tresEnRaya(board, playerTurn) > minimax.tresEnRaya(
+						board, chagenPlayerTurn(playerTurn)))
+					lblState.setText("El jugador azul ha ganado");
+				else if (minimax.tresEnRaya(board, playerTurn) < minimax
+						.tresEnRaya(board, chagenPlayerTurn(playerTurn)))
+					lblState.setText("El jugador rojo ha ganado");
+				else if (minimax.dosEnRaya(board, playerTurn) > minimax.dosEnRaya(
+						board, chagenPlayerTurn(playerTurn)))
+					lblState.setText("El jugador azul ha ganado");
+				else if (minimax.tresEnRaya(board, playerTurn) < minimax
+						.tresEnRaya(board, chagenPlayerTurn(playerTurn)))
+					lblState.setText("El jugador rojo ha ganado");
+				else
+					lblState.setText("El juego ha terminado en empate");
+				winner = true;
+			}
+			//TODO SI hay empate gana el último que pone ficha
+			playerTurn = chagenPlayerTurn(playerTurn);
+			activateButtons(false);
+
+			if (computer && !winner) {
+				lblState.setText("Pensando...");
+				juegaMaquina();
+			}else{ 
+				if(!computer){
+					if(!winner){
+						Controller.getInstance().updateGame(game.getName());
+						lblState.setText("Es el turno de "+lblOpponentName.getText());
+					}else{
+						Controller.getInstance().finishGame(game.getName(),username);
+					}
+				}
 			}
 		}
 	}
 
-	private JLabel getLblEstado() {
-		if (lblEstado == null) {
-			lblEstado = new JLabel();
-			lblEstado.setText("El jugador azul ha ganado");
-			lblEstado.setBounds(10, 434, 333, 15);
-			lblEstado.setFont(new java.awt.Font("Tahoma", 1, 11));
+	private JLabel getLblState() {
+		if (lblState == null) {
+			lblState = new JLabel();
+			lblState.setBounds(10, 434, 333, 15);
+			lblState.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
-		return lblEstado;
+		return lblState;
 	}
 
-	private int cambiarJugador(int jugador) {
+	private int chagenPlayerTurn(int jugador) {
 		if (jugador == 1)
 			return 2;
 		else
 			return 1;
 	}
 
-	private void desactivar(boolean enabled) {
+	private void activateButtons(boolean enabled) {
 		btn1.setVisible(enabled);
 		btn2.setVisible(enabled);
 		btn3.setVisible(enabled);
@@ -1220,28 +1231,30 @@ public class Connect4UI extends javax.swing.JFrame {
 	}
 
 	private void juegaMaquina() {
-		lblEstado.setText("Pensando...");
-		int movimiento = minimax.minimax(game.getBoard(), jugador);
+		int movimiento = minimax.minimax(game.getBoard(), playerTurn);
 		int fila = libre(movimiento);
-		game.getBoard().ponerFicha(movimiento, jugador);
+		Connect4.ponerFicha(game.getBoard(), movimiento, playerTurn);
 		boardUI[fila][movimiento].setIcon(new ImageIcon(getClass()
 				.getClassLoader().getResource("images/ConnectFour/Blue.jpg")));
-		jugador = cambiarJugador(jugador);
-		lblEstado.setText("Turno del jugador rojo");
+		playerTurn = chagenPlayerTurn(playerTurn);
+		
+		
+		//Computer has won the game
 		if (minimax.ganador(2, game.getBoard(), movimiento)) {
-			desactivar(false);
-			lblEstado.setText("Tu turno");
-			// Ganador gana=new Ganador(this,"El jugador azul ha ganado");
+			activateButtons(false);
+			lblState.setText("Has perdido la partida");
+			
+		}else{
+			activateButtons(true);
+			lblState.setText("Es tu turno");
 		}
 	}
 
 	public void updateBoard() {
-		int[][] board = game.getBoard().getTablero();
+		int[][] board = game.getBoard();
 		for (int i = 0; i < boardUI.length; i++) {
 			for (int j = 0; j < boardUI[0].length; j++) {
 				switch (board[i][j]) {
-				case 0:
-					break;
 				case 1:
 					boardUI[i][j].setIcon(new ImageIcon(getClass()
 							.getClassLoader().getResource(
@@ -1255,5 +1268,14 @@ public class Connect4UI extends javax.swing.JFrame {
 				}
 			}
 		}
+		
+		playerTurn = chagenPlayerTurn(playerTurn);
+		lblState.setText("Es tu turno");
+		activateButtons(true);
+	}
+
+	public void lostGame() {
+		lblState.setText("Has perdido la partida");
+		activateButtons(false);
 	}
 }
