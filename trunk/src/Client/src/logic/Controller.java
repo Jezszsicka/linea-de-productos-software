@@ -3,11 +3,7 @@ package logic;
 import java.util.Hashtable;
 import java.util.List;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-
-import checkers.CheckersUI;
-import chess.ChessUI;
 
 import model.Filter;
 import model.Game;
@@ -33,6 +29,8 @@ import ProductLine.UserAlreadyExistsException;
 import ProductLine.UserAlreadyLoggedException;
 import ProductLine.UserNotInGameException;
 import ProductLine.UserNotLoggedException;
+import checkers.CheckersUI;
+import chess.ChessUI;
 
 import communications.Client;
 
@@ -58,7 +56,7 @@ public class Controller {
 	//Managers
 	private Session session;
 	private SessionManager sessionManager;
-	private GamesManager gameManager;
+	private GamesManager gamesManager;
 	private LanguageManager language;
 	private MessagesManager messagesManager;
 
@@ -117,7 +115,7 @@ public class Controller {
 		try {
 			session = sessionManager.loginUser(username, password);
 			language.loadPreferences(session.getUser());
-			gameManager = new GamesManager(session);
+			gamesManager = new GamesManager(session);
 			messagesManager = new MessagesManager(session);
 			waitingRoomUI = new WaitingRoomUI(session.getUser(),
 					session.getUsers());
@@ -142,7 +140,7 @@ public class Controller {
 
 	public void logoutUser() {
 			sessionManager.logoutUser();
-			gameManager = null;
+			gamesManager = null;
 			waitingRoomUI.dispose();
 			waitingRoomUI = null;
 			loginUI = new LoginUI();
@@ -174,18 +172,18 @@ public class Controller {
 		messagesManager.sendGeneralMessage(message);
 	}
 
-	public void sendPrivateMessage(String sender, String destinatary,
+	public void sendPrivateMessage(String destinatary,
 			String message) throws UserNotLoggedException {
-		messagesManager.sendPrivateMessage(sender, destinatary, message);
+		messagesManager.sendPrivateMessage(destinatary, message);
 	}
 	
 	public void sendGameMessage(String game, String message) {
 		messagesManager.sendGameMessage(game,message);
 	}
 	
-	public void sendGamePrivateMessage(String game, String sender,
+	public void sendGamePrivateMessage(String game,
 			String destinatary, String message) throws UserNotInGameException {
-		messagesManager.sendGamePrivateMessage(game,sender,destinatary,message);
+		messagesManager.sendGamePrivateMessage(game,destinatary,message);
 	}
 	
 	public void sendMessage(String to, String subject, String content) throws WrongInputException {
@@ -202,17 +200,18 @@ public class Controller {
 	}
 
 	public void receiveGameMessage(String gameName, String sender, String message) {
-		Game game = gameManager.searchGame(gameName);
+		System.out.println(gameName);
+		Game game = gamesManager.searchGame(gameName);
 		if (game.isStarted()) {
 			GameUI gameUI = gamesUI.get(gameName);
 			gameUI.receiveMessage(sender, message);
 		} else
-			gameWaitingRooms.get(game).receiveMessage(sender, message);
+			gameWaitingRooms.get(gameName).receiveMessage(sender, message);
 	}
 
 	public void receiveGamePrivateMessage(String gameName, String sender,
 			String message) {
-		Game game = gameManager.searchGame(gameName);
+		Game game = gamesManager.searchGame(gameName);
 		if (game.isStarted()) {
 			GameUI gameUI = gamesUI.get(gameName);
 			gameUI.receivePrivateMessage(sender, message);
@@ -326,7 +325,7 @@ public class Controller {
 
 	public void createGame(String gameName, GameType type) {
 		try {
-			Game game = gameManager.createGame(gameName, type);
+			Game game = gamesManager.createGame(gameName, type);
 			createGameUI.dispose();
 			waitingRoomUI.setEnabled(true);
 			gameWaitingRooms.put(game.getName(), new GameWaitingRoomUI(session
@@ -343,18 +342,18 @@ public class Controller {
 	}
 
 	public List<ProductLine.Game> listGames(String game, Filter filter) {
-		return gameManager.listGames(game,filter);
+		return gamesManager.listGames(game,filter);
 	}
 
 	public void deleteGame(String gameName) {
-		gameManager.deleteGame(gameName);
+		gamesManager.deleteGame(gameName);
 		gameWaitingRooms.remove(gameName);
 		waitingRoomUI.toFront();
 	}
 
 	public void joinGame(String gameName) {
 		try {
-			Game game = gameManager.joinGame(gameName);
+			Game game = gamesManager.joinGame(gameName);
 			gameWaitingRooms.put(game.getName(), new GameWaitingRoomUI(session
 					.getUser().getUsername(), game,false));
 			joinGameUI.dispose();
@@ -368,21 +367,28 @@ public class Controller {
 	}
 	
 	public void leaveGame(String game) {
-		gameManager.leaveGame(game);
+		gamesManager.leaveGame(game);
 		gameWaitingRooms.remove(game);
 	}
 
 	public void userJoinGame(String game, String player) {
-		gameManager.userJoinGame(game, player);
+		gamesManager.userJoinGame(game, player);
 		GameWaitingRoomUI gameUI = gameWaitingRooms.get(game);
 		gameUI.userJoinGame(player);
 
 	}
 
-	public void userLeaveGame(String game, String player) {
-		gameManager.userLeaveGame(game,player);
-		GameWaitingRoomUI gameUI = gameWaitingRooms.get(game);
-		gameUI.userLeaveGame(player);
+	public void userLeaveGame(String gameName, String player) {
+		Game game = gamesManager.searchGame(gameName);
+		gamesManager.userLeaveGame(gameName,player);
+		if(game.isStarted()){
+			GameUI gameUI = gamesUI.get(gameName);
+			gameUI.userLeaveGame(player);
+			gamesUI.remove(gameName);
+		}else{
+			GameWaitingRoomUI gameUI = gameWaitingRooms.get(gameName);
+			gameUI.userLeaveGame(player);
+		}
 	}
 	
 	public User searchUser(String username) {
@@ -404,11 +410,11 @@ public class Controller {
 	}
 	
 	public void changeSlotState(String gameName, int slot, SlotState slotState) {
-		gameManager.changeSlotState(gameName,slot,slotState);
+		gamesManager.changeSlotState(gameName,slot,slotState);
 	}
 
 	public void slotStateChanged(String gameName, int slot, SlotState state) {
-		gameManager.slotStateChanged(gameName, slot, state);
+		gamesManager.slotStateChanged(gameName, slot, state);
 		GameWaitingRoomUI gameWaitingRoomUI = gameWaitingRooms.get(gameName);
 		gameWaitingRoomUI.slotStateChanged();
 	}
@@ -443,7 +449,7 @@ public class Controller {
 	}
 
 	public void startGame(String game) throws NotEnoughPlayersException {
-		gameManager.startGame(game);
+		gamesManager.startGame(game);
 	}
 
 	public void gameStarted(String game) {
@@ -452,7 +458,7 @@ public class Controller {
 	}
 
 	public void closeGameWaitingRoomUI(String gameName) {
-		Game game = gameManager.searchGame(gameName);
+		Game game = gamesManager.searchGame(gameName);
 		GameWaitingRoomUI gameUI = gameWaitingRooms.get(gameName);
 		gameUI.dispose();
 		gameWaitingRooms.remove(game.getName());
@@ -474,22 +480,22 @@ public class Controller {
 
 	public void gameUpdated(String gameName, int[][] board) {
 		GameUI gameUI = gamesUI.get(gameName);
-		gameManager.gameUpdated(gameName,board);
+		gamesManager.gameUpdated(gameName,board);
 		gameUI.updateBoard();
 	}
 
 	public void updateGame(String game) {
-		gameManager.updateGame(game);
+		gamesManager.updateGame(game);
 	}
 
 	public void gameFinished(String game) {
 		GameUI gameUI = gamesUI.get(game);
-		gameManager.finishGame(game);
+		gamesManager.finishGame(game);
 		gameUI.lostGame();
 	}
 
 	public void finishGame(String game, String winnerPlayer) {
-		gameManager.finishGame(game,winnerPlayer);
+		gamesManager.finishGame(game,winnerPlayer);
 	}
 
 

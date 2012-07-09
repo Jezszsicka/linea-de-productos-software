@@ -81,7 +81,6 @@ public class JoinGameUI extends javax.swing.JFrame {
 	private void refreshGames() {
 		List<Game> games = Controller.getInstance().listGames(
 				txtGameSearch.getText(), filter);
-		System.out.println(games.toString());
 		clearList();
 		for (Game game : games) {
 			int freeSlots = 0;
