@@ -450,7 +450,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 				String privateMessage = message.split(destinatary)[1];
 				try {
 					Controller.getInstance().sendPrivateMessage(
-							user.getUsername(), destinatary, privateMessage);
+							destinatary, privateMessage);
 					try {
 						htmlEditor.insertHTML(chatText, chatText.getLength(),
 								"<font color=\"red\"><b> >" + destinatary

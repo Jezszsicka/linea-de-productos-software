@@ -95,21 +95,32 @@ public class GamesManager {
 	/**
 	 * Removes an user from a game
 	 * 
-	 * @param game
+	 * @param gameName
 	 *            Game to leave
 	 * @param player
 	 *            Player who leaves the game
 	 **/
-	public void leaveGame(String game, String player) {
-		Game currentGame = searchGame(game);
-		currentGame.removePlayer(player);
-		for (Slot slot : currentGame.getSlots()) {
+	public void leaveGame(String gameName, String player) {
+		Game game = searchGame(gameName);
+		game.removePlayer(player);
+		for (Slot slot : game.getSlots()) {
 			if (slot.getType().equals(SlotState.Human)) {
 				Session userSession = UsersManager.getInstance().searchSession(
 						slot.getPlayer());
-				userSession.getCallback().userLeaveGame(game, player);
+				userSession.getCallback().userLeaveGame(gameName, player);
 			}
 		}
+		
+		//TODO Comportamiento según el juego
+		if(game.isStarted()){
+			switch(game.getTypeGame()){
+			case Connect4:
+				games.remove(game);
+				break;
+			}
+			
+		}
+			
 
 	}
 
@@ -124,6 +135,8 @@ public class GamesManager {
 	 **/
 	public List<ProductLine.Game> listGames(String user, String gameName,
 			Filter gamesFilter) {
+		System.out.println(games.toString());
+		
 		List<ProductLine.Game> list = new ArrayList<ProductLine.Game>();
 		for (Game game : games) {
 			boolean toList = true;
@@ -226,9 +239,11 @@ public class GamesManager {
 		Slot changedSlot = game.getSlot(slot);
 		final String changedSlotPlayer = changedSlot.getPlayer();
 		
-		if (changedSlot.getType().equals(SlotState.Human)) {
+		
+		if (changedSlot.getType() == SlotState.Human) {
 			for (Slot gameSlot : game.getSlots()) {
 				final String slotPlayer = gameSlot.getPlayer();
+				//Kick the player from game
 				if (slotPlayer.equalsIgnoreCase(
 						changedSlotPlayer)) {
 					new Thread() {
@@ -238,9 +253,10 @@ public class GamesManager {
 							userSession.getCallback().kickedFromGame(
 									game.getName());
 						}
-					}.start();
+					}.start();	
 				} else {
-					if (gameSlot.getType().equals(SlotState.Human) && !slotPlayer.equalsIgnoreCase(changedSlotPlayer) && !slotPlayer.equalsIgnoreCase(game.getSlot(0).getPlayer())) {
+					//
+					if (gameSlot.getType() == SlotState.Human && !slotPlayer.equalsIgnoreCase(changedSlotPlayer) && !slotPlayer.equalsIgnoreCase(game.getSlot(0).getPlayer())) {
 						new Thread() {
 							public void run() {
 								Session userSession = UsersManager
@@ -256,9 +272,10 @@ public class GamesManager {
 			}
 
 		} else {
+			
 			for (Slot gameSlot : game.getSlots()){
 				final String slotPlayer = gameSlot.getPlayer();
-				if(gameSlot.getType().equals(SlotState.Human) && !slotPlayer.equalsIgnoreCase(game.getSlot(0).getPlayer())){
+				if(gameSlot.getType() == SlotState.Human && !slotPlayer.equalsIgnoreCase(game.getSlot(0).getPlayer())){
 					new Thread(){
 						public void run(){
 							Session userSession = UsersManager.getInstance().searchSession(slotPlayer);

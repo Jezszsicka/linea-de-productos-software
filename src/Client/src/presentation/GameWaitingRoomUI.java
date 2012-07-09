@@ -477,7 +477,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				String privateMessage = message.split(destinatary)[1];
 				try {
 					Controller.getInstance().sendGamePrivateMessage(
-							game.getName(), username, destinatary,
+							game.getName(), destinatary,
 							privateMessage);
 					try {
 						htmlEditor.insertHTML(chatText, chatText.getLength(),
