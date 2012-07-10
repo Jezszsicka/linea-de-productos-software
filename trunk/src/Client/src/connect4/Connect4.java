@@ -1,7 +1,12 @@
 package connect4;
 
 public class Connect4 {
-
+	//RED is always the first player
+	public static int EMPTY = 0;
+	public static int RED = 1;
+	public static int BLUE = 2;
+	
+	
 	/**Coloca una ficha en el tablero
 	 * @param columna Columna donde se desea poner la ficha
 	 * @param jugador Jugador que desea poner la ficha

@@ -90,6 +90,14 @@ public class CheckersMove {
 		// rows. (In a regular move, it only moves one row.)
 		return (fromRow - toRow == 2 || fromRow - toRow == -2);
 	}
+
+
+	@Override
+	public String toString() {
+		return "CheckersMove [fromRow=" + fromRow + ", fromColumn="
+				+ fromColumn + ", toRow=" + toRow + ", toColumn=" + toColumn
+				+ "]";
+	}
 	
 
 }

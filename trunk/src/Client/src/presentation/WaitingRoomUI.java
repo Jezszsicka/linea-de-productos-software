@@ -438,7 +438,6 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 		pnlUsers.setPreferredSize(new Dimension(pnlUsers.getWidth(), size));
 		pnlUsers.setSize(pnlUsers.getWidth(), size);
 		pnlUsers.repaint();
-
 	}
 
 	private void sendMessage() {

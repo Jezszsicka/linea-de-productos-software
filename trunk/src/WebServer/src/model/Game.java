@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+
+
 import Ice.Current;
 import ProductLine.GameType;
 import ProductLine.SlotState;
@@ -21,8 +23,16 @@ public class Game extends ProductLine.Game {
 		slots.add(new Slot(creator,SlotState.Human));
 		switch (typeGame) {
 		case Checkers:
+			board = new int [8][8];
+			//CheckersGame.initBoard(board);
+			slots.add(new Slot("",SlotState.Empty));
+			break;
 		case Chess:
+			board = new int [8][8];
+			slots.add(new Slot("",SlotState.Empty));
+			break;
 		case Connect4:
+			board = new int [6][7];
 			slots.add(new Slot("",SlotState.Empty));
 			break;
 		case Trivial:

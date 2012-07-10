@@ -11,7 +11,7 @@ import javax.mail.internet.MimeMessage.RecipientType;
 
 import com.sun.mail.smtp.SMTPTransport;
 
-import constants.MailConstants;
+import constants.Constants;
 
 public class MailSender {
 
@@ -32,7 +32,7 @@ public class MailSender {
 		props.setProperty("mail.smtp.port", "587");
 
 		// SMTP User
-		props.setProperty("mail.smtp.user", MailConstants.Account);
+		props.setProperty("mail.smtp.user", Constants.Account);
 		session = Session.getDefaultInstance(props);
 		// session.setDebug(true);
 	}
@@ -47,16 +47,16 @@ public class MailSender {
 
 		MimeMessage message = new MimeMessage(session);
 		try {
-			message.setFrom(new InternetAddress(MailConstants.Account));
+			message.setFrom(new InternetAddress(Constants.Account));
 			message.addRecipient(RecipientType.TO, new InternetAddress(address));
 
 			// Subject and text
 
-			message.setSubject(MailConstants.Subject+subject);
+			message.setSubject(Constants.Subject+subject);
 			message.setText(text);
 			SMTPTransport t = (SMTPTransport) session.getTransport("smtp");
 
-			t.connect(MailConstants.Account, MailConstants.Password);
+			t.connect(Constants.Account, Constants.Password);
 			t.sendMessage(message, message.getAllRecipients());
 
 			t.close();
