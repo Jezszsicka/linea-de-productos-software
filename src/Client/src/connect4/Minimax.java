@@ -413,9 +413,9 @@ public class Minimax {
 	 * @param jugador Jugador actual
 	 * @return Jugador del siguiente turno**/
 	public int cambiarJugador(int jugador){
-		if(jugador==1)
-			return 2;
-		else return 1;
+		if(jugador== Connect4.RED)
+			return Connect4.BLUE;
+		else return Connect4.RED;
 	}
 	
 	

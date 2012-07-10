@@ -23,6 +23,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
+import constants.Constants;
+
 import presentation.GameUI;
 
 import logic.Controller;
@@ -123,15 +125,15 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 		this.game = game;
 		playerTurn = 1;
 		boardUI = new JLabel[6][7];
-		minimax = new Minimax(4);
+		minimax = new Minimax(Constants.Connect4ComputerLevel);
 		destinatary = "";
 
 		Slot opponentSlot = game.getSlot(0);
-		myPlayer = 2;
+		myPlayer = Connect4.BLUE;
 
 		if (opponentSlot.getPlayer().equalsIgnoreCase(username)) {
 			opponentSlot = game.getSlot(1);
-			myPlayer = 1;
+			myPlayer = Connect4.RED;
 		}
 
 		if (opponentSlot.getType() == SlotState.Human)
@@ -154,6 +156,7 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 					opponentSlot.getPlayer());
 			lblOpponentAvatar.setIcon(new ImageIcon(opponent.getAvatar()));
 			lblOpponentName.setText(opponent.getUsername());
+			
 			if (playerTurn != myPlayer) {
 				activateButtons(false);
 				lblState.setText("Es el turno de "+opponent.getName());
@@ -1135,7 +1138,7 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 		boolean winner = false;
 		if (fila != -1) {
 			Connect4.ponerFicha(game.getBoard(), columna, playerTurn);
-			if (playerTurn == 1) {
+			if (playerTurn == Connect4.RED) {
 				boardUI[fila][columna].setIcon(new ImageIcon(getClass()
 						.getClassLoader().getResource(
 								"images/ConnectFour/Red.jpg")));
@@ -1200,13 +1203,6 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 		return lblState;
 	}
 
-	private int chagenPlayerTurn(int jugador) {
-		if (jugador == 1)
-			return 2;
-		else
-			return 1;
-	}
-
 	private void activateButtons(boolean enabled) {
 		btn1.setVisible(enabled);
 		btn2.setVisible(enabled);
@@ -1217,6 +1213,14 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 		btn7.setVisible(enabled);
 	}
 
+	
+	private int chagenPlayerTurn(int jugador) {
+		if (jugador == Connect4.RED)
+			return Connect4.BLUE;
+		else
+			return Connect4.RED;
+	}
+	
 	private void computerMove() {
 		int movimiento = minimax.minimax(game.getBoard(), playerTurn);
 		int fila = libre(movimiento);
