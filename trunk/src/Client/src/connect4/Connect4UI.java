@@ -1311,7 +1311,6 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 				dispose();
 			}
 		}.start();
-		
 	}
 
 	

@@ -322,6 +322,7 @@ public class GamesManager {
 		// TODO Auto-generated method stub
 		Game game = searchGame(gameName);
 		switch(game.getTypeGame()){
+		case Checkers:
 		case Connect4:
 			game.setBoard(board);
 			String turn;

@@ -3,6 +3,8 @@ package logic;
 import java.util.Hashtable;
 import java.util.List;
 
+import checkers.CheckersGame;
+
 import model.Filter;
 import model.Game;
 import model.Session;
@@ -48,6 +50,12 @@ public class GamesManager {
 	 * @throws FullGameException The game is full**/
 	public Game joinGame(String gameName) throws FullGameException {
 		Game game = (Game)session.getProxy().joinGame(gameName, session.getUser().getUsername());
+		switch(game.getTypeGame()){
+		case Checkers:
+			CheckersGame.initBoard(game.getBoard());
+			break;
+			
+		}
 		games.put(gameName, game);
 		return game;
 		
