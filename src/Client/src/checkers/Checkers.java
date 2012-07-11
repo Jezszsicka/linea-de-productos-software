@@ -291,6 +291,7 @@ public class Checkers extends JPanel {
 			 * same player continues moving.
 			 */
 
+			//TODO
 			if (move.isJump()) {
 				legalMoves = board.getLegalJumpsFrom(currentPlayer, move.toRow,
 						move.toCol);

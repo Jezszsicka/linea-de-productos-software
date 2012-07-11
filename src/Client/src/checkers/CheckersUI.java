@@ -1,15 +1,18 @@
 package checkers;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -18,6 +21,7 @@ import javax.swing.SwingConstants;
 
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.SoftBevelBorder;
 import javax.swing.text.BadLocationException;
@@ -25,11 +29,13 @@ import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
 import connect4.Connect4;
+import connect4.Connect4UI;
 
 import presentation.GameUI;
 
 import logic.Controller;
 import model.Game;
+import model.User;
 import ProductLine.Slot;
 import ProductLine.UserNotInGameException;
 
@@ -44,7 +50,7 @@ import ProductLine.UserNotInGameException;
  * ANY CORPORATE OR COMMERCIAL PURPOSE.
  */
 @SuppressWarnings("serial")
-public class CheckersUI extends javax.swing.JFrame implements GameUI{
+public class CheckersUI extends javax.swing.JFrame implements GameUI {
 
 	private HTMLEditorKit htmlEditor;
 	private HTMLDocument chatText;
@@ -121,16 +127,27 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 	private JLabel lbl_01;
 	private JLabel lbl_00;
 	private JPanel pnlBoard;
-	private JLabel lblAvatarBlack;
+	private JLabel lblOpponentAvatar;
 	private JPanel pnlBackground;
-	
+	private JLabel lblState;
+
+	private static final Border blackBorder = new LineBorder(
+			new java.awt.Color(0, 0, 0), 1, false);
+	private static final Border redBorder = new LineBorder(new java.awt.Color(
+			255, 0, 0), 4, false);
+	private static final Border greenBorder = new LineBorder(
+			new java.awt.Color(0, 255, 0), 4, false);
+	private static final Border blueBorder = new LineBorder(new java.awt.Color(
+			0, 0, 255), 4, false);
+
 	private JLabel[][] boardUI;
 	private Game game;
 	private int myPlayer;
 	private int playerTurn;
 	private List<CheckersMove> moves;
-	
-	
+	private int selectedRow;
+	private int selectedColumn;
+	private boolean activeSquares;
 
 	public CheckersUI(String username, Game game) {
 		super();
@@ -138,49 +155,49 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		this.game = game;
 		destinatary = "";
 		boardUI = new JLabel[8][8];
-		
+		playerTurn = CheckersGame.RED;
+
 		Slot opponentSlot = game.getSlot(0);
 		myPlayer = CheckersGame.BLACK;
 
 		if (opponentSlot.getPlayer().equalsIgnoreCase(username)) {
 			opponentSlot = game.getSlot(1);
 			myPlayer = CheckersGame.RED;
+			activeSquares = true;
 		}
-		
+
 		initGUI();
-		refreshBoard();
+		selectedRow = -1;
+
+		User opponent = Controller.getInstance().searchUser(
+				opponentSlot.getPlayer());
+		lblOpponentAvatar.setIcon(new ImageIcon(opponent.getAvatar()));
+		lblOpponentName.setText(opponent.getUsername());
 		
-		if (playerTurn != myPlayer) {
+		if (playerTurn == myPlayer) {
 			moves = CheckersGame.legalMoves(game.getBoard(), myPlayer);
 			resaltarMovimientos();
-			//activateButtons(false);
-			//lblState.setText("Es el turno de "+opponent.getName());
+			activeSquares = true;
+			lblState.setText("Es tu turno");
 		} else {
-			//lblState.setText("Es tu turno");
-			//activateButtons(true);
+			lblState.setText("Es el turno de "+opponent.getName());
+			activeSquares = false;
 		}
+		
+		refreshBoard();
+
 	}
 
 	private void initGUI() {
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
 		pack();
-		this.setSize(650, 721);
+		this.setSize(660, 732);
 		setLocationRelativeTo(null);
 		setVisible(true);
 		getContentPane().add(getPnlBackground());
 	}
 
-	private void resaltarMovimientos() {
-		for(CheckersMove move : moves){
-			int row = move.getFromRow();
-			int column = move.getFromColumn();
-			boardUI[row][column].setBorder(new LineBorder(new java.awt.Color(0,255,0),4,false));
-			repaint();
-		}
-		
-	}
-	
 	private void txtMessageKeyPressed(KeyEvent evt) {
 		if (evt.getKeyCode() == 10 && txtMessage.getText().length() > 0)
 			sendMessage();
@@ -195,8 +212,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 				String privateMessage = message.split(destinatary)[1];
 				try {
 					Controller.getInstance().sendGamePrivateMessage(
-							game.getName(), destinatary,
-							privateMessage);
+							game.getName(), destinatary, privateMessage);
 					try {
 						htmlEditor.insertHTML(chatText, chatText.getLength(),
 								"<font color=\"red\"><b> >" + destinatary
@@ -251,24 +267,28 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		if (pnlBackground == null) {
 			pnlBackground = new JPanel();
 			pnlBackground.setLayout(null);
-			pnlBackground.setBounds(0, 0, 634, 683);
-			pnlBackground.add(getLblAvatarBlack());
+			pnlBackground.setBounds(0, 0, 644, 694);
+			pnlBackground.add(getLblOpponentAvatar());
 			pnlBackground.add(getPnlBoard());
 			pnlBackground.add(getBtnQuit());
 			pnlBackground.add(getTxtMessage());
 			pnlBackground.add(getPnlChat());
 			pnlBackground.add(getLblOpponentName());
+			pnlBackground.add(getLblState());
 		}
 		return pnlBackground;
 	}
-	private JLabel getLblAvatarBlack() {
-		if (lblAvatarBlack == null) {
-			lblAvatarBlack = new JLabel();
-			lblAvatarBlack.setBounds(513, 11, 101, 124);
-			lblAvatarBlack.setBorder(new SoftBevelBorder(BevelBorder.LOWERED,null,null,null,null));
+
+	private JLabel getLblOpponentAvatar() {
+		if (lblOpponentAvatar == null) {
+			lblOpponentAvatar = new JLabel();
+			lblOpponentAvatar.setBounds(522, 11, 101, 124);
+			lblOpponentAvatar.setBorder(new SoftBevelBorder(BevelBorder.LOWERED,
+					null, null, null, null));
 		}
-		return lblAvatarBlack;
+		return lblOpponentAvatar;
 	}
+
 	private JPanel getPnlBoard() {
 		if (pnlBoard == null) {
 			pnlBoard = new JPanel();
@@ -342,13 +362,15 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return pnlBoard;
 	}
+
 	private JLabel getLbl_00() {
-		if(lbl_00 == null) {
+		if (lbl_00 == null) {
 			lbl_00 = new JLabel();
 			lbl_00.setBounds(7, 7, 60, 60);
-			lbl_00.setBackground(new java.awt.Color(255,255,255));
+			lbl_00.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_00.setOpaque(true);
-			lbl_00.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_00.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_00.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_00.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -359,13 +381,15 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_00;
 	}
+
 	private JLabel getLbl_01() {
-		if(lbl_01 == null) {
+		if (lbl_01 == null) {
 			lbl_01 = new JLabel();
 			lbl_01.setBounds(67, 7, 60, 60);
 			lbl_01.setOpaque(true);
-			lbl_01.setBackground(new java.awt.Color(0,0,0));
-			lbl_01.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_01.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_01.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_01.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_01MouseClicked(evt);
@@ -375,13 +399,15 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_01;
 	}
+
 	private JLabel getLbl_02() {
-		if(lbl_02 == null) {
+		if (lbl_02 == null) {
 			lbl_02 = new JLabel();
 			lbl_02.setOpaque(true);
-			lbl_02.setBackground(new java.awt.Color(255,255,255));
+			lbl_02.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_02.setBounds(127, 7, 60, 60);
-			lbl_02.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_02.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_02.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_02.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -392,13 +418,15 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_02;
 	}
+
 	private JLabel getLbl_03() {
-		if(lbl_03 == null) {
+		if (lbl_03 == null) {
 			lbl_03 = new JLabel();
 			lbl_03.setOpaque(true);
-			lbl_03.setBackground(new java.awt.Color(0,0,0));
+			lbl_03.setBackground(new java.awt.Color(0, 0, 0));
 			lbl_03.setBounds(187, 7, 60, 60);
-			lbl_03.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_03.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_03.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_03MouseClicked(evt);
@@ -408,13 +436,15 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_03;
 	}
+
 	private JLabel getLbl_04() {
-		if(lbl_04 == null) {
+		if (lbl_04 == null) {
 			lbl_04 = new JLabel();
 			lbl_04.setOpaque(true);
-			lbl_04.setBackground(new java.awt.Color(255,255,255));
+			lbl_04.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_04.setBounds(247, 7, 60, 60);
-			lbl_04.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_04.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_04.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_04.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -425,13 +455,15 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_04;
 	}
+
 	private JLabel getLbl_05() {
-		if(lbl_05 == null) {
+		if (lbl_05 == null) {
 			lbl_05 = new JLabel();
 			lbl_05.setOpaque(true);
-			lbl_05.setBackground(new java.awt.Color(0,0,0));
+			lbl_05.setBackground(new java.awt.Color(0, 0, 0));
 			lbl_05.setBounds(307, 7, 60, 60);
-			lbl_05.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_05.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_05.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_05MouseClicked(evt);
@@ -441,13 +473,15 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_05;
 	}
+
 	private JLabel getLbl_06() {
-		if(lbl_06 == null) {
+		if (lbl_06 == null) {
 			lbl_06 = new JLabel();
 			lbl_06.setOpaque(true);
-			lbl_06.setBackground(new java.awt.Color(255,255,255));
+			lbl_06.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_06.setBounds(367, 7, 60, 60);
-			lbl_06.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_06.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_06.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_06.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -458,13 +492,15 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_06;
 	}
+
 	private JLabel getLbl_07() {
-		if(lbl_07 == null) {
+		if (lbl_07 == null) {
 			lbl_07 = new JLabel();
 			lbl_07.setBounds(427, 7, 60, 60);
-			lbl_07.setBackground(new java.awt.Color(0,0,0));
+			lbl_07.setBackground(new java.awt.Color(0, 0, 0));
 			lbl_07.setOpaque(true);
-			lbl_07.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_07.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_07.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_07MouseClicked(evt);
@@ -474,12 +510,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_07;
 	}
+
 	private JLabel getLbl_17() {
-		if(lbl_17 == null) {
+		if (lbl_17 == null) {
 			lbl_17 = new JLabel();
 			lbl_17.setOpaque(true);
-			lbl_17.setBackground(new java.awt.Color(255,255,255));
-			lbl_17.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_17.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_17.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_17.setBounds(427, 67, 60, 60);
 			lbl_17.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_17.addMouseListener(new MouseAdapter() {
@@ -491,12 +529,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_17;
 	}
+
 	private JLabel getLbl_16() {
-		if(lbl_16 == null) {
+		if (lbl_16 == null) {
 			lbl_16 = new JLabel();
 			lbl_16.setOpaque(true);
-			lbl_16.setBackground(new java.awt.Color(0,0,0));
-			lbl_16.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_16.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_16.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_16.setBounds(367, 67, 60, 60);
 			lbl_16.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -507,12 +547,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_16;
 	}
+
 	private JLabel getLbl_15() {
-		if(lbl_15 == null) {
+		if (lbl_15 == null) {
 			lbl_15 = new JLabel();
 			lbl_15.setOpaque(true);
-			lbl_15.setBackground(new java.awt.Color(255,255,255));
-			lbl_15.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_15.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_15.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_15.setBounds(307, 67, 60, 60);
 			lbl_15.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_15.addMouseListener(new MouseAdapter() {
@@ -524,12 +566,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_15;
 	}
+
 	private JLabel getLbl_14() {
-		if(lbl_14 == null) {
+		if (lbl_14 == null) {
 			lbl_14 = new JLabel();
 			lbl_14.setOpaque(true);
-			lbl_14.setBackground(new java.awt.Color(0,0,0));
-			lbl_14.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_14.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_14.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_14.setBounds(247, 67, 60, 60);
 			lbl_14.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -540,12 +584,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_14;
 	}
+
 	private JLabel getLbl_13() {
-		if(lbl_13 == null) {
+		if (lbl_13 == null) {
 			lbl_13 = new JLabel();
 			lbl_13.setOpaque(true);
-			lbl_13.setBackground(new java.awt.Color(255,255,255));
-			lbl_13.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_13.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_13.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_13.setBounds(187, 67, 60, 60);
 			lbl_13.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_13.addMouseListener(new MouseAdapter() {
@@ -557,12 +603,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_13;
 	}
+
 	private JLabel getLbl_12() {
-		if(lbl_12 == null) {
+		if (lbl_12 == null) {
 			lbl_12 = new JLabel();
 			lbl_12.setOpaque(true);
-			lbl_12.setBackground(new java.awt.Color(0,0,0));
-			lbl_12.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_12.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_12.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_12.setBounds(127, 67, 60, 60);
 			lbl_12.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -573,12 +621,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_12;
 	}
+
 	private JLabel getLbl_11() {
-		if(lbl_11 == null) {
+		if (lbl_11 == null) {
 			lbl_11 = new JLabel();
 			lbl_11.setOpaque(true);
-			lbl_11.setBackground(new java.awt.Color(255,255,255));
-			lbl_11.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_11.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_11.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_11.setBounds(67, 67, 60, 60);
 			lbl_11.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_11.addMouseListener(new MouseAdapter() {
@@ -590,12 +640,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_11;
 	}
+
 	private JLabel getLbl_10() {
-		if(lbl_10 == null) {
+		if (lbl_10 == null) {
 			lbl_10 = new JLabel();
 			lbl_10.setOpaque(true);
-			lbl_10.setBackground(new java.awt.Color(0,0,0));
-			lbl_10.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_10.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_10.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_10.setBounds(7, 67, 60, 60);
 			lbl_10.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -606,12 +658,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_10;
 	}
+
 	private JLabel getLbl_27() {
-		if(lbl_27 == null) {
+		if (lbl_27 == null) {
 			lbl_27 = new JLabel();
 			lbl_27.setOpaque(true);
-			lbl_27.setBackground(new java.awt.Color(0,0,0));
-			lbl_27.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_27.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_27.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_27.setBounds(427, 127, 60, 60);
 			lbl_27.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -622,12 +676,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_27;
 	}
+
 	private JLabel getLbl_26() {
-		if(lbl_26 == null) {
+		if (lbl_26 == null) {
 			lbl_26 = new JLabel();
 			lbl_26.setOpaque(true);
-			lbl_26.setBackground(new java.awt.Color(255,255,255));
-			lbl_26.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_26.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_26.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_26.setBounds(367, 127, 60, 60);
 			lbl_26.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_26.addMouseListener(new MouseAdapter() {
@@ -639,12 +695,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_26;
 	}
+
 	private JLabel getLbl_25() {
-		if(lbl_25 == null) {
+		if (lbl_25 == null) {
 			lbl_25 = new JLabel();
 			lbl_25.setOpaque(true);
-			lbl_25.setBackground(new java.awt.Color(0,0,0));
-			lbl_25.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_25.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_25.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_25.setBounds(307, 127, 60, 60);
 			lbl_25.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -655,12 +713,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_25;
 	}
+
 	private JLabel getLbl_24() {
-		if(lbl_24 == null) {
+		if (lbl_24 == null) {
 			lbl_24 = new JLabel();
 			lbl_24.setOpaque(true);
-			lbl_24.setBackground(new java.awt.Color(255,255,255));
-			lbl_24.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_24.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_24.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_24.setBounds(247, 127, 60, 60);
 			lbl_24.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_24.addMouseListener(new MouseAdapter() {
@@ -672,12 +732,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_24;
 	}
+
 	private JLabel getLbl_23() {
-		if(lbl_23 == null) {
+		if (lbl_23 == null) {
 			lbl_23 = new JLabel();
 			lbl_23.setOpaque(true);
-			lbl_23.setBackground(new java.awt.Color(0,0,0));
-			lbl_23.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_23.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_23.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_23.setBounds(187, 127, 60, 60);
 			lbl_23.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -688,12 +750,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_23;
 	}
+
 	private JLabel getLbl_22() {
-		if(lbl_22 == null) {
+		if (lbl_22 == null) {
 			lbl_22 = new JLabel();
 			lbl_22.setOpaque(true);
-			lbl_22.setBackground(new java.awt.Color(255,255,255));
-			lbl_22.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_22.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_22.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_22.setBounds(127, 127, 60, 60);
 			lbl_22.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_22.addMouseListener(new MouseAdapter() {
@@ -705,12 +769,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_22;
 	}
+
 	private JLabel getLbl_21() {
-		if(lbl_21 == null) {
+		if (lbl_21 == null) {
 			lbl_21 = new JLabel();
 			lbl_21.setOpaque(true);
-			lbl_21.setBackground(new java.awt.Color(0,0,0));
-			lbl_21.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_21.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_21.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_21.setBounds(67, 127, 60, 60);
 			lbl_21.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -721,12 +787,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_21;
 	}
+
 	private JLabel getLbl_20() {
-		if(lbl_20 == null) {
+		if (lbl_20 == null) {
 			lbl_20 = new JLabel();
 			lbl_20.setOpaque(true);
-			lbl_20.setBackground(new java.awt.Color(255,255,255));
-			lbl_20.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_20.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_20.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_20.setBounds(7, 127, 60, 60);
 			lbl_20.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_20.addMouseListener(new MouseAdapter() {
@@ -738,12 +806,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_20;
 	}
+
 	private JLabel getLbl_37() {
-		if(lbl_37 == null) {
+		if (lbl_37 == null) {
 			lbl_37 = new JLabel();
 			lbl_37.setOpaque(true);
-			lbl_37.setBackground(new java.awt.Color(255,255,255));
-			lbl_37.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_37.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_37.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_37.setBounds(427, 186, 60, 60);
 			lbl_37.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_37.addMouseListener(new MouseAdapter() {
@@ -755,12 +825,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_37;
 	}
+
 	private JLabel getLbl_36() {
-		if(lbl_36 == null) {
+		if (lbl_36 == null) {
 			lbl_36 = new JLabel();
 			lbl_36.setOpaque(true);
-			lbl_36.setBackground(new java.awt.Color(0,0,0));
-			lbl_36.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_36.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_36.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_36.setBounds(367, 186, 60, 60);
 			lbl_36.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -771,12 +843,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_36;
 	}
+
 	private JLabel getLbl_35() {
-		if(lbl_35 == null) {
+		if (lbl_35 == null) {
 			lbl_35 = new JLabel();
 			lbl_35.setOpaque(true);
-			lbl_35.setBackground(new java.awt.Color(255,255,255));
-			lbl_35.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_35.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_35.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_35.setBounds(307, 186, 60, 60);
 			lbl_35.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_35.addMouseListener(new MouseAdapter() {
@@ -788,12 +862,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_35;
 	}
+
 	private JLabel getLbl_34() {
-		if(lbl_34 == null) {
+		if (lbl_34 == null) {
 			lbl_34 = new JLabel();
 			lbl_34.setOpaque(true);
-			lbl_34.setBackground(new java.awt.Color(0,0,0));
-			lbl_34.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_34.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_34.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_34.setBounds(247, 186, 60, 60);
 			lbl_34.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -804,12 +880,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_34;
 	}
+
 	private JLabel getLbl_33() {
-		if(lbl_33 == null) {
+		if (lbl_33 == null) {
 			lbl_33 = new JLabel();
 			lbl_33.setOpaque(true);
-			lbl_33.setBackground(new java.awt.Color(255,255,255));
-			lbl_33.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_33.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_33.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_33.setBounds(187, 186, 60, 60);
 			lbl_33.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_33.addMouseListener(new MouseAdapter() {
@@ -821,12 +899,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_33;
 	}
+
 	private JLabel getLbl_32() {
-		if(lbl_32 == null) {
+		if (lbl_32 == null) {
 			lbl_32 = new JLabel();
 			lbl_32.setOpaque(true);
-			lbl_32.setBackground(new java.awt.Color(0,0,0));
-			lbl_32.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_32.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_32.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_32.setBounds(127, 186, 60, 60);
 			lbl_32.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -837,12 +917,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_32;
 	}
+
 	private JLabel getLbl_31() {
-		if(lbl_31 == null) {
+		if (lbl_31 == null) {
 			lbl_31 = new JLabel();
 			lbl_31.setOpaque(true);
-			lbl_31.setBackground(new java.awt.Color(255,255,255));
-			lbl_31.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_31.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_31.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_31.setBounds(67, 186, 60, 60);
 			lbl_31.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_31.addMouseListener(new MouseAdapter() {
@@ -854,12 +936,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_31;
 	}
+
 	private JLabel getLbl_30() {
-		if(lbl_30 == null) {
+		if (lbl_30 == null) {
 			lbl_30 = new JLabel();
 			lbl_30.setOpaque(true);
-			lbl_30.setBackground(new java.awt.Color(0,0,0));
-			lbl_30.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_30.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_30.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_30.setBounds(7, 186, 60, 60);
 			lbl_30.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -870,12 +954,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_30;
 	}
+
 	private JLabel getLbl_47() {
-		if(lbl_47 == null) {
+		if (lbl_47 == null) {
 			lbl_47 = new JLabel();
 			lbl_47.setOpaque(true);
-			lbl_47.setBackground(new java.awt.Color(0,0,0));
-			lbl_47.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_47.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_47.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_47.setBounds(427, 246, 60, 60);
 			lbl_47.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -886,12 +972,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_47;
 	}
+
 	private JLabel getLbl_46() {
-		if(lbl_46 == null) {
+		if (lbl_46 == null) {
 			lbl_46 = new JLabel();
 			lbl_46.setOpaque(true);
-			lbl_46.setBackground(new java.awt.Color(255,255,255));
-			lbl_46.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_46.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_46.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_46.setBounds(367, 246, 60, 60);
 			lbl_46.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_46.addMouseListener(new MouseAdapter() {
@@ -903,12 +991,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_46;
 	}
+
 	private JLabel getLbl_45() {
-		if(lbl_45 == null) {
+		if (lbl_45 == null) {
 			lbl_45 = new JLabel();
 			lbl_45.setOpaque(true);
-			lbl_45.setBackground(new java.awt.Color(0,0,0));
-			lbl_45.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_45.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_45.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_45.setBounds(307, 246, 60, 60);
 			lbl_45.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -919,12 +1009,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_45;
 	}
+
 	private JLabel getLbl_44() {
-		if(lbl_44 == null) {
+		if (lbl_44 == null) {
 			lbl_44 = new JLabel();
 			lbl_44.setOpaque(true);
-			lbl_44.setBackground(new java.awt.Color(255,255,255));
-			lbl_44.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_44.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_44.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_44.setBounds(247, 246, 60, 60);
 			lbl_44.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_44.addMouseListener(new MouseAdapter() {
@@ -936,12 +1028,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_44;
 	}
+
 	private JLabel getLbl_43() {
-		if(lbl_43 == null) {
+		if (lbl_43 == null) {
 			lbl_43 = new JLabel();
 			lbl_43.setOpaque(true);
-			lbl_43.setBackground(new java.awt.Color(0,0,0));
-			lbl_43.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_43.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_43.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_43.setBounds(187, 246, 60, 60);
 			lbl_43.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -952,12 +1046,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_43;
 	}
+
 	private JLabel getLbl_42() {
-		if(lbl_42 == null) {
+		if (lbl_42 == null) {
 			lbl_42 = new JLabel();
 			lbl_42.setOpaque(true);
-			lbl_42.setBackground(new java.awt.Color(255,255,255));
-			lbl_42.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_42.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_42.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_42.setBounds(127, 246, 60, 60);
 			lbl_42.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_42.addMouseListener(new MouseAdapter() {
@@ -969,12 +1065,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_42;
 	}
+
 	private JLabel getLbl_41() {
-		if(lbl_41 == null) {
+		if (lbl_41 == null) {
 			lbl_41 = new JLabel();
 			lbl_41.setOpaque(true);
-			lbl_41.setBackground(new java.awt.Color(0,0,0));
-			lbl_41.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_41.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_41.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_41.setBounds(67, 246, 60, 60);
 			lbl_41.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -985,12 +1083,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_41;
 	}
+
 	private JLabel getLbl_40() {
-		if(lbl_40 == null) {
+		if (lbl_40 == null) {
 			lbl_40 = new JLabel();
 			lbl_40.setOpaque(true);
-			lbl_40.setBackground(new java.awt.Color(255,255,255));
-			lbl_40.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_40.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_40.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_40.setBounds(7, 246, 60, 60);
 			lbl_40.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_40.addMouseListener(new MouseAdapter() {
@@ -1002,12 +1102,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_40;
 	}
+
 	private JLabel getLbl_57() {
-		if(lbl_57 == null) {
+		if (lbl_57 == null) {
 			lbl_57 = new JLabel();
 			lbl_57.setOpaque(true);
-			lbl_57.setBackground(new java.awt.Color(255,255,255));
-			lbl_57.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_57.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_57.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_57.setBounds(427, 306, 60, 60);
 			lbl_57.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_57.addMouseListener(new MouseAdapter() {
@@ -1019,12 +1121,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_57;
 	}
+
 	private JLabel getLbl_55() {
-		if(lbl_55 == null) {
+		if (lbl_55 == null) {
 			lbl_55 = new JLabel();
 			lbl_55.setOpaque(true);
-			lbl_55.setBackground(new java.awt.Color(255,255,255));
-			lbl_55.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_55.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_55.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_55.setBounds(307, 306, 60, 60);
 			lbl_55.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_55.addMouseListener(new MouseAdapter() {
@@ -1036,12 +1140,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_55;
 	}
+
 	private JLabel getLbl_56() {
-		if(lbl_56 == null) {
+		if (lbl_56 == null) {
 			lbl_56 = new JLabel();
 			lbl_56.setOpaque(true);
-			lbl_56.setBackground(new java.awt.Color(0,0,0));
-			lbl_56.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_56.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_56.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_56.setBounds(367, 306, 60, 60);
 			lbl_56.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -1052,12 +1158,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_56;
 	}
+
 	private JLabel getLbl_54() {
-		if(lbl_54 == null) {
+		if (lbl_54 == null) {
 			lbl_54 = new JLabel();
 			lbl_54.setOpaque(true);
-			lbl_54.setBackground(new java.awt.Color(0,0,0));
-			lbl_54.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_54.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_54.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_54.setBounds(247, 306, 60, 60);
 			lbl_54.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -1068,12 +1176,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_54;
 	}
+
 	private JLabel getLbl_53() {
-		if(lbl_53 == null) {
+		if (lbl_53 == null) {
 			lbl_53 = new JLabel();
 			lbl_53.setOpaque(true);
-			lbl_53.setBackground(new java.awt.Color(255,255,255));
-			lbl_53.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_53.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_53.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_53.setBounds(187, 306, 60, 60);
 			lbl_53.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_53.addMouseListener(new MouseAdapter() {
@@ -1085,12 +1195,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_53;
 	}
+
 	private JLabel getLbl_52() {
-		if(lbl_52 == null) {
+		if (lbl_52 == null) {
 			lbl_52 = new JLabel();
 			lbl_52.setOpaque(true);
-			lbl_52.setBackground(new java.awt.Color(0,0,0));
-			lbl_52.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_52.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_52.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_52.setBounds(127, 306, 60, 60);
 			lbl_52.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -1101,12 +1213,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_52;
 	}
+
 	private JLabel getLbl_51() {
-		if(lbl_51 == null) {
+		if (lbl_51 == null) {
 			lbl_51 = new JLabel();
 			lbl_51.setOpaque(true);
-			lbl_51.setBackground(new java.awt.Color(255,255,255));
-			lbl_51.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_51.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_51.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_51.setBounds(67, 306, 60, 60);
 			lbl_51.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_51.addMouseListener(new MouseAdapter() {
@@ -1118,12 +1232,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_51;
 	}
+
 	private JLabel getLbl_50() {
-		if(lbl_50 == null) {
+		if (lbl_50 == null) {
 			lbl_50 = new JLabel();
 			lbl_50.setOpaque(true);
-			lbl_50.setBackground(new java.awt.Color(0,0,0));
-			lbl_50.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_50.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_50.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_50.setBounds(7, 306, 60, 60);
 			lbl_50.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -1134,12 +1250,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_50;
 	}
+
 	private JLabel getLbl_67() {
-		if(lbl_67 == null) {
+		if (lbl_67 == null) {
 			lbl_67 = new JLabel();
 			lbl_67.setOpaque(true);
-			lbl_67.setBackground(new java.awt.Color(0,0,0));
-			lbl_67.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_67.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_67.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_67.setBounds(427, 366, 60, 60);
 			lbl_67.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -1150,12 +1268,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_67;
 	}
+
 	private JLabel getLbl_66() {
-		if(lbl_66 == null) {
+		if (lbl_66 == null) {
 			lbl_66 = new JLabel();
 			lbl_66.setOpaque(true);
-			lbl_66.setBackground(new java.awt.Color(255,255,255));
-			lbl_66.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_66.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_66.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_66.setBounds(367, 366, 60, 60);
 			lbl_66.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_66.addMouseListener(new MouseAdapter() {
@@ -1167,12 +1287,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_66;
 	}
+
 	private JLabel getLbl_65() {
-		if(lbl_65 == null) {
+		if (lbl_65 == null) {
 			lbl_65 = new JLabel();
 			lbl_65.setOpaque(true);
-			lbl_65.setBackground(new java.awt.Color(0,0,0));
-			lbl_65.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_65.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_65.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_65.setBounds(307, 366, 60, 60);
 			lbl_65.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -1183,12 +1305,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_65;
 	}
+
 	private JLabel getLbl_64() {
-		if(lbl_64 == null) {
+		if (lbl_64 == null) {
 			lbl_64 = new JLabel();
 			lbl_64.setOpaque(true);
-			lbl_64.setBackground(new java.awt.Color(255,255,255));
-			lbl_64.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_64.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_64.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_64.setBounds(247, 366, 60, 60);
 			lbl_64.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_64.addMouseListener(new MouseAdapter() {
@@ -1200,12 +1324,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_64;
 	}
+
 	private JLabel getLbl_63() {
-		if(lbl_63 == null) {
+		if (lbl_63 == null) {
 			lbl_63 = new JLabel();
 			lbl_63.setOpaque(true);
-			lbl_63.setBackground(new java.awt.Color(0,0,0));
-			lbl_63.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_63.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_63.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_63.setBounds(187, 366, 60, 60);
 			lbl_63.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -1216,12 +1342,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_63;
 	}
+
 	private JLabel getLbl_62() {
-		if(lbl_62 == null) {
+		if (lbl_62 == null) {
 			lbl_62 = new JLabel();
 			lbl_62.setOpaque(true);
-			lbl_62.setBackground(new java.awt.Color(255,255,255));
-			lbl_62.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_62.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_62.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_62.setBounds(127, 366, 60, 60);
 			lbl_62.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_62.addMouseListener(new MouseAdapter() {
@@ -1233,12 +1361,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_62;
 	}
+
 	private JLabel getLbl_61() {
-		if(lbl_61 == null) {
+		if (lbl_61 == null) {
 			lbl_61 = new JLabel();
 			lbl_61.setOpaque(true);
-			lbl_61.setBackground(new java.awt.Color(0,0,0));
-			lbl_61.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_61.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_61.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_61.setBounds(67, 366, 60, 60);
 			lbl_61.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -1249,12 +1379,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_61;
 	}
+
 	private JLabel getLbl_60() {
-		if(lbl_60 == null) {
+		if (lbl_60 == null) {
 			lbl_60 = new JLabel();
 			lbl_60.setOpaque(true);
-			lbl_60.setBackground(new java.awt.Color(255,255,255));
-			lbl_60.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_60.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_60.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_60.setBounds(7, 366, 60, 60);
 			lbl_60.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_60.addMouseListener(new MouseAdapter() {
@@ -1266,12 +1398,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_60;
 	}
+
 	private JLabel getLbl_70() {
-		if(lbl_70 == null) {
+		if (lbl_70 == null) {
 			lbl_70 = new JLabel();
 			lbl_70.setOpaque(true);
-			lbl_70.setBackground(new java.awt.Color(0,0,0));
-			lbl_70.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_70.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_70.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_70.setBounds(7, 426, 60, 60);
 			lbl_70.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -1282,12 +1416,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_70;
 	}
+
 	private JLabel getLbl_77() {
-		if(lbl_77 == null) {
+		if (lbl_77 == null) {
 			lbl_77 = new JLabel();
 			lbl_77.setOpaque(true);
-			lbl_77.setBackground(new java.awt.Color(255,255,255));
-			lbl_77.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_77.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_77.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_77.setBounds(427, 426, 60, 60);
 			lbl_77.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_77.addMouseListener(new MouseAdapter() {
@@ -1299,12 +1435,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_77;
 	}
+
 	private JLabel getLbl_76() {
-		if(lbl_76 == null) {
+		if (lbl_76 == null) {
 			lbl_76 = new JLabel();
 			lbl_76.setOpaque(true);
-			lbl_76.setBackground(new java.awt.Color(0,0,0));
-			lbl_76.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_76.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_76.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_76.setBounds(367, 426, 60, 60);
 			lbl_76.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -1315,12 +1453,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_76;
 	}
+
 	private JLabel getLbl_75() {
-		if(lbl_75 == null) {
+		if (lbl_75 == null) {
 			lbl_75 = new JLabel();
 			lbl_75.setOpaque(true);
-			lbl_75.setBackground(new java.awt.Color(255,255,255));
-			lbl_75.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_75.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_75.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_75.setBounds(307, 426, 60, 60);
 			lbl_75.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_75.addMouseListener(new MouseAdapter() {
@@ -1332,12 +1472,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_75;
 	}
+
 	private JLabel getLbl_74() {
-		if(lbl_74 == null) {
+		if (lbl_74 == null) {
 			lbl_74 = new JLabel();
 			lbl_74.setOpaque(true);
-			lbl_74.setBackground(new java.awt.Color(0,0,0));
-			lbl_74.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_74.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_74.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_74.setBounds(247, 426, 60, 60);
 			lbl_74.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -1348,12 +1490,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_74;
 	}
+
 	private JLabel getLbl_73() {
-		if(lbl_73 == null) {
+		if (lbl_73 == null) {
 			lbl_73 = new JLabel();
 			lbl_73.setOpaque(true);
-			lbl_73.setBackground(new java.awt.Color(255,255,255));
-			lbl_73.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_73.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_73.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_73.setBounds(187, 426, 60, 60);
 			lbl_73.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_73.addMouseListener(new MouseAdapter() {
@@ -1365,12 +1509,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_73;
 	}
+
 	private JLabel getLbl_72() {
-		if(lbl_72 == null) {
+		if (lbl_72 == null) {
 			lbl_72 = new JLabel();
 			lbl_72.setOpaque(true);
-			lbl_72.setBackground(new java.awt.Color(0,0,0));
-			lbl_72.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_72.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_72.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_72.setBounds(127, 426, 60, 60);
 			lbl_72.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -1381,12 +1527,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_72;
 	}
+
 	private JLabel getLbl_71() {
-		if(lbl_71 == null) {
+		if (lbl_71 == null) {
 			lbl_71 = new JLabel();
 			lbl_71.setOpaque(true);
-			lbl_71.setBackground(new java.awt.Color(255,255,255));
-			lbl_71.setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
+			lbl_71.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_71.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
 			lbl_71.setBounds(67, 426, 60, 60);
 			lbl_71.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_71.addMouseListener(new MouseAdapter() {
@@ -1398,19 +1546,26 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return lbl_71;
 	}
+
 	private JButton getBtnQuit() {
-		if(btnQuit == null) {
+		if (btnQuit == null) {
 			btnQuit = new JButton();
 			btnQuit.setText("Quit");
-			btnQuit.setBounds(519, 642, 86, 23);
+			btnQuit.setBounds(538, 660, 86, 23);
+			btnQuit.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					btnQuitMouseClicked(evt);
+				}
+			});
 		}
 		return btnQuit;
 	}
+
 	private JTextField getTxtMessage() {
-		if(txtMessage == null) {
+		if (txtMessage == null) {
 			txtMessage = new JTextField();
 			txtMessage.setText(null);
-			txtMessage.setBounds(10, 643, 493, 20);
+			txtMessage.setBounds(10, 663, 493, 20);
 			txtMessage.setText(null);
 			txtMessage.setText(null);
 			txtMessage.addKeyListener(new KeyAdapter() {
@@ -1421,21 +1576,23 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return txtMessage;
 	}
+
 	private JScrollPane getPnlChat() {
-		if(pnlChat == null) {
+		if (pnlChat == null) {
 			pnlChat = new JScrollPane();
-			pnlChat.setBounds(10, 509, 494, 128);
+			pnlChat.setBounds(10, 527, 493, 128);
 			pnlChat.setViewportView(getTxtChat());
 		}
 		return pnlChat;
 	}
+
 	private JTextPane getTxtChat() {
-		if(txtChat == null) {
-			
+		if (txtChat == null) {
+
 			htmlEditor = new HTMLEditorKit();
-			
+
 			chatText = new HTMLDocument();
-			
+
 			txtChat = new JTextPane();
 			txtChat.setEditable(false);
 			txtChat.setEditorKit(htmlEditor);
@@ -1443,291 +1600,431 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 		}
 		return txtChat;
 	}
+
 	private JLabel getLblOpponentName() {
-		if(lblOpponentName == null) {
+		if (lblOpponentName == null) {
 			lblOpponentName = new JLabel();
 			lblOpponentName.setHorizontalAlignment(SwingConstants.CENTER);
-			lblOpponentName.setFont(new java.awt.Font("Tahoma",1,11));
+			lblOpponentName.setFont(new java.awt.Font("Tahoma", 1, 11));
 			lblOpponentName.setBorder(BorderFactory.createTitledBorder(""));
-			lblOpponentName.setBounds(513, 141, 102, 16);
+			lblOpponentName.setBounds(522, 141, 102, 16);
 		}
 		return lblOpponentName;
 	}
 
 	private void lbl_00MouseClicked(MouseEvent evt) {
-		movimientosPosibles(0,0);
+		if (activeSquares)
+			movimientosPosibles(0, 0);
 	}
-	
+
 	private void lbl_01MouseClicked(MouseEvent evt) {
-		movimientosPosibles(0,1);
+		if (activeSquares)
+			movimientosPosibles(0, 1);
 	}
-	
+
 	private void lbl_02MouseClicked(MouseEvent evt) {
-		movimientosPosibles(0,2);
+		if (activeSquares)
+			movimientosPosibles(0, 2);
 	}
-	
+
 	private void lbl_03MouseClicked(MouseEvent evt) {
-		movimientosPosibles(0,3);
+		if (activeSquares)
+			movimientosPosibles(0, 3);
 	}
-	
+
 	private void lbl_04MouseClicked(MouseEvent evt) {
-		movimientosPosibles(0,4);
+		if (activeSquares)
+			movimientosPosibles(0, 4);
 	}
-	
+
 	private void lbl_05MouseClicked(MouseEvent evt) {
-		movimientosPosibles(0,5);
+		if (activeSquares)
+			movimientosPosibles(0, 5);
 	}
-	
+
 	private void lbl_06MouseClicked(MouseEvent evt) {
-		movimientosPosibles(0,6);
+		if (activeSquares)
+			movimientosPosibles(0, 6);
 	}
-	
+
 	private void lbl_07MouseClicked(MouseEvent evt) {
-		movimientosPosibles(0,7);
+		if (activeSquares)
+			movimientosPosibles(0, 7);
 	}
-	
+
 	private void lbl_17MouseClicked(MouseEvent evt) {
-		movimientosPosibles(1,7);
+		if (activeSquares)
+			movimientosPosibles(1, 7);
 	}
-	
+
 	private void lbl_16MouseClicked(MouseEvent evt) {
-		movimientosPosibles(1,6);
+		if (activeSquares)
+			movimientosPosibles(1, 6);
 	}
-	
+
 	private void lbl_15MouseClicked(MouseEvent evt) {
-		movimientosPosibles(1,5);
+		if (activeSquares)
+			movimientosPosibles(1, 5);
 	}
-	
+
 	private void lbl_14MouseClicked(MouseEvent evt) {
-		movimientosPosibles(1,4);
+		if (activeSquares)
+			movimientosPosibles(1, 4);
 	}
-	
+
 	private void lbl_13MouseClicked(MouseEvent evt) {
-		movimientosPosibles(1,3);
+		if (activeSquares)
+			movimientosPosibles(1, 3);
 	}
-	
+
 	private void lbl_12MouseClicked(MouseEvent evt) {
-		movimientosPosibles(1,2);
+		if (activeSquares)
+			movimientosPosibles(1, 2);
 	}
-	
+
 	private void lbl_11MouseClicked(MouseEvent evt) {
-		movimientosPosibles(1,1);
+		if (activeSquares)
+			movimientosPosibles(1, 1);
 	}
-	
+
 	private void lbl_10MouseClicked(MouseEvent evt) {
-		movimientosPosibles(1,0);
+		if (activeSquares)
+			movimientosPosibles(1, 0);
 	}
-	
+
 	private void lbl_27MouseClicked(MouseEvent evt) {
-		movimientosPosibles(2,7);
+		if (activeSquares)
+			movimientosPosibles(2, 7);
 	}
-	
+
 	private void lbl_26MouseClicked(MouseEvent evt) {
-		movimientosPosibles(2,6);
+		if (activeSquares)
+			movimientosPosibles(2, 6);
 	}
-	
+
 	private void lbl_25MouseClicked(MouseEvent evt) {
-		movimientosPosibles(2,5);
+		if (activeSquares)
+			movimientosPosibles(2, 5);
 	}
-	
+
 	private void lbl_24MouseClicked(MouseEvent evt) {
-		movimientosPosibles(2,4);
+		if (activeSquares)
+			movimientosPosibles(2, 4);
 	}
-	
+
 	private void lbl_23MouseClicked(MouseEvent evt) {
-		movimientosPosibles(2,3);
+		if (activeSquares)
+			movimientosPosibles(2, 3);
 	}
-	
+
 	private void lbl_22MouseClicked(MouseEvent evt) {
-		movimientosPosibles(2,2);
+		if (activeSquares)
+			movimientosPosibles(2, 2);
 	}
-	
+
 	private void lbl_21MouseClicked(MouseEvent evt) {
-		movimientosPosibles(2,1);
+		if (activeSquares)
+			movimientosPosibles(2, 1);
 	}
-	
+
 	private void lbl_20MouseClicked(MouseEvent evt) {
-		movimientosPosibles(2,0);
+		if (activeSquares)
+			movimientosPosibles(2, 0);
 	}
-	
+
 	private void lbl_37MouseClicked(MouseEvent evt) {
-		movimientosPosibles(3,7);
+		if (activeSquares)
+			movimientosPosibles(3, 7);
 	}
-	
+
 	private void lbl_36MouseClicked(MouseEvent evt) {
-		movimientosPosibles(3,6);
+		if (activeSquares)
+			movimientosPosibles(3, 6);
 	}
-	
+
 	private void lbl_35MouseClicked(MouseEvent evt) {
-		movimientosPosibles(3,5);
+		if (activeSquares)
+			movimientosPosibles(3, 5);
 	}
-	
+
 	private void lbl_34MouseClicked(MouseEvent evt) {
-		movimientosPosibles(3,4);
+		if (activeSquares)
+			movimientosPosibles(3, 4);
 	}
-	
+
 	private void lbl_33MouseClicked(MouseEvent evt) {
-		movimientosPosibles(3,3);
+		if (activeSquares)
+			movimientosPosibles(3, 3);
 	}
-	
+
 	private void lbl_32MouseClicked(MouseEvent evt) {
-		movimientosPosibles(3,2);
+		if (activeSquares)
+			movimientosPosibles(3, 2);
 	}
-	
+
 	private void lbl_31MouseClicked(MouseEvent evt) {
-		movimientosPosibles(3,1);
+		if (activeSquares)
+			movimientosPosibles(3, 1);
 	}
-	
+
 	private void lbl_30MouseClicked(MouseEvent evt) {
-		movimientosPosibles(3,0);
+		if (activeSquares)
+			movimientosPosibles(3, 0);
 	}
-	
+
 	private void lbl_47MouseClicked(MouseEvent evt) {
-		movimientosPosibles(4,7);
+		if (activeSquares)
+			movimientosPosibles(4, 7);
 	}
-	
+
 	private void lbl_46MouseClicked(MouseEvent evt) {
-		movimientosPosibles(4,6);
+		if (activeSquares)
+			movimientosPosibles(4, 6);
 	}
-	
+
 	private void lbl_45MouseClicked(MouseEvent evt) {
-		movimientosPosibles(4,5);
+		if (activeSquares)
+			movimientosPosibles(4, 5);
 	}
-	
+
 	private void lbl_44MouseClicked(MouseEvent evt) {
-		movimientosPosibles(4,4);
+		if (activeSquares)
+			movimientosPosibles(4, 4);
 	}
-	
+
 	private void lbl_43MouseClicked(MouseEvent evt) {
-		movimientosPosibles(4,3);
+		if (activeSquares)
+			movimientosPosibles(4, 3);
 	}
-	
+
 	private void lbl_42MouseClicked(MouseEvent evt) {
-		movimientosPosibles(4,2);
+		if (activeSquares)
+			movimientosPosibles(4, 2);
 	}
-	
+
 	private void lbl_41MouseClicked(MouseEvent evt) {
-		movimientosPosibles(4,1);
+		if (activeSquares)
+			movimientosPosibles(4, 1);
 	}
-	
+
 	private void lbl_40MouseClicked(MouseEvent evt) {
-		movimientosPosibles(4,0);
+		if (activeSquares)
+			movimientosPosibles(4, 0);
 	}
-	
+
 	private void lbl_57MouseClicked(MouseEvent evt) {
-		movimientosPosibles(5,7);
+		if (activeSquares)
+			movimientosPosibles(5, 7);
 	}
-	
+
 	private void lbl_55MouseClicked(MouseEvent evt) {
-		movimientosPosibles(5,5);
+		if (activeSquares)
+			movimientosPosibles(5, 5);
 	}
-	
+
 	private void lbl_56MouseClicked(MouseEvent evt) {
-		movimientosPosibles(5,6);
+		if (activeSquares)
+			movimientosPosibles(5, 6);
 	}
-	
+
 	private void lbl_54MouseClicked(MouseEvent evt) {
-		movimientosPosibles(5,4);
+		if (activeSquares)
+			movimientosPosibles(5, 4);
 	}
-	
+
 	private void lbl_53MouseClicked(MouseEvent evt) {
-		movimientosPosibles(5,3);
+		if (activeSquares)
+			movimientosPosibles(5, 3);
 	}
-	
+
 	private void lbl_52MouseClicked(MouseEvent evt) {
-		movimientosPosibles(5,2);
+		if (activeSquares)
+			movimientosPosibles(5, 2);
 	}
-	
+
 	private void lbl_51MouseClicked(MouseEvent evt) {
-		movimientosPosibles(5,1);
+		if (activeSquares)
+			movimientosPosibles(5, 1);
 	}
 
 	private void lbl_50MouseClicked(MouseEvent evt) {
-		movimientosPosibles(5,0);
-	}
-	
-	private void lbl_67MouseClicked(MouseEvent evt) {
-		movimientosPosibles(6,7);
-	}
-	
-	private void lbl_66MouseClicked(MouseEvent evt) {
-		movimientosPosibles(6,6);
-	}
-	
-	private void lbl_65MouseClicked(MouseEvent evt) {
-		movimientosPosibles(6,5);
-	}
-	
-	private void lbl_64MouseClicked(MouseEvent evt) {
-		movimientosPosibles(6,4);
-	}
-	
-	private void lbl_63MouseClicked(MouseEvent evt) {
-		movimientosPosibles(6,3);
-	}
-	
-	private void lbl_62MouseClicked(MouseEvent evt) {
-		movimientosPosibles(6,2);
-	}
-	
-	private void lbl_61MouseClicked(MouseEvent evt) {
-		movimientosPosibles(6,1);
-	}
-	
-	private void lbl_60MouseClicked(MouseEvent evt) {
-		movimientosPosibles(6,0);
-	}
-	
-	private void lbl_70MouseClicked(MouseEvent evt) {
-		movimientosPosibles(7,0);
-	}
-	
-	private void lbl_77MouseClicked(MouseEvent evt) {
-		movimientosPosibles(7,7);
-	}
-	
-	private void lbl_76MouseClicked(MouseEvent evt) {
-		movimientosPosibles(7,6);
-	}
-	
-	private void lbl_75MouseClicked(MouseEvent evt) {
-		movimientosPosibles(7,5);
-	}
-	
-	private void lbl_74MouseClicked(MouseEvent evt) {
-		movimientosPosibles(7,4);
-	}
-	
-	private void lbl_73MouseClicked(MouseEvent evt) {
-		movimientosPosibles(7,3);
-	}
-	
-	private void lbl_72MouseClicked(MouseEvent evt) {
-		movimientosPosibles(7,2);
-	}
-	
-	private void lbl_71MouseClicked(MouseEvent evt) {
-		movimientosPosibles(7,1);
+		if (activeSquares)
+			movimientosPosibles(5, 0);
 	}
 
-	
+	private void lbl_67MouseClicked(MouseEvent evt) {
+		if (activeSquares)
+			movimientosPosibles(6, 7);
+	}
+
+	private void lbl_66MouseClicked(MouseEvent evt) {
+		if (activeSquares)
+			movimientosPosibles(6, 6);
+	}
+
+	private void lbl_65MouseClicked(MouseEvent evt) {
+		if (activeSquares)
+			movimientosPosibles(6, 5);
+	}
+
+	private void lbl_64MouseClicked(MouseEvent evt) {
+		if (activeSquares)
+			movimientosPosibles(6, 4);
+	}
+
+	private void lbl_63MouseClicked(MouseEvent evt) {
+		if (activeSquares)
+			movimientosPosibles(6, 3);
+	}
+
+	private void lbl_62MouseClicked(MouseEvent evt) {
+		if (activeSquares)
+			movimientosPosibles(6, 2);
+	}
+
+	private void lbl_61MouseClicked(MouseEvent evt) {
+		if (activeSquares)
+			movimientosPosibles(6, 1);
+	}
+
+	private void lbl_60MouseClicked(MouseEvent evt) {
+		if (activeSquares)
+			movimientosPosibles(6, 0);
+	}
+
+	private void lbl_70MouseClicked(MouseEvent evt) {
+		if (activeSquares)
+			movimientosPosibles(7, 0);
+	}
+
+	private void lbl_77MouseClicked(MouseEvent evt) {
+		if (activeSquares)
+			movimientosPosibles(7, 7);
+	}
+
+	private void lbl_76MouseClicked(MouseEvent evt) {
+		if (activeSquares)
+			movimientosPosibles(7, 6);
+	}
+
+	private void lbl_75MouseClicked(MouseEvent evt) {
+		if (activeSquares)
+			movimientosPosibles(7, 5);
+	}
+
+	private void lbl_74MouseClicked(MouseEvent evt) {
+		if (activeSquares)
+			movimientosPosibles(7, 4);
+	}
+
+	private void lbl_73MouseClicked(MouseEvent evt) {
+		if (activeSquares)
+			movimientosPosibles(7, 3);
+	}
+
+	private void lbl_72MouseClicked(MouseEvent evt) {
+		if (activeSquares)
+			movimientosPosibles(7, 2);
+	}
+
+	private void lbl_71MouseClicked(MouseEvent evt) {
+		if (activeSquares)
+			movimientosPosibles(7, 1);
+	}
+
 	private void movimientosPosibles(int row, int column) {
-		for(int i = 0 ; i < 8 ; i ++)
-			for(int j= 0;j< 8 ; j++ )
-				boardUI[i][j].setBorder(new LineBorder(new java.awt.Color(0,0,0),1,false));
-						
-		for(CheckersMove move : moves){
-			if(move.getFromRow() == row && move.getFromColumn() == column){
-				boardUI[row][column].setBorder(new LineBorder(new java.awt.Color(0,0,255),4,false));
-				boardUI[move.getToRow()][move.getToColumn()].setBorder(new LineBorder(new java.awt.Color(255,0,0),4,false));
-			}else{
-				boardUI[move.getFromRow()][move.getFromColumn()].setBorder(new LineBorder(new java.awt.Color(0,255,0),4,false));
+		boolean validMove = false;
+
+		// Same square pressed
+		if (!(selectedRow == row && selectedColumn == column)) {
+			// Possible moves from this square
+			List<CheckersMove> possibleMoves = new ArrayList<CheckersMove>();
+
+			for (CheckersMove move : moves) {
+				if (move.getFromRow() == row && move.getFromColumn() == column) {
+					possibleMoves.add(move);
+				}
+			}
+
+			// There are movements from this square
+			if (possibleMoves.size() > 0) {
+				selectedRow = row;
+				selectedColumn = column;
+
+				for (CheckersMove move : moves) {
+					if (!(move.getFromRow() == row && move.getFromColumn() == column)) {
+						boardUI[move.getFromRow()][move.getFromColumn()]
+								.setBorder(new LineBorder(new java.awt.Color(0,
+										255, 0), 4, false));
+						boardUI[move.getToRow()][move.getToColumn()]
+								.setBorder(new LineBorder(new java.awt.Color(0,
+										0, 0), 1, false));
+					}
+				}
+
+				for (CheckersMove move : possibleMoves) {
+					boardUI[row][column].setBorder(new LineBorder(
+							new java.awt.Color(0, 0, 255), 4, false));
+					boardUI[move.getToRow()][move.getToColumn()]
+							.setBorder(new LineBorder(new java.awt.Color(255,
+									0, 0), 4, false));
+				}
+			} else { // Check if it's a legal move
+				for (CheckersMove move : moves) {
+					if (move.getFromRow() == selectedRow
+							&& move.getFromColumn() == selectedColumn) {
+						if (move.getToRow() == row
+								&& move.getToColumn() == column) {
+							// It's a valid move
+							CheckersGame.move(game.getBoard(), selectedRow,
+									selectedColumn, row, column);
+							validMove = true;
+							if(move.isJump()){
+								moves = CheckersGame.getLegalJumpsFrom(game.getBoard(), myPlayer, move.getToRow(), move.getToColumn());
+								if(!moves.isEmpty()){
+									refreshBoard();
+									lblState.setText("Que tienes para dar otro saltito hombre!");
+								}
+								else{ //No more jumps
+									activeSquares = false;
+									playerTurn = changePlayerTurn(playerTurn);
+									refreshBoard();
+									List<CheckersMove> opponentMoves = CheckersGame.legalMoves(game.getBoard(), playerTurn);
+									if(opponentMoves.size() > 0){
+										Controller.getInstance().updateGame(game.getName());
+										lblState.setText("Es el turno de "+lblOpponentName.getText());
+									}else{
+										Controller.getInstance().finishGame(game.getName(), username);
+										JOptionPane.showMessageDialog(this, "Has ganado el juego!");
+										dispose();
+									}
+								}
+							}else{
+								activeSquares = false;
+								playerTurn = changePlayerTurn(playerTurn);
+								refreshBoard();
+								List<CheckersMove> opponentMoves = CheckersGame.legalMoves(game.getBoard(), playerTurn);
+								if(opponentMoves.size() > 0){
+									Controller.getInstance().updateGame(game.getName());
+									lblState.setText("Es el turno de "+lblOpponentName.getText());
+								}else{
+									Controller.getInstance().finishGame(game.getName(), username);
+									JOptionPane.showMessageDialog(this, "Has ganado el juego!");
+									dispose();
+								}
+							}
+							break;
+						}
+					}
+				}
+
+				if (!validMove)
+					lblState.setText("Mueve donde valga caracarton");
+
 			}
 		}
 	}
-	
-	
-	
+
 	@Override
 	public void receiveMessage(String sender, String message) {
 		try {
@@ -1757,51 +2054,103 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI{
 
 	@Override
 	public void updateBoard() {
-		// TODO Auto-generated method stub
-		
+		playerTurn = myPlayer;
+		activeSquares = true;
+		refreshBoard();
+		lblState.setText("Es tu turno");
 	}
 
 	@Override
 	public void lostGame() {
-		// TODO Auto-generated method stub
-		
+		refreshBoard();
+		lblState.setText("Has perdido la partida");
+		activeSquares = false;
+		new Thread(){
+			public void run(){
+				JOptionPane.showMessageDialog(CheckersUI.this, "Has perdido el juego!");
+				dispose();
+			}
+		}.start();
 	}
-	
+
 	@Override
-	public void userLeaveGame(String player) {
-		// TODO Auto-generated method stub
-		
+	public void userLeaveGame(final String player) {
+		new Thread(){
+			public void run(){
+				JOptionPane.showMessageDialog(CheckersUI.this, player+" ha abandonado el juego. !Has ganado¡");
+				dispose();
+			}
+		}.start();
+
 	}
-	
-	public void refreshBoard(){
-		int [][] board = game.getBoard();
-		for(int row = 0;row < 8; row ++){
-			for(int column = 0; column < 8; column ++){
-				switch(board[row][column]){
+
+	private void resaltarMovimientos() {
+		for (CheckersMove move : moves) {
+			int row = move.getFromRow();
+			int column = move.getFromColumn();
+			boardUI[row][column].setBorder(greenBorder);
+			repaint();
+		}
+	}
+
+	public void refreshBoard() {
+		int[][] board = game.getBoard();
+		for (int row = 0; row < 8; row++) {
+			for (int column = 0; column < 8; column++) {
+				boardUI[row][column].setBorder(blackBorder);
+				switch (board[row][column]) {
 				case CheckersGame.EMPTY:
 					boardUI[row][column].setIcon(null);
 					break;
 				case CheckersGame.RED:
-					boardUI[row][column].setIcon(new ImageIcon(getClass().getClassLoader()
-							.getResource("images/Checkers/Red.png")));
+					boardUI[row][column].setIcon(new ImageIcon(getClass()
+							.getClassLoader().getResource(
+									"images/Checkers/Red.png")));
 					break;
 				case CheckersGame.RED_KING:
+					boardUI[row][column].setIcon(new ImageIcon(getClass()
+							.getClassLoader().getResource(
+									"images/Checkers/Red_King.png")));
 					break;
 				case CheckersGame.BLACK:
-					boardUI[row][column].setIcon(new ImageIcon(getClass().getClassLoader()
-							.getResource("images/Checkers/Black.png")));
+					boardUI[row][column].setIcon(new ImageIcon(getClass()
+							.getClassLoader().getResource(
+									"images/Checkers/Black.png")));
 					break;
 				case CheckersGame.BLACK_KING:
+					boardUI[row][column].setIcon(new ImageIcon(getClass()
+							.getClassLoader().getResource(
+									"images/Checkers/Black_King.png")));
 					break;
 				}
 			}
 		}
+
+		if (playerTurn == myPlayer){
+			moves = CheckersGame.legalMoves(game.getBoard(), myPlayer);
+			resaltarMovimientos();
+		}
 	}
-	
-	private int chagenPlayerTurn(int turn) {
+
+	private int changePlayerTurn(int turn) {
 		if (turn == CheckersGame.RED)
 			return CheckersGame.BLACK;
 		else
 			return CheckersGame.RED;
 	}
+
+	private JLabel getLblState() {
+		if (lblState == null) {
+			lblState = new JLabel();
+			lblState.setBounds(10, 503, 446, 18);
+			lblState.setFont(new java.awt.Font("Tahoma", 1, 11));
+		}
+		return lblState;
+	}
+	
+	private void btnQuitMouseClicked(MouseEvent evt) {
+		Controller.getInstance().leaveGame(game.getName());
+		dispose();
+	}
+
 }
