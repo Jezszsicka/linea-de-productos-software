@@ -172,9 +172,9 @@ public class ServerI extends _ServerDisp{
 	}
 
 	@Override
-	public void updateGame(String game, String player, int[][] board,
+	public void updateGame(String game, String player,int nextTurn, int[][] board,
 			Current __current) {
-		GamesManager.getInstance().updateGame(game,player,board);
+		GamesManager.getInstance().updateGame(game,player,nextTurn,board);
 		
 	}
 

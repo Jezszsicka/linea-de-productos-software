@@ -2,8 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import checkers.CheckersGame;
-
 import Ice.Current;
 import ProductLine.GameType;
 import ProductLine.SlotState;
@@ -24,7 +22,6 @@ public class Game extends ProductLine.Game {
 		switch (typeGame) {
 		case Checkers:
 			board = new int [8][8];
-			CheckersGame.initBoard(board);
 			slots.add(new Slot("",SlotState.Empty));
 			break;
 		case Chess:
@@ -101,6 +98,13 @@ public class Game extends ProductLine.Game {
 				players++;
 		
 		return players;
+	}
+
+	@Override
+	public int changeTurn(Current __current) {
+		turn = ++turn % players();
+		System.out.println("Cambiamos el turno al jugador "+turn);
+		return turn;
 	}
 
 	

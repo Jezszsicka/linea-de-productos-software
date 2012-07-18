@@ -110,7 +110,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 		this.users = users;
 		if (user.getAvatar().length == 0) {
 			lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/1.jpg")));
+					.getResource("images/Avatars/1.jpg")));
 		} else {
 			lblAvatar.setIcon(new ImageIcon(user.getAvatar()));
 		}
@@ -401,7 +401,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 			JLabel userAvatarLabel = new JLabel();
 			if (users.get(i).getAvatar().length == 0) {
 				userAvatarLabel.setIcon(new ImageIcon(getClass()
-						.getClassLoader().getResource("images/1.jpg")));
+						.getClassLoader().getResource("images/Avatars/1.jpg")));
 			} else {
 				ImageIcon image = new ImageIcon(users.get(i).getAvatar());
 				image = new ImageIcon(image.getImage().getScaledInstance(

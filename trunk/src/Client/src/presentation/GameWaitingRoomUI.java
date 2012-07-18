@@ -9,6 +9,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -125,6 +127,13 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
 		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
 				.getResource("images/Games/checkers_icon.png")));
+		
+		/*for(PlayerPanel pnl : playerPanels){
+		JComboBox<String> box = pnl.getPlayerType();
+		ComboBoxModel<String> playerTypeModel = new DefaultComboBoxModel<String>(
+				new String[] { "Jugador", "Cerrada" });
+		box.setModel(playerTypeModel);
+		}*/
 
 	}
 
@@ -198,6 +207,11 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			BorderLayout thisLayout = new BorderLayout();
 			getContentPane().setLayout(thisLayout);
 			this.setResizable(false);
+			this.addWindowListener(new WindowAdapter() {
+				public void windowClosing(WindowEvent evt) {
+					thisWindowClosing(evt);
+				}
+			});
 			getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
 			pack();
 			this.setSize(677, 450);
@@ -401,6 +415,9 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				Controller.getInstance().startGame(game.getName());
 				btnCancel.setEnabled(false);
 				btnStartGame.setEnabled(false);
+				for(int i=1;i<playerPanels.size();i++){
+					playerPanels.get(i).getPlayerType().setEnabled(false);
+				}
 				new Thread(){
 					public void run(){
 						for(int i = 5;i>0;i--){
@@ -594,6 +611,14 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			pnlPlayersScroll.setViewportView(getPnlPlayers());
 		}
 		return pnlPlayersScroll;
+	}
+	
+	private void thisWindowClosing(WindowEvent evt) {
+		if (creator)
+			Controller.getInstance().deleteGame(game.getName());
+		else
+			Controller.getInstance().leaveGame(game.getName());
+		dispose();
 	}
 
 	private class PlayerPanel extends JPanel {

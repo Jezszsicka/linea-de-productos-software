@@ -135,7 +135,6 @@ public class GamesManager {
 	 **/
 	public List<ProductLine.Game> listGames(String user, String gameName,
 			Filter gamesFilter) {
-		System.out.println(games.toString());
 		
 		List<ProductLine.Game> list = new ArrayList<ProductLine.Game>();
 		for (Game game : games) {
@@ -318,20 +317,16 @@ public class GamesManager {
 		
 	}
 
-	public void updateGame(String gameName, String player, int[][] board) {
+	public void updateGame(String gameName, String player,int nextTurn, int[][] board) {
 		// TODO Auto-generated method stub
 		Game game = searchGame(gameName);
 		switch(game.getTypeGame()){
 		case Checkers:
 		case Connect4:
 			game.setBoard(board);
-			String turn;
-			if(game.getSlot(0).getPlayer().equals(player))
-				turn = game.getSlot(1).getPlayer();
-			else
-				turn = game.getSlot(0).getPlayer();
+			String turn = game.getSlot(nextTurn).getPlayer();
 			Session turnSession = UsersManager.getInstance().searchSession(turn);
-			turnSession.getCallback().gameUpdated(gameName,board);
+			turnSession.getCallback().gameUpdated(gameName,nextTurn,board);
 			break;
 		}
 		

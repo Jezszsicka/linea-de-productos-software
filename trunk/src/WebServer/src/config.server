@@ -3,8 +3,8 @@
 # "Callback.Server". The following line sets the endpoints for this
 # adapter.
 #
-ProductLine.Server.Endpoints=tcp -h 192.168.1.12 -p 9997
-
+#ProductLine.Server.Endpoints=tcp -h 192.168.1.12 -p 9997
+ProductLine.Server.Endpoints=tcp -p 9997
 #
 # Warn about connection exceptions
 #
@@ -18,7 +18,7 @@ Ice.Warn.Connections=1
 # 2 = like 1, but more detailed
 # 3 = like 2, but also trace data transfer
 #
-Ice.Trace.Network=3
+#Ice.Trace.Network=3
 
 #
 # Protocol Tracing
@@ -29,3 +29,5 @@ Ice.Trace.Network=3
 #Ice.Trace.Protocol=1
 
 Ice.ThreadPool.Server.SizeMax=10
+Ice.ACM.Client=0
+Ice.ACM.Server=0

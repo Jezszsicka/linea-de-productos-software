@@ -28,12 +28,14 @@ module ProductLine {
 		["protected"] bool started;
 		["protected"] SlotList slots;
 		["protected"] bidimensionalIntArray board;
+		["protected"] int turn;
 		bool addPlayer(string user);
 		void removePlayer(string user);
 		Slot getSlot(int slot);
 		void setSlot(int slotIndex,Slot newSlot);
 		int freeSlots();
 		int players();
+		int changeTurn();
 	};
 
 	["java:getset"]
@@ -126,7 +128,7 @@ module ProductLine {
 		void changeSlotState(string game, int slot, SlotState state);
 		GameList listGames(string user, string gameName, Filter gamesFilter);
 		void startGame(string game);
-		void updateGame(string game, string player,bidimensionalIntArray board);
+		void updateGame(string game, string player, int nextTurn ,bidimensionalIntArray board);
 		void finishGame(string game, string player);
     };
     
@@ -143,7 +145,7 @@ module ProductLine {
     	void slotStateChanged(string game, int slot, SlotState state);
     	void kickedFromGame(string game);
     	void gameStarted(string game);
-    	void gameUpdated(string game,bidimensionalIntArray board);
+    	void gameUpdated(string game,int nextTurn,bidimensionalIntArray board);
     	void gameFinished(string game);
     };
     
