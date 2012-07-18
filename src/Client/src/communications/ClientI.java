@@ -77,7 +77,7 @@ public class ClientI extends _ClientDisp{
 	}
 
 	@Override
-	public void gameUpdated(String game, int[][] board, Current __current) {
+	public void gameUpdated(String game,int nextTurn, int[][] board, Current __current) {
 		Controller.getInstance().gameUpdated(game,board);	
 	}
 

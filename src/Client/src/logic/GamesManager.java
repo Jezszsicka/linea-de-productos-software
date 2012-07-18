@@ -3,7 +3,10 @@ package logic;
 import java.util.Hashtable;
 import java.util.List;
 
-import checkers.CheckersGame;
+import connect4.Connect4;
+
+import checkers.Checkers;
+import chess.Chess;
 
 import model.Filter;
 import model.Game;
@@ -41,6 +44,19 @@ public class GamesManager {
 		String username = session.getUser().getUsername();
 		session.getProxy().createGame(gameName,username, type);
 		Game game = new Game(gameName,username,type);
+		switch(type){
+		case Checkers:
+			Checkers.initBoard(game.getBoard());
+			break;
+		case Chess:
+			Chess.initBoard(game.getBoard());
+			break;
+		case Connect4:
+			Connect4.initBoard(game.getBoard());
+			break;
+		
+			
+		}
 		games.put(gameName, game);	
 		return game;
 	}
@@ -52,7 +68,7 @@ public class GamesManager {
 		Game game = (Game)session.getProxy().joinGame(gameName, session.getUser().getUsername());
 		switch(game.getTypeGame()){
 		case Checkers:
-			CheckersGame.initBoard(game.getBoard());
+			Checkers.initBoard(game.getBoard());
 			break;
 			
 		}
@@ -134,8 +150,10 @@ public class GamesManager {
 	 * @param gameName Name of the game**/
 	public void updateGame(String gameName) {
 		Game game = searchGame(gameName);
+		int nextTurn = game.getTurn();
+		System.out.println("Updateamos con el turno "+nextTurn);
 		String player = session.getUser().getUsername();
-		session.getProxy().updateGame(gameName, player, game.getBoard());		
+		session.getProxy().updateGame(gameName, player,nextTurn, game.getBoard());		
 	}
 	
 	/**Notification: The board of a game has been updated

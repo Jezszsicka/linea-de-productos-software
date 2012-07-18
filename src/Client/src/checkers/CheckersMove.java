@@ -84,7 +84,7 @@ public class CheckersMove {
 		this.toColumn = toColumn;
 	}
 	
-	boolean isJump() {
+	public boolean isJump() {
 		// Test whether this move is a jump. It is assumed that
 		// the move is legal. In a jump, the piece moves two
 		// rows. (In a regular move, it only moves one row.)

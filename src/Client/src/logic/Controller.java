@@ -245,6 +245,7 @@ public class Controller {
 		try {
 			sessionManager.changeName(name, lastname, password);
 			profileUI.closeChangeFrame();
+			profileUI.toFront();
 		} catch (InvalidLoggingException e) {
 			JOptionPane.showMessageDialog(profileUI, "The password is wrong",
 					"Incorrect password", JOptionPane.ERROR_MESSAGE);
@@ -261,6 +262,7 @@ public class Controller {
 		try {
 			sessionManager.changeEmail(email, confirmEmail, password);
 			profileUI.closeChangeFrame();
+			profileUI.toFront();
 		} catch (WrongInputException e) {
 			JOptionPane.showMessageDialog(profileUI, e.getMessage(),
 					e.getError(), JOptionPane.WARNING_MESSAGE);
@@ -279,6 +281,7 @@ public class Controller {
 			sessionManager.changePassword(password, newPassword,
 					confirmPassword);
 			profileUI.closeChangeFrame();
+			profileUI.toFront();
 		} catch (InvalidLoggingException e) {
 			JOptionPane.showMessageDialog(profileUI, "The password is wrong",
 					"Incorrect password", JOptionPane.ERROR_MESSAGE);
@@ -484,8 +487,8 @@ public class Controller {
 		gameUI.updateBoard();
 	}
 
-	public void updateGame(String game) {
-		gamesManager.updateGame(game);
+	public void updateGame(String gameName) {
+		gamesManager.updateGame(gameName);
 	}
 
 	public void gameFinished(String game) {

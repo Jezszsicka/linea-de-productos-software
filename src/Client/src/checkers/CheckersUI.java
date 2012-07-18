@@ -4,6 +4,8 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +39,7 @@ import logic.Controller;
 import model.Game;
 import model.User;
 import ProductLine.Slot;
+import ProductLine.SlotState;
 import ProductLine.UserNotInGameException;
 
 /**
@@ -148,6 +151,8 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 	private int selectedRow;
 	private int selectedColumn;
 	private boolean activeSquares;
+	private boolean computer;
+	private Minimax minimax;
 
 	public CheckersUI(String username, Game game) {
 		super();
@@ -155,33 +160,48 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		this.game = game;
 		destinatary = "";
 		boardUI = new JLabel[8][8];
-		playerTurn = CheckersGame.RED;
-
+		minimax = new Minimax(6);
+		
+		playerTurn = Checkers.RED;
 		Slot opponentSlot = game.getSlot(0);
-		myPlayer = CheckersGame.BLACK;
+		
+		myPlayer = Checkers.BLACK;
 
 		if (opponentSlot.getPlayer().equalsIgnoreCase(username)) {
 			opponentSlot = game.getSlot(1);
-			myPlayer = CheckersGame.RED;
-			activeSquares = true;
+			myPlayer = Checkers.RED;
 		}
 
+		if (opponentSlot.getType() == SlotState.Human)
+			computer = false;
+		else
+			computer = true;
+		
 		initGUI();
 		selectedRow = -1;
 
-		User opponent = Controller.getInstance().searchUser(
-				opponentSlot.getPlayer());
-		lblOpponentAvatar.setIcon(new ImageIcon(opponent.getAvatar()));
-		lblOpponentName.setText(opponent.getUsername());
-		
-		if (playerTurn == myPlayer) {
-			moves = CheckersGame.legalMoves(game.getBoard(), myPlayer);
-			resaltarMovimientos();
-			activeSquares = true;
+		if(computer){
+			lblOpponentAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/computer.png")));
+			lblOpponentName.setText("Computer");
 			lblState.setText("Es tu turno");
-		} else {
-			lblState.setText("Es el turno de "+opponent.getName());
-			activeSquares = false;
+			activeSquares = true;
+			
+		}else{
+			User opponent = Controller.getInstance().searchUser(
+					opponentSlot.getPlayer());
+			lblOpponentAvatar.setIcon(new ImageIcon(opponent.getAvatar()));
+			lblOpponentName.setText(opponent.getUsername());
+			
+			if (playerTurn == myPlayer) {
+				moves = Checkers.legalMoves(game.getBoard(), myPlayer);
+				resaltarMovimientos();
+				activeSquares = true;
+				lblState.setText("Es tu turno");
+			} else {
+				lblState.setText("Es el turno de "+opponent.getName());
+				activeSquares = false;
+			}
 		}
 		
 		refreshBoard();
@@ -189,12 +209,17 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 	}
 
 	private void initGUI() {
-		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(null);
 		pack();
 		this.setSize(660, 732);
 		setLocationRelativeTo(null);
 		setVisible(true);
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent evt) {
+				thisWindowClosing(evt);
+			}
+		});
 		getContentPane().add(getPnlBackground());
 	}
 
@@ -387,7 +412,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_01 = new JLabel();
 			lbl_01.setBounds(67, 7, 60, 60);
 			lbl_01.setOpaque(true);
-			lbl_01.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_01.setBackground(new java.awt.Color(51,51,255));
 			lbl_01.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_01.addMouseListener(new MouseAdapter() {
@@ -423,7 +448,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_03 == null) {
 			lbl_03 = new JLabel();
 			lbl_03.setOpaque(true);
-			lbl_03.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_03.setBackground(new java.awt.Color(51,51,255));
 			lbl_03.setBounds(187, 7, 60, 60);
 			lbl_03.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
@@ -460,7 +485,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_05 == null) {
 			lbl_05 = new JLabel();
 			lbl_05.setOpaque(true);
-			lbl_05.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_05.setBackground(new java.awt.Color(51,51,255));
 			lbl_05.setBounds(307, 7, 60, 60);
 			lbl_05.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
@@ -497,7 +522,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_07 == null) {
 			lbl_07 = new JLabel();
 			lbl_07.setBounds(427, 7, 60, 60);
-			lbl_07.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_07.setBackground(new java.awt.Color(51,51,255));
 			lbl_07.setOpaque(true);
 			lbl_07.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
@@ -534,7 +559,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_16 == null) {
 			lbl_16 = new JLabel();
 			lbl_16.setOpaque(true);
-			lbl_16.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_16.setBackground(new java.awt.Color(51,51,255));
 			lbl_16.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_16.setBounds(367, 67, 60, 60);
@@ -571,7 +596,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_14 == null) {
 			lbl_14 = new JLabel();
 			lbl_14.setOpaque(true);
-			lbl_14.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_14.setBackground(new java.awt.Color(51,51,255));
 			lbl_14.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_14.setBounds(247, 67, 60, 60);
@@ -608,7 +633,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_12 == null) {
 			lbl_12 = new JLabel();
 			lbl_12.setOpaque(true);
-			lbl_12.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_12.setBackground(new java.awt.Color(51,51,255));
 			lbl_12.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_12.setBounds(127, 67, 60, 60);
@@ -645,7 +670,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_10 == null) {
 			lbl_10 = new JLabel();
 			lbl_10.setOpaque(true);
-			lbl_10.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_10.setBackground(new java.awt.Color(51,51,255));
 			lbl_10.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_10.setBounds(7, 67, 60, 60);
@@ -663,7 +688,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_27 == null) {
 			lbl_27 = new JLabel();
 			lbl_27.setOpaque(true);
-			lbl_27.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_27.setBackground(new java.awt.Color(51,51,255));
 			lbl_27.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_27.setBounds(427, 127, 60, 60);
@@ -700,7 +725,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_25 == null) {
 			lbl_25 = new JLabel();
 			lbl_25.setOpaque(true);
-			lbl_25.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_25.setBackground(new java.awt.Color(51,51,255));
 			lbl_25.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_25.setBounds(307, 127, 60, 60);
@@ -737,7 +762,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_23 == null) {
 			lbl_23 = new JLabel();
 			lbl_23.setOpaque(true);
-			lbl_23.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_23.setBackground(new java.awt.Color(51,51,255));
 			lbl_23.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_23.setBounds(187, 127, 60, 60);
@@ -774,7 +799,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_21 == null) {
 			lbl_21 = new JLabel();
 			lbl_21.setOpaque(true);
-			lbl_21.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_21.setBackground(new java.awt.Color(51,51,255));
 			lbl_21.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_21.setBounds(67, 127, 60, 60);
@@ -830,7 +855,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_36 == null) {
 			lbl_36 = new JLabel();
 			lbl_36.setOpaque(true);
-			lbl_36.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_36.setBackground(new java.awt.Color(51,51,255));
 			lbl_36.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_36.setBounds(367, 186, 60, 60);
@@ -867,7 +892,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_34 == null) {
 			lbl_34 = new JLabel();
 			lbl_34.setOpaque(true);
-			lbl_34.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_34.setBackground(new java.awt.Color(51,51,255));
 			lbl_34.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_34.setBounds(247, 186, 60, 60);
@@ -904,7 +929,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_32 == null) {
 			lbl_32 = new JLabel();
 			lbl_32.setOpaque(true);
-			lbl_32.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_32.setBackground(new java.awt.Color(51,51,255));
 			lbl_32.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_32.setBounds(127, 186, 60, 60);
@@ -941,7 +966,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_30 == null) {
 			lbl_30 = new JLabel();
 			lbl_30.setOpaque(true);
-			lbl_30.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_30.setBackground(new java.awt.Color(51,51,255));
 			lbl_30.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_30.setBounds(7, 186, 60, 60);
@@ -959,7 +984,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_47 == null) {
 			lbl_47 = new JLabel();
 			lbl_47.setOpaque(true);
-			lbl_47.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_47.setBackground(new java.awt.Color(51,51,255));
 			lbl_47.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_47.setBounds(427, 246, 60, 60);
@@ -996,7 +1021,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_45 == null) {
 			lbl_45 = new JLabel();
 			lbl_45.setOpaque(true);
-			lbl_45.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_45.setBackground(new java.awt.Color(51,51,255));
 			lbl_45.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_45.setBounds(307, 246, 60, 60);
@@ -1033,7 +1058,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_43 == null) {
 			lbl_43 = new JLabel();
 			lbl_43.setOpaque(true);
-			lbl_43.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_43.setBackground(new java.awt.Color(51,51,255));
 			lbl_43.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_43.setBounds(187, 246, 60, 60);
@@ -1070,7 +1095,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_41 == null) {
 			lbl_41 = new JLabel();
 			lbl_41.setOpaque(true);
-			lbl_41.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_41.setBackground(new java.awt.Color(51,51,255));
 			lbl_41.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_41.setBounds(67, 246, 60, 60);
@@ -1145,7 +1170,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_56 == null) {
 			lbl_56 = new JLabel();
 			lbl_56.setOpaque(true);
-			lbl_56.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_56.setBackground(new java.awt.Color(51,51,255));
 			lbl_56.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_56.setBounds(367, 306, 60, 60);
@@ -1163,7 +1188,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_54 == null) {
 			lbl_54 = new JLabel();
 			lbl_54.setOpaque(true);
-			lbl_54.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_54.setBackground(new java.awt.Color(51,51,255));
 			lbl_54.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_54.setBounds(247, 306, 60, 60);
@@ -1200,7 +1225,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_52 == null) {
 			lbl_52 = new JLabel();
 			lbl_52.setOpaque(true);
-			lbl_52.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_52.setBackground(new java.awt.Color(51,51,255));
 			lbl_52.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_52.setBounds(127, 306, 60, 60);
@@ -1237,7 +1262,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_50 == null) {
 			lbl_50 = new JLabel();
 			lbl_50.setOpaque(true);
-			lbl_50.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_50.setBackground(new java.awt.Color(51,51,255));
 			lbl_50.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_50.setBounds(7, 306, 60, 60);
@@ -1255,7 +1280,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_67 == null) {
 			lbl_67 = new JLabel();
 			lbl_67.setOpaque(true);
-			lbl_67.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_67.setBackground(new java.awt.Color(51,51,255));
 			lbl_67.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_67.setBounds(427, 366, 60, 60);
@@ -1292,7 +1317,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_65 == null) {
 			lbl_65 = new JLabel();
 			lbl_65.setOpaque(true);
-			lbl_65.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_65.setBackground(new java.awt.Color(51,51,255));
 			lbl_65.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_65.setBounds(307, 366, 60, 60);
@@ -1329,7 +1354,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_63 == null) {
 			lbl_63 = new JLabel();
 			lbl_63.setOpaque(true);
-			lbl_63.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_63.setBackground(new java.awt.Color(51,51,255));
 			lbl_63.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_63.setBounds(187, 366, 60, 60);
@@ -1366,7 +1391,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_61 == null) {
 			lbl_61 = new JLabel();
 			lbl_61.setOpaque(true);
-			lbl_61.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_61.setBackground(new java.awt.Color(51,51,255));
 			lbl_61.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_61.setBounds(67, 366, 60, 60);
@@ -1403,7 +1428,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_70 == null) {
 			lbl_70 = new JLabel();
 			lbl_70.setOpaque(true);
-			lbl_70.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_70.setBackground(new java.awt.Color(51,51,255));
 			lbl_70.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_70.setBounds(7, 426, 60, 60);
@@ -1440,7 +1465,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_76 == null) {
 			lbl_76 = new JLabel();
 			lbl_76.setOpaque(true);
-			lbl_76.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_76.setBackground(new java.awt.Color(51,51,255));
 			lbl_76.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_76.setBounds(367, 426, 60, 60);
@@ -1477,7 +1502,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_74 == null) {
 			lbl_74 = new JLabel();
 			lbl_74.setOpaque(true);
-			lbl_74.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_74.setBackground(new java.awt.Color(51,51,255));
 			lbl_74.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_74.setBounds(247, 426, 60, 60);
@@ -1514,7 +1539,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_72 == null) {
 			lbl_72 = new JLabel();
 			lbl_72.setOpaque(true);
-			lbl_72.setBackground(new java.awt.Color(0, 0, 0));
+			lbl_72.setBackground(new java.awt.Color(51,51,255));
 			lbl_72.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_72.setBounds(127, 426, 60, 60);
@@ -1976,23 +2001,27 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 						if (move.getToRow() == row
 								&& move.getToColumn() == column) {
 							// It's a valid move
-							CheckersGame.move(game.getBoard(), selectedRow,
+							Checkers.move(game.getBoard(), selectedRow,
 									selectedColumn, row, column);
 							validMove = true;
 							if(move.isJump()){
-								moves = CheckersGame.getLegalJumpsFrom(game.getBoard(), myPlayer, move.getToRow(), move.getToColumn());
+								moves = Checkers.getLegalJumpsFrom(game.getBoard(), myPlayer, move.getToRow(), move.getToColumn());
 								if(!moves.isEmpty()){
 									refreshBoard();
 									lblState.setText("Que tienes para dar otro saltito hombre!");
 								}
 								else{ //No more jumps
 									activeSquares = false;
-									playerTurn = changePlayerTurn(playerTurn);
+									playerTurn = game.changeTurn();
 									refreshBoard();
-									List<CheckersMove> opponentMoves = CheckersGame.legalMoves(game.getBoard(), playerTurn);
+									List<CheckersMove> opponentMoves = Checkers.legalMoves(game.getBoard(), playerTurn);
 									if(opponentMoves.size() > 0){
-										Controller.getInstance().updateGame(game.getName());
-										lblState.setText("Es el turno de "+lblOpponentName.getText());
+										if(computer){
+											computerMove();
+										}else{
+											Controller.getInstance().updateGame(game.getName());
+											lblState.setText("Es el turno de "+lblOpponentName.getText());
+										}
 									}else{
 										Controller.getInstance().finishGame(game.getName(), username);
 										JOptionPane.showMessageDialog(this, "Has ganado el juego!");
@@ -2001,12 +2030,16 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 								}
 							}else{
 								activeSquares = false;
-								playerTurn = changePlayerTurn(playerTurn);
+								playerTurn = game.changeTurn();
 								refreshBoard();
-								List<CheckersMove> opponentMoves = CheckersGame.legalMoves(game.getBoard(), playerTurn);
+								List<CheckersMove> opponentMoves = Checkers.legalMoves(game.getBoard(), playerTurn);
 								if(opponentMoves.size() > 0){
-									Controller.getInstance().updateGame(game.getName());
-									lblState.setText("Es el turno de "+lblOpponentName.getText());
+									if(computer){
+										computerMove();
+									}else{
+										Controller.getInstance().updateGame(game.getName());
+										lblState.setText("Es el turno de "+lblOpponentName.getText());
+									}
 								}else{
 									Controller.getInstance().finishGame(game.getName(), username);
 									JOptionPane.showMessageDialog(this, "Has ganado el juego!");
@@ -2023,6 +2056,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 
 			}
 		}
+	}
+
+	private void computerMove() {
+		CheckersMove move = minimax.minimax(game.getBoard(), game.getTurn());
+		Checkers.move(game.getBoard(), move.getFromRow(),move.getFromColumn(),move.getToRow(),move.getToColumn());
+		playerTurn = game.changeTurn();
+		activeSquares = true;
+		refreshBoard();
 	}
 
 	@Override
@@ -2054,7 +2095,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 
 	@Override
 	public void updateBoard() {
-		playerTurn = myPlayer;
+		playerTurn = game.changeTurn();
 		activeSquares = true;
 		refreshBoard();
 		lblState.setText("Es tu turno");
@@ -2099,25 +2140,25 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			for (int column = 0; column < 8; column++) {
 				boardUI[row][column].setBorder(blackBorder);
 				switch (board[row][column]) {
-				case CheckersGame.EMPTY:
+				case Checkers.EMPTY:
 					boardUI[row][column].setIcon(null);
 					break;
-				case CheckersGame.RED:
+				case Checkers.RED:
 					boardUI[row][column].setIcon(new ImageIcon(getClass()
 							.getClassLoader().getResource(
 									"images/Checkers/Red.png")));
 					break;
-				case CheckersGame.RED_KING:
+				case Checkers.RED_KING:
 					boardUI[row][column].setIcon(new ImageIcon(getClass()
 							.getClassLoader().getResource(
 									"images/Checkers/Red_King.png")));
 					break;
-				case CheckersGame.BLACK:
+				case Checkers.BLACK:
 					boardUI[row][column].setIcon(new ImageIcon(getClass()
 							.getClassLoader().getResource(
 									"images/Checkers/Black.png")));
 					break;
-				case CheckersGame.BLACK_KING:
+				case Checkers.BLACK_KING:
 					boardUI[row][column].setIcon(new ImageIcon(getClass()
 							.getClassLoader().getResource(
 									"images/Checkers/Black_King.png")));
@@ -2127,17 +2168,11 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		}
 
 		if (playerTurn == myPlayer){
-			moves = CheckersGame.legalMoves(game.getBoard(), myPlayer);
+			moves = Checkers.legalMoves(game.getBoard(), myPlayer);
 			resaltarMovimientos();
 		}
 	}
 
-	private int changePlayerTurn(int turn) {
-		if (turn == CheckersGame.RED)
-			return CheckersGame.BLACK;
-		else
-			return CheckersGame.RED;
-	}
 
 	private JLabel getLblState() {
 		if (lblState == null) {
@@ -2149,6 +2184,11 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 	}
 	
 	private void btnQuitMouseClicked(MouseEvent evt) {
+		Controller.getInstance().leaveGame(game.getName());
+		dispose();
+	}
+	
+	private void thisWindowClosing(WindowEvent evt) {
 		Controller.getInstance().leaveGame(game.getName());
 		dispose();
 	}
