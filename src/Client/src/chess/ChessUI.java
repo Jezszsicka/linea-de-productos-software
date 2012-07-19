@@ -7,8 +7,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -20,7 +18,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
-
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
@@ -30,20 +27,13 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
-import checkers.Checkers;
-import checkers.CheckersMove;
-import checkers.Minimax;
-
-import connect4.Connect4;
-import connect4.Connect4UI;
-
-import presentation.GameUI;
+import chess.Chess.Player;
 
 import logic.Controller;
 import model.Game;
 import model.User;
+import presentation.GameUI;
 import ProductLine.Slot;
-import ProductLine.SlotState;
 import ProductLine.UserNotInGameException;
 
 /**
@@ -149,14 +139,12 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 
 	private JLabel[][] boardUI;
 	private Game game;
-	private int myPlayer;
-	private int playerTurn;
-	private List<CheckersMove> moves;
+	private Player myPlayer;
+	private Player playerTurn;
 	private int selectedRow;
 	private int selectedColumn;
 	private boolean activeSquares;
-	private boolean computer;
-	private Minimax minimax;
+	
 
 	public ChessUI(String username, Game game) {
 		super();
@@ -164,52 +152,32 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 		this.game = game;
 		destinatary = "";
 		boardUI = new JLabel[8][8];
-		minimax = new Minimax(6);
-		
-		playerTurn = Checkers.RED;
-		Slot opponentSlot = game.getSlot(0);
-		
-		myPlayer = Checkers.BLACK;
+
+		myPlayer = Player.White;
+		playerTurn = Player.White;
+		Slot opponentSlot = game.getSlot(1);
 
 		if (opponentSlot.getPlayer().equalsIgnoreCase(username)) {
-			opponentSlot = game.getSlot(1);
-			myPlayer = Checkers.RED;
+			opponentSlot = game.getSlot(0);
+			myPlayer = Player.Black;
 		}
 
-		if (opponentSlot.getType() == SlotState.Human)
-			computer = false;
-		else
-			computer = true;
-		
 		initGUI();
 		selectedRow = -1;
 
-		if(computer){
-			lblOpponentAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/computer.png")));
-			lblOpponentName.setText("Computer");
-			lblState.setText("Es tu turno");
-			activeSquares = true;
-			
-		}else{
-			User opponent = Controller.getInstance().searchUser(
-					opponentSlot.getPlayer());
-			lblOpponentAvatar.setIcon(new ImageIcon(opponent.getAvatar()));
-			lblOpponentName.setText(opponent.getUsername());
-			
-			if (playerTurn == myPlayer) {
-				moves = Checkers.legalMoves(game.getBoard(), myPlayer);
-				resaltarMovimientos();
-				activeSquares = true;
-				lblState.setText("Es tu turno");
-			} else {
-				lblState.setText("Es el turno de "+opponent.getName());
-				activeSquares = false;
-			}
-		}
-		
-		refreshBoard();
+		User opponent = Controller.getInstance().searchUser(
+				opponentSlot.getPlayer());
+		lblOpponentAvatar.setIcon(new ImageIcon(opponent.getAvatar()));
+		lblOpponentName.setText(opponent.getUsername());
 
+		if (playerTurn == myPlayer) {
+			activeSquares = true;
+			lblState.setText("Es tu turno");
+		} else {
+			lblState.setText("Es el turno de " + opponent.getName());
+			activeSquares = false;
+		}
+		repaint();
 	}
 
 	private void initGUI() {
@@ -312,8 +280,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 		if (lblOpponentAvatar == null) {
 			lblOpponentAvatar = new JLabel();
 			lblOpponentAvatar.setBounds(522, 11, 101, 124);
-			lblOpponentAvatar.setBorder(new SoftBevelBorder(BevelBorder.LOWERED,
-					null, null, null, null));
+			lblOpponentAvatar.setBorder(new SoftBevelBorder(
+					BevelBorder.LOWERED, null, null, null, null));
 		}
 		return lblOpponentAvatar;
 	}
@@ -401,6 +369,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_00.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_00.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_00.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/Black R.png")));
 			lbl_00.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_00MouseClicked(evt);
@@ -419,6 +389,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_01.setBackground(new java.awt.Color(0, 0, 0));
 			lbl_01.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
+			lbl_01.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/Black N.png")));
+			lbl_01.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_01.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_01MouseClicked(evt);
@@ -438,6 +411,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_02.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_02.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_02.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/Black B.png")));
 			lbl_02.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_02MouseClicked(evt);
@@ -456,6 +431,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_03.setBounds(187, 7, 60, 60);
 			lbl_03.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
+			lbl_03.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/Black Q.png")));
+			lbl_03.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_03.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_03MouseClicked(evt);
@@ -475,6 +453,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_04.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_04.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_04.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/Black K.png")));
 			lbl_04.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_04MouseClicked(evt);
@@ -493,6 +473,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_05.setBounds(307, 7, 60, 60);
 			lbl_05.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
+			lbl_05.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/Black B.png")));
+			lbl_05.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_05.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_05MouseClicked(evt);
@@ -512,6 +495,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_06.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_06.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_06.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/Black N.png")));
 			lbl_06.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_06MouseClicked(evt);
@@ -530,6 +515,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_07.setOpaque(true);
 			lbl_07.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
+			lbl_07.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/Black R.png")));
+			lbl_07.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_07.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_07MouseClicked(evt);
@@ -549,6 +537,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_17.setBounds(427, 67, 60, 60);
 			lbl_17.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_17.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/Black P.png")));
 			lbl_17.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_17MouseClicked(evt);
@@ -567,6 +557,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_16.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_16.setBounds(367, 67, 60, 60);
+			lbl_16.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/Black P.png")));
+			lbl_16.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_16.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_16MouseClicked(evt);
@@ -586,6 +579,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_15.setBounds(307, 67, 60, 60);
 			lbl_15.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_15.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/Black P.png")));
 			lbl_15.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_15MouseClicked(evt);
@@ -604,6 +599,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_14.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_14.setBounds(247, 67, 60, 60);
+			lbl_14.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/Black P.png")));
+			lbl_14.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_14.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_14MouseClicked(evt);
@@ -623,6 +621,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_13.setBounds(187, 67, 60, 60);
 			lbl_13.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_13.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/Black P.png")));
 			lbl_13.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_13MouseClicked(evt);
@@ -641,6 +641,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_12.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_12.setBounds(127, 67, 60, 60);
+			lbl_12.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/Black P.png")));
+			lbl_12.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_12.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_12MouseClicked(evt);
@@ -660,6 +663,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_11.setBounds(67, 67, 60, 60);
 			lbl_11.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_11.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/Black P.png")));
 			lbl_11.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_11MouseClicked(evt);
@@ -678,6 +683,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_10.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_10.setBounds(7, 67, 60, 60);
+			lbl_10.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/Black P.png")));
+			lbl_10.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_10.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_10MouseClicked(evt);
@@ -696,6 +704,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_27.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_27.setBounds(427, 127, 60, 60);
+			lbl_27.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_27.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_27MouseClicked(evt);
@@ -733,6 +742,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_25.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_25.setBounds(307, 127, 60, 60);
+			lbl_25.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_25.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_25MouseClicked(evt);
@@ -770,6 +780,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_23.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_23.setBounds(187, 127, 60, 60);
+			lbl_23.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_23.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_23MouseClicked(evt);
@@ -807,6 +818,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_21.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_21.setBounds(67, 127, 60, 60);
+			lbl_21.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_21.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_21MouseClicked(evt);
@@ -863,6 +875,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_36.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_36.setBounds(367, 186, 60, 60);
+			lbl_36.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_36.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_36MouseClicked(evt);
@@ -900,6 +913,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_34.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_34.setBounds(247, 186, 60, 60);
+			lbl_34.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_34.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_34MouseClicked(evt);
@@ -937,6 +951,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_32.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_32.setBounds(127, 186, 60, 60);
+			lbl_32.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_32.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_32MouseClicked(evt);
@@ -974,6 +989,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_30.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_30.setBounds(7, 186, 60, 60);
+			lbl_30.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_30.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_30MouseClicked(evt);
@@ -992,6 +1008,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_47.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_47.setBounds(427, 246, 60, 60);
+			lbl_47.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_47.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_47MouseClicked(evt);
@@ -1029,6 +1046,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_45.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_45.setBounds(307, 246, 60, 60);
+			lbl_45.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_45.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_45MouseClicked(evt);
@@ -1066,6 +1084,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_43.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_43.setBounds(187, 246, 60, 60);
+			lbl_43.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_43.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_43MouseClicked(evt);
@@ -1103,6 +1122,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_41.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_41.setBounds(67, 246, 60, 60);
+			lbl_41.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_41.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_41MouseClicked(evt);
@@ -1178,6 +1198,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_56.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_56.setBounds(367, 306, 60, 60);
+			lbl_56.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_56.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_56MouseClicked(evt);
@@ -1196,6 +1217,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_54.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_54.setBounds(247, 306, 60, 60);
+			lbl_54.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_54.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_54MouseClicked(evt);
@@ -1233,6 +1255,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_52.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_52.setBounds(127, 306, 60, 60);
+			lbl_52.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_52.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_52MouseClicked(evt);
@@ -1270,6 +1293,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_50.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_50.setBounds(7, 306, 60, 60);
+			lbl_50.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_50.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_50MouseClicked(evt);
@@ -1288,6 +1312,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_67.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_67.setBounds(427, 366, 60, 60);
+			lbl_67.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/White P.png")));
+			lbl_67.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_67.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_67MouseClicked(evt);
@@ -1307,6 +1334,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_66.setBounds(367, 366, 60, 60);
 			lbl_66.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_66.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/White P.png")));
 			lbl_66.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_66MouseClicked(evt);
@@ -1325,6 +1354,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_65.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_65.setBounds(307, 366, 60, 60);
+			lbl_65.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/White P.png")));
+			lbl_65.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_65.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_65MouseClicked(evt);
@@ -1344,6 +1376,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_64.setBounds(247, 366, 60, 60);
 			lbl_64.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_64.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/White P.png")));
 			lbl_64.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_64MouseClicked(evt);
@@ -1362,6 +1396,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_63.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_63.setBounds(187, 366, 60, 60);
+			lbl_63.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/White P.png")));
+			lbl_63.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_63.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_63MouseClicked(evt);
@@ -1381,6 +1418,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_62.setBounds(127, 366, 60, 60);
 			lbl_62.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_62.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/White P.png")));
 			lbl_62.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_62MouseClicked(evt);
@@ -1399,6 +1438,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_61.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_61.setBounds(67, 366, 60, 60);
+			lbl_61.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/White P.png")));
+			lbl_61.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_61.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_61MouseClicked(evt);
@@ -1418,6 +1460,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_60.setBounds(7, 366, 60, 60);
 			lbl_60.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_60.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/White P.png")));
 			lbl_60.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_60MouseClicked(evt);
@@ -1436,6 +1480,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_70.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_70.setBounds(7, 426, 60, 60);
+			lbl_70.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_70.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/White R.png")));
 			lbl_70.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_70MouseClicked(evt);
@@ -1455,6 +1502,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_77.setBounds(427, 426, 60, 60);
 			lbl_77.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_77.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/White R.png")));
 			lbl_77.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_77MouseClicked(evt);
@@ -1473,6 +1522,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_76.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_76.setBounds(367, 426, 60, 60);
+			lbl_76.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_76.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/White N.png")));
 			lbl_76.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_76MouseClicked(evt);
@@ -1492,6 +1544,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_75.setBounds(307, 426, 60, 60);
 			lbl_75.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_75.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/White B.png")));
 			lbl_75.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_75MouseClicked(evt);
@@ -1510,6 +1564,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_74.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_74.setBounds(247, 426, 60, 60);
+			lbl_74.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_74.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/White K.png")));
 			lbl_74.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_74MouseClicked(evt);
@@ -1529,6 +1586,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_73.setBounds(187, 426, 60, 60);
 			lbl_73.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_73.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/White Q.png")));
 			lbl_73.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_73MouseClicked(evt);
@@ -1547,6 +1606,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			lbl_72.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_72.setBounds(127, 426, 60, 60);
+			lbl_72.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_72.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/White B.png")));
 			lbl_72.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_72MouseClicked(evt);
@@ -1566,6 +1628,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_71.setBounds(67, 426, 60, 60);
 			lbl_71.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_71.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Chess/White N.png")));
 			lbl_71.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lbl_71MouseClicked(evt);
@@ -1643,431 +1707,366 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 
 	private void lbl_00MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(0, 0);
+			movePiece(0, 0);
 	}
 
 	private void lbl_01MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(0, 1);
+			movePiece(0, 1);
 	}
 
 	private void lbl_02MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(0, 2);
+			movePiece(0, 2);
 	}
 
 	private void lbl_03MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(0, 3);
+			movePiece(0, 3);
 	}
 
 	private void lbl_04MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(0, 4);
+			movePiece(0, 4);
 	}
 
 	private void lbl_05MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(0, 5);
+			movePiece(0, 5);
 	}
 
 	private void lbl_06MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(0, 6);
+			movePiece(0, 6);
 	}
 
 	private void lbl_07MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(0, 7);
+			movePiece(0, 7);
 	}
 
 	private void lbl_17MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(1, 7);
+			movePiece(1, 7);
 	}
 
 	private void lbl_16MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(1, 6);
+			movePiece(1, 6);
 	}
 
 	private void lbl_15MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(1, 5);
+			movePiece(1, 5);
 	}
 
 	private void lbl_14MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(1, 4);
+			movePiece(1, 4);
 	}
 
 	private void lbl_13MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(1, 3);
+			movePiece(1, 3);
 	}
 
 	private void lbl_12MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(1, 2);
+			movePiece(1, 2);
 	}
 
 	private void lbl_11MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(1, 1);
+			movePiece(1, 1);
 	}
 
 	private void lbl_10MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(1, 0);
+			movePiece(1, 0);
 	}
 
 	private void lbl_27MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(2, 7);
+			movePiece(2, 7);
 	}
 
 	private void lbl_26MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(2, 6);
+			movePiece(2, 6);
 	}
 
 	private void lbl_25MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(2, 5);
+			movePiece(2, 5);
 	}
 
 	private void lbl_24MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(2, 4);
+			movePiece(2, 4);
 	}
 
 	private void lbl_23MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(2, 3);
+			movePiece(2, 3);
 	}
 
 	private void lbl_22MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(2, 2);
+			movePiece(2, 2);
 	}
 
 	private void lbl_21MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(2, 1);
+			movePiece(2, 1);
 	}
 
 	private void lbl_20MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(2, 0);
+			movePiece(2, 0);
 	}
 
 	private void lbl_37MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(3, 7);
+			movePiece(3, 7);
 	}
 
 	private void lbl_36MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(3, 6);
+			movePiece(3, 6);
 	}
 
 	private void lbl_35MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(3, 5);
+			movePiece(3, 5);
 	}
 
 	private void lbl_34MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(3, 4);
+			movePiece(3, 4);
 	}
 
 	private void lbl_33MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(3, 3);
+			movePiece(3, 3);
 	}
 
 	private void lbl_32MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(3, 2);
+			movePiece(3, 2);
 	}
 
 	private void lbl_31MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(3, 1);
+			movePiece(3, 1);
 	}
 
 	private void lbl_30MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(3, 0);
+			movePiece(3, 0);
 	}
 
 	private void lbl_47MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(4, 7);
+			movePiece(4, 7);
 	}
 
 	private void lbl_46MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(4, 6);
+			movePiece(4, 6);
 	}
 
 	private void lbl_45MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(4, 5);
+			movePiece(4, 5);
 	}
 
 	private void lbl_44MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(4, 4);
+			movePiece(4, 4);
 	}
 
 	private void lbl_43MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(4, 3);
+			movePiece(4, 3);
 	}
 
 	private void lbl_42MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(4, 2);
+			movePiece(4, 2);
 	}
 
 	private void lbl_41MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(4, 1);
+			movePiece(4, 1);
 	}
 
 	private void lbl_40MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(4, 0);
+			movePiece(4, 0);
 	}
 
 	private void lbl_57MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(5, 7);
+			movePiece(5, 7);
 	}
 
 	private void lbl_55MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(5, 5);
+			movePiece(5, 5);
 	}
 
 	private void lbl_56MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(5, 6);
+			movePiece(5, 6);
 	}
 
 	private void lbl_54MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(5, 4);
+			movePiece(5, 4);
 	}
 
 	private void lbl_53MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(5, 3);
+			movePiece(5, 3);
 	}
 
 	private void lbl_52MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(5, 2);
+			movePiece(5, 2);
 	}
 
 	private void lbl_51MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(5, 1);
+			movePiece(5, 1);
 	}
 
 	private void lbl_50MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(5, 0);
+			movePiece(5, 0);
 	}
 
 	private void lbl_67MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(6, 7);
+			movePiece(6, 7);
 	}
 
 	private void lbl_66MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(6, 6);
+			movePiece(6, 6);
 	}
 
 	private void lbl_65MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(6, 5);
+			movePiece(6, 5);
 	}
 
 	private void lbl_64MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(6, 4);
+			movePiece(6, 4);
 	}
 
 	private void lbl_63MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(6, 3);
+			movePiece(6, 3);
 	}
 
 	private void lbl_62MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(6, 2);
+			movePiece(6, 2);
 	}
 
 	private void lbl_61MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(6, 1);
+			movePiece(6, 1);
 	}
 
 	private void lbl_60MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(6, 0);
+			movePiece(6, 0);
 	}
 
 	private void lbl_70MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(7, 0);
+			movePiece(7, 0);
 	}
 
 	private void lbl_77MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(7, 7);
+			movePiece(7, 7);
 	}
 
 	private void lbl_76MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(7, 6);
+			movePiece(7, 6);
 	}
 
 	private void lbl_75MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(7, 5);
+			movePiece(7, 5);
 	}
 
 	private void lbl_74MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(7, 4);
+			movePiece(7, 4);
 	}
 
 	private void lbl_73MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(7, 3);
+			movePiece(7, 3);
 	}
 
 	private void lbl_72MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(7, 2);
+			movePiece(7, 2);
 	}
 
 	private void lbl_71MouseClicked(MouseEvent evt) {
 		if (activeSquares)
-			movimientosPosibles(7, 1);
+			movePiece(7, 1);
 	}
 
-	private void movimientosPosibles(int row, int column) {
-		boolean validMove = false;
-
+	private void movePiece(int row, int column) {
 		// Same square pressed
 		if (!(selectedRow == row && selectedColumn == column)) {
-			// Possible moves from this square
-			List<CheckersMove> possibleMoves = new ArrayList<CheckersMove>();
-
-			for (CheckersMove move : moves) {
-				if (move.getFromRow() == row && move.getFromColumn() == column) {
-					possibleMoves.add(move);
-				}
-			}
-
-			// There are movements from this square
-			if (possibleMoves.size() > 0) {
+			boolean playerPiece ;
+			if(myPlayer == Player.White)
+				playerPiece = Chess.isWhitePiece(game.getBoard()[row][column]);
+			else
+				playerPiece = Chess.isBlackPiece(game.getBoard()[row][column]);
+			
+			if(playerPiece && selectedRow != -1)
+				boardUI[selectedRow][selectedColumn].setBorder(blackBorder);
+			
+			if(playerPiece){
 				selectedRow = row;
 				selectedColumn = column;
-
-				for (CheckersMove move : moves) {
-					if (!(move.getFromRow() == row && move.getFromColumn() == column)) {
-						boardUI[move.getFromRow()][move.getFromColumn()]
-								.setBorder(new LineBorder(new java.awt.Color(0,
-										255, 0), 4, false));
-						boardUI[move.getToRow()][move.getToColumn()]
-								.setBorder(new LineBorder(new java.awt.Color(0,
-										0, 0), 1, false));
-					}
-				}
-
-				for (CheckersMove move : possibleMoves) {
-					boardUI[row][column].setBorder(new LineBorder(
-							new java.awt.Color(0, 0, 255), 4, false));
-					boardUI[move.getToRow()][move.getToColumn()]
-							.setBorder(new LineBorder(new java.awt.Color(255,
-									0, 0), 4, false));
-				}
-			} else { // Check if it's a legal move
-				for (CheckersMove move : moves) {
-					if (move.getFromRow() == selectedRow
-							&& move.getFromColumn() == selectedColumn) {
-						if (move.getToRow() == row
-								&& move.getToColumn() == column) {
-							// It's a valid move
-							Checkers.move(game.getBoard(), selectedRow,
-									selectedColumn, row, column);
-							validMove = true;
-							if(move.isJump()){
-								moves = Checkers.getLegalJumpsFrom(game.getBoard(), myPlayer, move.getToRow(), move.getToColumn());
-								if(!moves.isEmpty()){
-									refreshBoard();
-									lblState.setText("Que tienes para dar otro saltito hombre!");
-								}
-								else{ //No more jumps
-									activeSquares = false;
-									playerTurn = game.changeTurn();
-									refreshBoard();
-									List<CheckersMove> opponentMoves = Checkers.legalMoves(game.getBoard(), playerTurn);
-									if(opponentMoves.size() > 0){
-										if(computer){
-											computerMove();
-										}else{
-											Controller.getInstance().updateGame(game.getName());
-											lblState.setText("Es el turno de "+lblOpponentName.getText());
-										}
-									}else{
-										Controller.getInstance().finishGame(game.getName(), username);
-										JOptionPane.showMessageDialog(this, "Has ganado el juego!");
-										dispose();
-									}
-								}
-							}else{
-								activeSquares = false;
-								playerTurn = game.changeTurn();
-								refreshBoard();
-								List<CheckersMove> opponentMoves = Checkers.legalMoves(game.getBoard(), playerTurn);
-								if(opponentMoves.size() > 0){
-									if(computer){
-										computerMove();
-									}else{
-										Controller.getInstance().updateGame(game.getName());
-										lblState.setText("Es el turno de "+lblOpponentName.getText());
-									}
-								}else{
-									Controller.getInstance().finishGame(game.getName(), username);
-									JOptionPane.showMessageDialog(this, "Has ganado el juego!");
-									dispose();
-								}
-							}
-							break;
+				boardUI[row][column].setBorder(blueBorder);
+			}else{
+				if(selectedRow != -1){
+					if(Chess.move(game.getBoard(),playerTurn, selectedRow, selectedColumn, row, column)){
+						refreshBoard();
+						selectedRow = -1;
+						
+						playerTurn = toChessTurn(game.changeTurn());
+						
+						if(Chess.checkMate(game.getBoard(), playerTurn)){
+							Controller.getInstance().finishGame(game.getName(), username);
+							JOptionPane.showMessageDialog(this, "Has ganado el juego!");
+							dispose();
+						}else{
+							Controller.getInstance().updateGame(game.getName());
+							activeSquares = false;
+							lblState.setText("Es el turno de "+ lblOpponentName.getText());
 						}
+					}else{
+						lblState.setText("Mueve donde valga, capullo!");
 					}
+				}else{
+					lblState.setText("Pulsa sobre una ficha tuya");
 				}
-
-				if (!validMove)
-					lblState.setText("Mueve donde valga caracarton");
-
+					
 			}
 		}
-	}
-
-	private void computerMove() {
-		CheckersMove move = minimax.minimax(game.getBoard(), game.getTurn());
-		Checkers.move(game.getBoard(), move.getFromRow(),move.getFromColumn(),move.getToRow(),move.getToColumn());
-		playerTurn = game.changeTurn();
-		activeSquares = true;
-		refreshBoard();
 	}
 
 	@Override
@@ -2099,10 +2098,18 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 
 	@Override
 	public void updateBoard() {
-		playerTurn = game.changeTurn();
+		int turn = game.changeTurn();
+		playerTurn = toChessTurn(turn);
 		activeSquares = true;
 		refreshBoard();
 		lblState.setText("Es tu turno");
+	}
+
+	private Player toChessTurn(int turn) {
+		if(turn == 0)
+			return Player.White;
+		
+		return Player.Black;
 	}
 
 	@Override
@@ -2110,9 +2117,10 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 		refreshBoard();
 		lblState.setText("Has perdido la partida");
 		activeSquares = false;
-		new Thread(){
-			public void run(){
-				JOptionPane.showMessageDialog(ChessUI.this, "Has perdido el juego!");
+		new Thread() {
+			public void run() {
+				JOptionPane.showMessageDialog(ChessUI.this,
+						"Has perdido el juego!");
 				dispose();
 			}
 		}.start();
@@ -2120,22 +2128,14 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 
 	@Override
 	public void userLeaveGame(final String player) {
-		new Thread(){
-			public void run(){
-				JOptionPane.showMessageDialog(ChessUI.this, player+" ha abandonado el juego. !Has ganado¡");
+		new Thread() {
+			public void run() {
+				JOptionPane.showMessageDialog(ChessUI.this, player
+						+ " ha abandonado el juego. !Has ganado¡");
 				dispose();
 			}
 		}.start();
 
-	}
-
-	private void resaltarMovimientos() {
-		for (CheckersMove move : moves) {
-			int row = move.getFromRow();
-			int column = move.getFromColumn();
-			boardUI[row][column].setBorder(greenBorder);
-			repaint();
-		}
 	}
 
 	public void refreshBoard() {
@@ -2144,39 +2144,76 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			for (int column = 0; column < 8; column++) {
 				boardUI[row][column].setBorder(blackBorder);
 				switch (board[row][column]) {
-				case Checkers.EMPTY:
+				case Chess.EMPTY:
 					boardUI[row][column].setIcon(null);
 					break;
-				case Checkers.RED:
+				case Chess.BLACK_INITIAL_PAWN:
+				case Chess.BLACK_PAWN:
 					boardUI[row][column].setIcon(new ImageIcon(getClass()
 							.getClassLoader().getResource(
-									"images/Checkers/Red.png")));
+									"images/Chess/Black P.png")));
 					break;
-				case Checkers.RED_KING:
+				case Chess.BLACK_ROOK:
 					boardUI[row][column].setIcon(new ImageIcon(getClass()
 							.getClassLoader().getResource(
-									"images/Checkers/Red_King.png")));
+									"images/Chess/Black R.png")));
 					break;
-				case Checkers.BLACK:
+				case Chess.BLACK_KNIGHT:
 					boardUI[row][column].setIcon(new ImageIcon(getClass()
 							.getClassLoader().getResource(
-									"images/Checkers/Black.png")));
+									"images/Chess/Black N.png")));
 					break;
-				case Checkers.BLACK_KING:
+				case Chess.BLACK_BISHOP:
 					boardUI[row][column].setIcon(new ImageIcon(getClass()
 							.getClassLoader().getResource(
-									"images/Checkers/Black_King.png")));
+									"images/Chess/Black B.png")));
+					break;
+				case Chess.BLACK_QUEEN:
+					boardUI[row][column].setIcon(new ImageIcon(getClass()
+							.getClassLoader().getResource(
+									"images/Chess/Black Q.png")));
+					break;
+				case Chess.BLACK_KING:
+					boardUI[row][column].setIcon(new ImageIcon(getClass()
+							.getClassLoader().getResource(
+									"images/Chess/Black K.png")));
+					break;
+					
+				case Chess.WHITE_INITIAL_PAWN:
+				case Chess.WHITE_PAWN:
+					boardUI[row][column].setIcon(new ImageIcon(getClass()
+							.getClassLoader().getResource(
+									"images/Chess/White P.png")));
+					break;
+				case Chess.WHITE_ROOK:
+					boardUI[row][column].setIcon(new ImageIcon(getClass()
+							.getClassLoader().getResource(
+									"images/Chess/White R.png")));
+					break;
+				case Chess.WHITE_KNIGHT:
+					boardUI[row][column].setIcon(new ImageIcon(getClass()
+							.getClassLoader().getResource(
+									"images/Chess/White N.png")));
+					break;
+				case Chess.WHITE_BISHOP:
+					boardUI[row][column].setIcon(new ImageIcon(getClass()
+							.getClassLoader().getResource(
+									"images/Chess/White B.png")));
+					break;
+				case Chess.WHITE_QUEEN:
+					boardUI[row][column].setIcon(new ImageIcon(getClass()
+							.getClassLoader().getResource(
+									"images/Chess/White Q.png")));
+					break;
+				case Chess.WHITE_KING:
+					boardUI[row][column].setIcon(new ImageIcon(getClass()
+							.getClassLoader().getResource(
+									"images/Chess/White K.png")));
 					break;
 				}
 			}
 		}
-
-		if (playerTurn == myPlayer){
-			moves = Checkers.legalMoves(game.getBoard(), myPlayer);
-			resaltarMovimientos();
-		}
 	}
-
 
 	private JLabel getLblState() {
 		if (lblState == null) {
@@ -2186,12 +2223,12 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 		}
 		return lblState;
 	}
-	
+
 	private void btnQuitMouseClicked(MouseEvent evt) {
 		Controller.getInstance().leaveGame(game.getName());
 		dispose();
 	}
-	
+
 	private void thisWindowClosing(WindowEvent evt) {
 		Controller.getInstance().leaveGame(game.getName());
 		dispose();

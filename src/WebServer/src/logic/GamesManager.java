@@ -56,7 +56,6 @@ public class GamesManager {
 	 * **/
 	public void createGame(String gameName, String creator, GameType type)
 			throws GameAlreadyExistsException {
-		//TODO crear el juego correspodniente al tipo
 		Game game = new Game(gameName, creator, type);
 		if (games.contains(game))
 			throw new GameAlreadyExistsException();
@@ -114,6 +113,8 @@ public class GamesManager {
 		//TODO Comportamiento según el juego
 		if(game.isStarted()){
 			switch(game.getTypeGame()){
+			case Checkers:
+			case Chess:
 			case Connect4:
 				games.remove(game);
 				break;
@@ -322,6 +323,7 @@ public class GamesManager {
 		Game game = searchGame(gameName);
 		switch(game.getTypeGame()){
 		case Checkers:
+		case Chess:
 		case Connect4:
 			game.setBoard(board);
 			String turn = game.getSlot(nextTurn).getPlayer();
