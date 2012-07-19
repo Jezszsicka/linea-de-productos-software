@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Chess {
+	
 	public enum Player {
 		Black, White
 	};
@@ -51,17 +52,17 @@ public class Chess {
 		board[7][5] = WHITE_BISHOP;
 
 		// Kings
-		board[0][3] = BLACK_KING;
-		board[7][3] = WHITE_KING;
+		board[0][3] = BLACK_QUEEN;
+		board[7][3] = WHITE_QUEEN;
 
 		// Queens
-		board[0][4] = BLACK_QUEEN;
-		board[7][4] = WHITE_QUEEN;
+		board[0][4] = BLACK_KING;
+		board[7][4] = WHITE_KING;
 
 		// Pawns
 		for (int i = 0; i < 8; i++) {
-			board[1][i] = BLACK_PAWN;
-			board[6][i] = WHITE_PAWN;
+			board[1][i] = BLACK_INITIAL_PAWN;
+			board[6][i] = WHITE_INITIAL_PAWN;
 		}
 
 		// Empty
@@ -70,31 +71,33 @@ public class Chess {
 				board[i][j] = EMPTY;
 			}
 		}
-
-		for (int i = 0; i < 8; i++) {
-			for (int j = 0; j < 8; j++) {
-				System.out.print(board[i][j] + " ");
-			}
-			System.out.println();
-		}
 	}
-	
-	
-	public static boolean move(int[][] board, Player player,int fromRow,
-			int fromColumn, int toRow, int toColumn){
-		
-		if(isValidMove(board,player,fromRow,fromColumn,toRow,toColumn)){
-			board[toRow][toColumn] = board[fromRow][fromColumn];
+
+	public static boolean move(int[][] board, Player player, int fromRow,
+			int fromColumn, int toRow, int toColumn) {
+
+		if (isValidMove(board, player, fromRow, fromColumn, toRow, toColumn)) {
+			int piece = board[fromRow][fromColumn];
+			switch (piece) {
+			case BLACK_INITIAL_PAWN:
+				piece = BLACK_PAWN;
+				break;
+			case WHITE_INITIAL_PAWN:
+				piece = WHITE_PAWN;
+				break;
+			}
+
+			board[toRow][toColumn] = piece;
 			board[fromRow][fromColumn] = EMPTY;
 			return true;
 		}
-		
+
 		return false;
-		
+
 	}
 
-	public static boolean isValidMove(int[][] board, Player player, int fromRow,
-			int fromColumn, int toRow, int toColumn) {
+	public static boolean isValidMove(int[][] board, Player player,
+			int fromRow, int fromColumn, int toRow, int toColumn) {
 		boolean valid = false;
 		final int piece = board[fromRow][fromColumn];
 
@@ -102,14 +105,13 @@ public class Chess {
 		case BLACK_INITIAL_PAWN:
 		case WHITE_INITIAL_PAWN:
 			valid = checkPawnMove(board, player, fromRow, fromColumn, toRow,
-					toColumn,true);
+					toColumn, true);
 			break;
-			
-		
+
 		case BLACK_PAWN:
 		case WHITE_PAWN:
 			valid = checkPawnMove(board, player, fromRow, fromColumn, toRow,
-					toColumn,false);
+					toColumn, false);
 			break;
 		case BLACK_ROOK:
 		case WHITE_ROOK:
@@ -142,7 +144,8 @@ public class Chess {
 	}
 
 	private static boolean checkPawnMove(int[][] board, Player player,
-			int fromRow, int fromColumn, int toRow, int toColumn, boolean initial) {
+			int fromRow, int fromColumn, int toRow, int toColumn,
+			boolean initial) {
 		switch (player) {
 		case Black:
 
@@ -150,6 +153,14 @@ public class Chess {
 			if (fromRow + 1 == toRow && fromColumn == toColumn) {
 				if (board[toRow][toColumn] == EMPTY)
 					return true;
+			}
+
+			// Double Straight-down move
+			if (initial) {
+				if (fromRow + 2 == toRow && fromColumn == toColumn) {
+					if (board[toRow][toColumn] == EMPTY)
+						return true;
+				}
 			}
 
 			// Right-down diagonal move
@@ -168,9 +179,17 @@ public class Chess {
 		case White:
 
 			// Straight-up move
-			if (fromRow + 1 == toRow && fromColumn == toColumn) {
+			if (fromRow - 1 == toRow && fromColumn == toColumn) {
 				if (board[toRow][toColumn] == EMPTY)
 					return true;
+			}
+
+			if (initial) {
+				// Double Straight-up move
+				if (fromRow - 2 == toRow && fromColumn == toColumn) {
+					if (board[toRow][toColumn] == EMPTY)
+						return true;
+				}
 			}
 
 			// Right-up diagonal move
@@ -200,38 +219,47 @@ public class Chess {
 			// Move to the left
 			if (offset > 0) {
 				// Check if a piece is on the way
-				for (int i = fromColumn; i > toColumn; i++)
-					if (board[fromRow][i] != EMPTY)
+				for (int i = fromColumn - 1; i != toColumn; i--) {
+					if (board[fromRow][i] != EMPTY) {
 						return false;
+					}
+				}
 			}
 			// Move to the right
 			else {
 				// Check if a piece is on the way
-				for (int i = fromColumn; i < toColumn; i--)
-					if (board[fromRow][i] != EMPTY)
+				for (int i = fromColumn + 1; i != toColumn; i++) {
+					if (board[fromRow][i] != EMPTY) {
 						return false;
+					}
+				}
 			}
+		} else {
+			// Vertical move
+			if (fromColumn == toColumn) {
+				int offset = fromRow - toRow;
+				// Move up
+				if (offset > 0) {
+					// Check if a piece is on the way
+					for (int i = fromRow - 1; i != toRow; i--)
+						if (board[i][fromColumn] != EMPTY)
+							return false;
+				}
+				// Move down
+				else {
+					// Check if a piece is on the way
+					for (int i = fromRow + 1; i != toRow; i++)
+						if (board[i][fromColumn] != EMPTY)
+							return false;
+				}
+			} else {
+				// Other invalid move
+				return false;
+			}
+
 		}
 
-		// Vertical move
-		if (fromColumn == toColumn) {
-			int offset = fromRow - toRow;
-			// Move up
-			if (offset > 0) {
-				// Check if a piece is on the way
-				for (int i = fromRow; i < toRow; i--)
-					if (board[i][fromColumn] != EMPTY)
-						return false;
-			}
-			// Move down
-			else {
-				// Check if a piece is on the way
-				for (int i = fromRow; i > toColumn; i++)
-					if (board[i][fromColumn] != EMPTY)
-						return false;
-			}
-		}
-
+		// Check target square
 		if (player == Player.Black) {
 			if (board[toRow][toColumn] == EMPTY
 					|| isWhitePiece(board[toRow][toColumn]))
@@ -273,31 +301,48 @@ public class Chess {
 
 	private static boolean checkBishopMove(int[][] board, Player player,
 			int fromRow, int fromColumn, int toRow, int toColumn) {
-		int originalN = fromColumn - fromRow;
-		int moveN = toColumn - toRow;
+		int n1 = fromColumn - fromRow;
+		int n2 = fromColumn + fromRow;
+		int y1 = toRow + n1;
+		int y2 = -toRow + n2;
 
-		if (originalN == moveN) {
+		int rectN;
+		int m;
+
+		// Not diagonal move
+		if (fromRow == toRow || fromColumn == toColumn)
+			return false;
+
+		if (y1 == toColumn) {
+			rectN = n1;
+			m = 1;
+		} else if (y2 == toColumn) {
+			rectN = n2;
+			m = -1;
+		} else
+			return false;
+
+		// Down diagonal
+		if (fromRow < toRow) {
+			System.out.println("Diagonal hacia abajo");
+			for (int i = fromRow + 1; i != toRow; i++) {
+				int j = m * i + rectN;
+				if (board[i][j] != EMPTY)
+					return false;
+			}
+		} else {
 			// Up diagonal
-			if (fromRow < toRow) {
-				for (int i = fromRow; i > toRow; i--) {
-					int j = i + moveN;
+			if (fromRow > toRow) {
+				System.out.println("Diagonal hacia arriba");
+				for (int i = fromRow - 1; i != toRow; i--) {
+					int j = m * i + rectN;
 					if (board[i][j] != EMPTY)
 						return false;
 				}
-			}// Down diagonal
-			else {
-				if (fromRow > toRow) {
-					for (int i = fromRow; i < toRow; i++) {
-						int j = i + moveN;
-						if (board[i][j] != EMPTY)
-							return false;
-					}
-				}
-
 			}
 		}
 
-		// Check move square
+		// Check target square
 		if (player == Player.Black) {
 			if (board[toRow][toColumn] == EMPTY
 					|| isWhitePiece(board[toRow][toColumn]))
@@ -356,27 +401,26 @@ public class Chess {
 	public static boolean check(int[][] board, Player player) {
 		int[] kingPosition = findKing(board, player);
 
-		Player opponentPlayer;
-		if (player == Player.Black)
-			opponentPlayer = Player.White;
-		else
-			opponentPlayer = Player.Black;
+		Player opponentPlayer = changePlayer(player);
+		
 
 		if (opponentPlayer == Player.Black) {
 			for (int row = 0; row < 8; row++) {
 				for (int column = 0; column < 8; column++) {
 					int piece = board[row][column];
-					if(isWhitePiece(piece))
-						if(isValidMove(board,opponentPlayer,row,column,kingPosition[0],kingPosition[1]))
+					if (isBlackPiece(piece))
+						if (isValidMove(board, opponentPlayer, row, column,
+								kingPosition[0], kingPosition[1]))
 							return true;
 				}
 			}
-		}else{
+		} else {
 			for (int row = 0; row < 8; row++) {
 				for (int column = 0; column < 8; column++) {
 					int piece = board[row][column];
-					if(isBlackPiece(piece))
-						if(isValidMove(board,opponentPlayer,row,column,kingPosition[0],kingPosition[1]))
+					if (isWhitePiece(piece))
+						if (isValidMove(board, opponentPlayer, row, column,
+								kingPosition[0], kingPosition[1]))
 							return true;
 				}
 			}
@@ -385,26 +429,46 @@ public class Chess {
 	}
 
 	public static boolean checkMate(int[][] board, Player player) {
-		int [] kingPosition = findKing(board,player);
-		List<int[]> moves = kingMoves(board,kingPosition,player);
-		for(int[] move : moves){
-			
-		}
-		
-		return false;
-	}
-	
-	private static List<int []> kingMoves(int [][] board,int [] kingPosition,Player player){
-		List<int []> moves = new ArrayList<int []>();
-		for(int[] move : KingMoves){
-			try{
-				if(isValidMove(board,player,kingPosition[0],kingPosition[1],move[0],move[1]))
-					moves.add(move);
-			}catch(IndexOutOfBoundsException e){
-				e.printStackTrace();
+
+		if (!check(board, player))
+			return false;
+		else {
+			int[] kingPosition = findKing(board, player);
+			List<int[]> moves = kingMoves(board, kingPosition, player);
+
+			for (int[] move : moves) {
+				int[][] auxBoard = clone(board);
+				move(auxBoard, player, kingPosition[0], kingPosition[1],
+						kingPosition[0] + move[0], kingPosition[1] + move[1]);
+				if (!check(auxBoard, player))
+					return false;
 			}
 		}
-		
+
+		return true;
+	}
+
+	private static int[][] clone(int[][] board) {
+		int[][] copy = new int[8][8];
+		for (int i = 0; i < 8; i++)
+			for (int j = 0; j < 8; j++)
+				copy[i][j] = board[i][j];
+		return copy;
+	}
+
+	private static List<int[]> kingMoves(int[][] board, int[] kingPosition,
+			Player player) {
+		List<int[]> moves = new ArrayList<int[]>();
+		for (int[] move : KingMoves) {
+			try {
+				if (isValidMove(board, player, kingPosition[0],
+						kingPosition[1], kingPosition[0] + move[0],
+						kingPosition[1] + move[1]))
+					moves.add(move);
+			} catch (IndexOutOfBoundsException e) {
+			}
+		}
+
 		return moves;
 	}
 
@@ -429,11 +493,30 @@ public class Chess {
 		return position;
 	}
 
-	private static boolean isWhitePiece(int piece) {
+	public static boolean isWhitePiece(int piece) {
 		return piece >= 7 && piece <= 13;
 	}
 
-	private static boolean isBlackPiece(int piece) {
+	public static boolean isBlackPiece(int piece) {
 		return piece >= 0 && piece <= 6;
+	}
+
+	public static boolean isPawnPromoted(int[][] board, int row, Player player) {
+		if (player == Player.Black)
+			return row == 7;
+		else
+			return row == 0;
+	}
+
+	public static void promotePawn(int[][] board, int row, int column,
+			Player player) {
+
+	}
+	
+	public static Player changePlayer(Player player){
+		if(player == Player.Black)
+			return Player.White;
+		
+		return Player.Black;
 	}
 }

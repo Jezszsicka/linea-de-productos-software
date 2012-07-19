@@ -70,8 +70,13 @@ public class GamesManager {
 		case Checkers:
 			Checkers.initBoard(game.getBoard());
 			break;
-			
+		case Chess:
+			Chess.initBoard(game.getBoard());
+			break;
+		case Connect4:
+			Connect4.initBoard(game.getBoard());
 		}
+		
 		games.put(gameName, game);
 		return game;
 		
