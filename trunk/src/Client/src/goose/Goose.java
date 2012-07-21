@@ -2,12 +2,28 @@ package goose;
 
 public class Goose {
 
-	public static void initBoard(int[][] board) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	public final static int EMPTY = 0;
+	public final static int GOOSE_SQUARE = 1;
+	public final static int BRIDGE_SQUARE  = 2;
+	public final static int DICE_SQUARE = 3;
+	public final static int LABYRINTH_SQUARE = 4;
+	public final static int HOSTEL_SQUARE = 5;
+	public final static int JAIL_SQUARE = 6;
+	public final static int WELL_SQUARE = 7;
+	public final static int SKULL_SQUARE = 8;
+	public static int [] GOOSE_BOARD = {
+		EMPTY,EMPTY,EMPTY,EMPTY,GOOSE_SQUARE,BRIDGE_SQUARE,EMPTY,EMPTY,
+		GOOSE_SQUARE,EMPTY,EMPTY,BRIDGE_SQUARE,EMPTY,GOOSE_SQUARE,EMPTY,EMPTY,
+		EMPTY,GOOSE_SQUARE,HOSTEL_SQUARE,EMPTY,EMPTY,EMPTY,GOOSE_SQUARE,EMPTY,
+		EMPTY,DICE_SQUARE,GOOSE_SQUARE,EMPTY,EMPTY,EMPTY,WELL_SQUARE,GOOSE_SQUARE,
+		EMPTY,EMPTY,EMPTY,GOOSE_SQUARE,EMPTY,EMPTY,EMPTY,EMPTY,
+		GOOSE_SQUARE,LABYRINTH_SQUARE,EMPTY,EMPTY,GOOSE_SQUARE,EMPTY,EMPTY,EMPTY,
+		EMPTY,GOOSE_SQUARE,EMPTY,JAIL_SQUARE,DICE_SQUARE,GOOSE_SQUARE,EMPTY,EMPTY,
+		GOOSE_SQUARE,SKULL_SQUARE,EMPTY,EMPTY,EMPTY,EMPTY,EMPTY,EMPTY
+	};
+	
+	
 	public static int throwDice(){
-		return (int) Math.floor(Math.random()*6+1);
+		return (int) (Math.random()*6+1);
 	}
 }

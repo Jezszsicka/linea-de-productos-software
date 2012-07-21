@@ -60,14 +60,14 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 	private JScrollPane pnlChat;
 	private JTextField txtMessage;
 	private JButton btnQuit;
-	private JLabel lbl_71;
-	private JLabel lbl_72;
-	private JLabel lbl_73;
-	private JLabel lbl_74;
-	private JLabel lbl_75;
-	private JLabel lbl_76;
-	private JLabel lbl_77;
-	private JLabel lbl_70;
+	private JLabel lbl_1;
+	private JLabel lbl_2;
+	private JLabel lbl_3;
+	private JLabel lbl_4;
+	private JLabel lbl_5;
+	private JLabel lbl_6;
+	private JLabel lbl_7;
+	private JLabel lbl_0;
 	private JLabel lbl_60;
 	private JLabel lbl_61;
 	private JLabel lbl_62;
@@ -132,6 +132,8 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			new java.awt.Color(0, 0, 0), 1, false);
 	private static final Border redBorder = new LineBorder(new java.awt.Color(
 			255, 0, 0), 4, false);
+	private JButton btnThrow;
+	private JLabel lblDice;
 	private static final Border greenBorder = new LineBorder(
 			new java.awt.Color(0, 255, 0), 4, false);
 	private static final Border blueBorder = new LineBorder(new java.awt.Color(
@@ -165,16 +167,16 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		initGUI();
 		selectedRow = -1;
 
-		User opponent = Controller.getInstance().searchUser(
-				opponentSlot.getPlayer());
-		lblOpponentAvatar.setIcon(new ImageIcon(opponent.getAvatar()));
-		lblOpponentName.setText(opponent.getUsername());
+	//	User opponent = Controller.getInstance().searchUser(
+	//			opponentSlot.getPlayer());
+	//	lblOpponentAvatar.setIcon(new ImageIcon(opponent.getAvatar()));
+	//	lblOpponentName.setText(opponent.getUsername());
 
 		if (playerTurn == myPlayer) {
 			activeSquares = true;
 			lblState.setText("Es tu turno");
 		} else {
-			lblState.setText("Es el turno de " + opponent.getName());
+		//	lblState.setText("Es el turno de " + opponent.getName());
 			activeSquares = false;
 		}
 		repaint();
@@ -272,6 +274,8 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			pnlBackground.add(getPnlChat());
 			pnlBackground.add(getLblOpponentName());
 			pnlBackground.add(getLblState());
+			pnlBackground.add(getLblDice());
+			pnlBackground.add(getBtnThrow());
 		}
 		return pnlBackground;
 	}
@@ -348,14 +352,14 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			pnlBoard.add(getLbl_62());
 			pnlBoard.add(getLbl_61());
 			pnlBoard.add(getLbl_60());
-			pnlBoard.add(getLbl_70());
-			pnlBoard.add(getLbl_77());
-			pnlBoard.add(getLbl_76());
-			pnlBoard.add(getLbl_75());
-			pnlBoard.add(getLbl_74());
-			pnlBoard.add(getLbl_73());
-			pnlBoard.add(getLbl_72());
-			pnlBoard.add(getLbl_71());
+			pnlBoard.add(getLbl_0());
+			pnlBoard.add(getLbl_7());
+			pnlBoard.add(getLbl_6());
+			pnlBoard.add(getLbl_5());
+			pnlBoard.add(getLbl_4());
+			pnlBoard.add(getLbl_3());
+			pnlBoard.add(getLbl_2());
+			pnlBoard.add(getLbl_1());
 		}
 		return pnlBoard;
 	}
@@ -371,11 +375,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_00.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_00.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/Black R.png")));
-			lbl_00.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_00MouseClicked(evt);
-				}
-			});
 			boardUI[0][0] = lbl_00;
 		}
 		return lbl_00;
@@ -392,11 +391,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_01.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/Black N.png")));
 			lbl_01.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_01.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_01MouseClicked(evt);
-				}
-			});
 			boardUI[0][1] = lbl_01;
 		}
 		return lbl_01;
@@ -413,11 +407,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_02.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_02.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/Black B.png")));
-			lbl_02.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_02MouseClicked(evt);
-				}
-			});
 			boardUI[0][2] = lbl_02;
 		}
 		return lbl_02;
@@ -434,11 +423,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_03.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/Black Q.png")));
 			lbl_03.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_03.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_03MouseClicked(evt);
-				}
-			});
 			boardUI[0][3] = lbl_03;
 		}
 		return lbl_03;
@@ -455,11 +439,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_04.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_04.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/Black K.png")));
-			lbl_04.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_04MouseClicked(evt);
-				}
-			});
 			boardUI[0][4] = lbl_04;
 		}
 		return lbl_04;
@@ -476,11 +455,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_05.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/Black B.png")));
 			lbl_05.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_05.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_05MouseClicked(evt);
-				}
-			});
 			boardUI[0][5] = lbl_05;
 		}
 		return lbl_05;
@@ -497,11 +471,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_06.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_06.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/Black N.png")));
-			lbl_06.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_06MouseClicked(evt);
-				}
-			});
 			boardUI[0][6] = lbl_06;
 		}
 		return lbl_06;
@@ -518,11 +487,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_07.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/Black R.png")));
 			lbl_07.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_07.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_07MouseClicked(evt);
-				}
-			});
 			boardUI[0][7] = lbl_07;
 		}
 		return lbl_07;
@@ -539,11 +503,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_17.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_17.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/Black P.png")));
-			lbl_17.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_17MouseClicked(evt);
-				}
-			});
 			boardUI[1][7] = lbl_17;
 		}
 		return lbl_17;
@@ -560,11 +519,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_16.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/Black P.png")));
 			lbl_16.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_16.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_16MouseClicked(evt);
-				}
-			});
 			boardUI[1][6] = lbl_16;
 		}
 		return lbl_16;
@@ -581,11 +535,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_15.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_15.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/Black P.png")));
-			lbl_15.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_15MouseClicked(evt);
-				}
-			});
 			boardUI[1][5] = lbl_15;
 		}
 		return lbl_15;
@@ -602,11 +551,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_14.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/Black P.png")));
 			lbl_14.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_14.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_14MouseClicked(evt);
-				}
-			});
 			boardUI[1][4] = lbl_14;
 		}
 		return lbl_14;
@@ -623,11 +567,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_13.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_13.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/Black P.png")));
-			lbl_13.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_13MouseClicked(evt);
-				}
-			});
 			boardUI[1][3] = lbl_13;
 		}
 		return lbl_13;
@@ -644,11 +583,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_12.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/Black P.png")));
 			lbl_12.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_12.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_12MouseClicked(evt);
-				}
-			});
 			boardUI[1][2] = lbl_12;
 		}
 		return lbl_12;
@@ -665,11 +599,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_11.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_11.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/Black P.png")));
-			lbl_11.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_11MouseClicked(evt);
-				}
-			});
 			boardUI[1][1] = lbl_11;
 		}
 		return lbl_11;
@@ -686,11 +615,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_10.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/Black P.png")));
 			lbl_10.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_10.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_10MouseClicked(evt);
-				}
-			});
 			boardUI[1][0] = lbl_10;
 		}
 		return lbl_10;
@@ -705,11 +629,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_27.setBounds(427, 127, 60, 60);
 			lbl_27.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_27.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_27MouseClicked(evt);
-				}
-			});
 			boardUI[2][7] = lbl_27;
 		}
 		return lbl_27;
@@ -724,11 +643,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_26.setBounds(367, 127, 60, 60);
 			lbl_26.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_26.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_26MouseClicked(evt);
-				}
-			});
 			boardUI[2][6] = lbl_26;
 		}
 		return lbl_26;
@@ -743,11 +657,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_25.setBounds(307, 127, 60, 60);
 			lbl_25.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_25.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_25MouseClicked(evt);
-				}
-			});
 			boardUI[2][5] = lbl_25;
 		}
 		return lbl_25;
@@ -762,11 +671,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_24.setBounds(247, 127, 60, 60);
 			lbl_24.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_24.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_24MouseClicked(evt);
-				}
-			});
 			boardUI[2][4] = lbl_24;
 		}
 		return lbl_24;
@@ -781,11 +685,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_23.setBounds(187, 127, 60, 60);
 			lbl_23.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_23.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_23MouseClicked(evt);
-				}
-			});
 			boardUI[2][3] = lbl_23;
 		}
 		return lbl_23;
@@ -800,11 +699,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_22.setBounds(127, 127, 60, 60);
 			lbl_22.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_22.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_22MouseClicked(evt);
-				}
-			});
 			boardUI[2][2] = lbl_22;
 		}
 		return lbl_22;
@@ -819,11 +713,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_21.setBounds(67, 127, 60, 60);
 			lbl_21.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_21.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_21MouseClicked(evt);
-				}
-			});
 			boardUI[2][1] = lbl_21;
 		}
 		return lbl_21;
@@ -838,11 +727,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_20.setBounds(7, 127, 60, 60);
 			lbl_20.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_20.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_20MouseClicked(evt);
-				}
-			});
 			boardUI[2][0] = lbl_20;
 		}
 		return lbl_20;
@@ -857,11 +741,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_37.setBounds(427, 186, 60, 60);
 			lbl_37.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_37.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_37MouseClicked(evt);
-				}
-			});
 			boardUI[3][7] = lbl_37;
 		}
 		return lbl_37;
@@ -876,11 +755,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_36.setBounds(367, 186, 60, 60);
 			lbl_36.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_36.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_36MouseClicked(evt);
-				}
-			});
 			boardUI[3][6] = lbl_36;
 		}
 		return lbl_36;
@@ -895,11 +769,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_35.setBounds(307, 186, 60, 60);
 			lbl_35.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_35.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_35MouseClicked(evt);
-				}
-			});
 			boardUI[3][5] = lbl_35;
 		}
 		return lbl_35;
@@ -914,11 +783,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_34.setBounds(247, 186, 60, 60);
 			lbl_34.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_34.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_34MouseClicked(evt);
-				}
-			});
 			boardUI[3][4] = lbl_34;
 		}
 		return lbl_34;
@@ -933,11 +797,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_33.setBounds(187, 186, 60, 60);
 			lbl_33.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_33.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_33MouseClicked(evt);
-				}
-			});
 			boardUI[3][3] = lbl_33;
 		}
 		return lbl_33;
@@ -952,11 +811,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_32.setBounds(127, 186, 60, 60);
 			lbl_32.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_32.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_32MouseClicked(evt);
-				}
-			});
 			boardUI[3][2] = lbl_32;
 		}
 		return lbl_32;
@@ -971,11 +825,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_31.setBounds(67, 186, 60, 60);
 			lbl_31.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_31.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_31MouseClicked(evt);
-				}
-			});
 			boardUI[3][1] = lbl_31;
 		}
 		return lbl_31;
@@ -990,11 +839,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_30.setBounds(7, 186, 60, 60);
 			lbl_30.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_30.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_30MouseClicked(evt);
-				}
-			});
 			boardUI[3][0] = lbl_30;
 		}
 		return lbl_30;
@@ -1009,11 +853,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_47.setBounds(427, 246, 60, 60);
 			lbl_47.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_47.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_47MouseClicked(evt);
-				}
-			});
 			boardUI[4][7] = lbl_47;
 		}
 		return lbl_47;
@@ -1028,11 +867,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_46.setBounds(367, 246, 60, 60);
 			lbl_46.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_46.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_46MouseClicked(evt);
-				}
-			});
 			boardUI[4][6] = lbl_46;
 		}
 		return lbl_46;
@@ -1047,11 +881,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_45.setBounds(307, 246, 60, 60);
 			lbl_45.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_45.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_45MouseClicked(evt);
-				}
-			});
 			boardUI[4][5] = lbl_45;
 		}
 		return lbl_45;
@@ -1066,11 +895,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_44.setBounds(247, 246, 60, 60);
 			lbl_44.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_44.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_44MouseClicked(evt);
-				}
-			});
 			boardUI[4][4] = lbl_44;
 		}
 		return lbl_44;
@@ -1085,11 +909,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_43.setBounds(187, 246, 60, 60);
 			lbl_43.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_43.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_43MouseClicked(evt);
-				}
-			});
 			boardUI[4][3] = lbl_43;
 		}
 		return lbl_43;
@@ -1104,11 +923,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_42.setBounds(127, 246, 60, 60);
 			lbl_42.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_42.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_42MouseClicked(evt);
-				}
-			});
 			boardUI[4][2] = lbl_42;
 		}
 		return lbl_42;
@@ -1123,11 +937,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_41.setBounds(67, 246, 60, 60);
 			lbl_41.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_41.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_41MouseClicked(evt);
-				}
-			});
 			boardUI[4][1] = lbl_41;
 		}
 		return lbl_41;
@@ -1142,11 +951,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_40.setBounds(7, 246, 60, 60);
 			lbl_40.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_40.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_40MouseClicked(evt);
-				}
-			});
 			boardUI[4][0] = lbl_40;
 		}
 		return lbl_40;
@@ -1161,11 +965,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_57.setBounds(427, 306, 60, 60);
 			lbl_57.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_57.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_57MouseClicked(evt);
-				}
-			});
 			boardUI[5][7] = lbl_57;
 		}
 		return lbl_57;
@@ -1180,11 +979,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_55.setBounds(307, 306, 60, 60);
 			lbl_55.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_55.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_55MouseClicked(evt);
-				}
-			});
 			boardUI[5][5] = lbl_55;
 		}
 		return lbl_55;
@@ -1199,11 +993,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_56.setBounds(367, 306, 60, 60);
 			lbl_56.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_56.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_56MouseClicked(evt);
-				}
-			});
 			boardUI[5][6] = lbl_56;
 		}
 		return lbl_56;
@@ -1218,11 +1007,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_54.setBounds(247, 306, 60, 60);
 			lbl_54.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_54.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_54MouseClicked(evt);
-				}
-			});
 			boardUI[5][4] = lbl_54;
 		}
 		return lbl_54;
@@ -1237,11 +1021,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_53.setBounds(187, 306, 60, 60);
 			lbl_53.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_53.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_53MouseClicked(evt);
-				}
-			});
 			boardUI[5][3] = lbl_53;
 		}
 		return lbl_53;
@@ -1256,11 +1035,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_52.setBounds(127, 306, 60, 60);
 			lbl_52.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_52.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_52MouseClicked(evt);
-				}
-			});
 			boardUI[5][2] = lbl_52;
 		}
 		return lbl_52;
@@ -1275,11 +1049,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_51.setBounds(67, 306, 60, 60);
 			lbl_51.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_51.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_51MouseClicked(evt);
-				}
-			});
 			boardUI[5][1] = lbl_51;
 		}
 		return lbl_51;
@@ -1294,11 +1063,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 					false));
 			lbl_50.setBounds(7, 306, 60, 60);
 			lbl_50.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_50.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_50MouseClicked(evt);
-				}
-			});
 			boardUI[5][0] = lbl_50;
 		}
 		return lbl_50;
@@ -1315,11 +1079,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_67.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/White P.png")));
 			lbl_67.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_67.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_67MouseClicked(evt);
-				}
-			});
 			boardUI[6][7] = lbl_67;
 		}
 		return lbl_67;
@@ -1336,11 +1095,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_66.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_66.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/White P.png")));
-			lbl_66.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_66MouseClicked(evt);
-				}
-			});
 			boardUI[6][6] = lbl_66;
 		}
 		return lbl_66;
@@ -1357,11 +1111,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_65.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/White P.png")));
 			lbl_65.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_65.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_65MouseClicked(evt);
-				}
-			});
 			boardUI[6][5] = lbl_65;
 		}
 		return lbl_65;
@@ -1378,11 +1127,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_64.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_64.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/White P.png")));
-			lbl_64.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_64MouseClicked(evt);
-				}
-			});
 			boardUI[6][4] = lbl_64;
 		}
 		return lbl_64;
@@ -1399,11 +1143,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_63.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/White P.png")));
 			lbl_63.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_63.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_63MouseClicked(evt);
-				}
-			});
 			boardUI[6][3] = lbl_63;
 		}
 		return lbl_63;
@@ -1420,11 +1159,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_62.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_62.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/White P.png")));
-			lbl_62.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_62MouseClicked(evt);
-				}
-			});
 			boardUI[6][2] = lbl_62;
 		}
 		return lbl_62;
@@ -1441,11 +1175,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_61.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/White P.png")));
 			lbl_61.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_61.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_61MouseClicked(evt);
-				}
-			});
 			boardUI[6][1] = lbl_61;
 		}
 		return lbl_61;
@@ -1462,182 +1191,137 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_60.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_60.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/White P.png")));
-			lbl_60.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_60MouseClicked(evt);
-				}
-			});
 			boardUI[6][0] = lbl_60;
 		}
 		return lbl_60;
 	}
 
-	private JLabel getLbl_70() {
-		if (lbl_70 == null) {
-			lbl_70 = new JLabel();
-			lbl_70.setOpaque(true);
-			lbl_70.setBackground(new java.awt.Color(255,255,255));
-			lbl_70.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+	private JLabel getLbl_0() {
+		if (lbl_0 == null) {
+			lbl_0 = new JLabel();
+			lbl_0.setOpaque(true);
+			lbl_0.setBackground(new java.awt.Color(255,255,255));
+			lbl_0.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
-			lbl_70.setBounds(7, 426, 60, 60);
-			lbl_70.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_70.setIcon(new ImageIcon(getClass().getClassLoader()
+			lbl_0.setBounds(7, 426, 60, 60);
+			lbl_0.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_0.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/White R.png")));
-			lbl_70.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_70MouseClicked(evt);
-				}
-			});
-			boardUI[7][0] = lbl_70;
+			boardUI[7][0] = lbl_0;
 		}
-		return lbl_70;
+		return lbl_0;
 	}
 
-	private JLabel getLbl_77() {
-		if (lbl_77 == null) {
-			lbl_77 = new JLabel();
-			lbl_77.setOpaque(true);
-			lbl_77.setBackground(new java.awt.Color(255, 255, 255));
-			lbl_77.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+	private JLabel getLbl_7() {
+		if (lbl_7 == null) {
+			lbl_7 = new JLabel();
+			lbl_7.setOpaque(true);
+			lbl_7.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_7.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
-			lbl_77.setBounds(427, 426, 60, 60);
-			lbl_77.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_77.setIcon(new ImageIcon(getClass().getClassLoader()
+			lbl_7.setBounds(427, 426, 60, 60);
+			lbl_7.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_7.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/White R.png")));
-			lbl_77.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_77MouseClicked(evt);
-				}
-			});
-			boardUI[7][7] = lbl_77;
+			boardUI[7][7] = lbl_7;
 		}
-		return lbl_77;
+		return lbl_7;
 	}
 
-	private JLabel getLbl_76() {
-		if (lbl_76 == null) {
-			lbl_76 = new JLabel();
-			lbl_76.setOpaque(true);
-			lbl_76.setBackground(new java.awt.Color(255,255,255));
-			lbl_76.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+	private JLabel getLbl_6() {
+		if (lbl_6 == null) {
+			lbl_6 = new JLabel();
+			lbl_6.setOpaque(true);
+			lbl_6.setBackground(new java.awt.Color(255,255,255));
+			lbl_6.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
-			lbl_76.setBounds(367, 426, 60, 60);
-			lbl_76.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_76.setIcon(new ImageIcon(getClass().getClassLoader()
+			lbl_6.setBounds(367, 426, 60, 60);
+			lbl_6.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_6.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/White N.png")));
-			lbl_76.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_76MouseClicked(evt);
-				}
-			});
-			boardUI[7][6] = lbl_76;
+			boardUI[7][6] = lbl_6;
 		}
-		return lbl_76;
+		return lbl_6;
 	}
 
-	private JLabel getLbl_75() {
-		if (lbl_75 == null) {
-			lbl_75 = new JLabel();
-			lbl_75.setOpaque(true);
-			lbl_75.setBackground(new java.awt.Color(255, 255, 255));
-			lbl_75.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+	private JLabel getLbl_5() {
+		if (lbl_5 == null) {
+			lbl_5 = new JLabel();
+			lbl_5.setOpaque(true);
+			lbl_5.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_5.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
-			lbl_75.setBounds(307, 426, 60, 60);
-			lbl_75.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_75.setIcon(new ImageIcon(getClass().getClassLoader()
+			lbl_5.setBounds(307, 426, 60, 60);
+			lbl_5.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_5.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/White B.png")));
-			lbl_75.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_75MouseClicked(evt);
-				}
-			});
-			boardUI[7][5] = lbl_75;
+			boardUI[7][5] = lbl_5;
 		}
-		return lbl_75;
+		return lbl_5;
 	}
 
-	private JLabel getLbl_74() {
-		if (lbl_74 == null) {
-			lbl_74 = new JLabel();
-			lbl_74.setOpaque(true);
-			lbl_74.setBackground(new java.awt.Color(255,255,255));
-			lbl_74.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+	private JLabel getLbl_4() {
+		if (lbl_4 == null) {
+			lbl_4 = new JLabel();
+			lbl_4.setOpaque(true);
+			lbl_4.setBackground(new java.awt.Color(255,255,255));
+			lbl_4.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
-			lbl_74.setBounds(247, 426, 60, 60);
-			lbl_74.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_74.setIcon(new ImageIcon(getClass().getClassLoader()
+			lbl_4.setBounds(247, 426, 60, 60);
+			lbl_4.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_4.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/White K.png")));
-			lbl_74.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_74MouseClicked(evt);
-				}
-			});
-			boardUI[7][4] = lbl_74;
+			boardUI[7][4] = lbl_4;
 		}
-		return lbl_74;
+		return lbl_4;
 	}
 
-	private JLabel getLbl_73() {
-		if (lbl_73 == null) {
-			lbl_73 = new JLabel();
-			lbl_73.setOpaque(true);
-			lbl_73.setBackground(new java.awt.Color(255, 255, 255));
-			lbl_73.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+	private JLabel getLbl_3() {
+		if (lbl_3 == null) {
+			lbl_3 = new JLabel();
+			lbl_3.setOpaque(true);
+			lbl_3.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_3.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
-			lbl_73.setBounds(187, 426, 60, 60);
-			lbl_73.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_73.setIcon(new ImageIcon(getClass().getClassLoader()
+			lbl_3.setBounds(187, 426, 60, 60);
+			lbl_3.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_3.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/White Q.png")));
-			lbl_73.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_73MouseClicked(evt);
-				}
-			});
-			boardUI[7][3] = lbl_73;
+			boardUI[7][3] = lbl_3;
 		}
-		return lbl_73;
+		return lbl_3;
 	}
 
-	private JLabel getLbl_72() {
-		if (lbl_72 == null) {
-			lbl_72 = new JLabel();
-			lbl_72.setOpaque(true);
-			lbl_72.setBackground(new java.awt.Color(255,255,255));
-			lbl_72.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+	private JLabel getLbl_2() {
+		if (lbl_2 == null) {
+			lbl_2 = new JLabel();
+			lbl_2.setOpaque(true);
+			lbl_2.setBackground(new java.awt.Color(255,255,255));
+			lbl_2.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
-			lbl_72.setBounds(127, 426, 60, 60);
-			lbl_72.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_72.setIcon(new ImageIcon(getClass().getClassLoader()
+			lbl_2.setBounds(127, 426, 60, 60);
+			lbl_2.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_2.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/White B.png")));
-			lbl_72.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_72MouseClicked(evt);
-				}
-			});
-			boardUI[7][2] = lbl_72;
+			boardUI[7][2] = lbl_2;
 		}
-		return lbl_72;
+		return lbl_2;
 	}
 
-	private JLabel getLbl_71() {
-		if (lbl_71 == null) {
-			lbl_71 = new JLabel();
-			lbl_71.setOpaque(true);
-			lbl_71.setBackground(new java.awt.Color(255, 255, 255));
-			lbl_71.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+	private JLabel getLbl_1() {
+		if (lbl_1 == null) {
+			lbl_1 = new JLabel();
+			lbl_1.setOpaque(true);
+			lbl_1.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_1.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
-			lbl_71.setBounds(67, 426, 60, 60);
-			lbl_71.setHorizontalAlignment(SwingConstants.CENTER);
-			lbl_71.setIcon(new ImageIcon(getClass().getClassLoader()
+			lbl_1.setBounds(67, 426, 60, 60);
+			lbl_1.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_1.setIcon(new ImageIcon(getClass().getClassLoader()
 					.getResource("images/Chess/White N.png")));
-			lbl_71.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					lbl_71MouseClicked(evt);
-				}
-			});
-			boardUI[7][1] = lbl_71;
+			boardUI[7][1] = lbl_1;
 		}
-		return lbl_71;
+		return lbl_1;
 	}
 
 	private JButton getBtnQuit() {
@@ -1703,330 +1387,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lblOpponentName.setBounds(522, 141, 102, 16);
 		}
 		return lblOpponentName;
-	}
-
-	private void lbl_00MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(0, 0);
-	}
-
-	private void lbl_01MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(0, 1);
-	}
-
-	private void lbl_02MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(0, 2);
-	}
-
-	private void lbl_03MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(0, 3);
-	}
-
-	private void lbl_04MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(0, 4);
-	}
-
-	private void lbl_05MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(0, 5);
-	}
-
-	private void lbl_06MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(0, 6);
-	}
-
-	private void lbl_07MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(0, 7);
-	}
-
-	private void lbl_17MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(1, 7);
-	}
-
-	private void lbl_16MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(1, 6);
-	}
-
-	private void lbl_15MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(1, 5);
-	}
-
-	private void lbl_14MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(1, 4);
-	}
-
-	private void lbl_13MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(1, 3);
-	}
-
-	private void lbl_12MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(1, 2);
-	}
-
-	private void lbl_11MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(1, 1);
-	}
-
-	private void lbl_10MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(1, 0);
-	}
-
-	private void lbl_27MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(2, 7);
-	}
-
-	private void lbl_26MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(2, 6);
-	}
-
-	private void lbl_25MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(2, 5);
-	}
-
-	private void lbl_24MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(2, 4);
-	}
-
-	private void lbl_23MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(2, 3);
-	}
-
-	private void lbl_22MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(2, 2);
-	}
-
-	private void lbl_21MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(2, 1);
-	}
-
-	private void lbl_20MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(2, 0);
-	}
-
-	private void lbl_37MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(3, 7);
-	}
-
-	private void lbl_36MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(3, 6);
-	}
-
-	private void lbl_35MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(3, 5);
-	}
-
-	private void lbl_34MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(3, 4);
-	}
-
-	private void lbl_33MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(3, 3);
-	}
-
-	private void lbl_32MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(3, 2);
-	}
-
-	private void lbl_31MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(3, 1);
-	}
-
-	private void lbl_30MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(3, 0);
-	}
-
-	private void lbl_47MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(4, 7);
-	}
-
-	private void lbl_46MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(4, 6);
-	}
-
-	private void lbl_45MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(4, 5);
-	}
-
-	private void lbl_44MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(4, 4);
-	}
-
-	private void lbl_43MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(4, 3);
-	}
-
-	private void lbl_42MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(4, 2);
-	}
-
-	private void lbl_41MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(4, 1);
-	}
-
-	private void lbl_40MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(4, 0);
-	}
-
-	private void lbl_57MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(5, 7);
-	}
-
-	private void lbl_55MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(5, 5);
-	}
-
-	private void lbl_56MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(5, 6);
-	}
-
-	private void lbl_54MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(5, 4);
-	}
-
-	private void lbl_53MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(5, 3);
-	}
-
-	private void lbl_52MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(5, 2);
-	}
-
-	private void lbl_51MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(5, 1);
-	}
-
-	private void lbl_50MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(5, 0);
-	}
-
-	private void lbl_67MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(6, 7);
-	}
-
-	private void lbl_66MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(6, 6);
-	}
-
-	private void lbl_65MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(6, 5);
-	}
-
-	private void lbl_64MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(6, 4);
-	}
-
-	private void lbl_63MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(6, 3);
-	}
-
-	private void lbl_62MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(6, 2);
-	}
-
-	private void lbl_61MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(6, 1);
-	}
-
-	private void lbl_60MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(6, 0);
-	}
-
-	private void lbl_70MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(7, 0);
-	}
-
-	private void lbl_77MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(7, 7);
-	}
-
-	private void lbl_76MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(7, 6);
-	}
-
-	private void lbl_75MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(7, 5);
-	}
-
-	private void lbl_74MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(7, 4);
-	}
-
-	private void lbl_73MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(7, 3);
-	}
-
-	private void lbl_72MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(7, 2);
-	}
-
-	private void lbl_71MouseClicked(MouseEvent evt) {
-		if (activeSquares)
-			movePiece(7, 1);
-	}
-
-	private void movePiece(int row, int column) {
-		
 	}
 
 	@Override
@@ -2105,7 +1465,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLblState() {
 		if (lblState == null) {
 			lblState = new JLabel();
-			lblState.setBounds(10, 503, 446, 18);
+			lblState.setBounds(10, 503, 493, 18);
 			lblState.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblState;
@@ -2120,6 +1480,47 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		Controller.getInstance().leaveGame(game.getName());
 		dispose();
 	}
-
 	
+	private JLabel getLblDice() {
+		if(lblDice == null) {
+			lblDice = new JLabel();
+			lblDice.setBounds(522, 273, 112, 139);
+			lblDice.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
+			lblDice.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/Dice/4.png")));
+			lblDice.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return lblDice;
+	}
+	
+	private JButton getBtnThrow() {
+		if(btnThrow == null) {
+			btnThrow = new JButton();
+			btnThrow.setText("Throw");
+			btnThrow.setBounds(548, 534, 63, 23);
+			btnThrow.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					btnThrowMouseClicked(evt);
+				}
+			});
+		}
+		return btnThrow;
+	}
+	
+	private void btnThrowMouseClicked(MouseEvent evt) {
+		new Thread(){
+			public void run(){
+				for(int i=0; i<10;i++){				
+					int result = Goose.throwDice();
+					lblDice.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/Dice/"+result+".png")));
+					try {
+						sleep(100);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}.start();
+	}
+
 }
