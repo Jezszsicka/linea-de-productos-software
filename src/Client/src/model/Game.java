@@ -33,6 +33,7 @@ public class Game extends ProductLine.Game {
 			slots.add(new Slot("",SlotState.Empty));
 			break;
 		case Goose:
+			board = new int [8][1];
 			for(int i = 0; i<7; i++)
 				slots.add(new Slot("",SlotState.Empty));
 			break;

@@ -35,6 +35,7 @@ import model.User;
 import presentation.GameUI;
 import ProductLine.Slot;
 import ProductLine.UserNotInGameException;
+import java.awt.Rectangle;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -132,6 +133,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			new java.awt.Color(0, 0, 0), 1, false);
 	private static final Border redBorder = new LineBorder(new java.awt.Color(
 			255, 0, 0), 4, false);
+	private JLabel lblTimer;
 	private static final Border greenBorder = new LineBorder(
 			new java.awt.Color(0, 255, 0), 4, false);
 	private static final Border blueBorder = new LineBorder(new java.awt.Color(
@@ -144,7 +146,6 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 	private int selectedRow;
 	private int selectedColumn;
 	private boolean activeSquares;
-	
 
 	public ChessUI(String username, Game game) {
 		super();
@@ -183,7 +184,6 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 	private void initGUI() {
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(null);
-		pack();
 		this.setSize(660, 732);
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -272,6 +272,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			pnlBackground.add(getPnlChat());
 			pnlBackground.add(getLblOpponentName());
 			pnlBackground.add(getLblState());
+			pnlBackground.add(getLblTimer());
 		}
 		return pnlBackground;
 	}
@@ -2029,51 +2030,60 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 		// Same square pressed
 		if (!(selectedRow == row && selectedColumn == column)) {
 
-			boolean playerPiece ;
-			if(myPlayer == Player.White)
+			boolean playerPiece;
+			if (myPlayer == Player.White)
 				playerPiece = Chess.isWhitePiece(game.getBoard()[row][column]);
 			else
 				playerPiece = Chess.isBlackPiece(game.getBoard()[row][column]);
 
-			//Change piece focus
-			if(playerPiece && selectedRow != -1)
+			// Change piece focus
+			if (playerPiece && selectedRow != -1)
 				boardUI[selectedRow][selectedColumn].setBorder(blackBorder);
-			
-			//Piece selected
-			if(playerPiece){
+
+			// Piece selected
+			if (playerPiece) {
 				selectedRow = row;
 				selectedColumn = column;
 				boardUI[row][column].setBorder(blueBorder);
-			}else{
-				if(selectedRow != -1){
+			} else {
+				if (selectedRow != -1) {
 					int targetSquare = game.getBoard()[row][column];
-					//Check valid move
-					if(Chess.move(game.getBoard(),playerTurn, selectedRow, selectedColumn, row, column)){
-						refreshBoard();	
+					// Check valid move
+					if (Chess.move(game.getBoard(), playerTurn, selectedRow,
+							selectedColumn, row, column)) {
+						refreshBoard();
 						playerTurn = toChessTurn(game.changeTurn());
-						if(Chess.checkMate(game.getBoard(), playerTurn) || targetSquare == Chess.BLACK_KING || targetSquare == Chess.WHITE_KING){
-							Controller.getInstance().finishGame(game.getName(), username);
-							JOptionPane.showMessageDialog(this, "Has ganado el juego!");
+						if (Chess.checkMate(game.getBoard(), playerTurn)
+								|| targetSquare == Chess.BLACK_KING
+								|| targetSquare == Chess.WHITE_KING) {
+							Controller.getInstance().finishGame(game.getName(),
+									username);
+							JOptionPane.showMessageDialog(this,
+									"Has ganado el juego!");
 							dispose();
-						}else{
-							if(Chess.isPawnPromoted(game.getBoard(), row, column, Chess.changePlayer(playerTurn))){
-								new PawnPromotionUI(this,Chess.changePlayer(playerTurn));
+						} else {
+							if (Chess.isPawnPromoted(game.getBoard(), row,
+									column, Chess.changePlayer(playerTurn))) {
+								new PawnPromotionUI(this,
+										Chess.changePlayer(playerTurn));
 								selectedRow = row;
 								selectedColumn = column;
-							}else{
+							} else {
 								selectedRow = -1;
-								Controller.getInstance().updateGame(game.getName());
+								Controller.getInstance().updateGame(
+										game.getName());
 								activeSquares = false;
-								lblState.setText("Es el turno de "+ lblOpponentName.getText());
+								lblState.setText("Es el turno de "
+										+ lblOpponentName.getText());
 							}
 						}
-					}else{
+					} else {
 						lblState.setText("Mueve donde valga, capullo!");
 					}
-				}else{
+				} else {
 					lblState.setText("Pulsa sobre una ficha tuya");
 				}
-					
+
 			}
 		}
 	}
@@ -2115,9 +2125,9 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 	}
 
 	private Player toChessTurn(int turn) {
-		if(turn == 0)
+		if (turn == 0)
 			return Player.White;
-		
+
 		return Player.Black;
 	}
 
@@ -2187,7 +2197,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 							.getClassLoader().getResource(
 									"images/Chess/Black K.png")));
 					break;
-					
+
 				case Chess.WHITE_INITIAL_PAWN:
 				case Chess.WHITE_PAWN:
 					boardUI[row][column].setIcon(new ImageIcon(getClass()
@@ -2244,20 +2254,29 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 	}
 
 	public void promotePawn(int selectedPiece) {
-		int [][] board = game.getBoard();
+		int[][] board = game.getBoard();
 		board[selectedRow][selectedColumn] = selectedPiece;
 		selectedRow = -1;
 		refreshBoard();
-		if(Chess.checkMate(game.getBoard(), playerTurn)){
+		if (Chess.checkMate(game.getBoard(), playerTurn)) {
 			Controller.getInstance().finishGame(game.getName(), username);
 			JOptionPane.showMessageDialog(this, "Has ganado el juego!");
 			dispose();
-		}else{
+		} else {
 			Controller.getInstance().updateGame(game.getName());
 			activeSquares = false;
-			lblState.setText("Es el turno de "+ lblOpponentName.getText());
+			lblState.setText("Es el turno de " + lblOpponentName.getText());
 		}
 	}
 
-	
+	private JLabel getLblTimer() {
+		if (lblTimer == null) {
+			lblTimer = new JLabel();
+			lblTimer.setText("1:00");
+			lblTimer.setBounds(521, 386, 102, 14);
+			lblTimer.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return lblTimer;
+	}
+
 }

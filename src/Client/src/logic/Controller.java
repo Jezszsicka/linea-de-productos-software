@@ -36,6 +36,7 @@ import communications.Client;
 
 import connect4.Connect4UI;
 import exceptions.WrongInputException;
+import goose.GooseUI;
 
 public class Controller {
 	public static Controller controller;
@@ -478,6 +479,9 @@ public class Controller {
 		case Chess:
 			GameUI chessUI = new ChessUI(session.getUser().getUsername(),game);
 			gamesUI.put(gameName, chessUI);
+		case Goose:
+			GameUI gooseUI = new GooseUI(session.getUser().getUsername(),game);
+			gamesUI.put(gameName, gooseUI);
 		}
 	}
 

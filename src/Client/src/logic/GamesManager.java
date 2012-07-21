@@ -3,11 +3,6 @@ package logic;
 import java.util.Hashtable;
 import java.util.List;
 
-import connect4.Connect4;
-
-import checkers.Checkers;
-import chess.Chess;
-
 import model.Filter;
 import model.Game;
 import model.Session;
@@ -17,8 +12,10 @@ import ProductLine.GameType;
 import ProductLine.NotEnoughPlayersException;
 import ProductLine.Slot;
 import ProductLine.SlotState;
+import checkers.Checkers;
+import chess.Chess;
+import connect4.Connect4;
 import exceptions.WrongInputException;
-import goose.Goose;
 
 public class GamesManager {
 	private Session session;
@@ -55,8 +52,6 @@ public class GamesManager {
 		case Connect4:
 			Connect4.initBoard(game.getBoard());
 			break;
-		case Goose:
-			Goose.initBoard(game.getBoard());	
 		}
 		games.put(gameName, game);	
 		return game;
@@ -76,8 +71,6 @@ public class GamesManager {
 			break;
 		case Connect4:
 			Connect4.initBoard(game.getBoard());
-		case Goose:
-			Goose.initBoard(game.getBoard());
 		}
 		
 		games.put(gameName, game);
