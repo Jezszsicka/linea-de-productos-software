@@ -3,7 +3,7 @@
 module ProductLine {
 	enum RoleType { Player, Admin };
 	enum SlotState {Human,Computer,Empty,Closed};
-	enum GameType {	Ludo, Chess, Trivial, Monopoly, Checkers, Connect4};
+	enum GameType {	Checkers,Chess, Connect4, Goose};
 	enum Players { TwoPlayers, ThreeOrMore};
 	enum MessageType {Normal,Invitation};
 	

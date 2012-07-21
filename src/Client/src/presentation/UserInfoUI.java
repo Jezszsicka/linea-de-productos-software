@@ -81,7 +81,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 
 		ArrayList<Ranking> rank = new ArrayList<Ranking>();
 		rank.add(new Ranking(20, 5, GameType.Checkers));
-		rank.add(new Ranking(20, 67, GameType.Monopoly));
+		rank.add(new Ranking(20, 67, GameType.Chess));
 		user.setRankings(rank);
 
 		loadRankings(user);

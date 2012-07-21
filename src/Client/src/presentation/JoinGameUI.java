@@ -50,7 +50,7 @@ public class JoinGameUI extends javax.swing.JFrame {
 	private JTextField txtGameSearch;
 	private DefaultTableModel tblGamesModel;
 	private JCheckBox checkCheckers;
-	private JCheckBox checkTrivial;
+	private JCheckBox checkGoose;
 	private JLabel Players;
 	private JCheckBox check2Players;
 	private JCheckBox check3orMore;
@@ -290,19 +290,19 @@ public class JoinGameUI extends javax.swing.JFrame {
 		return Players;
 	}
 
-	private JCheckBox getCheckTrivial() {
-		if (checkTrivial == null) {
-			checkTrivial = new JCheckBox();
-			checkTrivial.setText("Trivial");
-			checkTrivial.setBounds(23, 103, 94, 23);
-			checkTrivial.setFocusable(false);
-			checkTrivial.addMouseListener(new MouseAdapter() {
+	private JCheckBox getCheckGoose() {
+		if (checkGoose == null) {
+			checkGoose = new JCheckBox();
+			checkGoose.setText("Oca");
+			checkGoose.setBounds(23, 103, 94, 23);
+			checkGoose.setFocusable(false);
+			checkGoose.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
-					checkTrivialMouseClicked(evt);
+					checkGooseMouseClicked(evt);
 				}
 			});
 		}
-		return checkTrivial;
+		return checkGoose;
 	}
 
 	private JCheckBox getCheckCheckers() {
@@ -351,7 +351,7 @@ public class JoinGameUI extends javax.swing.JFrame {
 			pnlFilter.add(getLblFilter());
 			pnlFilter.add(getLblGame());
 			pnlFilter.add(getCheckCheckers());
-			pnlFilter.add(getCheckTrivial());
+			pnlFilter.add(getCheckGoose());
 			pnlFilter.add(getPlayers());
 			pnlFilter.add(getCheck2Players());
 			pnlFilter.add(getCheck3orMore());
@@ -367,11 +367,11 @@ public class JoinGameUI extends javax.swing.JFrame {
 		}
 	}
 
-	private void checkTrivialMouseClicked(MouseEvent evt) {
-		if (checkTrivial.isSelected()) {
-			filter.addGame(GameType.Trivial);
+	private void checkGooseMouseClicked(MouseEvent evt) {
+		if (checkGoose.isSelected()) {
+			filter.addGame(GameType.Goose);
 		} else {
-			filter.removeGame(GameType.Trivial);
+			filter.removeGame(GameType.Goose);
 		}
 	}
 

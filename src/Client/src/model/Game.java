@@ -32,7 +32,7 @@ public class Game extends ProductLine.Game {
 			board = new int [6][7];
 			slots.add(new Slot("",SlotState.Empty));
 			break;
-		case Trivial:
+		case Goose:
 			for(int i = 0; i<7; i++)
 				slots.add(new Slot("",SlotState.Empty));
 			break;

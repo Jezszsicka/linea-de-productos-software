@@ -55,6 +55,10 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JButton btnCancel;
 	private JLabel lblGame;
 	private JTextField txtGameName;
+	private JLabel jLabel3;
+	private JLabel jLabel2;
+	private JLabel jLabel1;
+	private JPanel jPanel1;
 	private JLabel lblChessPlayers;
 	private JLabel lblConnect4;
 	private JLabel lblConnect4Players;
@@ -230,7 +234,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 		if (pnlConnect4 == null) {
 			pnlConnect4 = new JPanel();
 			pnlConnect4.setLayout(null);
-			pnlConnect4.setBounds(10, 173, 243, 40);
+			pnlConnect4.setBounds(10, 122, 243, 40);
 			pnlConnect4.setBorder(BorderFactory.createTitledBorder(""));
 			pnlConnect4.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -369,6 +373,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 			pnlGameSelection.add(getPnlCheckers());
 			pnlGameSelection.add(getPnlChess());
 			pnlGameSelection.add(getConnect4());
+			pnlGameSelection.add(getJPanel1());
 		}
 		return pnlGameSelection;
 	}
@@ -377,7 +382,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 		if (pnlChess == null) {
 			pnlChess = new JPanel();
 			pnlChess.setLayout(null);
-			pnlChess.setBounds(10, 124, 243, 40);
+			pnlChess.setBounds(10, 168, 243, 40);
 			pnlChess.setBorder(BorderFactory.createTitledBorder(""));
 			pnlChess.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -420,6 +425,53 @@ public class CreateGameUI extends javax.swing.JFrame {
 		}
 		return lblChessPlayers;
 	}
+	
+	private JPanel getJPanel1() {
+		if(jPanel1 == null) {
+			jPanel1 = new JPanel();
+			jPanel1.setBorder(BorderFactory.createTitledBorder(""));
+			jPanel1.setLayout(null);
+			jPanel1.setBounds(10, 214, 243, 40);
+			jPanel1.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					jPanel1MouseClicked(evt);
+				}
+			});
+			jPanel1.add(getJLabel1x());
+			jPanel1.add(getJLabel2x());
+			jPanel1.add(getJLabel3x());
+		}
+		return jPanel1;
+	}
+	
+	private JLabel getJLabel1x() {
+		if(jLabel1 == null) {
+			jLabel1 = new JLabel();
+			jLabel1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/Games/trivial_small_icon.png")));
+			jLabel1.setBounds(153, 6, 25, 25);
+		}
+		return jLabel1;
+	}
+	
+	private JLabel getJLabel2x() {
+		if(jLabel2 == null) {
+			jLabel2 = new JLabel();
+			jLabel2.setText("Oca");
+			jLabel2.setHorizontalAlignment(SwingConstants.CENTER);
+			jLabel2.setBounds(70, 6, 59, 25);
+		}
+		return jLabel2;
+	}
+	
+	private JLabel getJLabel3x() {
+		if(jLabel3 == null) {
+			jLabel3 = new JLabel();
+			jLabel3.setText("8");
+			jLabel3.setHorizontalAlignment(SwingConstants.CENTER);
+			jLabel3.setBounds(10, 6, 21, 25);
+		}
+		return jLabel3;
+	}
 
 	private void thisWindowClosing(WindowEvent evt) {
 		Controller.getInstance().closeCreateGameUI();
@@ -452,6 +504,10 @@ public class CreateGameUI extends javax.swing.JFrame {
 		connect4Selected();
 	}
 
+	private void jPanel1MouseClicked(MouseEvent evt) {
+		gooseSelected();
+	}
+	
 	private void checkersSelected() {
 		lblGameTitle.setText("Damas");
 		txtGameDescription
@@ -478,7 +534,21 @@ public class CreateGameUI extends javax.swing.JFrame {
 				.setText("Conecta 4 es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
 		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
 				.getResource("images/Games/connect4_icon.png")));
-		lblGamePlayers.setText("2-8 jugadores");
+		lblGamePlayers.setText("2 jugadores");
 		selectedGame = GameType.Connect4;
 	}
+
+	private void gooseSelected() {
+		lblGameTitle.setText("Goose");
+		txtGameDescription
+				.setText("El juego de la oca");
+		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
+				.getResource("images/Games/trivial_icon.png")));
+		lblGamePlayers.setText("8 jugadores");
+		selectedGame = GameType.Goose;
+		
+	}
+
+	
+
 }

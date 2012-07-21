@@ -501,18 +501,18 @@ public class Chess {
 		return piece >= 0 && piece <= 6;
 	}
 
-	public static boolean isPawnPromoted(int[][] board, int row, Player player) {
-		if (player == Player.Black)
-			return row == 7;
-		else
-			return row == 0;
+	public static boolean isPawnPromoted(int[][] board, int row,int column, Player player) {
+		int piece = board[row][column];
+		if(piece == Chess.BLACK_PAWN || piece == Chess.WHITE_PAWN){
+			if (player == Player.Black)
+				return row == 7;
+			else
+				return row == 0;
+		}
+		
+		return false;
 	}
 
-	public static void promotePawn(int[][] board, int row, int column,
-			Player player) {
-
-	}
-	
 	public static Player changePlayer(Player player){
 		if(player == Player.Black)
 			return Player.White;
