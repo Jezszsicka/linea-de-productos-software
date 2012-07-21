@@ -72,16 +72,18 @@ public class GamesManager {
 	 * @throws FullGameException
 	 *             Game is full
 	 **/
-	public Game joinGame(final String game, final String player) throws FullGameException {
+	public Game joinGame(final String game, final String player)
+			throws FullGameException {
 		Game currentGame = searchGame(game);
 		if (currentGame.addPlayer(player)) {
 			for (final Slot slot : currentGame.getSlots()) {
 				if (!slot.getPlayer().equals(player)
-						&& slot.getType().equals(SlotState.Human)){
-					new Thread(){
-						public void run(){
-							UsersManager.getInstance().searchSession(slot.getPlayer())
-								.getCallback().userJoinGame(game, player);
+						&& slot.getType().equals(SlotState.Human)) {
+					new Thread() {
+						public void run() {
+							UsersManager.getInstance()
+									.searchSession(slot.getPlayer())
+									.getCallback().userJoinGame(game, player);
 						}
 					}.start();
 				}
@@ -109,19 +111,22 @@ public class GamesManager {
 				userSession.getCallback().userLeaveGame(gameName, player);
 			}
 		}
-		
-		//TODO Comportamiento según el juego
-		if(game.isStarted()){
-			switch(game.getTypeGame()){
+
+		// TODO Comportamiento según el juego
+		if (game.isStarted()) {
+			switch (game.getTypeGame()) {
 			case Checkers:
 			case Chess:
 			case Connect4:
 				games.remove(game);
 				break;
+			case Goose:
+				// TODO avisar al resto de jugadores que alguien deja el juego y
+				// si solo queda uno darlo como ganador y borrar el juego
+				break;
 			}
-			
+
 		}
-			
 
 	}
 
@@ -136,7 +141,7 @@ public class GamesManager {
 	 **/
 	public List<ProductLine.Game> listGames(String user, String gameName,
 			Filter gamesFilter) {
-		
+
 		List<ProductLine.Game> list = new ArrayList<ProductLine.Game>();
 		for (Game game : games) {
 			boolean toList = true;
@@ -234,18 +239,17 @@ public class GamesManager {
 	 * @param state
 	 *            new State for the slot
 	 **/
-	public void changeSlotState(String gameName, final int slot, final SlotState state) {
+	public void changeSlotState(String gameName, final int slot,
+			final SlotState state) {
 		final Game game = searchGame(gameName);
 		Slot changedSlot = game.getSlot(slot);
 		final String changedSlotPlayer = changedSlot.getPlayer();
-		
-		
+
 		if (changedSlot.getType() == SlotState.Human) {
 			for (Slot gameSlot : game.getSlots()) {
 				final String slotPlayer = gameSlot.getPlayer();
-				//Kick the player from game
-				if (slotPlayer.equalsIgnoreCase(
-						changedSlotPlayer)) {
+				// Kick the player from game
+				if (slotPlayer.equalsIgnoreCase(changedSlotPlayer)) {
 					new Thread() {
 						public void run() {
 							Session userSession = UsersManager.getInstance()
@@ -253,18 +257,20 @@ public class GamesManager {
 							userSession.getCallback().kickedFromGame(
 									game.getName());
 						}
-					}.start();	
+					}.start();
 				} else {
 					//
-					if (gameSlot.getType() == SlotState.Human && !slotPlayer.equalsIgnoreCase(changedSlotPlayer) && !slotPlayer.equalsIgnoreCase(game.getSlot(0).getPlayer())) {
+					if (gameSlot.getType() == SlotState.Human
+							&& !slotPlayer.equalsIgnoreCase(changedSlotPlayer)
+							&& !slotPlayer.equalsIgnoreCase(game.getSlot(0)
+									.getPlayer())) {
 						new Thread() {
 							public void run() {
 								Session userSession = UsersManager
-										.getInstance().searchSession(
-												slotPlayer);
-								userSession.getCallback()
-										.userLeaveGame(game.getName(),
-												changedSlotPlayer);
+										.getInstance()
+										.searchSession(slotPlayer);
+								userSession.getCallback().userLeaveGame(
+										game.getName(), changedSlotPlayer);
 							}
 						}.start();
 					}
@@ -272,14 +278,18 @@ public class GamesManager {
 			}
 
 		} else {
-			
-			for (Slot gameSlot : game.getSlots()){
+
+			for (Slot gameSlot : game.getSlots()) {
 				final String slotPlayer = gameSlot.getPlayer();
-				if(gameSlot.getType() == SlotState.Human && !slotPlayer.equalsIgnoreCase(game.getSlot(0).getPlayer())){
-					new Thread(){
-						public void run(){
-							Session userSession = UsersManager.getInstance().searchSession(slotPlayer);
-							userSession.getCallback().slotStateChanged(game.getName(), slot, state);
+				if (gameSlot.getType() == SlotState.Human
+						&& !slotPlayer.equalsIgnoreCase(game.getSlot(0)
+								.getPlayer())) {
+					new Thread() {
+						public void run() {
+							Session userSession = UsersManager.getInstance()
+									.searchSession(slotPlayer);
+							userSession.getCallback().slotStateChanged(
+									game.getName(), slot, state);
 						}
 					}.start();
 				}
@@ -307,37 +317,39 @@ public class GamesManager {
 		Game game = searchGame(gameName);
 		game.setStarted(true);
 		List<Slot> slots = game.getSlots();
-		for(int i = 1; i< slots.size();i++){
+		for (int i = 1; i < slots.size(); i++) {
 			Slot slot = slots.get(i);
-			if(slot.getType() == SlotState.Human){
-				Session playerSession = UsersManager.getInstance().searchSession(slot.getPlayer());
+			if (slot.getType() == SlotState.Human) {
+				Session playerSession = UsersManager.getInstance()
+						.searchSession(slot.getPlayer());
 				playerSession.getCallback().gameStarted(gameName);
 			}
 		}
-		
-		
+
 	}
 
-	public void updateGame(String gameName, String player,int nextTurn, int[][] board) {
+	public void updateGame(String gameName, String player, int nextTurn,
+			int[][] board) {
 		// TODO Auto-generated method stub
 		Game game = searchGame(gameName);
-		switch(game.getTypeGame()){
+		switch (game.getTypeGame()) {
 		case Checkers:
 		case Chess:
 		case Connect4:
 			game.setBoard(board);
 			String turn = game.getSlot(nextTurn).getPlayer();
-			Session turnSession = UsersManager.getInstance().searchSession(turn);
-			turnSession.getCallback().gameUpdated(gameName,nextTurn,board);
+			Session turnSession = UsersManager.getInstance()
+					.searchSession(turn);
+			turnSession.getCallback().gameUpdated(gameName, nextTurn, board);
 			break;
 		}
-		
+
 	}
 
 	public void finishGame(String gameName, String winnerPlayer) {
 		Game game = searchGame(gameName);
 		String turn;
-		if(game.getSlot(0).getPlayer().equals(winnerPlayer))
+		if (game.getSlot(0).getPlayer().equals(winnerPlayer))
 			turn = game.getSlot(1).getPlayer();
 		else
 			turn = game.getSlot(0).getPlayer();

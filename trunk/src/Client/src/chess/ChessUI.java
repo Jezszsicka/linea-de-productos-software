@@ -2028,35 +2028,44 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 	private void movePiece(int row, int column) {
 		// Same square pressed
 		if (!(selectedRow == row && selectedColumn == column)) {
+
 			boolean playerPiece ;
 			if(myPlayer == Player.White)
 				playerPiece = Chess.isWhitePiece(game.getBoard()[row][column]);
 			else
 				playerPiece = Chess.isBlackPiece(game.getBoard()[row][column]);
-			
+
+			//Change piece focus
 			if(playerPiece && selectedRow != -1)
 				boardUI[selectedRow][selectedColumn].setBorder(blackBorder);
 			
+			//Piece selected
 			if(playerPiece){
 				selectedRow = row;
 				selectedColumn = column;
 				boardUI[row][column].setBorder(blueBorder);
 			}else{
 				if(selectedRow != -1){
+					int targetSquare = game.getBoard()[row][column];
+					//Check valid move
 					if(Chess.move(game.getBoard(),playerTurn, selectedRow, selectedColumn, row, column)){
-						refreshBoard();
-						selectedRow = -1;
-						
+						refreshBoard();	
 						playerTurn = toChessTurn(game.changeTurn());
-						
-						if(Chess.checkMate(game.getBoard(), playerTurn)){
+						if(Chess.checkMate(game.getBoard(), playerTurn) || targetSquare == Chess.BLACK_KING || targetSquare == Chess.WHITE_KING){
 							Controller.getInstance().finishGame(game.getName(), username);
 							JOptionPane.showMessageDialog(this, "Has ganado el juego!");
 							dispose();
 						}else{
-							Controller.getInstance().updateGame(game.getName());
-							activeSquares = false;
-							lblState.setText("Es el turno de "+ lblOpponentName.getText());
+							if(Chess.isPawnPromoted(game.getBoard(), row, column, Chess.changePlayer(playerTurn))){
+								new PawnPromotionUI(this,Chess.changePlayer(playerTurn));
+								selectedRow = row;
+								selectedColumn = column;
+							}else{
+								selectedRow = -1;
+								Controller.getInstance().updateGame(game.getName());
+								activeSquares = false;
+								lblState.setText("Es el turno de "+ lblOpponentName.getText());
+							}
 						}
 					}else{
 						lblState.setText("Mueve donde valga, capullo!");
@@ -2234,4 +2243,21 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 		dispose();
 	}
 
+	public void promotePawn(int selectedPiece) {
+		int [][] board = game.getBoard();
+		board[selectedRow][selectedColumn] = selectedPiece;
+		selectedRow = -1;
+		refreshBoard();
+		if(Chess.checkMate(game.getBoard(), playerTurn)){
+			Controller.getInstance().finishGame(game.getName(), username);
+			JOptionPane.showMessageDialog(this, "Has ganado el juego!");
+			dispose();
+		}else{
+			Controller.getInstance().updateGame(game.getName());
+			activeSquares = false;
+			lblState.setText("Es el turno de "+ lblOpponentName.getText());
+		}
+	}
+
+	
 }

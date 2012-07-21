@@ -18,6 +18,7 @@ import ProductLine.NotEnoughPlayersException;
 import ProductLine.Slot;
 import ProductLine.SlotState;
 import exceptions.WrongInputException;
+import goose.Goose;
 
 public class GamesManager {
 	private Session session;
@@ -54,8 +55,8 @@ public class GamesManager {
 		case Connect4:
 			Connect4.initBoard(game.getBoard());
 			break;
-		
-			
+		case Goose:
+			Goose.initBoard(game.getBoard());	
 		}
 		games.put(gameName, game);	
 		return game;
@@ -75,6 +76,8 @@ public class GamesManager {
 			break;
 		case Connect4:
 			Connect4.initBoard(game.getBoard());
+		case Goose:
+			Goose.initBoard(game.getBoard());
 		}
 		
 		games.put(gameName, game);

@@ -117,6 +117,8 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		case Connect4:
 			connect4Selected();
 			break;
+		case Goose:
+			gooseSelected();
 		}
 
 	}
@@ -127,14 +129,6 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
 		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
 				.getResource("images/Games/checkers_icon.png")));
-		
-		/*for(PlayerPanel pnl : playerPanels){
-		JComboBox<String> box = pnl.getPlayerType();
-		ComboBoxModel<String> playerTypeModel = new DefaultComboBoxModel<String>(
-				new String[] { "Jugador", "Cerrada" });
-		box.setModel(playerTypeModel);
-		}*/
-
 	}
 
 	private void chessSelected() {
@@ -143,6 +137,13 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				.setText("El ajedrez es un juego competitivo entre dos personas, cada una de las cuales dispone de 16 piezas móviles que se colocan sobre un tablero dividido en 64 escaques.");
 		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
 				.getResource("images/Games/chess_icon.png")));
+		
+		for(PlayerPanel pnl : playerPanels){
+			JComboBox<String> box = pnl.getPlayerType();
+			ComboBoxModel<String> playerTypeModel = new DefaultComboBoxModel<String>(
+					new String[] { "Jugador", "Cerrada" });
+			box.setModel(playerTypeModel);
+		}
 
 	}
 
@@ -154,6 +155,14 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				.getResource("images/Games/connect4_icon.png")));
 	}
 
+	private void gooseSelected() {
+		lblGame.setText("Juego de la oca");
+		txtGameDescription
+				.setText("El juego de la oca es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
+				.getResource("images/Games/trivial_icon.png")));
+	}
+	
 	private void refreshPlayers() {
 		pnlPlayers.removeAll();
 		playerPanels.removeAll(playerPanels);
