@@ -67,7 +67,6 @@ public class MessagesUI extends javax.swing.JFrame {
 			}
 		});
 		getContentPane().add(getPnlBackground());
-		pack();
 		this.setSize(489, 323);
 	}
 

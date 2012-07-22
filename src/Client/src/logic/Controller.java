@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
+import ludo.LudoUI;
 import model.Filter;
 import model.Game;
 import model.Session;
@@ -201,7 +202,6 @@ public class Controller {
 	}
 
 	public void receiveGameMessage(String gameName, String sender, String message) {
-		System.out.println(gameName);
 		Game game = gamesManager.searchGame(gameName);
 		if (game.isStarted()) {
 			GameUI gameUI = gamesUI.get(gameName);
@@ -414,10 +414,12 @@ public class Controller {
 	}
 	
 	public void changeSlotState(String gameName, int slot, SlotState slotState) {
+		System.out.println("LLAMAOS AL CHANGE SLOT CON EL USUARIO "+session.getUser().getUsername());
 		gamesManager.changeSlotState(gameName,slot,slotState);
 	}
 
 	public void slotStateChanged(String gameName, int slot, SlotState state) {
+		System.out.println("HA CAMBIADO EL SLOT DE "+gameName);
 		gamesManager.slotStateChanged(gameName, slot, state);
 		GameWaitingRoomUI gameWaitingRoomUI = gameWaitingRooms.get(gameName);
 		gameWaitingRoomUI.slotStateChanged();
@@ -484,6 +486,9 @@ public class Controller {
 			GameUI gooseUI = new GooseUI(session.getUser().getUsername(),game);
 			gamesUI.put(gameName, gooseUI);
 			break;
+		case Ludo:
+			GameUI ludoUI = new LudoUI(session.getUser().getUsername(),game);
+			gamesUI.put(gameName, ludoUI);
 		}
 	}
 

@@ -38,16 +38,6 @@ import ProductLine.GameType;
 import ProductLine.Ranking;
 import ProductLine.User;
 
-/**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
- * Builder, which is free for non-commercial use. If Jigloo is being used
- * commercially (ie, by a corporation, company or business for any purpose
- * whatever) then you should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details. Use of Jigloo implies
- * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
- * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
- * ANY CORPORATE OR COMMERCIAL PURPOSE.
- */
 @SuppressWarnings("serial")
 public class ProfileUI extends javax.swing.JFrame {
 
@@ -536,8 +526,7 @@ public class ProfileUI extends javax.swing.JFrame {
 		return rankingScroll;
 	}
 
-
-	private void changeLanguage(int selectedLanguage){
+	private void changeLanguage(int selectedLanguage) {
 		Controller.getInstance().changeLanguage(selectedLanguage);
 		lblAccount.setText(language.getString("lblAccount"));
 		lblNickname.setText(language.getString("lblUsername"));
@@ -558,29 +547,35 @@ public class ProfileUI extends javax.swing.JFrame {
 		btnAvatar.setText(language.getString("btnSelectAvatar"));
 		btnDeleteAccount.setText(language.getString("btnDeleteAccount"));
 	}
-	
+
 	private JLabel getLblLanguage() {
-		if(lblLanguage == null) {
+		if (lblLanguage == null) {
 			lblLanguage = new JLabel("País");
 			lblLanguage.setText(language.getString("lblLanguage"));
 			lblLanguage.setBounds(164, 178, 82, 20);
-			lblLanguage.setFont(new java.awt.Font("Tahoma",1,11));
+			lblLanguage.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblLanguage;
 	}
-	
+
 	private JComboBox<String> getLstLanguages() {
-		if(lstLanguages == null) {
+		if (lstLanguages == null) {
 			ImageIcon[] icons = {
-					new ImageIcon(getClass().getClassLoader().getResource(
-							"images/Flags/us_small.png")),
-					new ImageIcon(getClass().getClassLoader().getResource(
-							"images/Flags/es_small.png")),
-					new ImageIcon(getClass().getClassLoader().getResource(
-							"images/Flags/fr_small.png")),
-					new ImageIcon(getClass().getClassLoader().getResource(
-							"images/Flags/de_small.png")) };
-			String[] description = new String[] { language.getString("US"), language.getString("Spanish"),language.getString("French"),language.getString("German") };
+					new ImageIcon(
+							ProfileUI.class
+									.getResource("/images/Flags/us_small.png")),
+					new ImageIcon(
+							ProfileUI.class
+									.getResource("/images/Flags/es_small.png")),
+					new ImageIcon(
+							ProfileUI.class
+									.getResource("/images/Flags/fr_small.png")),
+					new ImageIcon(
+							ProfileUI.class
+									.getResource("/images/Flags/de_small.png")) };
+			String[] description = new String[] { language.getString("US"),
+					language.getString("Spanish"),
+					language.getString("French"), language.getString("German") };
 			Integer[] intArray = new Integer[description.length];
 			for (int i = 0; i < icons.length; i++) {
 				intArray[i] = new Integer(i);
@@ -607,23 +602,29 @@ public class ProfileUI extends javax.swing.JFrame {
 		}
 		return lstLanguages;
 	}
-	
+
 	private void lstLanguagesItemStateChanged(ItemEvent evt) {
 		int selectedLanguage = lstLanguages.getSelectedIndex();
 		changeLanguage(selectedLanguage);
 	}
-	
+
 	private void lstLanguagesActionPerformed(ActionEvent evt) {
 		ImageIcon[] icons = {
-				new ImageIcon(getClass().getClassLoader().getResource(
-						"images/Flags/us_small.png")),
-				new ImageIcon(getClass().getClassLoader().getResource(
-						"images/Flags/es_small.png")),
-				new ImageIcon(getClass().getClassLoader().getResource(
-						"images/Flags/fr_small.png")),
-				new ImageIcon(getClass().getClassLoader().getResource(
-						"images/Flags/de_small.png")) };
-		String[] description = new String[] { language.getString("US"), language.getString("Spanish"),language.getString("French"),language.getString("German") };
+				new ImageIcon(
+						ProfileUI.class
+								.getResource("/images/Flags/us_small.png")),
+				new ImageIcon(
+						ProfileUI.class
+								.getResource("/images/Flags/es_small.png")),
+				new ImageIcon(
+						ProfileUI.class
+								.getResource("/images/Flags/fr_small.png")),
+				new ImageIcon(
+						ProfileUI.class
+								.getResource("/images/Flags/de_small.png")) };
+		String[] description = new String[] { language.getString("US"),
+				language.getString("Spanish"), language.getString("French"),
+				language.getString("German") };
 		Integer[] intArray = new Integer[description.length];
 		for (int i = 0; i < icons.length; i++) {
 			intArray[i] = new Integer(i);
@@ -636,9 +637,9 @@ public class ProfileUI extends javax.swing.JFrame {
 		lstLanguages.setRenderer(renderer);
 		lstLanguages.setSelectedIndex(language.getLanguageCode());
 	}
-	
+
 	private JButton getBtnDeleteAccount() {
-		if(btnDeleteAccount == null) {
+		if (btnDeleteAccount == null) {
 			btnDeleteAccount = new JButton("Borrar cuenta");
 			btnDeleteAccount.setText(language.getString("btnDeleteAccount"));
 			btnDeleteAccount.setBounds(458, 177, 138, 23);
@@ -651,7 +652,7 @@ public class ProfileUI extends javax.swing.JFrame {
 		}
 		return btnDeleteAccount;
 	}
-	
+
 	private void btnDeleteAccountMouseClicked(MouseEvent evt) {
 		new DeleteAccountUI(this);
 	}

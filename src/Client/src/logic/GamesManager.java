@@ -75,6 +75,10 @@ public class GamesManager {
 			break;
 		case Connect4:
 			Connect4.initBoard(game.getBoard());
+		case Goose:
+			break;
+		case Ludo:
+			break;
 		}
 		
 		games.put(gameName, game);

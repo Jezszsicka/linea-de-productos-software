@@ -22,16 +22,6 @@ import javax.swing.text.StyleConstants;
 import logic.Controller;
 import ProductLine.GameType;
 
-/**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
- * Builder, which is free for non-commercial use. If Jigloo is being used
- * commercially (ie, by a corporation, company or business for any purpose
- * whatever) then you should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details. Use of Jigloo implies
- * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
- * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
- * ANY CORPORATE OR COMMERCIAL PURPOSE.
- */
 @SuppressWarnings("serial")
 public class CreateGameUI extends javax.swing.JFrame {
 
@@ -55,10 +45,10 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JButton btnCancel;
 	private JLabel lblGame;
 	private JTextField txtGameName;
-	private JLabel jLabel3;
-	private JLabel jLabel2;
-	private JLabel jLabel1;
-	private JPanel jPanel1;
+	private JLabel lblGoosePlayers;
+	private JLabel lblGoose;
+	private JLabel lblGooseIcon;
+	private JPanel pnlGoose;
 	private JLabel lblChessPlayers;
 	private JLabel lblConnect4;
 	private JLabel lblConnect4Players;
@@ -76,6 +66,10 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel lblGameName;
 	private JButton btnCreate;
 	private GameType selectedGame;
+	private JPanel pnlLudo;
+	private JLabel lblLudoIcon;
+	private JLabel lblLudo;
+	private JLabel lblLudoPlayers;
 
 	public CreateGameUI() {
 		super();
@@ -206,8 +200,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 		if (lblIconCheckers == null) {
 			lblIconCheckers = new JLabel();
 			lblIconCheckers.setBounds(154, 8, 25, 25);
-			lblIconCheckers.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/Games/checkers_small_icon.png")));
+			lblIconCheckers.setIcon(new ImageIcon(CreateGameUI.class
+					.getResource("/images/Games/checkers_small_icon.png")));
 		}
 		return lblIconCheckers;
 	}
@@ -252,7 +246,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 		if (lblConnect4lIcon == null) {
 			lblConnect4lIcon = new JLabel();
 			lblConnect4lIcon.setBounds(153, 6, 25, 25);
-			lblConnect4lIcon.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/Games/connect4_small_icon.png")));
+			lblConnect4lIcon.setIcon(new ImageIcon(CreateGameUI.class
+					.getResource("/images/Games/connect4_small_icon.png")));
 		}
 		return lblConnect4lIcon;
 	}
@@ -281,8 +276,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 		if (lblGameImage == null) {
 			lblGameImage = new JLabel();
 			lblGameImage.setBounds(2, 36, 254, 60);
-			lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/Games/checkers_icon.png")));
+			lblGameImage.setIcon(new ImageIcon(CreateGameUI.class
+					.getResource("/images/Games/checkers_icon.png")));
 			lblGameImage.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		return lblGameImage;
@@ -373,7 +368,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 			pnlGameSelection.add(getPnlCheckers());
 			pnlGameSelection.add(getPnlChess());
 			pnlGameSelection.add(getConnect4());
-			pnlGameSelection.add(getJPanel1());
+			pnlGameSelection.add(getPnlGoose());
+			pnlGameSelection.add(getPnlLudo());
 		}
 		return pnlGameSelection;
 	}
@@ -399,8 +395,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblIconChess() {
 		if (lblIconChess == null) {
 			lblIconChess = new JLabel();
-			lblIconChess.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/Games/chess_small_icon.png")));
+			lblIconChess.setIcon(new ImageIcon(CreateGameUI.class
+					.getResource("/images/Games/chess_small_icon.png")));
 			lblIconChess.setBounds(153, 8, 25, 25);
 		}
 		return lblIconChess;
@@ -425,52 +421,100 @@ public class CreateGameUI extends javax.swing.JFrame {
 		}
 		return lblChessPlayers;
 	}
-	
-	private JPanel getJPanel1() {
-		if(jPanel1 == null) {
-			jPanel1 = new JPanel();
-			jPanel1.setBorder(BorderFactory.createTitledBorder(""));
-			jPanel1.setLayout(null);
-			jPanel1.setBounds(10, 214, 243, 40);
-			jPanel1.addMouseListener(new MouseAdapter() {
+
+	private JPanel getPnlGoose() {
+		if (pnlGoose == null) {
+			pnlGoose = new JPanel();
+			pnlGoose.setBorder(BorderFactory.createTitledBorder(""));
+			pnlGoose.setLayout(null);
+			pnlGoose.setBounds(10, 214, 243, 40);
+			pnlGoose.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
-					jPanel1MouseClicked(evt);
+					pnlGooseMouseClicked(evt);
 				}
 			});
-			jPanel1.add(getJLabel1x());
-			jPanel1.add(getJLabel2x());
-			jPanel1.add(getJLabel3x());
+			pnlGoose.add(getLblGooseIcon());
+			pnlGoose.add(getLblGoose());
+			pnlGoose.add(getLblGoosePlayers());
 		}
-		return jPanel1;
+		return pnlGoose;
 	}
-	
-	private JLabel getJLabel1x() {
-		if(jLabel1 == null) {
-			jLabel1 = new JLabel();
-			jLabel1.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/Games/trivial_small_icon.png")));
-			jLabel1.setBounds(153, 6, 25, 25);
+
+	private JLabel getLblGooseIcon() {
+		if (lblGooseIcon == null) {
+			lblGooseIcon = new JLabel();
+			lblGooseIcon.setIcon(new ImageIcon(CreateGameUI.class
+					.getResource("/images/Games/trivial_small_icon.png")));
+			lblGooseIcon.setBounds(153, 6, 25, 25);
 		}
-		return jLabel1;
+		return lblGooseIcon;
 	}
-	
-	private JLabel getJLabel2x() {
-		if(jLabel2 == null) {
-			jLabel2 = new JLabel();
-			jLabel2.setText("Oca");
-			jLabel2.setHorizontalAlignment(SwingConstants.CENTER);
-			jLabel2.setBounds(70, 6, 59, 25);
+
+	private JLabel getLblGoose() {
+		if (lblGoose == null) {
+			lblGoose = new JLabel();
+			lblGoose.setText("Oca");
+			lblGoose.setHorizontalAlignment(SwingConstants.CENTER);
+			lblGoose.setBounds(70, 6, 59, 25);
 		}
-		return jLabel2;
+		return lblGoose;
 	}
-	
-	private JLabel getJLabel3x() {
-		if(jLabel3 == null) {
-			jLabel3 = new JLabel();
-			jLabel3.setText("8");
-			jLabel3.setHorizontalAlignment(SwingConstants.CENTER);
-			jLabel3.setBounds(10, 6, 21, 25);
+
+	private JLabel getLblGoosePlayers() {
+		if (lblGoosePlayers == null) {
+			lblGoosePlayers = new JLabel();
+			lblGoosePlayers.setText("8");
+			lblGoosePlayers.setHorizontalAlignment(SwingConstants.CENTER);
+			lblGoosePlayers.setBounds(10, 6, 21, 25);
 		}
-		return jLabel3;
+		return lblGoosePlayers;
+	}
+
+	private JPanel getPnlLudo() {
+		if (pnlLudo == null) {
+			pnlLudo = new JPanel();
+			pnlLudo.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					pnlLudoMouseClicked(arg0);
+				}
+			});
+			pnlLudo.setLayout(null);
+			pnlLudo.setBorder(BorderFactory.createTitledBorder(""));
+			pnlLudo.setBounds(10, 265, 243, 40);
+			pnlLudo.add(getLblLudoIcon());
+			pnlLudo.add(getLblLudo());
+			pnlLudo.add(getLblLudoPlayers());
+		}
+		return pnlLudo;
+	}
+
+	private JLabel getLblLudoIcon() {
+		if (lblLudoIcon == null) {
+			lblLudoIcon = new JLabel();
+			lblLudoIcon.setBounds(153, 6, 25, 25);
+		}
+		return lblLudoIcon;
+	}
+
+	private JLabel getLblLudo() {
+		if (lblLudo == null) {
+			lblLudo = new JLabel();
+			lblLudo.setText("Ludo");
+			lblLudo.setHorizontalAlignment(SwingConstants.CENTER);
+			lblLudo.setBounds(70, 6, 59, 25);
+		}
+		return lblLudo;
+	}
+
+	private JLabel getLblLudoPlayers() {
+		if (lblLudoPlayers == null) {
+			lblLudoPlayers = new JLabel();
+			lblLudoPlayers.setText("8");
+			lblLudoPlayers.setHorizontalAlignment(SwingConstants.CENTER);
+			lblLudoPlayers.setBounds(10, 6, 21, 25);
+		}
+		return lblLudoPlayers;
 	}
 
 	private void thisWindowClosing(WindowEvent evt) {
@@ -504,16 +548,20 @@ public class CreateGameUI extends javax.swing.JFrame {
 		connect4Selected();
 	}
 
-	private void jPanel1MouseClicked(MouseEvent evt) {
+	private void pnlGooseMouseClicked(MouseEvent evt) {
 		gooseSelected();
 	}
-	
+
+	protected void pnlLudoMouseClicked(MouseEvent arg0) {
+		ludoSelected();
+	}
+
 	private void checkersSelected() {
 		lblGameTitle.setText("Damas");
 		txtGameDescription
 				.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
-		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/Games/checkers_icon.png")));
+		lblGameImage.setIcon(new ImageIcon(CreateGameUI.class
+				.getResource("/images/Games/checkers_icon.png")));
 		lblGamePlayers.setText("2 jugadores");
 		selectedGame = GameType.Checkers;
 	}
@@ -522,8 +570,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 		lblGameTitle.setText("Ajedrez");
 		txtGameDescription
 				.setText("El ajedrez es un juego competitivo entre dos personas, cada una de las cuales dispone de 16 piezas móviles que se colocan sobre un tablero dividido en 64 escaques.");
-		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/Games/chess_icon.png")));
+		lblGameImage.setIcon(new ImageIcon(CreateGameUI.class
+				.getResource("/images/Games/chess_icon.png")));
 		lblGamePlayers.setText("2 jugadores");
 		selectedGame = GameType.Chess;
 	}
@@ -532,23 +580,27 @@ public class CreateGameUI extends javax.swing.JFrame {
 		lblGameTitle.setText("Conecta 4");
 		txtGameDescription
 				.setText("Conecta 4 es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
-		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/Games/connect4_icon.png")));
+		lblGameImage.setIcon(new ImageIcon(CreateGameUI.class
+				.getResource("/images/Games/connect4_icon.png")));
 		lblGamePlayers.setText("2 jugadores");
 		selectedGame = GameType.Connect4;
 	}
 
 	private void gooseSelected() {
 		lblGameTitle.setText("Goose");
-		txtGameDescription
-				.setText("El juego de la oca");
-		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/Games/trivial_icon.png")));
-		lblGamePlayers.setText("8 jugadores");
+		txtGameDescription.setText("El juego de la oca");
+		lblGameImage.setIcon(new ImageIcon(CreateGameUI.class
+				.getResource("/images/Games/trivial_icon.png")));
+		lblGamePlayers.setText("2-8 jugadores");
 		selectedGame = GameType.Goose;
-		
 	}
 
-	
-
+	private void ludoSelected() {
+		lblGameTitle.setText("Ludo");
+		txtGameDescription.setText("El parchís es un juego teta");
+		lblGameImage.setIcon(new ImageIcon(CreateGameUI.class
+				.getResource("/images/Games/trivial_icon.png")));
+		lblGamePlayers.setText("2-4 jugadores");
+		selectedGame = GameType.Ludo;
+	}
 }

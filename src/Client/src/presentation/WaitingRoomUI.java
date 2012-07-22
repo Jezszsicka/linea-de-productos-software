@@ -1,12 +1,12 @@
 package presentation;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -39,18 +39,7 @@ import logic.Controller;
 import logic.LanguageManager;
 import model.User;
 import ProductLine.UserNotLoggedException;
-import java.awt.Rectangle;
 
-/**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
- * Builder, which is free for non-commercial use. If Jigloo is being used
- * commercially (ie, by a corporation, company or business for any purpose
- * whatever) then you should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details. Use of Jigloo implies
- * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
- * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
- * ANY CORPORATE OR COMMERCIAL PURPOSE.
- */
 @SuppressWarnings("serial")
 public class WaitingRoomUI extends javax.swing.JFrame {
 
@@ -109,8 +98,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 		this.user = user;
 		this.users = users;
 		if (user.getAvatar().length == 0) {
-			lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/Avatars/1.jpg")));
+			lblAvatar.setIcon(new ImageIcon(WaitingRoomUI.class
+					.getResource("/images/Avatars/1.jpg")));
 		} else {
 			lblAvatar.setIcon(new ImageIcon(user.getAvatar()));
 		}
@@ -259,8 +248,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 			btnProfile = new JButton();
 			btnProfile.setBounds(482, 6, 56, 58);
 			btnProfile.setFocusable(false);
-			btnProfile.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/profile_icon.png")));
+			btnProfile.setIcon(new ImageIcon(WaitingRoomUI.class
+					.getResource("/images/profile_icon.png")));
 			btnProfile.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.RAISED));
 			btnProfile.addMouseListener(new MouseAdapter() {
@@ -286,8 +275,6 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 			lblAvatar.setBounds(23, 15, 100, 120);
 			lblAvatar.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
-			lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/Avatars/2.jpg")));
 		}
 		return lblAvatar;
 	}
@@ -306,7 +293,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 	private void thisWindowClosing(WindowEvent evt) {
 		int option = JOptionPane.showConfirmDialog(this,
-				language.getString("ExitDialogMessage"), language.getString("ExitDialogTitle"),
+				language.getString("ExitDialogMessage"),
+				language.getString("ExitDialogTitle"),
 				JOptionPane.YES_NO_OPTION);
 		if (option == JOptionPane.YES_OPTION) {
 			Controller.getInstance().logoutUser();
@@ -320,7 +308,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 	protected void btnExitMouseClicked(MouseEvent evt) {
 		int option = JOptionPane.showConfirmDialog(this,
-				language.getString("ExitDialogMessage"), language.getString("ExitDialogTitle"),
+				language.getString("ExitDialogMessage"),
+				language.getString("ExitDialogTitle"),
 				JOptionPane.YES_NO_OPTION);
 		if (option == JOptionPane.YES_OPTION) {
 			Controller.getInstance().logoutUser();
@@ -400,8 +389,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 			JLabel userAvatarLabel = new JLabel();
 			if (users.get(i).getAvatar().length == 0) {
-				userAvatarLabel.setIcon(new ImageIcon(getClass()
-						.getClassLoader().getResource("images/Avatars/1.jpg")));
+				userAvatarLabel.setIcon(new ImageIcon(WaitingRoomUI.class
+						.getResource("/images/Avatars/1.jpg")));
 			} else {
 				ImageIcon image = new ImageIcon(users.get(i).getAvatar());
 				image = new ImageIcon(image.getImage().getScaledInstance(
@@ -448,8 +437,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 			if (!destinatary.equalsIgnoreCase(user.getUsername())) {
 				String privateMessage = message.split(destinatary)[1];
 				try {
-					Controller.getInstance().sendPrivateMessage(
-							destinatary, privateMessage);
+					Controller.getInstance().sendPrivateMessage(destinatary,
+							privateMessage);
 					try {
 						htmlEditor.insertHTML(chatText, chatText.getLength(),
 								"<font color=\"red\"><b> >" + destinatary
@@ -567,7 +556,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 			scrollPnlUsers.setPreferredSize(new java.awt.Dimension(143, 260));
 			scrollPnlUsers.setBorder(BorderFactory
 					.createEmptyBorder(0, 0, 0, 0));
-			scrollPnlUsers.setForeground(new java.awt.Color(0,0,0));
+			scrollPnlUsers.setForeground(new java.awt.Color(0, 0, 0));
 			scrollPnlUsers.setViewportView(getPnlUsers());
 		}
 		return scrollPnlUsers;
@@ -610,21 +599,24 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 		}
 	}
-	
+
 	private JLabel getBtnMessages() {
-		if(btnMessages == null) {
+		if (btnMessages == null) {
 			btnMessages = new JLabel();
 			btnMessages.setText("Messages");
 			btnMessages.setBounds(338, 7, 57, 56);
 			btnMessages.setFocusable(false);
-			btnMessages.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/mailIcon.png")));
+			btnMessages.setIcon(new ImageIcon(WaitingRoomUI.class
+					.getResource("/images/mailIcon.png")));
 			btnMessages.addMouseListener(new MouseAdapter() {
 				public void mouseExited(MouseEvent evt) {
 					btnMessagesMouseExited(evt);
 				}
+
 				public void mouseEntered(MouseEvent evt) {
 					btnMessagesMouseEntered(evt);
 				}
+
 				public void mouseClicked(MouseEvent evt) {
 					btnMessagesMouseClicked(evt);
 				}
@@ -632,23 +624,23 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 		}
 		return btnMessages;
 	}
-	
+
 	private void btnMessagesMouseClicked(MouseEvent evt) {
 		Controller.getInstance().showMessagesUI();
 	}
-	
-	private void setHandCursor(){
+
+	private void setHandCursor() {
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
-	
-	private void setDefaultCursor(){
+
+	private void setDefaultCursor() {
 		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
-	
+
 	private void btnMessagesMouseEntered(MouseEvent evt) {
 		setHandCursor();
 	}
-	
+
 	private void btnMessagesMouseExited(MouseEvent evt) {
 		setDefaultCursor();
 	}
