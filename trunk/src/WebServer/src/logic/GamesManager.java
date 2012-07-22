@@ -121,6 +121,7 @@ public class GamesManager {
 				games.remove(game);
 				break;
 			case Goose:
+			case Ludo:
 				// TODO avisar al resto de jugadores que alguien deja el juego y
 				// si solo queda uno darlo como ganador y borrar el juego
 				break;
@@ -343,11 +344,9 @@ public class GamesManager {
 			if (player.equalsIgnoreCase(session.getUser().getName())) {
 				
 				int updateUser = game.getTurn();
-				System.out.println("Next turn :"+nextTurn +" Update turn "+updateUser);
 				checkersTurn = game.getSlot(updateUser).getPlayer();
 				session = UsersManager.getInstance()
 						.searchSession(checkersTurn);
-				System.out.println("CAMBIO DE TURNO CHETO A: "+session.getUser().getUsername());
 				game.changeTurn();
 			}
 

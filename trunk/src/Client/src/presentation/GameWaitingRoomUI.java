@@ -45,16 +45,6 @@ import ProductLine.Slot;
 import ProductLine.UserNotInGameException;
 import ProductLine.SlotState;
 
-/**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
- * Builder, which is free for non-commercial use. If Jigloo is being used
- * commercially (ie, by a corporation, company or business for any purpose
- * whatever) then you should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details. Use of Jigloo implies
- * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
- * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
- * ANY CORPORATE OR COMMERCIAL PURPOSE.
- */
 @SuppressWarnings("serial")
 public class GameWaitingRoomUI extends javax.swing.JFrame {
 
@@ -105,7 +95,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		setVisible(true);
 		setLocationRelativeTo(null);
 		destinatary = "";
-		refreshPlayers();
+		initPlayers();
 		lblName.setText(game.getName());
 		switch (game.getTypeGame()) {
 		case Checkers:
@@ -119,6 +109,8 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			break;
 		case Goose:
 			gooseSelected();
+		case Ludo:
+			ludoSelected();
 		}
 
 	}
@@ -127,18 +119,18 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		lblGame.setText("Damas");
 		txtGameDescription
 				.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
-		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/Games/checkers_icon.png")));
+		lblGameImage.setIcon(new ImageIcon(GameWaitingRoomUI.class
+				.getResource("/images/Games/checkers_icon.png")));
 	}
 
 	private void chessSelected() {
 		lblGame.setText("Ajedrez");
 		txtGameDescription
 				.setText("El ajedrez es un juego competitivo entre dos personas, cada una de las cuales dispone de 16 piezas móviles que se colocan sobre un tablero dividido en 64 escaques.");
-		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/Games/chess_icon.png")));
-		
-		for(PlayerPanel pnl : playerPanels){
+		lblGameImage.setIcon(new ImageIcon(GameWaitingRoomUI.class
+				.getResource("/images/Games/chess_icon.png")));
+
+		for (PlayerPanel pnl : playerPanels) {
 			JComboBox<String> box = pnl.getPlayerType();
 			ComboBoxModel<String> playerTypeModel = new DefaultComboBoxModel<String>(
 					new String[] { "Jugador", "Cerrada" });
@@ -151,21 +143,26 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		lblGame.setText("Conecta 4");
 		txtGameDescription
 				.setText("Conecta 4 es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
-		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/Games/connect4_icon.png")));
+		lblGameImage.setIcon(new ImageIcon(GameWaitingRoomUI.class
+				.getResource("/images/Games/connect4_icon.png")));
 	}
 
 	private void gooseSelected() {
 		lblGame.setText("Juego de la oca");
 		txtGameDescription
 				.setText("El juego de la oca es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
-		lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/Games/trivial_icon.png")));
+		lblGameImage.setIcon(new ImageIcon(GameWaitingRoomUI.class
+				.getResource("/images/Games/trivial_icon.png")));
 	}
-	
-	private void refreshPlayers() {
-		pnlPlayers.removeAll();
-		playerPanels.removeAll(playerPanels);
+
+	private void ludoSelected() {
+		lblGame.setText("Ludo");
+		txtGameDescription.setText("El parchis chupi way");
+		lblGameImage.setIcon(new ImageIcon(GameWaitingRoomUI.class
+				.getResource("/images/Games/trivial_icon.png")));
+	}
+
+	private void initPlayers() {
 		int size = 0;
 		PlayerPanel playerPanel = null;
 		for (int i = 0; i < game.getSlots().size(); i++) {
@@ -194,20 +191,56 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		}
 
 		if (size > pnlPlayersScroll.getHeight()) {
-			for(PlayerPanel panel : playerPanels){
-				panel.setPreferredSize(new Dimension(panel.getWidth()-15,panel.getHeight()));
-				panel.setSize(panel.getWidth()-15,panel.getHeight());
+			for (PlayerPanel panel : playerPanels) {
+				panel.setPreferredSize(new Dimension(panel.getWidth() - 15,
+						panel.getHeight()));
+				panel.setSize(panel.getWidth() - 15, panel.getHeight());
 				JComboBox<String> playerType = panel.getPlayerType();
-				playerType.setLocation(playerType.getX()-15, playerType.getY());
+				playerType.setLocation(playerType.getX() - 15,
+						playerType.getY());
 				panel.repaint();
 			}
-				
+
 		}
-		
+
 		pnlPlayers.setPreferredSize(new Dimension(pnlPlayers.getWidth(), size));
 		pnlPlayers.setSize(pnlPlayers.getWidth(), size);
 		pnlPlayers.repaint();
 
+	}
+
+	private void refreshPlayers() {
+		for (int i = 0; i < game.getSlots().size(); i++) {
+			Slot slot = game.getSlot(i);
+			PlayerPanel playerPanel = playerPanels.get(i);
+			switch (slot.getType()) {
+			case Human:
+				User user = Controller.getInstance().searchUser(
+						slot.getPlayer());
+				playerPanel.setPlayer(user.getUsername());
+				playerPanel.setAvatar(new ImageIcon(user.getAvatar()));
+				playerPanel.setCountry(user.getCountry());
+				break;
+			case Empty:
+				playerPanel.setPlayer("Free");
+				playerPanel.setAvatar(new ImageIcon(GameWaitingRoomUI.class
+						.getResource("/images/contact_icon.png")));
+				playerPanel.setCountry(-1);
+				break;
+			case Computer:
+				playerPanel.setPlayer("Computer");
+				playerPanel.setAvatar(new ImageIcon(GameWaitingRoomUI.class
+						.getResource("/images/contact_icon.png")));
+				playerPanel.setCountry(-1);
+				break;
+			case Closed:
+				playerPanel.setPlayer("Closed");
+				playerPanel.setAvatar(new ImageIcon(GameWaitingRoomUI.class
+						.getResource("/images/contact_icon.png")));
+				playerPanel.setCountry(-1);
+				break;
+			}
+		}
 	}
 
 	private void initGUI() {
@@ -222,7 +255,6 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				}
 			});
 			getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
-			pack();
 			this.setSize(677, 450);
 		} catch (Exception e) {
 			// add your error handling code here
@@ -322,8 +354,8 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		if (lblGameImage == null) {
 			lblGameImage = new JLabel();
 			lblGameImage.setHorizontalAlignment(SwingConstants.CENTER);
-			lblGameImage.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/Games/checkers_icon.png")));
+			lblGameImage.setIcon(new ImageIcon(GameWaitingRoomUI.class
+					.getResource("/images/Games/checkers_icon.png")));
 			lblGameImage.setBounds(2, 57, 261, 60);
 		}
 		return lblGameImage;
@@ -409,7 +441,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	}
 
 	private void btnCancelMouseClicked(MouseEvent evt) {
-		if(btnCancel.isEnabled()){
+		if (btnCancel.isEnabled()) {
 			if (creator)
 				Controller.getInstance().deleteGame(game.getName());
 			else
@@ -419,22 +451,24 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	}
 
 	private void btnStartGameMouseClicked(MouseEvent evt) {
-		if(btnStartGame.isEnabled()){
+		if (btnStartGame.isEnabled()) {
 			try {
 				Controller.getInstance().startGame(game.getName());
 				btnCancel.setEnabled(false);
 				btnStartGame.setEnabled(false);
-				for(int i=1;i<playerPanels.size();i++){
+				for (int i = 1; i < playerPanels.size(); i++) {
 					playerPanels.get(i).getPlayerType().setEnabled(false);
 				}
-				new Thread(){
-					public void run(){
-						for(int i = 5;i>0;i--){
+				new Thread() {
+					public void run() {
+						for (int i = 5; i > 0; i--) {
 							try {
-								htmlEditor.insertHTML(chatText, chatText.getLength(),
-										"<b>La partida empezará en "+i+" </b>",
-										0, 0, null);
-								txtChat.setCaretPosition(txtChat.getDocument().getLength());
+								htmlEditor.insertHTML(chatText,
+										chatText.getLength(),
+										"<b>La partida empezará en " + i
+												+ " </b>", 0, 0, null);
+								txtChat.setCaretPosition(txtChat.getDocument()
+										.getLength());
 								try {
 									sleep(1000);
 								} catch (InterruptedException e) {
@@ -447,14 +481,17 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
-							}	
+							}
 						}
-						Controller.getInstance().closeGameWaitingRoomUI(game.getName());		
+						Controller.getInstance().closeGameWaitingRoomUI(
+								game.getName());
 					}
 				}.start();
 			} catch (NotEnoughPlayersException e1) {
-				JOptionPane.showMessageDialog(this, "Que vas a jugar tu solo gañán!",
-						"Echandome un solitario", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(this,
+						"Que vas a jugar tu solo gañán!",
+						"Echandome un solitario",
+						JOptionPane.INFORMATION_MESSAGE);
 				e1.printStackTrace();
 			}
 		}
@@ -462,14 +499,15 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 
 	public void gameStarted() {
 		btnCancel.setEnabled(false);
-		new Thread(){
-			public void run(){
-				for(int i = 5;i>0;i--){
+		new Thread() {
+			public void run() {
+				for (int i = 5; i > 0; i--) {
 					try {
 						htmlEditor.insertHTML(chatText, chatText.getLength(),
-								"<b>La partida empezará en "+i+" </b>",
-								0, 0, null);
-						txtChat.setCaretPosition(txtChat.getDocument().getLength());
+								"<b>La partida empezará en " + i + " </b>", 0,
+								0, null);
+						txtChat.setCaretPosition(txtChat.getDocument()
+								.getLength());
 						try {
 							sleep(1000);
 						} catch (InterruptedException e) {
@@ -482,13 +520,13 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}	
+					}
 				}
 				Controller.getInstance().closeGameWaitingRoomUI(game.getName());
 			}
 		}.start();
 	}
-	
+
 	private void txtMessageKeyPressed(KeyEvent evt) {
 		if (evt.getKeyCode() == 10 && txtMessage.getText().length() > 0)
 			sendMessage();
@@ -503,8 +541,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				String privateMessage = message.split(destinatary)[1];
 				try {
 					Controller.getInstance().sendGamePrivateMessage(
-							game.getName(), destinatary,
-							privateMessage);
+							game.getName(), destinatary, privateMessage);
 					try {
 						htmlEditor.insertHTML(chatText, chatText.getLength(),
 								"<font color=\"red\"><b> >" + destinatary
@@ -621,7 +658,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		}
 		return pnlPlayersScroll;
 	}
-	
+
 	private void thisWindowClosing(WindowEvent evt) {
 		if (creator)
 			Controller.getInstance().deleteGame(game.getName());
@@ -636,7 +673,6 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		private JLabel lblCountry;
 		private JComboBox<String> playerType;
 		private int slot;
-		private boolean changeState;
 
 		public PlayerPanel(int slot, SlotState state) {
 			super();
@@ -647,31 +683,33 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			add(getLblPlayer());
 			add(getPlayerType());
 			setLayout(null);
-			lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/contact_icon.png")));
+			lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
+					.getResource("/images/contact_icon.png")));
 			if (!creator)
 				playerType.setEnabled(false);
 			switch (state) {
 			case Empty: // Empty
-				lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/contact_icon.png")));
+				lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
+						.getResource("/images/contact_icon.png")));
 				lblPlayer.setText("Free");
 				lblCountry.setIcon(null);
 				playerType.setSelectedIndex(0);
 				break;
 			case Computer: // Computer
-				lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/contact_icon.png")));
+				lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
+						.getResource("/images/contact_icon.png")));
 				lblPlayer.setText("Computer");
 				lblCountry.setIcon(null);
 				playerType.setSelectedIndex(1);
 				break;
 			case Closed: // Closed
-				lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/contact_icon.png")));
+				lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
+						.getResource("/images/contact_icon.png")));
 				lblPlayer.setText("Closed");
 				lblCountry.setIcon(null);
 				playerType.setSelectedIndex(2);
+				break;
+			default:
 				break;
 			}
 		}
@@ -693,12 +731,12 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			lblAvatar.setIcon(image);
 			lblPlayer.setText(player.getUsername());
 			lblCountry.setIcon(new ImageIcon(
-					getClass().getClassLoader().getResource(
-							Utils.countrySmallImgPath(player.getCountry()))));
+					GameWaitingRoomUI.class.getResource(Utils
+							.countrySmallImgPath(player.getCountry()))));
 			setLayout(null);
 			if (!creator)
 				playerType.setEnabled(false);
-			
+
 		}
 
 		private JLabel getLblAvatar() {
@@ -715,7 +753,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		private JLabel getLblPlayer() {
 			if (lblPlayer == null) {
 				lblPlayer = new JLabel();
-				lblPlayer.setBounds(80, userIconLabelHeight/2-5, 80, 20);
+				lblPlayer.setBounds(80, userIconLabelHeight / 2 - 5, 80, 20);
 			}
 			return lblPlayer;
 		}
@@ -723,7 +761,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		private JLabel getLblCountry() {
 			if (lblCountry == null) {
 				lblCountry = new JLabel();
-				lblCountry.setBounds(180, userIconLabelHeight/2-5, 80, 20);
+				lblCountry.setBounds(180, userIconLabelHeight / 2 - 5, 80, 20);
 			}
 			return lblCountry;
 		}
@@ -734,7 +772,8 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 						new String[] { "Jugador", "Ordenador", "Cerrada" });
 				playerType = new JComboBox<String>();
 				playerType.setModel(playerTypeModel);
-				playerType.setBounds(getWidth()-105, userIconLabelHeight/2-5, 100, 20);
+				playerType.setBounds(getWidth() - 105,
+						userIconLabelHeight / 2 - 5, 100, 20);
 				playerType.setFocusable(false);
 				if (creator) {
 					playerType.addItemListener(new ItemListener() {
@@ -748,39 +787,51 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		}
 
 		private void playerTypeItemStateChanged(ItemEvent evt) {
-			if (changeState) {
+			if (evt.getStateChange() == ItemEvent.SELECTED) {
 				int type = playerType.getSelectedIndex();
 				switch (type) {
 				case 0: // Empty
 					Controller.getInstance().changeSlotState(game.getName(),
 							slot, SlotState.Empty);
-					lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
-							.getResource("images/contact_icon.png")));
+					lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
+							.getResource("/images/contact_icon.png")));
 					lblPlayer.setText("Free");
 					lblCountry.setIcon(null);
 					break;
 				case 1: // Computer
 					Controller.getInstance().changeSlotState(game.getName(),
 							slot, SlotState.Computer);
-					lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
-							.getResource("images/contact_icon.png")));
+					lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
+							.getResource("/images/contact_icon.png")));
 					lblPlayer.setText("Computer");
 					lblCountry.setIcon(null);
 					break;
 				case 2: // Closed
 					Controller.getInstance().changeSlotState(game.getName(),
 							slot, SlotState.Closed);
-					lblAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
-							.getResource("images/contact_icon.png")));
+					lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
+							.getResource("/images/contact_icon.png")));
 					lblPlayer.setText("Closed");
 					lblCountry.setIcon(null);
 					break;
 				}
-				changeState = false;
-			} else {
-				changeState = true;
 			}
 		}
 
+		public void setPlayer(String player) {
+			lblPlayer.setText(player);
+		}
+
+		public void setAvatar(ImageIcon avatar) {
+			lblAvatar.setIcon(avatar);
+		}
+
+		public void setCountry(int country) {
+			if (country != -1)
+				lblCountry.setIcon(new ImageIcon(GameWaitingRoomUI.class
+						.getResource(Utils.countrySmallImgPath(country))));
+			else
+				lblCountry.setIcon(null);
+		}
 	}
 }

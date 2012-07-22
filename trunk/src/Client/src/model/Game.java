@@ -39,7 +39,7 @@ public class Game extends ProductLine.Game {
 			break;
 		case Ludo:
 			board = new int [4][4];
-			for(int i = 0; i<4; i++)
+			for(int i = 0; i<3; i++)
 				slots.add(new Slot("",SlotState.Empty));
 		}
 		

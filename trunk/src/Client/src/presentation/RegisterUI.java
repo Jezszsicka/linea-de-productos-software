@@ -30,16 +30,6 @@ import logic.LanguageManager;
 import model.User;
 import ProductLine.RoleType;
 
-/**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
- * Builder, which is free for non-commercial use. If Jigloo is being used
- * commercially (ie, by a corporation, company or business for any purpose
- * whatever) then you should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details. Use of Jigloo implies
- * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
- * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
- * ANY CORPORATE OR COMMERCIAL PURPOSE.
- */
 @SuppressWarnings("serial")
 public class RegisterUI extends javax.swing.JFrame {
 
@@ -306,15 +296,22 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JComboBox getSelectedCountry() {
 		if (selectedCountry == null) {
 			ImageIcon[] icons = {
-					new ImageIcon(getClass().getClassLoader().getResource(
-							"images/Flags/us_small.png")),
-					new ImageIcon(getClass().getClassLoader().getResource(
-							"images/Flags/es_small.png")),
-					new ImageIcon(getClass().getClassLoader().getResource(
-							"images/Flags/fr_small.png")),
-					new ImageIcon(getClass().getClassLoader().getResource(
-							"images/Flags/de_small.png")) };
-			String[] description = new String[] { language.getString("UnitedStates"), language.getString("Spain"),language.getString("France"),language.getString("Germany") };
+					new ImageIcon(
+							RegisterUI.class
+									.getResource("/images/Flags/us_small.png")),
+					new ImageIcon(
+							RegisterUI.class
+									.getResource("/images/Flags/es_small.png")),
+					new ImageIcon(
+							RegisterUI.class
+									.getResource("/images/Flags/fr_small.png")),
+					new ImageIcon(
+							RegisterUI.class
+									.getResource("/images/Flags/de_small.png")) };
+			String[] description = new String[] {
+					language.getString("UnitedStates"),
+					language.getString("Spain"), language.getString("France"),
+					language.getString("Germany") };
 			Integer[] intArray = new Integer[description.length];
 			for (int i = 0; i < icons.length; i++) {
 				intArray[i] = new Integer(i);

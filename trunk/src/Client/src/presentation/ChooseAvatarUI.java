@@ -19,16 +19,6 @@ import javax.swing.filechooser.FileFilter;
 
 import logic.LanguageManager;
 
-/**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
- * Builder, which is free for non-commercial use. If Jigloo is being used
- * commercially (ie, by a corporation, company or business for any purpose
- * whatever) then you should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details. Use of Jigloo implies
- * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
- * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
- * ANY CORPORATE OR COMMERCIAL PURPOSE.
- */
 @SuppressWarnings("serial")
 public class ChooseAvatarUI extends javax.swing.JFrame {
 
@@ -73,8 +63,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 			}
 		});
 		getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
-		pack();
-		this.setSize(526, 404);
+		setSize(526, 404);
 	}
 
 	private ImagePanel getPnlBackground() {
@@ -135,8 +124,8 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 			lblAvatar1.setBounds(31, 26, 100, 120);
 			lblAvatar1.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
-			lblAvatar1.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/Avatars/1.jpg")));
+			lblAvatar1.setIcon(new ImageIcon(ChooseAvatarUI.class
+					.getResource("/images/Avatars/1.jpg")));
 			lblAvatar1.setFocusable(false);
 			lblAvatar1.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -165,8 +154,8 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 			lblAvatar2.setBounds(146, 26, 100, 120);
 			lblAvatar2.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
-			lblAvatar2.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/Avatars/2.jpg")));
+			lblAvatar2.setIcon(new ImageIcon(ChooseAvatarUI.class
+					.getResource("/images/Avatars/2.jpg")));
 			lblAvatar2.setFocusable(false);
 			lblAvatar2.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -195,8 +184,8 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 			lblAvatar3.setBounds(261, 26, 100, 120);
 			lblAvatar3.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
-			lblAvatar3.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/Avatars/3.jpg")));
+			lblAvatar3.setIcon(new ImageIcon(ChooseAvatarUI.class
+					.getResource("/images/Avatars/3.jpg")));
 			lblAvatar3.setFocusable(false);
 			lblAvatar3.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -309,8 +298,8 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	}
 
 	private void changeAvatar(int avatar) {
-		File file = new File(getClass().getClassLoader()
-				.getResource("images/Avatars/" + avatar + ".jpg").getPath());
+		File file = new File(ChooseAvatarUI.class.getResource(
+				"/images/Avatars/" + avatar + ".jpg").getPath());
 		if (parent instanceof ProfileUI) {
 			((ProfileUI) parent).setAvatar(file);
 		} else {

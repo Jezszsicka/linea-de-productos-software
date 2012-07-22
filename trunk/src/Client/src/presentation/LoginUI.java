@@ -19,16 +19,6 @@ import javax.swing.JTextField;
 import logic.Controller;
 import logic.LanguageManager;
 
-/**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
- * Builder, which is free for non-commercial use. If Jigloo is being used
- * commercially (ie, by a corporation, company or business for any purpose
- * whatever) then you should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details. Use of Jigloo implies
- * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
- * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
- * ANY CORPORATE OR COMMERCIAL PURPOSE.
- */
 @SuppressWarnings("serial")
 public class LoginUI extends javax.swing.JFrame {
 	{
@@ -42,7 +32,6 @@ public class LoginUI extends javax.swing.JFrame {
 	}
 
 	private JPanel pnlBackground;
-	private JButton jButton1;
 	private JLabel lblRemember;
 	private JButton btnLogin;
 	private JTextField txtUsername;
@@ -66,8 +55,8 @@ public class LoginUI extends javax.swing.JFrame {
 		getContentPane().add(getPnlBackground());
 		setLocationRelativeTo(null);
 		setVisible(true);
-		this.setIconImage(new ImageIcon(getClass().getClassLoader()
-				.getResource("images/icon.png")).getImage());
+		this.setIconImage(new ImageIcon(LoginUI.class
+				.getResource("/images/icon.png")).getImage());
 		this.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent evt) {
 				thisWindowClosing(evt);
@@ -87,7 +76,6 @@ public class LoginUI extends javax.swing.JFrame {
 			pnlBackground.add(getLblPassword());
 			pnlBackground.add(getBtnRegister());
 			pnlBackground.add(getLblRemember());
-			pnlBackground.add(getJButton1());
 		}
 		return pnlBackground;
 	}
@@ -201,20 +189,22 @@ public class LoginUI extends javax.swing.JFrame {
 	private void thisWindowClosing(WindowEvent evt) {
 		Controller.getInstance().closeConnection();
 	}
-	
+
 	private JLabel getLblRemember() {
-		if(lblRemember == null) {
+		if (lblRemember == null) {
 			lblRemember = new JLabel();
 			lblRemember.setText("¿Has olvidado tu contraseña?");
 			lblRemember.setBounds(87, 207, 170, 14);
-			lblRemember.setFont(new java.awt.Font("Tahoma",1,11));
+			lblRemember.setFont(new java.awt.Font("Tahoma", 1, 11));
 			lblRemember.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lblRememberMouseClicked(evt);
 				}
+
 				public void mouseExited(MouseEvent evt) {
 					lblRememberMouseExited(evt);
 				}
+
 				public void mouseEntered(MouseEvent evt) {
 					lblRememberMouseEntered(evt);
 				}
@@ -222,35 +212,16 @@ public class LoginUI extends javax.swing.JFrame {
 		}
 		return lblRemember;
 	}
-	
+
 	private void lblRememberMouseEntered(MouseEvent evt) {
 		setCursor(new Cursor(Cursor.HAND_CURSOR));
 	}
-	
+
 	private void lblRememberMouseExited(MouseEvent evt) {
 		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
-	
+
 	private void lblRememberMouseClicked(MouseEvent evt) {
 		Controller.getInstance().showResetPasswordUI();
 	}
-	
-	private JButton getJButton1() {
-		if(jButton1 == null) {
-			jButton1 = new JButton();
-			jButton1.setText("jButton1");
-			jButton1.setBounds(361, 203, 73, 23);
-			jButton1.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					jButton1MouseClicked(evt);
-				}
-			});
-		}
-		return jButton1;
-	}
-	
-	private void jButton1MouseClicked(MouseEvent evt) {
-		new Z();
-	}
-	
 }

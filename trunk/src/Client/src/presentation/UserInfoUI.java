@@ -25,16 +25,6 @@ import ProductLine.GameType;
 import ProductLine.Ranking;
 import ProductLine.User;
 
-/**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
- * Builder, which is free for non-commercial use. If Jigloo is being used
- * commercially (ie, by a corporation, company or business for any purpose
- * whatever) then you should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details. Use of Jigloo implies
- * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
- * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
- * ANY CORPORATE OR COMMERCIAL PURPOSE.
- */
 @SuppressWarnings("serial")
 public class UserInfoUI extends javax.swing.JFrame {
 
@@ -89,8 +79,8 @@ public class UserInfoUI extends javax.swing.JFrame {
 		lblUserName.setText(user.getName() + " " + user.getLastName());
 		lblUserEmail.setText(user.getEmail());
 		lblAvatar.setIcon(new ImageIcon(user.getAvatar()));
-		lblFlag.setIcon(new ImageIcon(getClass().getClassLoader().getResource(
-				Utils.countryImgPath(user.getCountry()))));
+		lblFlag.setIcon(new ImageIcon(UserInfoUI.class.getResource(Utils
+				.countryImgPath(user.getCountry()))));
 		setVisible(true);
 		setLocationRelativeTo(null);
 
@@ -104,8 +94,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 			}
 		});
 		getContentPane().add(getJPanel1(), BorderLayout.CENTER);
-		pack();
-		this.setSize(600, 500);
+		setSize(600, 500);
 	}
 
 	private void loadRankings(User user) {
@@ -359,8 +348,6 @@ public class UserInfoUI extends javax.swing.JFrame {
 		if (lblFlag == null) {
 			lblFlag = new JLabel();
 			lblFlag.setBounds(440, 35, 131, 117);
-			lblFlag.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/Flags/es.png")));
 		}
 		return lblFlag;
 	}
