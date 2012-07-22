@@ -52,6 +52,10 @@ public class GamesManager {
 		case Connect4:
 			Connect4.initBoard(game.getBoard());
 			break;
+		case Goose:
+			break;
+		case Ludo:
+			break;
 		}
 		games.put(gameName, game);	
 		return game;
@@ -152,7 +156,6 @@ public class GamesManager {
 	public void updateGame(String gameName) {
 		Game game = searchGame(gameName);
 		int nextTurn = game.getTurn();
-		System.out.println("Updateamos con el turno "+nextTurn);
 		String player = session.getUser().getUsername();
 		session.getProxy().updateGame(gameName, player,nextTurn, game.getBoard());		
 	}
