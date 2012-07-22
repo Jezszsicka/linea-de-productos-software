@@ -27,15 +27,14 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
-import chess.Chess.Player;
-
 import logic.Controller;
 import model.Game;
 import model.User;
 import presentation.GameUI;
 import ProductLine.Slot;
 import ProductLine.UserNotInGameException;
-import java.awt.Rectangle;
+import chess.Chess.Player;
+import constants.Constants;
 
 /**
  * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
@@ -128,12 +127,13 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 	private JLabel lblOpponentAvatar;
 	private JPanel pnlBackground;
 	private JLabel lblState;
+	private JLabel lblTimer;
 
 	private static final Border blackBorder = new LineBorder(
 			new java.awt.Color(0, 0, 0), 1, false);
 	private static final Border redBorder = new LineBorder(new java.awt.Color(
 			255, 0, 0), 4, false);
-	private JLabel lblTimer;
+
 	private static final Border greenBorder = new LineBorder(
 			new java.awt.Color(0, 255, 0), 4, false);
 	private static final Border blueBorder = new LineBorder(new java.awt.Color(
@@ -146,9 +146,11 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 	private int selectedRow;
 	private int selectedColumn;
 	private boolean activeSquares;
+	private boolean turnPassed;
 
 	public ChessUI(String username, Game game) {
 		super();
+		setResizable(false);
 		this.username = username;
 		this.game = game;
 		destinatary = "";
@@ -174,6 +176,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 		if (playerTurn == myPlayer) {
 			activeSquares = true;
 			lblState.setText("Es tu turno");
+			startTimer();
 		} else {
 			lblState.setText("Es el turno de " + opponent.getName());
 			activeSquares = false;
@@ -184,7 +187,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 	private void initGUI() {
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(null);
-		this.setSize(660, 732);
+		this.setSize(648, 719);
 		setLocationRelativeTo(null);
 		setVisible(true);
 		this.addWindowListener(new WindowAdapter() {
@@ -264,7 +267,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 		if (pnlBackground == null) {
 			pnlBackground = new JPanel();
 			pnlBackground.setLayout(null);
-			pnlBackground.setBounds(0, 0, 644, 694);
+			pnlBackground.setBounds(0, 0, 644, 691);
 			pnlBackground.add(getLblOpponentAvatar());
 			pnlBackground.add(getPnlBoard());
 			pnlBackground.add(getBtnQuit());
@@ -1706,6 +1709,16 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 		return lblOpponentName;
 	}
 
+	private JLabel getLblTimer() {
+		if (lblTimer == null) {
+			lblTimer = new JLabel();
+			lblTimer.setText(formatTurnTime(Constants.ChessTurn));
+			lblTimer.setBounds(521, 386, 102, 14);
+			lblTimer.setHorizontalAlignment(SwingConstants.CENTER);
+		}
+		return lblTimer;
+	}
+
 	private void lbl_00MouseClicked(MouseEvent evt) {
 		if (activeSquares)
 			movePiece(0, 0);
@@ -2026,6 +2039,18 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			movePiece(7, 1);
 	}
 
+	private void btnQuitMouseClicked(MouseEvent evt) {
+		turnPassed = true;
+		Controller.getInstance().leaveGame(game.getName());
+		dispose();
+	}
+
+	private void thisWindowClosing(WindowEvent evt) {
+		turnPassed = true;
+		Controller.getInstance().leaveGame(game.getName());
+		dispose();
+	}
+
 	private void movePiece(int row, int column) {
 		// Same square pressed
 		if (!(selectedRow == row && selectedColumn == column)) {
@@ -2050,7 +2075,8 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 					int targetSquare = game.getBoard()[row][column];
 					// Check valid move
 					if (Chess.move(game.getBoard(), playerTurn, selectedRow,
-							selectedColumn, row, column)) {
+							selectedColumn, row, column) && !turnPassed) {
+						endTurn();
 						refreshBoard();
 						playerTurn = toChessTurn(game.changeTurn());
 						if (Chess.checkMate(game.getBoard(), playerTurn)
@@ -2116,12 +2142,13 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 	}
 
 	@Override
-	public void updateBoard() {
+	public void updateBoard(int nextTurn) {
 		int turn = game.changeTurn();
 		playerTurn = toChessTurn(turn);
 		activeSquares = true;
 		refreshBoard();
 		lblState.setText("Es tu turno");
+		startTimer();
 	}
 
 	private Player toChessTurn(int turn) {
@@ -2149,6 +2176,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 	public void userLeaveGame(final String player) {
 		new Thread() {
 			public void run() {
+				turnPassed = true;
 				JOptionPane.showMessageDialog(ChessUI.this, player
 						+ " ha abandonado el juego. !Has ganado¡");
 				dispose();
@@ -2243,16 +2271,6 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 		return lblState;
 	}
 
-	private void btnQuitMouseClicked(MouseEvent evt) {
-		Controller.getInstance().leaveGame(game.getName());
-		dispose();
-	}
-
-	private void thisWindowClosing(WindowEvent evt) {
-		Controller.getInstance().leaveGame(game.getName());
-		dispose();
-	}
-
 	public void promotePawn(int selectedPiece) {
 		int[][] board = game.getBoard();
 		board[selectedRow][selectedColumn] = selectedPiece;
@@ -2263,20 +2281,68 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			JOptionPane.showMessageDialog(this, "Has ganado el juego!");
 			dispose();
 		} else {
+			endTurn();
 			Controller.getInstance().updateGame(game.getName());
 			activeSquares = false;
-			lblState.setText("Es el turno de " + lblOpponentName.getText());
+			lblState.setText("Se te ha acabado el tiempo ,es el turno de "
+					+ lblOpponentName.getText());
 		}
 	}
 
-	private JLabel getLblTimer() {
-		if (lblTimer == null) {
-			lblTimer = new JLabel();
-			lblTimer.setText("1:00");
-			lblTimer.setBounds(521, 386, 102, 14);
-			lblTimer.setHorizontalAlignment(SwingConstants.CENTER);
-		}
-		return lblTimer;
+	private void startTimer() {
+		turnPassed = false;
+		new Thread() {
+			public void run() {
+
+				for (int turn = Constants.ChessTurn - 1; turn >= 0
+						&& !turnPassed; turn--) {
+					try {
+						sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					lblTimer.setText(formatTurnTime(turn));
+				}
+
+				if (!turnPassed) {
+					endTurn();
+					playerTurn = toChessTurn(game.changeTurn());
+					Controller.getInstance().updateGame(game.getName());
+					activeSquares = false;
+					lblState.setText("Se te ha acabado el tiempo. Es el turno de "
+							+ lblOpponentName.getText());
+
+					if (selectedRow != -1)
+						boardUI[selectedRow][selectedColumn]
+								.setBorder(blackBorder);
+				}
+
+				lblTimer.setText(formatTurnTime(Constants.ChessTurn));
+
+			}
+		}.start();
 	}
 
+	private synchronized void endTurn() {
+		turnPassed = true;
+	}
+
+	private String formatTurnTime(int turnTime) {
+		int minutes = (int) (turnTime / 60);
+		int seconds = turnTime % 60;
+
+		String formattedTime;
+
+		if (minutes < 10)
+			formattedTime = "0" + minutes + ":";
+		else
+			formattedTime = minutes + ":";
+
+		if (seconds < 10)
+			formattedTime += "0" + seconds;
+		else
+			formattedTime += seconds;
+
+		return formattedTime;
+	}
 }

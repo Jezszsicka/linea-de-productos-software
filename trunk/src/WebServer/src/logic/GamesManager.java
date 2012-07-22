@@ -334,6 +334,25 @@ public class GamesManager {
 		Game game = searchGame(gameName);
 		switch (game.getTypeGame()) {
 		case Checkers:
+			game.setBoard(board);
+			game.changeTurn();
+			String checkersTurn = game.getSlot(nextTurn).getPlayer();
+			Session session = UsersManager.getInstance().searchSession(
+					checkersTurn);
+			
+			if (player.equalsIgnoreCase(session.getUser().getName())) {
+				
+				int updateUser = game.getTurn();
+				System.out.println("Next turn :"+nextTurn +" Update turn "+updateUser);
+				checkersTurn = game.getSlot(updateUser).getPlayer();
+				session = UsersManager.getInstance()
+						.searchSession(checkersTurn);
+				System.out.println("CAMBIO DE TURNO CHETO A: "+session.getUser().getUsername());
+				game.changeTurn();
+			}
+
+			session.getCallback().gameUpdated(gameName, nextTurn, board);
+			break;
 		case Chess:
 		case Connect4:
 			game.setBoard(board);

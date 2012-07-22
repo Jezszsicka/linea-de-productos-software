@@ -479,16 +479,18 @@ public class Controller {
 		case Chess:
 			GameUI chessUI = new ChessUI(session.getUser().getUsername(),game);
 			gamesUI.put(gameName, chessUI);
+			break;
 		case Goose:
 			GameUI gooseUI = new GooseUI(session.getUser().getUsername(),game);
 			gamesUI.put(gameName, gooseUI);
+			break;
 		}
 	}
 
-	public void gameUpdated(String gameName, int[][] board) {
+	public void gameUpdated(String gameName, int[][] board, int nextTurn) {
 		GameUI gameUI = gamesUI.get(gameName);
 		gamesManager.gameUpdated(gameName,board);
-		gameUI.updateBoard();
+		gameUI.updateBoard(nextTurn);
 	}
 
 	public void updateGame(String gameName) {

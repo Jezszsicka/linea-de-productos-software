@@ -158,10 +158,10 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 					opponentSlot.getPlayer());
 			lblOpponentAvatar.setIcon(new ImageIcon(opponent.getAvatar()));
 			lblOpponentName.setText(opponent.getUsername());
-			
+
 			if (playerTurn != myPlayer) {
 				activateButtons(false);
-				lblState.setText("Es el turno de "+opponent.getName());
+				lblState.setText("Es el turno de " + opponent.getName());
 			} else {
 				lblState.setText("Es tu turno");
 				activateButtons(true);
@@ -262,8 +262,7 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 				String privateMessage = message.split(destinatary)[1];
 				try {
 					Controller.getInstance().sendGamePrivateMessage(
-							game.getName(), destinatary,
-							privateMessage);
+							game.getName(), destinatary, privateMessage);
 					try {
 						htmlEditor.insertHTML(chatText, chatText.getLength(),
 								"<font color=\"red\"><b> >" + destinatary
@@ -1177,7 +1176,7 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 					lblState.setText("El juego ha terminado en empate");
 				winner = true;
 			}
-			
+
 			// TODO SI hay empate gana el último que pone ficha
 			playerTurn = game.changeTurn();
 			activateButtons(false);
@@ -1194,7 +1193,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 					} else {
 						Controller.getInstance().finishGame(game.getName(),
 								username);
-						JOptionPane.showMessageDialog(this, "Has ganado el juego!");
+						JOptionPane.showMessageDialog(this,
+								"Has ganado el juego!");
 						dispose();
 					}
 				}
@@ -1221,14 +1221,13 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 		btn7.setVisible(enabled);
 	}
 
-	
 	private int changePlayerTurn(int jugador) {
 		if (jugador == Connect4.RED)
 			return Connect4.BLUE;
 		else
 			return Connect4.RED;
 	}
-	
+
 	private void computerMove() {
 		int movimiento = minimax.minimax(game.getBoard(), playerTurn);
 		int fila = libre(movimiento);
@@ -1239,7 +1238,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 
 		// Computer has won the game
 		if (minimax.ganador(Connect4.BLUE, game.getBoard(), movimiento)) {
-			//TODO Aunque sea contra el ordenador hay que terminar la partida avisando al servidor
+			// TODO Aunque sea contra el ordenador hay que terminar la partida
+			// avisando al servidor
 			activateButtons(false);
 			lblState.setText("Has perdido la partida");
 			JOptionPane.showMessageDialog(this, "Has perdido el juego!");
@@ -1255,7 +1255,7 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 		Controller.getInstance().leaveGame(game.getName());
 		dispose();
 	}
-	
+
 	@Override
 	public void receiveMessage(String sender, String message) {
 		try {
@@ -1285,7 +1285,7 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	}
 
 	@Override
-	public void updateBoard() {
+	public void updateBoard(int nextTurn) {
 		int[][] board = game.getBoard();
 		for (int i = 0; i < boardUI.length; i++) {
 			for (int j = 0; j < boardUI[0].length; j++) {
@@ -1313,25 +1313,26 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	public void lostGame() {
 		lblState.setText("Has perdido la partida");
 		activateButtons(false);
-		new Thread(){
-			public void run(){
-				JOptionPane.showMessageDialog(Connect4UI.this, "Has perdido el juego!");
+		new Thread() {
+			public void run() {
+				JOptionPane.showMessageDialog(Connect4UI.this,
+						"Has perdido el juego!");
 				dispose();
 			}
 		}.start();
 	}
 
-	
 	@Override
 	public void userLeaveGame(final String player) {
-		new Thread(){
-			public void run(){
-				JOptionPane.showMessageDialog(Connect4UI.this, player+" ha abandonado el juego. !Has ganado¡");
+		new Thread() {
+			public void run() {
+				JOptionPane.showMessageDialog(Connect4UI.this, player
+						+ " ha abandonado el juego. !Has ganado¡");
 				dispose();
 			}
 		}.start();
 	}
-	
+
 	private void thisWindowClosing(WindowEvent evt) {
 		Controller.getInstance().leaveGame(game.getName());
 		dispose();

@@ -146,7 +146,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 	private int selectedRow;
 	private int selectedColumn;
 	private boolean activeSquares;
-	
 
 	public GooseUI(String username, Game game) {
 		super();
@@ -167,16 +166,16 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		initGUI();
 		selectedRow = -1;
 
-	//	User opponent = Controller.getInstance().searchUser(
-	//			opponentSlot.getPlayer());
-	//	lblOpponentAvatar.setIcon(new ImageIcon(opponent.getAvatar()));
-	//	lblOpponentName.setText(opponent.getUsername());
+		// User opponent = Controller.getInstance().searchUser(
+		// opponentSlot.getPlayer());
+		// lblOpponentAvatar.setIcon(new ImageIcon(opponent.getAvatar()));
+		// lblOpponentName.setText(opponent.getUsername());
 
 		if (playerTurn == myPlayer) {
 			activeSquares = true;
 			lblState.setText("Es tu turno");
 		} else {
-		//	lblState.setText("Es el turno de " + opponent.getName());
+			// lblState.setText("Es el turno de " + opponent.getName());
 			activeSquares = false;
 		}
 		repaint();
@@ -385,7 +384,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 			lbl_01 = new JLabel();
 			lbl_01.setBounds(67, 7, 60, 60);
 			lbl_01.setOpaque(true);
-			lbl_01.setBackground(new java.awt.Color(255,255,255));
+			lbl_01.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_01.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_01.setIcon(new ImageIcon(getClass().getClassLoader()
@@ -416,7 +415,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_03 == null) {
 			lbl_03 = new JLabel();
 			lbl_03.setOpaque(true);
-			lbl_03.setBackground(new java.awt.Color(255,255,255));
+			lbl_03.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_03.setBounds(187, 7, 60, 60);
 			lbl_03.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
@@ -448,7 +447,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_05 == null) {
 			lbl_05 = new JLabel();
 			lbl_05.setOpaque(true);
-			lbl_05.setBackground(new java.awt.Color(255,255,255));
+			lbl_05.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_05.setBounds(307, 7, 60, 60);
 			lbl_05.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
@@ -480,7 +479,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_07 == null) {
 			lbl_07 = new JLabel();
 			lbl_07.setBounds(427, 7, 60, 60);
-			lbl_07.setBackground(new java.awt.Color(255,255,255));
+			lbl_07.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_07.setOpaque(true);
 			lbl_07.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
@@ -512,7 +511,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_16 == null) {
 			lbl_16 = new JLabel();
 			lbl_16.setOpaque(true);
-			lbl_16.setBackground(new java.awt.Color(255,255,255));
+			lbl_16.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_16.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_16.setBounds(367, 67, 60, 60);
@@ -544,7 +543,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_14 == null) {
 			lbl_14 = new JLabel();
 			lbl_14.setOpaque(true);
-			lbl_14.setBackground(new java.awt.Color(255,255,255));
+			lbl_14.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_14.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_14.setBounds(247, 67, 60, 60);
@@ -576,7 +575,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_12 == null) {
 			lbl_12 = new JLabel();
 			lbl_12.setOpaque(true);
-			lbl_12.setBackground(new java.awt.Color(255,255,255));
+			lbl_12.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_12.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_12.setBounds(127, 67, 60, 60);
@@ -608,7 +607,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_10 == null) {
 			lbl_10 = new JLabel();
 			lbl_10.setOpaque(true);
-			lbl_10.setBackground(new java.awt.Color(255,255,255));
+			lbl_10.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_10.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_10.setBounds(7, 67, 60, 60);
@@ -624,7 +623,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_27 == null) {
 			lbl_27 = new JLabel();
 			lbl_27.setOpaque(true);
-			lbl_27.setBackground(new java.awt.Color(255,255,255));
+			lbl_27.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_27.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_27.setBounds(427, 127, 60, 60);
@@ -652,7 +651,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_25 == null) {
 			lbl_25 = new JLabel();
 			lbl_25.setOpaque(true);
-			lbl_25.setBackground(new java.awt.Color(255,255,255));
+			lbl_25.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_25.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_25.setBounds(307, 127, 60, 60);
@@ -680,7 +679,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_23 == null) {
 			lbl_23 = new JLabel();
 			lbl_23.setOpaque(true);
-			lbl_23.setBackground(new java.awt.Color(255,255,255));
+			lbl_23.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_23.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_23.setBounds(187, 127, 60, 60);
@@ -708,7 +707,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_21 == null) {
 			lbl_21 = new JLabel();
 			lbl_21.setOpaque(true);
-			lbl_21.setBackground(new java.awt.Color(255,255,255));
+			lbl_21.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_21.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_21.setBounds(67, 127, 60, 60);
@@ -750,7 +749,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_36 == null) {
 			lbl_36 = new JLabel();
 			lbl_36.setOpaque(true);
-			lbl_36.setBackground(new java.awt.Color(255,255,255));
+			lbl_36.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_36.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_36.setBounds(367, 186, 60, 60);
@@ -778,7 +777,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_34 == null) {
 			lbl_34 = new JLabel();
 			lbl_34.setOpaque(true);
-			lbl_34.setBackground(new java.awt.Color(255,255,255));
+			lbl_34.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_34.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_34.setBounds(247, 186, 60, 60);
@@ -806,7 +805,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_32 == null) {
 			lbl_32 = new JLabel();
 			lbl_32.setOpaque(true);
-			lbl_32.setBackground(new java.awt.Color(255,255,255));
+			lbl_32.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_32.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_32.setBounds(127, 186, 60, 60);
@@ -834,7 +833,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_30 == null) {
 			lbl_30 = new JLabel();
 			lbl_30.setOpaque(true);
-			lbl_30.setBackground(new java.awt.Color(255,255,255));
+			lbl_30.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_30.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_30.setBounds(7, 186, 60, 60);
@@ -848,7 +847,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_47 == null) {
 			lbl_47 = new JLabel();
 			lbl_47.setOpaque(true);
-			lbl_47.setBackground(new java.awt.Color(255,255,255));
+			lbl_47.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_47.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_47.setBounds(427, 246, 60, 60);
@@ -876,7 +875,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_45 == null) {
 			lbl_45 = new JLabel();
 			lbl_45.setOpaque(true);
-			lbl_45.setBackground(new java.awt.Color(255,255,255));
+			lbl_45.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_45.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_45.setBounds(307, 246, 60, 60);
@@ -904,7 +903,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_43 == null) {
 			lbl_43 = new JLabel();
 			lbl_43.setOpaque(true);
-			lbl_43.setBackground(new java.awt.Color(255,255,255));
+			lbl_43.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_43.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_43.setBounds(187, 246, 60, 60);
@@ -932,7 +931,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_41 == null) {
 			lbl_41 = new JLabel();
 			lbl_41.setOpaque(true);
-			lbl_41.setBackground(new java.awt.Color(255,255,255));
+			lbl_41.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_41.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_41.setBounds(67, 246, 60, 60);
@@ -988,7 +987,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_56 == null) {
 			lbl_56 = new JLabel();
 			lbl_56.setOpaque(true);
-			lbl_56.setBackground(new java.awt.Color(255,255,255));
+			lbl_56.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_56.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_56.setBounds(367, 306, 60, 60);
@@ -1002,7 +1001,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_54 == null) {
 			lbl_54 = new JLabel();
 			lbl_54.setOpaque(true);
-			lbl_54.setBackground(new java.awt.Color(255,255,255));
+			lbl_54.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_54.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_54.setBounds(247, 306, 60, 60);
@@ -1030,7 +1029,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_52 == null) {
 			lbl_52 = new JLabel();
 			lbl_52.setOpaque(true);
-			lbl_52.setBackground(new java.awt.Color(255,255,255));
+			lbl_52.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_52.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_52.setBounds(127, 306, 60, 60);
@@ -1058,7 +1057,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_50 == null) {
 			lbl_50 = new JLabel();
 			lbl_50.setOpaque(true);
-			lbl_50.setBackground(new java.awt.Color(255,255,255));
+			lbl_50.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_50.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_50.setBounds(7, 306, 60, 60);
@@ -1072,7 +1071,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_67 == null) {
 			lbl_67 = new JLabel();
 			lbl_67.setOpaque(true);
-			lbl_67.setBackground(new java.awt.Color(255,255,255));
+			lbl_67.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_67.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_67.setBounds(427, 366, 60, 60);
@@ -1104,7 +1103,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_65 == null) {
 			lbl_65 = new JLabel();
 			lbl_65.setOpaque(true);
-			lbl_65.setBackground(new java.awt.Color(255,255,255));
+			lbl_65.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_65.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_65.setBounds(307, 366, 60, 60);
@@ -1136,7 +1135,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_63 == null) {
 			lbl_63 = new JLabel();
 			lbl_63.setOpaque(true);
-			lbl_63.setBackground(new java.awt.Color(255,255,255));
+			lbl_63.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_63.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_63.setBounds(187, 366, 60, 60);
@@ -1168,7 +1167,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_61 == null) {
 			lbl_61 = new JLabel();
 			lbl_61.setOpaque(true);
-			lbl_61.setBackground(new java.awt.Color(255,255,255));
+			lbl_61.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_61.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_61.setBounds(67, 366, 60, 60);
@@ -1200,7 +1199,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_0 == null) {
 			lbl_0 = new JLabel();
 			lbl_0.setOpaque(true);
-			lbl_0.setBackground(new java.awt.Color(255,255,255));
+			lbl_0.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_0.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_0.setBounds(7, 426, 60, 60);
@@ -1232,7 +1231,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_6 == null) {
 			lbl_6 = new JLabel();
 			lbl_6.setOpaque(true);
-			lbl_6.setBackground(new java.awt.Color(255,255,255));
+			lbl_6.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_6.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_6.setBounds(367, 426, 60, 60);
@@ -1264,7 +1263,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_4 == null) {
 			lbl_4 = new JLabel();
 			lbl_4.setOpaque(true);
-			lbl_4.setBackground(new java.awt.Color(255,255,255));
+			lbl_4.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_4.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_4.setBounds(247, 426, 60, 60);
@@ -1296,7 +1295,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_2 == null) {
 			lbl_2 = new JLabel();
 			lbl_2.setOpaque(true);
-			lbl_2.setBackground(new java.awt.Color(255,255,255));
+			lbl_2.setBackground(new java.awt.Color(255, 255, 255));
 			lbl_2.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_2.setBounds(127, 426, 60, 60);
@@ -1417,7 +1416,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 	}
 
 	@Override
-	public void updateBoard() {
+	public void updateBoard(int nexTurn) {
 		int turn = game.changeTurn();
 		playerTurn = toChessTurn(turn);
 		activeSquares = true;
@@ -1426,9 +1425,9 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 	}
 
 	private Player toChessTurn(int turn) {
-		if(turn == 0)
+		if (turn == 0)
 			return Player.White;
-		
+
 		return Player.Black;
 	}
 
@@ -1459,7 +1458,7 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 	}
 
 	public void refreshBoard() {
-		
+
 	}
 
 	private JLabel getLblState() {
@@ -1480,20 +1479,22 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		Controller.getInstance().leaveGame(game.getName());
 		dispose();
 	}
-	
+
 	private JLabel getLblDice() {
-		if(lblDice == null) {
+		if (lblDice == null) {
 			lblDice = new JLabel();
 			lblDice.setBounds(522, 273, 112, 139);
-			lblDice.setBorder(new LineBorder(new java.awt.Color(0,0,0), 1, false));
-			lblDice.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/Dice/4.png")));
+			lblDice.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
+					false));
+			lblDice.setIcon(new ImageIcon(getClass().getClassLoader()
+					.getResource("images/Dice/4.png")));
 			lblDice.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		return lblDice;
 	}
-	
+
 	private JButton getBtnThrow() {
-		if(btnThrow == null) {
+		if (btnThrow == null) {
 			btnThrow = new JButton();
 			btnThrow.setText("Throw");
 			btnThrow.setBounds(548, 534, 63, 23);
@@ -1505,13 +1506,14 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 		}
 		return btnThrow;
 	}
-	
+
 	private void btnThrowMouseClicked(MouseEvent evt) {
-		new Thread(){
-			public void run(){
-				for(int i=0; i<10;i++){				
+		new Thread() {
+			public void run() {
+				for (int i = 0; i < 10; i++) {
 					int result = Goose.throwDice();
-					lblDice.setIcon(new ImageIcon(getClass().getClassLoader().getResource("images/Dice/"+result+".png")));
+					lblDice.setIcon(new ImageIcon(getClass().getClassLoader()
+							.getResource("images/Dice/" + result + ".png")));
 					try {
 						sleep(100);
 					} catch (InterruptedException e) {
