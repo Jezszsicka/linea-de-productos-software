@@ -1,5 +1,6 @@
 package presentation;
 
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -133,6 +134,16 @@ public class ReadMessageUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					btnBackMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnBackMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnBackMouseExited(e);
+				}
 			});
 		}
 		return btnBack;
@@ -141,6 +152,17 @@ public class ReadMessageUI extends javax.swing.JFrame {
 	private JButton getBtnDelete() {
 		if (btnDelete == null) {
 			btnDelete = new JButton();
+			btnDelete.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnDeleteMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnDeleteMouseExited(e);
+				}
+			});
 			btnDelete.setText("Delete");
 			btnDelete.setBounds(398, 254, 76, 23);
 			btnDelete.setFocusable(false);
@@ -158,4 +180,27 @@ public class ReadMessageUI extends javax.swing.JFrame {
 		dispose();
 	}
 
+	private void setHandCursor() {
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+
+	private void setDefaultCursor() {
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	protected void btnDeleteMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnDeleteMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnBackMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnBackMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
 }

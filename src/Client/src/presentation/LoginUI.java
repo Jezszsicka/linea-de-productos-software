@@ -89,6 +89,16 @@ public class LoginUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent e) {
 					do_btnLogin_mouseClicked(e);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnLoginMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnLoginMouseExited(e);
+				}
 			});
 			btnLogin.setFocusable(false);
 			btnLogin.setBounds(244, 132, 89, 23);
@@ -153,6 +163,16 @@ public class LoginUI extends javax.swing.JFrame {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					do_btnRegister_mouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnRegisterMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnRegisterMouseExited(e);
 				}
 			});
 			btnRegister.setFocusable(false);
@@ -223,5 +243,29 @@ public class LoginUI extends javax.swing.JFrame {
 
 	private void lblRememberMouseClicked(MouseEvent evt) {
 		Controller.getInstance().showResetPasswordUI();
+	}
+
+	private void setHandCursor() {
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+
+	private void setDefaultCursor() {
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	protected void btnLoginMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnLoginMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnRegisterMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnRegisterMouseExited(MouseEvent e) {
+		setDefaultCursor();
 	}
 }

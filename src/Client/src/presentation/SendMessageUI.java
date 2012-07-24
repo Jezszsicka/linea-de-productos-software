@@ -1,5 +1,6 @@
 package presentation;
 
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -102,6 +103,16 @@ public class SendMessageUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					btnSendMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnSendMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnSendMouseExited(e);
+				}
 			});
 		}
 		return btnSend;
@@ -116,6 +127,16 @@ public class SendMessageUI extends javax.swing.JFrame {
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnCancelMouseClicked(evt);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnCancelMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnCancelMouseExited(e);
 				}
 			});
 		}
@@ -187,4 +208,27 @@ public class SendMessageUI extends javax.swing.JFrame {
 		dispose();
 	}
 
+	private void setHandCursor() {
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+
+	private void setDefaultCursor() {
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	protected void btnSendMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnSendMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnCancelMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnCancelMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
 }

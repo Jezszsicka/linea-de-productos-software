@@ -1,5 +1,6 @@
 package presentation;
 
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -142,6 +143,16 @@ public class JoinGameUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					btnJoinMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnJoinMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnJoinMouseExited(e);
+				}
 			});
 		}
 		return btnJoin;
@@ -156,6 +167,16 @@ public class JoinGameUI extends javax.swing.JFrame {
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnCancelMouseClicked(evt);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnCancelMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnCancelMouseExited(e);
 				}
 			});
 		}
@@ -198,6 +219,16 @@ public class JoinGameUI extends javax.swing.JFrame {
 			btnFilter.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnFilterMouseClicked(evt);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnFilterMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnFilterMouseExited(e);
 				}
 			});
 		}
@@ -389,4 +420,35 @@ public class JoinGameUI extends javax.swing.JFrame {
 		refreshGames();
 	}
 
+	private void setHandCursor() {
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+
+	private void setDefaultCursor() {
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	protected void btnFilterMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnFilterMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnJoinMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnJoinMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnCancelMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnCancelMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
 }

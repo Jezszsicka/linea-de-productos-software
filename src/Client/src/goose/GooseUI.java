@@ -27,25 +27,13 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
-import chess.Chess.Player;
-
 import logic.Controller;
 import model.Game;
-import model.User;
 import presentation.GameUI;
 import ProductLine.Slot;
 import ProductLine.UserNotInGameException;
+import chess.Chess.Player;
 
-/**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
- * Builder, which is free for non-commercial use. If Jigloo is being used
- * commercially (ie, by a corporation, company or business for any purpose
- * whatever) then you should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details. Use of Jigloo implies
- * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
- * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
- * ANY CORPORATE OR COMMERCIAL PURPOSE.
- */
 @SuppressWarnings("serial")
 public class GooseUI extends javax.swing.JFrame implements GameUI {
 
@@ -184,7 +172,6 @@ public class GooseUI extends javax.swing.JFrame implements GameUI {
 	private void initGUI() {
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(null);
-		pack();
 		this.setSize(660, 732);
 		setLocationRelativeTo(null);
 		setVisible(true);

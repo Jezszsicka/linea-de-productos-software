@@ -36,16 +36,6 @@ import ProductLine.Slot;
 import ProductLine.SlotState;
 import ProductLine.UserNotInGameException;
 
-/**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
- * Builder, which is free for non-commercial use. If Jigloo is being used
- * commercially (ie, by a corporation, company or business for any purpose
- * whatever) then you should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details. Use of Jigloo implies
- * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
- * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
- * ANY CORPORATE OR COMMERCIAL PURPOSE.
- */
 @SuppressWarnings("serial")
 public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JPanel pnlBackground;
@@ -146,8 +136,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 		initGUI();
 
 		if (computer) {
-			lblOpponentAvatar.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/computer.png")));
+			lblOpponentAvatar.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/computer.png")));
 			lblOpponentName.setText("Computer");
 			setSize(762, 500);
 			pnlBackground.setSize(762, 480);
@@ -173,8 +163,7 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		getContentPane().setLayout(null);
 		getContentPane().add(getPnlBackground());
-		pack();
-		this.setSize(762, 661);
+		setSize(762, 661);
 		setLocationRelativeTo(null);
 		setVisible(true);
 		this.addWindowListener(new WindowAdapter() {
@@ -376,8 +365,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl76() {
 		if (lbl76 == null) {
 			lbl76 = new JLabel();
-			lbl76.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl76.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl76.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl76.setOpaque(true);
 			lbl76.setBackground(new java.awt.Color(0, 0, 0));
@@ -390,8 +379,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl75() {
 		if (lbl75 == null) {
 			lbl75 = new JLabel();
-			lbl75.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl75.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl75.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl75.setOpaque(true);
 			lbl75.setBackground(new java.awt.Color(0, 0, 0));
@@ -404,8 +393,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl74() {
 		if (lbl74 == null) {
 			lbl74 = new JLabel();
-			lbl74.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl74.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl74.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl74.setOpaque(true);
 			lbl74.setBackground(new java.awt.Color(0, 0, 0));
@@ -418,8 +407,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl73() {
 		if (lbl73 == null) {
 			lbl73 = new JLabel();
-			lbl73.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl73.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl73.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl73.setOpaque(true);
 			lbl73.setBackground(new java.awt.Color(0, 0, 0));
@@ -432,8 +421,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl72() {
 		if (lbl72 == null) {
 			lbl72 = new JLabel();
-			lbl72.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl72.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl72.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl72.setOpaque(true);
 			lbl72.setBackground(new java.awt.Color(0, 0, 0));
@@ -446,8 +435,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl71() {
 		if (lbl71 == null) {
 			lbl71 = new JLabel();
-			lbl71.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl71.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl71.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl71.setOpaque(true);
 			lbl71.setBackground(new java.awt.Color(0, 0, 0));
@@ -494,8 +483,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl61() {
 		if (lbl61 == null) {
 			lbl61 = new JLabel();
-			lbl61.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl61.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl61.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl61.setOpaque(true);
 			lbl61.setBackground(new java.awt.Color(0, 0, 0));
@@ -508,8 +497,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl62() {
 		if (lbl62 == null) {
 			lbl62 = new JLabel();
-			lbl62.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl62.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl62.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl62.setOpaque(true);
 			lbl62.setBackground(new java.awt.Color(0, 0, 0));
@@ -522,8 +511,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl63() {
 		if (lbl63 == null) {
 			lbl63 = new JLabel();
-			lbl63.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl63.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl63.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl63.setOpaque(true);
 			lbl63.setBackground(new java.awt.Color(0, 0, 0));
@@ -536,8 +525,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl64() {
 		if (lbl64 == null) {
 			lbl64 = new JLabel();
-			lbl64.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl64.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl64.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl64.setOpaque(true);
 			lbl64.setBackground(new java.awt.Color(0, 0, 0));
@@ -550,8 +539,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl65() {
 		if (lbl65 == null) {
 			lbl65 = new JLabel();
-			lbl65.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl65.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl65.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl65.setOpaque(true);
 			lbl65.setBackground(new java.awt.Color(0, 0, 0));
@@ -564,8 +553,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl66() {
 		if (lbl66 == null) {
 			lbl66 = new JLabel();
-			lbl66.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl66.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl66.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl66.setOpaque(true);
 			lbl66.setBackground(new java.awt.Color(0, 0, 0));
@@ -578,8 +567,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl56() {
 		if (lbl56 == null) {
 			lbl56 = new JLabel();
-			lbl56.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl56.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl56.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl56.setOpaque(true);
 			lbl56.setBackground(new java.awt.Color(0, 0, 0));
@@ -592,8 +581,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl55() {
 		if (lbl55 == null) {
 			lbl55 = new JLabel();
-			lbl55.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl55.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl55.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl55.setOpaque(true);
 			lbl55.setBackground(new java.awt.Color(0, 0, 0));
@@ -606,8 +595,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl54() {
 		if (lbl54 == null) {
 			lbl54 = new JLabel();
-			lbl54.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl54.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl54.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl54.setOpaque(true);
 			lbl54.setBackground(new java.awt.Color(0, 0, 0));
@@ -620,8 +609,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl53() {
 		if (lbl53 == null) {
 			lbl53 = new JLabel();
-			lbl53.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl53.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl53.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl53.setOpaque(true);
 			lbl53.setBackground(new java.awt.Color(0, 0, 0));
@@ -634,8 +623,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl52() {
 		if (lbl52 == null) {
 			lbl52 = new JLabel();
-			lbl52.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl52.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl52.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl52.setOpaque(true);
 			lbl52.setBackground(new java.awt.Color(0, 0, 0));
@@ -648,8 +637,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl51() {
 		if (lbl51 == null) {
 			lbl51 = new JLabel();
-			lbl51.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl51.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl51.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl51.setOpaque(true);
 			lbl51.setBackground(new java.awt.Color(0, 0, 0));
@@ -696,8 +685,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl41() {
 		if (lbl41 == null) {
 			lbl41 = new JLabel();
-			lbl41.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl41.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl41.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl41.setOpaque(true);
 			lbl41.setBackground(new java.awt.Color(0, 0, 0));
@@ -710,8 +699,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl42() {
 		if (lbl42 == null) {
 			lbl42 = new JLabel();
-			lbl42.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl42.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl42.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl42.setOpaque(true);
 			lbl42.setBackground(new java.awt.Color(0, 0, 0));
@@ -724,8 +713,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl43() {
 		if (lbl43 == null) {
 			lbl43 = new JLabel();
-			lbl43.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl43.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl43.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl43.setOpaque(true);
 			lbl43.setBackground(new java.awt.Color(0, 0, 0));
@@ -738,8 +727,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl44() {
 		if (lbl44 == null) {
 			lbl44 = new JLabel();
-			lbl44.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl44.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl44.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl44.setOpaque(true);
 			lbl44.setBackground(new java.awt.Color(0, 0, 0));
@@ -752,8 +741,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl45() {
 		if (lbl45 == null) {
 			lbl45 = new JLabel();
-			lbl45.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl45.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl45.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl45.setOpaque(true);
 			lbl45.setBackground(new java.awt.Color(0, 0, 0));
@@ -766,8 +755,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl46() {
 		if (lbl46 == null) {
 			lbl46 = new JLabel();
-			lbl46.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl46.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl46.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl46.setOpaque(true);
 			lbl46.setBackground(new java.awt.Color(0, 0, 0));
@@ -780,8 +769,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl36() {
 		if (lbl36 == null) {
 			lbl36 = new JLabel();
-			lbl36.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl36.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl36.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl36.setOpaque(true);
 			lbl36.setBackground(new java.awt.Color(0, 0, 0));
@@ -794,8 +783,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl35() {
 		if (lbl35 == null) {
 			lbl35 = new JLabel();
-			lbl35.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl35.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl35.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl35.setOpaque(true);
 			lbl35.setBackground(new java.awt.Color(0, 0, 0));
@@ -808,8 +797,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl34() {
 		if (lbl34 == null) {
 			lbl34 = new JLabel();
-			lbl34.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl34.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl34.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl34.setOpaque(true);
 			lbl34.setBackground(new java.awt.Color(0, 0, 0));
@@ -822,8 +811,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl33() {
 		if (lbl33 == null) {
 			lbl33 = new JLabel();
-			lbl33.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl33.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl33.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl33.setOpaque(true);
 			lbl33.setBackground(new java.awt.Color(0, 0, 0));
@@ -836,8 +825,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl32() {
 		if (lbl32 == null) {
 			lbl32 = new JLabel();
-			lbl32.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl32.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl32.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl32.setOpaque(true);
 			lbl32.setBackground(new java.awt.Color(0, 0, 0));
@@ -850,8 +839,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl31() {
 		if (lbl31 == null) {
 			lbl31 = new JLabel();
-			lbl31.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl31.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl31.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl31.setOpaque(true);
 			lbl31.setBackground(new java.awt.Color(0, 0, 0));
@@ -898,8 +887,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl21() {
 		if (lbl21 == null) {
 			lbl21 = new JLabel();
-			lbl21.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl21.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl21.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl21.setOpaque(true);
 			lbl21.setBackground(new java.awt.Color(0, 0, 0));
@@ -912,8 +901,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl22() {
 		if (lbl22 == null) {
 			lbl22 = new JLabel();
-			lbl22.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl22.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl22.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl22.setOpaque(true);
 			lbl22.setBackground(new java.awt.Color(0, 0, 0));
@@ -926,8 +915,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl23() {
 		if (lbl23 == null) {
 			lbl23 = new JLabel();
-			lbl23.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl23.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl23.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl23.setOpaque(true);
 			lbl23.setBackground(new java.awt.Color(0, 0, 0));
@@ -940,8 +929,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl24() {
 		if (lbl24 == null) {
 			lbl24 = new JLabel();
-			lbl24.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl24.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl24.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl24.setOpaque(true);
 			lbl24.setBackground(new java.awt.Color(0, 0, 0));
@@ -954,8 +943,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl25() {
 		if (lbl25 == null) {
 			lbl25 = new JLabel();
-			lbl25.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl25.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl25.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl25.setOpaque(true);
 			lbl25.setBackground(new java.awt.Color(0, 0, 0));
@@ -968,8 +957,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl26() {
 		if (lbl26 == null) {
 			lbl26 = new JLabel();
-			lbl26.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl26.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl26.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl26.setOpaque(true);
 			lbl26.setBackground(new java.awt.Color(0, 0, 0));
@@ -982,8 +971,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl16() {
 		if (lbl16 == null) {
 			lbl16 = new JLabel();
-			lbl16.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl16.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl16.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl16.setOpaque(true);
 			lbl16.setBackground(new java.awt.Color(0, 0, 0));
@@ -997,8 +986,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl15() {
 		if (lbl15 == null) {
 			lbl15 = new JLabel();
-			lbl15.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl15.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl15.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl15.setOpaque(true);
 			lbl15.setBackground(new java.awt.Color(0, 0, 0));
@@ -1011,8 +1000,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl14() {
 		if (lbl14 == null) {
 			lbl14 = new JLabel();
-			lbl14.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl14.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl14.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl14.setOpaque(true);
 			lbl14.setBackground(new java.awt.Color(0, 0, 0));
@@ -1025,8 +1014,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl13() {
 		if (lbl13 == null) {
 			lbl13 = new JLabel();
-			lbl13.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl13.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl13.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl13.setOpaque(true);
 			lbl13.setBackground(new java.awt.Color(0, 0, 0));
@@ -1039,8 +1028,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl12() {
 		if (lbl12 == null) {
 			lbl12 = new JLabel();
-			lbl12.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl12.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl12.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl12.setOpaque(true);
 			lbl12.setBackground(new java.awt.Color(0, 0, 0));
@@ -1053,8 +1042,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLbl11() {
 		if (lbl11 == null) {
 			lbl11 = new JLabel();
-			lbl11.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/ConnectFour/Empty.jpg")));
+			lbl11.setIcon(new ImageIcon(Connect4UI.class
+					.getResource("/images/ConnectFour/Empty.jpg")));
 			lbl11.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl11.setOpaque(true);
 			lbl11.setBackground(new java.awt.Color(0, 0, 0));
@@ -1147,11 +1136,11 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 			if (playerTurn == Connect4.RED) {
 				boardUI[fila][columna].setIcon(new ImageIcon(getClass()
 						.getClassLoader().getResource(
-								"images/ConnectFour/Red.jpg")));
+								"/images/ConnectFour/Red.jpg")));
 			} else {
 				boardUI[fila][columna].setIcon(new ImageIcon(getClass()
 						.getClassLoader().getResource(
-								"images/ConnectFour/Blue.jpg")));
+								"/images/ConnectFour/Blue.jpg")));
 			}
 
 			// Checks winner
@@ -1233,7 +1222,7 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 		int fila = libre(movimiento);
 		Connect4.ponerFicha(game.getBoard(), movimiento, playerTurn);
 		boardUI[fila][movimiento].setIcon(new ImageIcon(getClass()
-				.getClassLoader().getResource("images/ConnectFour/Blue.jpg")));
+				.getClassLoader().getResource("/images/ConnectFour/Blue.jpg")));
 		playerTurn = game.changeTurn();
 
 		// Computer has won the game
@@ -1293,12 +1282,12 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 				case 0:
 					boardUI[i][j].setIcon(new ImageIcon(getClass()
 							.getClassLoader().getResource(
-									"images/ConnectFour/Red.jpg")));
+									"/images/ConnectFour/Red.jpg")));
 					break;
 				case 1:
 					boardUI[i][j].setIcon(new ImageIcon(getClass()
 							.getClassLoader().getResource(
-									"images/ConnectFour/Blue.jpg")));
+									"/images/ConnectFour/Blue.jpg")));
 					break;
 				}
 			}

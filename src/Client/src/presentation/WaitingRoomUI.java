@@ -148,6 +148,16 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					btnSendMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent arg0) {
+					btnSendMouseEntered(arg0);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnSendMouseExited(e);
+				}
 			});
 		}
 		return btnSend;
@@ -164,6 +174,16 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent e) {
 					btnCreateGameMouseClicked(e);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnCreateGameMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnCreateGameMouseExited(e);
+				}
 			});
 		}
 		return btnCreateGame;
@@ -179,6 +199,16 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					btnExitMouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnExitMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnExitMouseExited(e);
 				}
 			});
 		}
@@ -238,6 +268,16 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					btnJoinGameMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnJoinGameMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnJoinGameMouseExited(e);
+				}
 			});
 		}
 		return btnJoinGame;
@@ -263,6 +303,16 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 				public void mouseClicked(MouseEvent evt) {
 					btnProfileMouseClicked(evt);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnProfileMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnProfileMouseExited(e);
 				}
 			});
 		}
@@ -642,6 +692,46 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	}
 
 	private void btnMessagesMouseExited(MouseEvent evt) {
+		setDefaultCursor();
+	}
+
+	protected void btnSendMouseEntered(MouseEvent arg0) {
+		setHandCursor();
+	}
+
+	protected void btnSendMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnProfileMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnProfileMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnExitMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnExitMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnCreateGameMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnCreateGameMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnJoinGameMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnJoinGameMouseExited(MouseEvent e) {
 		setDefaultCursor();
 	}
 }
