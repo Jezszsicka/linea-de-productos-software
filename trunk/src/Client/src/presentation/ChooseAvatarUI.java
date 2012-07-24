@@ -1,6 +1,7 @@
 package presentation;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -91,6 +92,16 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 			btnUpload.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnUploadMouseClicked(evt);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnUploadMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnUploadMouseExited(e);
 				}
 			});
 		}
@@ -211,6 +222,17 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private JLabel getLblAvatar4() {
 		if (lblAvatar4 == null) {
 			lblAvatar4 = new JLabel();
+			lblAvatar4.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lblAvatar4MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lblAvatar4MouseExited(e);
+				}
+			});
 			lblAvatar4.setBounds(379, 26, 100, 120);
 			lblAvatar4.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
@@ -222,6 +244,17 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private JLabel getLblAvatar6() {
 		if (lblAvatar6 == null) {
 			lblAvatar6 = new JLabel();
+			lblAvatar6.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lblAvatar6MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lblAvatar6MouseExited(e);
+				}
+			});
 			lblAvatar6.setBounds(146, 159, 100, 120);
 			lblAvatar6.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
@@ -233,6 +266,17 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private JLabel getLblAvatar7() {
 		if (lblAvatar7 == null) {
 			lblAvatar7 = new JLabel();
+			lblAvatar7.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lblAvatar7MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lblAvatar7MouseExited(e);
+				}
+			});
 			lblAvatar7.setBounds(261, 159, 100, 120);
 			lblAvatar7.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
@@ -244,6 +288,17 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private JLabel getLblAvatar8() {
 		if (lblAvatar8 == null) {
 			lblAvatar8 = new JLabel();
+			lblAvatar8.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lblAvatar8MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lblAvatar8MouseExited(e);
+				}
+			});
 			lblAvatar8.setBounds(379, 159, 100, 120);
 			lblAvatar8.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
@@ -255,6 +310,17 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private JLabel getLblAvatar5() {
 		if (lblAvatar5 == null) {
 			lblAvatar5 = new JLabel();
+			lblAvatar5.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lblAvatar5MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lblAvatar5MouseExited(e);
+				}
+			});
 			lblAvatar5.setBounds(31, 159, 100, 120);
 			lblAvatar5.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
@@ -322,6 +388,16 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					btnCancelMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnCancelMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnCancelMouseExited(e);
+				}
 			});
 		}
 		return btnCancel;
@@ -357,6 +433,69 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 		dispose();
 	}
 
+	private void setHandCursor() {
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+
+	private void setDefaultCursor() {
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	protected void btnUploadMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnUploadMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnCancelMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnCancelMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void lblAvatar4MouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void lblAvatar4MouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void lblAvatar5MouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void lblAvatar5MouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void lblAvatar6MouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void lblAvatar6MouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void lblAvatar7MouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void lblAvatar7MouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void lblAvatar8MouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void lblAvatar8MouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
 }
 
 class ExtensionFileFilter extends FileFilter {

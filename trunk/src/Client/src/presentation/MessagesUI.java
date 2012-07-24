@@ -1,5 +1,6 @@
 package presentation;
 
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -95,6 +96,16 @@ public class MessagesUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					btnBackMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnBackMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnBackMouseExited(e);
+				}
 			});
 		}
 		return btnBack;
@@ -110,6 +121,16 @@ public class MessagesUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					btnSendMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnSendMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnSendMouseExited(e);
+				}
 			});
 		}
 		return btnSend;
@@ -118,6 +139,17 @@ public class MessagesUI extends javax.swing.JFrame {
 	private JButton getBtnDelete() {
 		if (btnDelete == null) {
 			btnDelete = new JButton();
+			btnDelete.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnDeleteMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnDeleteMouseExited(e);
+				}
+			});
 			btnDelete.setText("Eliminar");
 			btnDelete.setBounds(260, 256, 74, 23);
 			btnDelete.setFocusable(false);
@@ -155,6 +187,16 @@ public class MessagesUI extends javax.swing.JFrame {
 			btnRead.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnReadMouseClicked(evt);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnReadMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnReadMouseExited(e);
 				}
 			});
 		}
@@ -206,4 +248,43 @@ public class MessagesUI extends javax.swing.JFrame {
 		Controller.getInstance().closeMessagesUI();
 	}
 
+	private void setHandCursor() {
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+
+	private void setDefaultCursor() {
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	protected void btnSendMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnSendMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnReadMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnReadMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnDeleteMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnDeleteMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnBackMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnBackMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
 }

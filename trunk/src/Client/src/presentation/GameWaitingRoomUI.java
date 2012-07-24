@@ -1,6 +1,7 @@
 package presentation;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ItemEvent;
@@ -415,6 +416,16 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnCancelMouseClicked(evt);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnCancelMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnCancelMouseExited(e);
 				}
 			});
 		}
@@ -833,5 +844,21 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			else
 				lblCountry.setIcon(null);
 		}
+	}
+
+	private void setHandCursor() {
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+
+	private void setDefaultCursor() {
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	protected void btnCancelMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnCancelMouseExited(MouseEvent e) {
+		setDefaultCursor();
 	}
 }

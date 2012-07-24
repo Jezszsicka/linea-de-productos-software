@@ -13,16 +13,6 @@ import javax.swing.WindowConstants;
 
 import chess.Chess.Player;
 
-/**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
- * Builder, which is free for non-commercial use. If Jigloo is being used
- * commercially (ie, by a corporation, company or business for any purpose
- * whatever) then you should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details. Use of Jigloo implies
- * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
- * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
- * ANY CORPORATE OR COMMERCIAL PURPOSE.
- */
 @SuppressWarnings("serial")
 public class PawnPromotionUI extends javax.swing.JFrame {
 	private JPanel pnlBackground;
@@ -45,12 +35,12 @@ public class PawnPromotionUI extends javax.swing.JFrame {
 		initGUI();
 
 		if (player == Chess.Player.Black) {
-			lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/Chess/Black Q.png")));
+			lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+					.getResource("/images/Chess/Black Q.png")));
 			selectedPiece = Chess.BLACK_QUEEN;
 		} else {
-			lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/Chess/White Q.png")));
+			lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+					.getResource("/images/Chess/White Q.png")));
 			selectedPiece = Chess.WHITE_QUEEN;
 		}
 
@@ -61,10 +51,9 @@ public class PawnPromotionUI extends javax.swing.JFrame {
 			setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			getContentPane().setLayout(null);
 			getContentPane().add(getPnlBackground(), "Center");
-			pack();
-			this.setSize(236, 200);
-			this.setLocationRelativeTo(null);
-			this.setVisible(true);
+			setSize(236, 200);
+			setLocationRelativeTo(null);
+			setVisible(true);
 		} catch (Exception e) {
 			// add your error handling code here
 			e.printStackTrace();
@@ -110,8 +99,8 @@ public class PawnPromotionUI extends javax.swing.JFrame {
 		if (lblNext == null) {
 			lblNext = new JLabel();
 			lblNext.setBounds(146, 55, 50, 50);
-			lblNext.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/Forward.png")));
+			lblNext.setIcon(new ImageIcon(PawnPromotionUI.class
+					.getResource("/images/Forward.png")));
 			lblNext.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lblNextMouseClicked(evt);
@@ -125,8 +114,8 @@ public class PawnPromotionUI extends javax.swing.JFrame {
 		if (lblPrevious == null) {
 			lblPrevious = new JLabel();
 			lblPrevious.setBounds(16, 55, 50, 50);
-			lblPrevious.setIcon(new ImageIcon(getClass().getClassLoader()
-					.getResource("images/Backward.png")));
+			lblPrevious.setIcon(new ImageIcon(PawnPromotionUI.class
+					.getResource("/images/Backward.png")));
 			lblPrevious.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lblPreviousMouseClicked(evt);
@@ -154,46 +143,46 @@ public class PawnPromotionUI extends javax.swing.JFrame {
 		if (player == Chess.Player.Black) {
 			switch (selectedPiece) {
 			case Chess.BLACK_QUEEN:
-				lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/Chess/Black R.png")));
+				lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+						.getResource("/images/Chess/Black R.png")));
 				selectedPiece = Chess.BLACK_ROOK;
 				break;
 			case Chess.BLACK_KNIGHT:
-				lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/Chess/Black Q.png")));
+				lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+						.getResource("/images/Chess/Black Q.png")));
 				selectedPiece = Chess.BLACK_QUEEN;
 				break;
 			case Chess.BLACK_BISHOP:
-				lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/Chess/Black N.png")));
+				lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+						.getResource("/images/Chess/Black N.png")));
 				selectedPiece = Chess.BLACK_KNIGHT;
 				break;
 			case Chess.BLACK_ROOK:
-				lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/Chess/Black B.png")));
+				lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+						.getResource("/images/Chess/Black B.png")));
 				selectedPiece = Chess.BLACK_BISHOP;
 				break;
 			}
 		} else {
 			switch (selectedPiece) {
 			case Chess.WHITE_QUEEN:
-				lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/Chess/White R.png")));
+				lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+						.getResource("/images/Chess/White R.png")));
 				selectedPiece = Chess.WHITE_ROOK;
 				break;
 			case Chess.WHITE_KNIGHT:
-				lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/Chess/White Q.png")));
+				lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+						.getResource("/images/Chess/White Q.png")));
 				selectedPiece = Chess.WHITE_QUEEN;
 				break;
 			case Chess.WHITE_BISHOP:
-				lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/Chess/White N.png")));
+				lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+						.getResource("/images/Chess/White N.png")));
 				selectedPiece = Chess.WHITE_KNIGHT;
 				break;
 			case Chess.WHITE_ROOK:
-				lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/Chess/White B.png")));
+				lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+						.getResource("/images/Chess/White B.png")));
 				selectedPiece = Chess.WHITE_BISHOP;
 				break;
 			}
@@ -204,46 +193,46 @@ public class PawnPromotionUI extends javax.swing.JFrame {
 		if (player == Chess.Player.Black) {
 			switch (selectedPiece) {
 			case Chess.BLACK_QUEEN:
-				lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/Chess/Black N.png")));
+				lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+						.getResource("/images/Chess/Black N.png")));
 				selectedPiece = Chess.BLACK_KNIGHT;
 				break;
 			case Chess.BLACK_KNIGHT:
-				lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/Chess/Black B.png")));
+				lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+						.getResource("/images/Chess/Black B.png")));
 				selectedPiece = Chess.BLACK_BISHOP;
 				break;
 			case Chess.BLACK_BISHOP:
-				lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/Chess/Black R.png")));
+				lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+						.getResource("/images/Chess/Black R.png")));
 				selectedPiece = Chess.BLACK_ROOK;
 				break;
 			case Chess.BLACK_ROOK:
-				lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/Chess/Black Q.png")));
+				lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+						.getResource("/images/Chess/Black Q.png")));
 				selectedPiece = Chess.BLACK_QUEEN;
 				break;
 			}
 		} else {
 			switch (selectedPiece) {
 			case Chess.WHITE_QUEEN:
-				lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/Chess/White N.png")));
+				lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+						.getResource("/images/Chess/White N.png")));
 				selectedPiece = Chess.WHITE_KNIGHT;
 				break;
 			case Chess.WHITE_KNIGHT:
-				lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/Chess/White B.png")));
+				lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+						.getResource("/images/Chess/White B.png")));
 				selectedPiece = Chess.WHITE_BISHOP;
 				break;
 			case Chess.WHITE_BISHOP:
-				lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/Chess/White R.png")));
+				lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+						.getResource("/images/Chess/White R.png")));
 				selectedPiece = Chess.WHITE_ROOK;
 				break;
 			case Chess.WHITE_ROOK:
-				lblPiece.setIcon(new ImageIcon(getClass().getClassLoader()
-						.getResource("images/Chess/White Q.png")));
+				lblPiece.setIcon(new ImageIcon(PawnPromotionUI.class
+						.getResource("/images/Chess/White Q.png")));
 				selectedPiece = Chess.WHITE_QUEEN;
 				break;
 			}

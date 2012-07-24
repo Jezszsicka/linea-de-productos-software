@@ -1,6 +1,7 @@
 package presentation;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -360,6 +361,17 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JButton getBtnInvite() {
 		if (btnInvite == null) {
 			btnInvite = new JButton();
+			btnInvite.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnInviteMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnInviteMouseExited(e);
+				}
+			});
 			btnInvite.setText("Invitar amigo");
 			btnInvite.setBounds(479, 399, 95, 23);
 			btnInvite.setFocusable(false);
@@ -377,6 +389,16 @@ public class UserInfoUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					btnBackMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnBackMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnBackMouseExited(e);
+				}
 			});
 		}
 		return btnBack;
@@ -386,4 +408,27 @@ public class UserInfoUI extends javax.swing.JFrame {
 		dispose();
 	}
 
+	private void setHandCursor() {
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+
+	private void setDefaultCursor() {
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	protected void btnInviteMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnInviteMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnBackMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnBackMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
 }

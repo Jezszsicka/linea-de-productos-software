@@ -1,6 +1,7 @@
 package presentation;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
@@ -79,6 +80,16 @@ public class DeleteAccountUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					btnDeleteMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnDeleteMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnDeleteMouseExited(e);
+				}
 			});
 		}
 		return btnDelete;
@@ -93,6 +104,16 @@ public class DeleteAccountUI extends javax.swing.JFrame {
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnCancelMouseClicked(evt);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnCancelMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnCancelMouseExited(e);
 				}
 			});
 		}
@@ -116,4 +137,27 @@ public class DeleteAccountUI extends javax.swing.JFrame {
 		dispose();
 	}
 
+	private void setHandCursor() {
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+
+	private void setDefaultCursor() {
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	protected void btnDeleteMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnDeleteMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnCancelMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnCancelMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
 }

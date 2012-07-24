@@ -1,5 +1,6 @@
 package presentation;
 
+import java.awt.Cursor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -115,6 +116,16 @@ public class CreateGameUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					btnCreateMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnCreateMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnCreateMouseExited(e);
+				}
 			});
 		}
 		return btnCreate;
@@ -167,6 +178,16 @@ public class CreateGameUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					btnCancelMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnCancelMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnCancelMouseExited(e);
+				}
 			});
 		}
 		return btnCancel;
@@ -216,6 +237,16 @@ public class CreateGameUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					pnlCheckersMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					pnlCheckersMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					pnlCheckersMouseExited(e);
+				}
 			});
 			pnlCheckers.add(getLblIconCheckers());
 			pnlCheckers.add(getLblCheckers());
@@ -233,6 +264,16 @@ public class CreateGameUI extends javax.swing.JFrame {
 			pnlConnect4.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					pnlConnect4MouseClicked(evt);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					pnlConnect4MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					pnlConnect4MouseExited(e);
 				}
 			});
 			pnlConnect4.add(getJLabel1());
@@ -384,6 +425,16 @@ public class CreateGameUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					pnlChessMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					pnlChessMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					pnlChessMouseExited(e);
+				}
 			});
 			pnlChess.add(getLblIconChess());
 			pnlChess.add(getLblChess());
@@ -432,6 +483,16 @@ public class CreateGameUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					pnlGooseMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					pnlGooseMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					pnlGooseMouseExited(e);
+				}
 			});
 			pnlGoose.add(getLblGooseIcon());
 			pnlGoose.add(getLblGoose());
@@ -477,6 +538,16 @@ public class CreateGameUI extends javax.swing.JFrame {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
 					pnlLudoMouseClicked(arg0);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					pnlLudoMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					pnlLudoMouseExited(e);
 				}
 			});
 			pnlLudo.setLayout(null);
@@ -602,5 +673,69 @@ public class CreateGameUI extends javax.swing.JFrame {
 				.getResource("/images/Games/trivial_icon.png")));
 		lblGamePlayers.setText("2-4 jugadores");
 		selectedGame = GameType.Ludo;
+	}
+
+	private void setHandCursor() {
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+
+	private void setDefaultCursor() {
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	protected void btnCreateMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnCreateMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnCancelMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnCancelMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void pnlCheckersMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void pnlCheckersMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void pnlConnect4MouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void pnlConnect4MouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void pnlChessMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void pnlChessMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void pnlGooseMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void pnlGooseMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void pnlLudoMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void pnlLudoMouseExited(MouseEvent e) {
+		setDefaultCursor();
 	}
 }
