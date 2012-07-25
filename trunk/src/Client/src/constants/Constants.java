@@ -12,4 +12,8 @@ public interface Constants {
 	public final int ChessTurn = 60;
 	public final int ConnectTurn = 60;
 	
+	//Ludo
+	public final int LudoPieceMoveTime = 500;
+	public final int LudoDiceTime = 100;
+	
 }

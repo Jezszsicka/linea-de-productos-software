@@ -26,7 +26,7 @@ public class Utils {
 	}
 
 	public static String countryImgPath(int country) {
-		String path = "images/Flags/";
+		String path = "/images/Flags/";
 		switch (country) {
 		case 0:
 			path += "us";
