@@ -18,6 +18,9 @@ import javax.swing.JTextField;
 
 import logic.Controller;
 import logic.LanguageManager;
+import ludo.JDiagonalLabel;
+import javax.swing.SwingConstants;
+import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class LoginUI extends javax.swing.JFrame {

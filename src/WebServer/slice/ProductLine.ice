@@ -131,6 +131,7 @@ module ProductLine {
 		GameList listGames(string user, string gameName, Filter gamesFilter);
 		void startGame(string game);
 		void updateGame(string game, string player, int nextTurn ,bidimensionalIntArray board);
+		void updateDiceGame(string game, string player, int nextTurn, bidimensionalIntArray board, int dice, int movedPiece);
 		void finishGame(string game, string player);
     };
     

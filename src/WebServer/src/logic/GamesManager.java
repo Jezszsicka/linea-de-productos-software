@@ -354,6 +354,8 @@ public class GamesManager {
 			break;
 		case Chess:
 		case Connect4:
+		case Goose:
+		case Ludo:
 			game.setBoard(board);
 			String turn = game.getSlot(nextTurn).getPlayer();
 			Session turnSession = UsersManager.getInstance()
@@ -364,7 +366,21 @@ public class GamesManager {
 
 	}
 
+	public void updateDiceGame(String gameName, String player, int nextTurn,
+			int[][] board, int dice, int movedPiece) {
+		
+		//TODO Avisar a todos los jugadores con una nueva llamada
+		Game game = searchGame(gameName);
+		game.setBoard(board);
+		String turn = game.getSlot(nextTurn).getPlayer();
+		Session turnSession = UsersManager.getInstance()
+				.searchSession(turn);
+		turnSession.getCallback().gameUpdated(gameName, nextTurn, board);
+		
+	}
+	
 	public void finishGame(String gameName, String winnerPlayer) {
+		//TODO eso solo vale para juegos de dos jugadores
 		Game game = searchGame(gameName);
 		String turn;
 		if (game.getSlot(0).getPlayer().equals(winnerPlayer))
@@ -375,4 +391,5 @@ public class GamesManager {
 		turnSession.getCallback().gameFinished(gameName);
 		games.remove(game);
 	}
+
 }
