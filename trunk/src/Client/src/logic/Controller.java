@@ -498,8 +498,20 @@ public class Controller {
 		gameUI.updateBoard(nextTurn);
 	}
 
+	public void diceGameUpdated(String gameName, int nextTurn,
+			int[][] board, int dice, int movedPiece) {
+		LudoUI gameUI = (LudoUI) gamesUI.get(gameName);
+		gamesManager.gameUpdated(gameName,nextTurn,board);
+		gameUI.updateBoard(dice,movedPiece);
+		
+	}
+	
 	public void updateGame(String gameName) {
 		gamesManager.updateGame(gameName);
+	}
+	
+	public void updateDiceGame(String gameName, int dice, int piece) {
+		gamesManager.updateDiceGame(gameName,dice,piece);
 	}
 
 	public void gameFinished(String game) {
@@ -511,6 +523,9 @@ public class Controller {
 	public void finishGame(String game, String winnerPlayer) {
 		gamesManager.finishGame(game,winnerPlayer);
 	}
+
+
+
 
 
 }

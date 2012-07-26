@@ -204,6 +204,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel[] bluePieces;
 	private JLabel[] greenPieces;
 	private boolean[] enabledSquares;
+	private boolean throwing;
+	private ThrowDiceThread throwDice;
 
 	public LudoUI(String username, Game game) {
 		this.username = username;
@@ -224,6 +226,7 @@ public class LudoUI extends JFrame implements GameUI {
 			enableDice(myPlayer);
 		} else {
 			lblState.setText("Es el turno de " + lblYellowPlayerName.getText());
+			diceAnimation(playerTurn);
 		}
 	}
 
@@ -518,6 +521,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_16() {
 		if (lbl_16 == null) {
 			lbl_16 = new JLabel("16");
+			lbl_16.setVerticalTextPosition(SwingConstants.BOTTOM);
 			lbl_16.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -549,6 +553,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_15() {
 		if (lbl_15 == null) {
 			lbl_15 = new JLabel("15");
+			lbl_15.setVerticalTextPosition(SwingConstants.BOTTOM);
 			lbl_15.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -581,6 +586,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_14() {
 		if (lbl_14 == null) {
 			lbl_14 = new JLabel("14");
+			lbl_14.setVerticalTextPosition(SwingConstants.BOTTOM);
 			lbl_14.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -612,6 +618,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_13() {
 		if (lbl_13 == null) {
 			lbl_13 = new JLabel("13");
+			lbl_13.setVerticalTextPosition(SwingConstants.BOTTOM);
 			lbl_13.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -643,6 +650,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_12() {
 		if (lbl_12 == null) {
 			lbl_12 = new JLabel("12");
+			lbl_12.setVerticalTextPosition(SwingConstants.BOTTOM);
 			lbl_12.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -674,6 +682,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_11() {
 		if (lbl_11 == null) {
 			lbl_11 = new JLabel("11");
+			lbl_11.setVerticalTextPosition(SwingConstants.BOTTOM);
 			lbl_11.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseEntered(MouseEvent e) {
@@ -683,6 +692,11 @@ public class LudoUI extends JFrame implements GameUI {
 				@Override
 				public void mouseExited(MouseEvent e) {
 					lbl_11MouseExited(e);
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					lbl_11MouseClicked(arg0);
 				}
 			});
 			lbl_11.setOpaque(true);
@@ -734,6 +748,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_10() {
 		if (lbl_10 == null) {
 			lbl_10 = new JLabel("10");
+			lbl_10.setVerticalAlignment(SwingConstants.BOTTOM);
+			lbl_10.setVerticalTextPosition(SwingConstants.BOTTOM);
 			lbl_10.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -752,7 +768,6 @@ public class LudoUI extends JFrame implements GameUI {
 			});
 			lbl_10.setOpaque(true);
 			lbl_10.setBackground(new Color(255, 255, 255));
-			lbl_10.setVerticalAlignment(SwingConstants.BOTTOM);
 			lbl_10.setFont(new Font("Tahoma", Font.BOLD, 11));
 			lbl_10.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_10.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -2708,7 +2723,6 @@ public class LudoUI extends JFrame implements GameUI {
 			lbl_6.setOpaque(true);
 			lbl_6.setBackground(new Color(255, 255, 255));
 			lbl_6.setHorizontalAlignment(SwingConstants.RIGHT);
-			lbl_6.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_6.setFont(new Font("Tahoma", Font.BOLD, 11));
 			lbl_6.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lbl_6.setBounds(0, 150, 60, 30);
@@ -3607,6 +3621,11 @@ public class LudoUI extends JFrame implements GameUI {
 			move(9);
 	}
 
+	protected void lbl_11MouseClicked(MouseEvent arg0) {
+		if (enabledSquares[11])
+			move(11);
+	}
+
 	protected void lbl_13MouseClicked(MouseEvent e) {
 		if (enabledSquares[13])
 			move(13);
@@ -4487,16 +4506,6 @@ public class LudoUI extends JFrame implements GameUI {
 		if (yellowDice) {
 			throwDice();
 			disableDices();
-			/*
-			 * new Thread() { public void run() { for (int i = 1; i < 68; i++) {
-			 * if (i != 1) { squares[i - 1].setIcon(null); squares[i -
-			 * 1].setText(String.valueOf(i - 1)); } squares[i] .setIcon(new
-			 * ImageIcon( LudoUI.class
-			 * .getResource("/images/Ludo/Pieces/yellow_1.png")));
-			 * squares[i].setText(null); try { sleep(500); } catch
-			 * (InterruptedException e) { // TODO Auto-generated catch block
-			 * e.printStackTrace(); } } } }.start();
-			 */
 		}
 	}
 
@@ -4631,51 +4640,7 @@ public class LudoUI extends JFrame implements GameUI {
 
 	@Override
 	public void updateBoard(int nextTurn) {
-		for (int player = 0; player < 4; player++) {
-			switch (player) {
-			case Ludo.YELLOW:
-				for (int piece = 0; piece < 4; piece++) {
-					if (game.getBoard()[player][piece] != 0) {
-						pnlYellowPlayer.remove(yellowPieces[piece]);
-					}
-				}
-				pnlYellowPlayer.repaint();
 
-				break;
-			case Ludo.RED:
-				for (int piece = 0; piece < 4; piece++) {
-					if (game.getBoard()[player][piece] != 0) {
-						pnlRedPlayer.remove(redPieces[piece]);
-					}
-				}
-				pnlRedPlayer.repaint();
-				break;
-			case Ludo.BLUE:
-				for (int piece = 0; piece < 4; piece++) {
-					if (game.getBoard()[player][piece] != 0) {
-						pnlBluePlayer.remove(bluePieces[piece]);
-					}
-				}
-				pnlBluePlayer.repaint();
-				break;
-			case Ludo.GREEN:
-				for (int piece = 0; piece < 4; piece++) {
-					if (game.getBoard()[player][piece] != 0) {
-						pnlGreenPlayer.remove(greenPieces[piece]);
-					}
-				}
-				pnlGreenPlayer.repaint();
-				break;
-			}
-		}
-
-		game.setTurn(nextTurn);
-		playerTurn = nextTurn;
-
-		if (myPlayer == playerTurn) {
-			lblState.setText("Es tu turno, lanza el dado");
-			enableDice(playerTurn);
-		}
 	}
 
 	@Override
@@ -4796,14 +4761,19 @@ public class LudoUI extends JFrame implements GameUI {
 						}
 
 						changeTurn();
-						Controller.getInstance().updateGame(game.getName());
+						Controller.getInstance().updateDiceGame(game.getName(),
+								5, piece);
+						diceAnimation(playerTurn);
 					} else {
 						// Move piece
 						if (Ludo.isPieceOut(game.getBoard(), myPlayer)) {
 							lblState.setText("Elige la ficha que quieras mover");
+							enablePlayerSquares(myPlayer);
 						} else {
 							changeTurn();
-							Controller.getInstance().updateGame(game.getName());
+							Controller.getInstance().updateDiceGame(
+									game.getName(), dice, -1);
+							diceAnimation(playerTurn);
 						}
 
 					}
@@ -4814,7 +4784,9 @@ public class LudoUI extends JFrame implements GameUI {
 						enablePlayerSquares(myPlayer);
 					} else {
 						changeTurn();
-						Controller.getInstance().updateGame(game.getName());
+						Controller.getInstance().updateDiceGame(game.getName(),
+								dice, -1);
+						diceAnimation(playerTurn);
 					}
 				}
 
@@ -4824,20 +4796,29 @@ public class LudoUI extends JFrame implements GameUI {
 	}
 
 	private void move(int fromSquare) {
+		disableSquares(myPlayer);
+
 		int piece = Ludo.pieceInSquare(game.getBoard(), fromSquare, myPlayer);
 		Ludo.move(piece, dice, game.getBoard(), myPlayer);
-		moveAnimation(fromSquare);
+		moveAnimation(fromSquare, piece, myPlayer);
+		playerTurn = game.changeTurn();
+		Controller.getInstance().updateDiceGame(game.getName(), dice, piece);
+		diceAnimation(playerTurn);
 	}
 
-	private void moveAnimation(final int fromSquare) {
-		disableSquare(fromSquare);
+	private void diceAnimation(int player) {
+		throwDice = new ThrowDiceThread(player);
+		throwDice.start();
+	}
+
+	private void moveAnimation(final int fromSquare, int piece, final int player) {
 
 		new Thread() {
 			public void run() {
 				int toSquare = fromSquare + dice;
 				ImageIcon icon = null;
 
-				switch (playerTurn) {
+				switch (player) {
 				case Ludo.YELLOW:
 					icon = new ImageIcon(
 							LudoUI.class
@@ -4873,34 +4854,44 @@ public class LudoUI extends JFrame implements GameUI {
 					}
 				}
 
-				playerTurn = game.changeTurn();
-				Controller.getInstance().updateGame(game.getName());
-				switch (playerTurn) {
-				case Ludo.YELLOW:
-					lblState.setText("Es el turno de "
-							+ lblYellowPlayerName.getText());
-					break;
-				case Ludo.RED:
-					lblState.setText("Es el turno de "
-							+ lblRedPlayerName.getText());
-					break;
-				case Ludo.BLUE:
-					lblState.setText("Es el turno de "
-							+ lblBluePlayerName.getText());
-					break;
-				case Ludo.GREEN:
-					lblState.setText("Es el turno de "
-							+ lblGreenPlayerName.getText());
-					break;
+				if (playerTurn != myPlayer) {
+					switch (playerTurn) {
+					case Ludo.YELLOW:
+						lblState.setText("Es el turno de "
+								+ lblYellowPlayerName.getText());
+						break;
+					case Ludo.RED:
+						lblState.setText("Es el turno de "
+								+ lblRedPlayerName.getText());
+						break;
+					case Ludo.BLUE:
+						lblState.setText("Es el turno de "
+								+ lblBluePlayerName.getText());
+						break;
+					case Ludo.GREEN:
+						lblState.setText("Es el turno de "
+								+ lblGreenPlayerName.getText());
+						break;
 
+					}
+				} else {
+					lblState.setText("Es tu turno, lanza el dado");
+					enableDice(myPlayer);
 				}
 			}
 		}.start();
 
 	}
 
-	private void disableSquare(int square) {
-		enabledSquares[square] = false;
+	private void disableSquares(int player) {
+		int[] piecesSquares = game.getBoard(player);
+		for (int piece = 0; piece < 4; piece++) {
+			int pieceSquare = piecesSquares[piece];
+			if (pieceSquare != Ludo.HOUSE) {
+				enabledSquares[pieceSquare] = false;
+			}
+		}
+
 		setDefaultCursor();
 
 	}
@@ -4938,4 +4929,183 @@ public class LudoUI extends JFrame implements GameUI {
 
 	}
 
+	public void updateBoard(int squares, int movedPiece) {
+		throwing = false;
+		try {
+			throwDice.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		switch (playerTurn) {
+		case Ludo.YELLOW:
+			lblYellowDice.setIcon(new ImageIcon(LudoUI.class
+					.getResource("/images/Dice/" + squares + "_40x40.png")));
+			break;
+		case Ludo.RED:
+			lblRedDice.setIcon(new ImageIcon(LudoUI.class
+					.getResource("/images/Dice/" + squares + "_40x40.png")));
+			break;
+		case Ludo.BLUE:
+			lblBlueDice.setIcon(new ImageIcon(LudoUI.class
+					.getResource("/images/Dice/" + squares + "_40x40.png")));
+			break;
+		case Ludo.GREEN:
+			lblGreenDice.setIcon(new ImageIcon(LudoUI.class
+					.getResource("/images/Dice/" + squares + "_40x40.png")));
+			break;
+		}
+
+		if (movedPiece != -1) {
+			dice = squares;
+			if (dice == 5) {
+				int pieceSquare = game.getBoard()[playerTurn][movedPiece];
+
+				switch (playerTurn) {
+				case Ludo.YELLOW:
+					if (pieceSquare == Ludo.YELLOW_INITIAL_SQUARE) {
+						pnlYellowPlayer.remove(yellowPieces[movedPiece]);
+						pnlYellowPlayer.repaint();
+						this.squares[Ludo.YELLOW_INITIAL_SQUARE]
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/Pieces/yellow_1.png")));
+					} else {
+						// The player moves a piece
+						int fromSquare = game.getBoard()[playerTurn][movedPiece]
+								- squares;
+						moveAnimation(fromSquare, movedPiece, playerTurn);
+					}
+					break;
+				case Ludo.RED:
+					if (pieceSquare == Ludo.RED_INITIAL_SQUARE) {
+						pnlRedPlayer.remove(redPieces[movedPiece]);
+						pnlRedPlayer.repaint();
+						this.squares[Ludo.RED_INITIAL_SQUARE]
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/Pieces/red_1.png")));
+					} else {
+						// The player moves a piece
+						int fromSquare = game.getBoard()[playerTurn][movedPiece]
+								- squares;
+						moveAnimation(fromSquare, movedPiece, playerTurn);
+					}
+					break;
+				case Ludo.BLUE:
+					if (pieceSquare == Ludo.BLUE_INITIAL_SQUARE) {
+						pnlBluePlayer.remove(bluePieces[movedPiece]);
+						pnlBluePlayer.repaint();
+						this.squares[Ludo.BLUE_INITIAL_SQUARE]
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/Pieces/blue_1.png")));
+					} else {
+						// The player moves a piece
+						int fromSquare = game.getBoard()[playerTurn][movedPiece]
+								- squares;
+						moveAnimation(fromSquare, movedPiece, playerTurn);
+					}
+					break;
+				case Ludo.GREEN:
+					if (pieceSquare == Ludo.GREEN_INITIAL_SQUARE) {
+						pnlGreenPlayer.remove(greenPieces[movedPiece]);
+						pnlGreenPlayer.repaint();
+						this.squares[Ludo.GREEN_INITIAL_SQUARE]
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/Pieces/green_1.png")));
+					} else {
+						// The player moves a piece
+						int fromSquare = game.getBoard()[playerTurn][movedPiece]
+								- squares;
+						moveAnimation(fromSquare, movedPiece, playerTurn);
+					}
+					break;
+				}
+
+			} else {
+				// The player moves a piece
+				int fromSquare = game.getBoard()[playerTurn][movedPiece]
+						- squares;
+				moveAnimation(fromSquare, movedPiece, playerTurn);
+			}
+
+			playerTurn = game.getTurn();
+		}
+
+		playerTurn = game.getTurn();
+
+		// Set label state
+		if (playerTurn == myPlayer) {
+			lblState.setText("Es tu turno, lanza el dado");
+			enableDice(myPlayer);
+		} else {
+			switch (playerTurn) {
+			case Ludo.YELLOW:
+				lblState.setText("Es el turno de "
+						+ lblYellowPlayerName.getText());
+				break;
+			case Ludo.RED:
+				lblState.setText("Es el turno de " + lblRedPlayerName.getText());
+				break;
+			case Ludo.BLUE:
+				lblState.setText("Es el turno de "
+						+ lblBluePlayerName.getText());
+				break;
+			case Ludo.GREEN:
+				lblState.setText("Es el turno de "
+						+ lblGreenPlayerName.getText());
+				break;
+
+			}
+		}
+
+	}
+
+	private class ThrowDiceThread extends Thread {
+		private int player;
+
+		public ThrowDiceThread(int player) {
+			super();
+			this.player = player;
+		}
+
+		public void run() {
+			throwing = true;
+			while (throwing) {
+				int playerDice = Ludo.throwDice();
+				switch (player) {
+				case Ludo.YELLOW:
+					lblYellowDice.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Dice/" + playerDice
+									+ "_40x40.png")));
+					break;
+				case Ludo.RED:
+					lblRedDice.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Dice/" + playerDice
+									+ "_40x40.png")));
+					break;
+				case Ludo.BLUE:
+					lblBlueDice.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Dice/" + playerDice
+									+ "_40x40.png")));
+					break;
+				case Ludo.GREEN:
+					lblGreenDice.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Dice/" + playerDice
+									+ "_40x40.png")));
+					break;
+				}
+
+				try {
+					sleep(Constants.LudoDiceTime);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }

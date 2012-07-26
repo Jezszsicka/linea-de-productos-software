@@ -149,6 +149,7 @@ module ProductLine {
     	void kickedFromGame(string game);
     	void gameStarted(string game);
     	void gameUpdated(string game,int nextTurn,bidimensionalIntArray board);
+    	void diceGameUpdated(string game, int nextTurn,bidimensionalIntArray board,int dice, int movedPiece);
     	void gameFinished(string game);
     };
     

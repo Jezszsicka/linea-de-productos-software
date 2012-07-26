@@ -164,6 +164,14 @@ public class GamesManager {
 		session.getProxy().updateGame(gameName, player,nextTurn, game.getBoard());		
 	}
 	
+	public void updateDiceGame(String gameName, int dice, int piece) {
+		Game game = searchGame(gameName);
+		int nextTurn = game.getTurn();
+		String player = session.getUser().getUsername();
+		session.getProxy().updateDiceGame(gameName, player,nextTurn, game.getBoard(),dice,piece);
+	}
+	
+	
 	/**Notification: The board of a game has been updated
 	 * @param gameName Name of the game
 	 * @param board The updated board of the game**/
@@ -172,6 +180,13 @@ public class GamesManager {
 		game.setBoard(board);
 	}
 
+	public void gameUpdated(String gameName, int turn, int[][] board) {
+		Game game = searchGame(gameName);
+		game.setBoard(board);
+		game.setTurn(turn);
+	}
+	
+	
 	/**A game has finished
 	 * @param game Name of the game
 	 * @param winnerPlayer Name of the winner player
@@ -193,5 +208,9 @@ public class GamesManager {
 	public Game searchGame(String game) {
 		return games.get(game);
 	}
+
+
+
+
 
 }

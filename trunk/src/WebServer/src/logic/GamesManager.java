@@ -372,11 +372,12 @@ public class GamesManager {
 		//TODO Avisar a todos los jugadores con una nueva llamada
 		Game game = searchGame(gameName);
 		game.setBoard(board);
-		String turn = game.getSlot(nextTurn).getPlayer();
-		Session turnSession = UsersManager.getInstance()
-				.searchSession(turn);
-		turnSession.getCallback().gameUpdated(gameName, nextTurn, board);
-		
+		for(Slot slot : game.getSlots()){
+			if(!slot.getPlayer().equalsIgnoreCase(player) && slot.getType()== SlotState.Human){
+				Session slotSession = UsersManager.getInstance().searchSession(slot.getPlayer());
+				slotSession.getCallback().diceGameUpdated(gameName,nextTurn,board,dice,movedPiece);
+			}
+		}
 	}
 	
 	public void finishGame(String gameName, String winnerPlayer) {
