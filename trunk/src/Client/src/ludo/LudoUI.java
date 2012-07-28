@@ -204,6 +204,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel[] bluePieces;
 	private JLabel[] greenPieces;
 	private boolean[] enabledSquares;
+	private int[][] boardUI;
+
 	private boolean throwing;
 	private ThrowDiceThread throwDice;
 
@@ -216,6 +218,7 @@ public class LudoUI extends JFrame implements GameUI {
 		redPieces = new JLabel[4];
 		bluePieces = new JLabel[4];
 		greenPieces = new JLabel[4];
+		boardUI = new int[69][2];
 		destinatary = "";
 		initGUI();
 		initPlayers();
@@ -341,6 +344,22 @@ public class LudoUI extends JFrame implements GameUI {
 		greenPieces[2] = lblGreenPiece3;
 		greenPieces[3] = lblGreenPiece4;
 
+	}
+
+	private void addPieceUI(int player, int square) {
+		if (boardUI[square][0] == Ludo.EMPTY) {
+			boardUI[square][0] = player;
+		} else {
+			boardUI[square][1] = player;
+		}
+	}
+
+	private void removePieceUI(int player, int square) {
+		if (boardUI[square][0] == player) {
+			boardUI[square][0] = Ludo.EMPTY;
+		} else {
+			boardUI[square][1] = Ludo.EMPTY;
+		}
 	}
 
 	private void initGUI() {
@@ -521,6 +540,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_16() {
 		if (lbl_16 == null) {
 			lbl_16 = new JLabel("16");
+			lbl_16.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_16.setVerticalTextPosition(SwingConstants.BOTTOM);
 			lbl_16.addMouseListener(new MouseAdapter() {
 				@Override
@@ -586,6 +606,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_14() {
 		if (lbl_14 == null) {
 			lbl_14 = new JLabel("14");
+			lbl_14.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_14.setVerticalTextPosition(SwingConstants.BOTTOM);
 			lbl_14.addMouseListener(new MouseAdapter() {
 				@Override
@@ -618,6 +639,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_13() {
 		if (lbl_13 == null) {
 			lbl_13 = new JLabel("13");
+			lbl_13.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_13.setVerticalTextPosition(SwingConstants.BOTTOM);
 			lbl_13.addMouseListener(new MouseAdapter() {
 				@Override
@@ -650,6 +672,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_12() {
 		if (lbl_12 == null) {
 			lbl_12 = new JLabel("12");
+			lbl_12.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_12.setVerticalTextPosition(SwingConstants.BOTTOM);
 			lbl_12.addMouseListener(new MouseAdapter() {
 				@Override
@@ -682,6 +705,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_11() {
 		if (lbl_11 == null) {
 			lbl_11 = new JLabel("11");
+			lbl_11.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_11.setVerticalTextPosition(SwingConstants.BOTTOM);
 			lbl_11.addMouseListener(new MouseAdapter() {
 				@Override
@@ -748,6 +772,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_10() {
 		if (lbl_10 == null) {
 			lbl_10 = new JLabel("10");
+			lbl_10.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_10.setVerticalAlignment(SwingConstants.BOTTOM);
 			lbl_10.setVerticalTextPosition(SwingConstants.BOTTOM);
 			lbl_10.addMouseListener(new MouseAdapter() {
@@ -928,6 +953,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_18() {
 		if (lbl_18 == null) {
 			lbl_18 = new JLabel("18");
+			lbl_18.setVerticalTextPosition(SwingConstants.TOP);
+			lbl_18.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_18.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -959,6 +986,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_19() {
 		if (lbl_19 == null) {
 			lbl_19 = new JLabel("19");
+			lbl_19.setVerticalTextPosition(SwingConstants.TOP);
+			lbl_19.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_19.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -990,6 +1019,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_20() {
 		if (lbl_20 == null) {
 			lbl_20 = new JLabel("20");
+			lbl_20.setVerticalTextPosition(SwingConstants.TOP);
+			lbl_20.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_20.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1021,6 +1052,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_21() {
 		if (lbl_21 == null) {
 			lbl_21 = new JLabel("21");
+			lbl_21.setVerticalTextPosition(SwingConstants.TOP);
+			lbl_21.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_21.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1052,6 +1085,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_22() {
 		if (lbl_22 == null) {
 			lbl_22 = new JLabel("22");
+			lbl_22.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_22.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1083,6 +1117,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_23() {
 		if (lbl_23 == null) {
 			lbl_23 = new JLabel("23");
+			lbl_23.setVerticalTextPosition(SwingConstants.TOP);
+			lbl_23.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_23.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1114,6 +1150,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_24() {
 		if (lbl_24 == null) {
 			lbl_24 = new JLabel("24");
+			lbl_24.setVerticalTextPosition(SwingConstants.TOP);
+			lbl_24.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_24.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1206,6 +1244,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_58() {
 		if (lbl_58 == null) {
 			lbl_58 = new JLabel("58");
+			lbl_58.setVerticalTextPosition(SwingConstants.BOTTOM);
+			lbl_58.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_58.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1237,6 +1277,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_57() {
 		if (lbl_57 == null) {
 			lbl_57 = new JLabel("57");
+			lbl_57.setVerticalTextPosition(SwingConstants.BOTTOM);
+			lbl_57.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_57.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1268,6 +1310,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_56() {
 		if (lbl_56 == null) {
 			lbl_56 = new JLabel("56");
+			lbl_56.setVerticalTextPosition(SwingConstants.BOTTOM);
+			lbl_56.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_56.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1299,6 +1343,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_55() {
 		if (lbl_55 == null) {
 			lbl_55 = new JLabel("55");
+			lbl_55.setVerticalTextPosition(SwingConstants.BOTTOM);
+			lbl_55.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_55.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1330,6 +1376,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_54() {
 		if (lbl_54 == null) {
 			lbl_54 = new JLabel("54");
+			lbl_54.setVerticalTextPosition(SwingConstants.BOTTOM);
+			lbl_54.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_54.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1361,6 +1409,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_53() {
 		if (lbl_53 == null) {
 			lbl_53 = new JLabel("53");
+			lbl_53.setVerticalTextPosition(SwingConstants.BOTTOM);
+			lbl_53.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_53.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1392,6 +1442,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_52() {
 		if (lbl_52 == null) {
 			lbl_52 = new JLabel("52");
+			lbl_52.setVerticalTextPosition(SwingConstants.BOTTOM);
+			lbl_52.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_52.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1571,6 +1623,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_44() {
 		if (lbl_44 == null) {
 			lbl_44 = new JLabel("44");
+			lbl_44.setVerticalTextPosition(SwingConstants.TOP);
+			lbl_44.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_44.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1602,6 +1656,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_45() {
 		if (lbl_45 == null) {
 			lbl_45 = new JLabel("45");
+			lbl_45.setVerticalTextPosition(SwingConstants.TOP);
+			lbl_45.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_45.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1633,6 +1689,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_46() {
 		if (lbl_46 == null) {
 			lbl_46 = new JLabel("46");
+			lbl_46.setVerticalTextPosition(SwingConstants.TOP);
+			lbl_46.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_46.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1664,6 +1722,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_47() {
 		if (lbl_47 == null) {
 			lbl_47 = new JLabel("47");
+			lbl_47.setVerticalTextPosition(SwingConstants.TOP);
+			lbl_47.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_47.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1695,6 +1755,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_48() {
 		if (lbl_48 == null) {
 			lbl_48 = new JLabel("48");
+			lbl_48.setVerticalTextPosition(SwingConstants.TOP);
+			lbl_48.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_48.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1726,6 +1788,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_49() {
 		if (lbl_49 == null) {
 			lbl_49 = new JLabel("49");
+			lbl_49.setVerticalTextPosition(SwingConstants.TOP);
+			lbl_49.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_49.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1757,6 +1821,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_50() {
 		if (lbl_50 == null) {
 			lbl_50 = new JLabel("50");
+			lbl_50.setVerticalTextPosition(SwingConstants.TOP);
+			lbl_50.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_50.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1882,6 +1948,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_35() {
 		if (lbl_35 == null) {
 			lbl_35 = new JLabel("35");
+			lbl_35.setHorizontalTextPosition(SwingConstants.LEFT);
 			lbl_35.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1901,7 +1968,6 @@ public class LudoUI extends JFrame implements GameUI {
 			lbl_35.setOpaque(true);
 			lbl_35.setBackground(new Color(255, 255, 255));
 			lbl_35.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lbl_35.setHorizontalAlignment(SwingConstants.LEFT);
 			lbl_35.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lbl_35.setBounds(120, 210, 60, 30);
 			squares[35] = lbl_35;
@@ -1955,6 +2021,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_36() {
 		if (lbl_36 == null) {
 			lbl_36 = new JLabel("36");
+			lbl_36.setHorizontalTextPosition(SwingConstants.LEFT);
 			lbl_36.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -1974,7 +2041,6 @@ public class LudoUI extends JFrame implements GameUI {
 			lbl_36.setOpaque(true);
 			lbl_36.setBackground(new Color(255, 255, 255));
 			lbl_36.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lbl_36.setHorizontalAlignment(SwingConstants.LEFT);
 			lbl_36.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lbl_36.setBounds(120, 180, 60, 30);
 			squares[36] = lbl_36;
@@ -2028,6 +2094,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_38() {
 		if (lbl_38 == null) {
 			lbl_38 = new JLabel("38");
+			lbl_38.setHorizontalTextPosition(SwingConstants.LEFT);
 			lbl_38.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -2047,7 +2114,6 @@ public class LudoUI extends JFrame implements GameUI {
 			lbl_38.setOpaque(true);
 			lbl_38.setBackground(new Color(255, 255, 255));
 			lbl_38.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lbl_38.setHorizontalAlignment(SwingConstants.LEFT);
 			lbl_38.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lbl_38.setBounds(120, 120, 60, 30);
 			squares[38] = lbl_38;
@@ -2058,6 +2124,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_37() {
 		if (lbl_37 == null) {
 			lbl_37 = new JLabel("37");
+			lbl_37.setHorizontalTextPosition(SwingConstants.LEFT);
 			lbl_37.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -2077,7 +2144,6 @@ public class LudoUI extends JFrame implements GameUI {
 			lbl_37.setOpaque(true);
 			lbl_37.setBackground(new Color(255, 255, 255));
 			lbl_37.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lbl_37.setHorizontalAlignment(SwingConstants.LEFT);
 			lbl_37.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lbl_37.setBounds(120, 150, 60, 30);
 			squares[37] = lbl_37;
@@ -2327,6 +2393,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_41() {
 		if (lbl_41 == null) {
 			lbl_41 = new JLabel("41");
+			lbl_41.setHorizontalTextPosition(SwingConstants.LEFT);
 			lbl_41.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -2346,7 +2413,6 @@ public class LudoUI extends JFrame implements GameUI {
 			lbl_41.setBackground(new Color(255, 255, 255));
 			lbl_41.setOpaque(true);
 			lbl_41.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lbl_41.setHorizontalAlignment(SwingConstants.LEFT);
 			lbl_41.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lbl_41.setBounds(120, 30, 60, 30);
 			squares[41] = lbl_41;
@@ -2357,6 +2423,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_40() {
 		if (lbl_40 == null) {
 			lbl_40 = new JLabel("40");
+			lbl_40.setHorizontalTextPosition(SwingConstants.LEFT);
 			lbl_40.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -2376,7 +2443,6 @@ public class LudoUI extends JFrame implements GameUI {
 			lbl_40.setBackground(new Color(255, 255, 255));
 			lbl_40.setOpaque(true);
 			lbl_40.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lbl_40.setHorizontalAlignment(SwingConstants.LEFT);
 			lbl_40.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lbl_40.setBounds(120, 60, 60, 30);
 			squares[40] = lbl_40;
@@ -2560,6 +2626,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_61() {
 		if (lbl_61 == null) {
 			lbl_61 = new JLabel("61");
+			lbl_61.setHorizontalTextPosition(SwingConstants.LEFT);
 			lbl_61.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -2579,7 +2646,6 @@ public class LudoUI extends JFrame implements GameUI {
 			lbl_61.setBackground(new Color(255, 255, 255));
 			lbl_61.setOpaque(true);
 			lbl_61.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lbl_61.setHorizontalAlignment(SwingConstants.LEFT);
 			lbl_61.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lbl_61.setBounds(120, 180, 60, 30);
 			squares[61] = lbl_61;
@@ -2632,6 +2698,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_63() {
 		if (lbl_63 == null) {
 			lbl_63 = new JLabel("63");
+			lbl_63.setHorizontalTextPosition(SwingConstants.LEFT);
 			lbl_63.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -2651,7 +2718,6 @@ public class LudoUI extends JFrame implements GameUI {
 			lbl_63.setFont(new Font("Tahoma", Font.BOLD, 11));
 			lbl_63.setOpaque(true);
 			lbl_63.setBackground(new Color(192, 192, 192));
-			lbl_63.setHorizontalAlignment(SwingConstants.LEFT);
 			lbl_63.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lbl_63.setBounds(120, 120, 60, 30);
 			squares[63] = lbl_63;
@@ -2662,6 +2728,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_62() {
 		if (lbl_62 == null) {
 			lbl_62 = new JLabel("62");
+			lbl_62.setHorizontalTextPosition(SwingConstants.LEFT);
 			lbl_62.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -2681,7 +2748,6 @@ public class LudoUI extends JFrame implements GameUI {
 			lbl_62.setBackground(new Color(255, 255, 255));
 			lbl_62.setOpaque(true);
 			lbl_62.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lbl_62.setHorizontalAlignment(SwingConstants.LEFT);
 			lbl_62.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lbl_62.setBounds(120, 150, 60, 30);
 			squares[62] = lbl_62;
@@ -2920,6 +2986,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_67() {
 		if (lbl_67 == null) {
 			lbl_67 = new JLabel("67");
+			lbl_67.setHorizontalTextPosition(SwingConstants.LEFT);
 			lbl_67.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -2939,7 +3006,6 @@ public class LudoUI extends JFrame implements GameUI {
 			lbl_67.setBackground(new Color(255, 255, 255));
 			lbl_67.setOpaque(true);
 			lbl_67.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lbl_67.setHorizontalAlignment(SwingConstants.LEFT);
 			lbl_67.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lbl_67.setBounds(120, 0, 60, 30);
 			squares[67] = lbl_67;
@@ -2950,6 +3016,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_66() {
 		if (lbl_66 == null) {
 			lbl_66 = new JLabel("66");
+			lbl_66.setHorizontalTextPosition(SwingConstants.LEFT);
 			lbl_66.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -2969,7 +3036,6 @@ public class LudoUI extends JFrame implements GameUI {
 			lbl_66.setBackground(new Color(255, 255, 255));
 			lbl_66.setOpaque(true);
 			lbl_66.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lbl_66.setHorizontalAlignment(SwingConstants.LEFT);
 			lbl_66.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lbl_66.setBounds(120, 30, 60, 30);
 			squares[66] = lbl_66;
@@ -2980,6 +3046,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_65() {
 		if (lbl_65 == null) {
 			lbl_65 = new JLabel("65");
+			lbl_65.setHorizontalTextPosition(SwingConstants.LEFT);
 			lbl_65.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -2999,7 +3066,6 @@ public class LudoUI extends JFrame implements GameUI {
 			lbl_65.setBackground(new Color(255, 255, 255));
 			lbl_65.setOpaque(true);
 			lbl_65.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lbl_65.setHorizontalAlignment(SwingConstants.LEFT);
 			lbl_65.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lbl_65.setBounds(120, 60, 60, 30);
 			squares[65] = lbl_65;
@@ -3010,6 +3076,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_64() {
 		if (lbl_64 == null) {
 			lbl_64 = new JLabel("64");
+			lbl_64.setHorizontalTextPosition(SwingConstants.LEFT);
 			lbl_64.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -3029,7 +3096,6 @@ public class LudoUI extends JFrame implements GameUI {
 			lbl_64.setBackground(new Color(255, 255, 255));
 			lbl_64.setOpaque(true);
 			lbl_64.setFont(new Font("Tahoma", Font.BOLD, 11));
-			lbl_64.setHorizontalAlignment(SwingConstants.LEFT);
 			lbl_64.setBorder(new LineBorder(new Color(0, 0, 0)));
 			lbl_64.setBounds(120, 90, 60, 30);
 			squares[64] = lbl_64;
@@ -4714,17 +4780,17 @@ public class LudoUI extends JFrame implements GameUI {
 					try {
 						sleep(Constants.LudoDiceTime);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 
 				// Take out a piece
 				if (dice == 5) {
-					int piece = Ludo.canBringPieceToStartingSquare(
-							game.getBoard(), myPlayer);
-					if (piece != -1) {
-						Ludo.takeOutPiece(game.getBoard(), piece, playerTurn);
+
+					if (Ludo.canBringPieceToStartingSquare(game.getBoard(),
+							myPlayer)) {
+						int piece = Ludo.takeOutPiece(game.getBoard(),
+								playerTurn);
 						switch (playerTurn) {
 						case Ludo.YELLOW:
 							squares[Ludo.YELLOW_INITIAL_SQUARE]
@@ -4934,7 +5000,6 @@ public class LudoUI extends JFrame implements GameUI {
 		try {
 			throwDice.join();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -5058,8 +5123,9 @@ public class LudoUI extends JFrame implements GameUI {
 				lblState.setText("Es el turno de "
 						+ lblGreenPlayerName.getText());
 				break;
-
 			}
+
+			diceAnimation(playerTurn);
 		}
 
 	}
@@ -5102,7 +5168,6 @@ public class LudoUI extends JFrame implements GameUI {
 				try {
 					sleep(Constants.LudoDiceTime);
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}

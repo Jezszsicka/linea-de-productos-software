@@ -2,12 +2,12 @@ package ludo;
 
 public class Ludo {
 
+	public static final int EMPTY = -1;
 	public static final int YELLOW = 0;
 	public static final int RED = 1;
 	public static final int BLUE = 2;
 	public static final int GREEN = 3;
-	
-	
+
 	public static final int HOUSE = 0;
 	public static final int YELLOW_INITIAL_SQUARE = 5;
 	public static final int RED_INITIAL_SQUARE = 39;
@@ -31,20 +31,19 @@ public class Ludo {
 		return (int) (Math.random() * 6 + 1);
 	}
 
-	public static int pieceInSquare(int[][] board,int square, int player){
+	public static int pieceInSquare(int[][] board, int square, int player) {
 		int piece = 0;
-		
-		for(int i = 0 ;i< 4;i ++){
-			if(board[player][i] == square){
+
+		for (int i = 0; i < 4; i++) {
+			if (board[player][i] == square) {
 				piece = i;
 				break;
 			}
 		}
-		
+
 		return piece;
 	}
-	
-	
+
 	public static void move(int piece, int squares, int[][] board, int player) {
 		int square;
 		switch (player) {
@@ -57,12 +56,12 @@ public class Ludo {
 				else
 					// AUN FALTA PARA LLEGAR o llegmaos justos
 					board[YELLOW][piece] += squares;
-			}else{
+			} else {
 				board[YELLOW][piece] += squares;
 			}
-				
+
 			break;
-			
+
 		case RED:
 			square = board[RED][piece];
 			if (square > RED_LAST_SQUARE) {
@@ -72,10 +71,10 @@ public class Ludo {
 				else
 					// AUN FALTA PARA LLEGAR o llegmaos justos
 					board[RED][piece] += squares;
-			}else{
+			} else {
 				board[RED][piece] += squares;
 			}
-			
+
 			break;
 		case BLUE:
 			square = board[BLUE][piece];
@@ -86,10 +85,10 @@ public class Ludo {
 				else
 					// AUN FALTA PARA LLEGAR o llegmaos justos
 					board[BLUE][piece] += squares;
-			}else{
+			} else {
 				board[BLUE][piece] += squares;
 			}
-			
+
 			break;
 		case GREEN:
 			square = board[GREEN][piece];
@@ -100,73 +99,114 @@ public class Ludo {
 				else
 					// AUN FALTA PARA LLEGAR o llegmaos justos
 					board[GREEN][piece] += squares;
-			}else{
+			} else {
 				board[GREEN][piece] += squares;
 			}
 			break;
 		}
 	}
-	
-	public static boolean isWinner(int [][]board, int player){
+
+	public static boolean isWinner(int[][] board, int player) {
 		boolean winner = false;
-		
-		switch(player){
+
+		switch (player) {
 		case YELLOW:
-			winner = board[YELLOW][0] == FINAL_SQUARE && board[YELLOW][1] == FINAL_SQUARE && board[YELLOW][2] == FINAL_SQUARE && board[YELLOW][3] == FINAL_SQUARE;
+			winner = board[YELLOW][0] == FINAL_SQUARE
+					&& board[YELLOW][1] == FINAL_SQUARE
+					&& board[YELLOW][2] == FINAL_SQUARE
+					&& board[YELLOW][3] == FINAL_SQUARE;
 			break;
 		case RED:
-			winner = board[RED][0] == FINAL_SQUARE && board[RED][1] == FINAL_SQUARE && board[RED][2] == FINAL_SQUARE && board[RED][3] == FINAL_SQUARE;
+			winner = board[RED][0] == FINAL_SQUARE
+					&& board[RED][1] == FINAL_SQUARE
+					&& board[RED][2] == FINAL_SQUARE
+					&& board[RED][3] == FINAL_SQUARE;
 			break;
 		case BLUE:
-			winner = board[BLUE][0] == FINAL_SQUARE && board[BLUE][1] == FINAL_SQUARE && board[BLUE][2] == FINAL_SQUARE && board[BLUE][3] == FINAL_SQUARE;
+			winner = board[BLUE][0] == FINAL_SQUARE
+					&& board[BLUE][1] == FINAL_SQUARE
+					&& board[BLUE][2] == FINAL_SQUARE
+					&& board[BLUE][3] == FINAL_SQUARE;
 			break;
 		case GREEN:
-			winner = board[GREEN][0] == FINAL_SQUARE && board[GREEN][1] == FINAL_SQUARE && board[GREEN][2] == FINAL_SQUARE && board[GREEN][3] == FINAL_SQUARE;
+			winner = board[GREEN][0] == FINAL_SQUARE
+					&& board[GREEN][1] == FINAL_SQUARE
+					&& board[GREEN][2] == FINAL_SQUARE
+					&& board[GREEN][3] == FINAL_SQUARE;
 			break;
 		}
-		
+
 		return winner;
 	}
 
-	public static int canBringPieceToStartingSquare(int[][] board,
-			int player) {
-		int piece = -1;
-				
-		for(int i=0 ; i<4; i++){
-			if(board[player][i] == HOUSE){
+	public static boolean canBringPieceToStartingSquare(int[][] board, int player) {
+		// TODO tener el cuenta el caso de que ya haya dos fichas en la casilla
+		// de salida
+
+		int initialPieces = 0;
+
+		switch (player) {
+		case YELLOW:
+			for (int piece = 0; piece < 4; piece++) {
+				if (board[player][piece] == YELLOW_INITIAL_SQUARE)
+					initialPieces++;
+			}
+			break;
+		case RED:
+			for (int piece = 0; piece < 4; piece++) {
+				if (board[player][piece] == RED_INITIAL_SQUARE)
+					initialPieces++;
+			}
+			break;
+		case BLUE:
+			for (int piece = 0; piece < 4; piece++) {
+				if (board[player][piece] == BLUE_INITIAL_SQUARE)
+					initialPieces++;
+			}
+			break;
+		case GREEN:
+			for (int piece = 0; piece < 4; piece++) {
+				if (board[player][piece] == GREEN_INITIAL_SQUARE)
+					initialPieces++;
+			}
+			break;
+		}
+
+
+		if (initialPieces < 2) {
+			for (int i = 0; i < 4; i++) {
+				if (board[player][i] == HOUSE) {
+					return true;
+				}
+
+			}
+		}
+
+		return false;
+	}
+
+	public static int takeOutPiece(int[][] board, int player) {
+		int piece = 0;
+		
+		for (int i = 0; i < 4; i++) {
+			if (board[player][i] == HOUSE) {
 				piece = i;
 				break;
 			}
-				
 		}
 		
 		return piece;
-	}
-	
-	public static void takeOutPiece(int [][] board, int piece, int player){
-		switch(player){
-		case YELLOW:
-			board[YELLOW][piece] = YELLOW_INITIAL_SQUARE;
-			break;
-		case RED:
-			board[RED][piece] = RED_INITIAL_SQUARE;
-			break;
-		case BLUE:
-			board[BLUE][piece] = BLUE_INITIAL_SQUARE;
-			break;
-		case GREEN:
-			board[GREEN][piece] = GREEN_INITIAL_SQUARE;
-			break;
-		}
+
+		
+		
 	}
 
 	public static boolean isPieceOut(int[][] board, int player) {
-		for(int i = 0; i<4; i++)
-			if(board[player][i] != HOUSE )
+		for (int i = 0; i < 4; i++)
+			if (board[player][i] != HOUSE)
 				return true;
-		
+
 		return false;
 	}
-	
-	
+
 }
