@@ -59,13 +59,13 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel lbl_10;
 	private JLabel lbl_9;
 	private JLabel lbl_17;
-	private JLabel label_4;
-	private JLabel label_5;
-	private JLabel label_7;
-	private JLabel label_8;
-	private JLabel label_10;
-	private JLabel label_11;
-	private JLabel label_13;
+	private JLabel lbl_85;
+	private JLabel lbl_86;
+	private JLabel lbl_87;
+	private JLabel lbl_88;
+	private JLabel lbl_89;
+	private JLabel lbl_90;
+	private JLabel lbl_91;
 	private JLabel lbl_18;
 	private JLabel lbl_19;
 	private JLabel lbl_20;
@@ -82,13 +82,13 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel lbl_54;
 	private JLabel lbl_53;
 	private JLabel lbl_52;
-	private JLabel label_31;
-	private JLabel label_32;
-	private JLabel label_33;
-	private JLabel label_34;
-	private JLabel label_35;
-	private JLabel label_36;
-	private JLabel label_37;
+	private JLabel lbl_99;
+	private JLabel lbl_98;
+	private JLabel lbl_97;
+	private JLabel lbl_96;
+	private JLabel lbl_95;
+	private JLabel lbl_94;
+	private JLabel lbl_93;
 	private JLabel lbl_51;
 	private JLabel lbl_43;
 	private JLabel lbl_44;
@@ -103,47 +103,47 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel lbl_34;
 	private JLabel lbl_35;
 	private JLabel lbl_32;
-	private JLabel label_50;
+	private JLabel lbl_77;
 	private JLabel lbl_36;
 	private JLabel lbl_30;
-	private JLabel label_53;
+	private JLabel lbl_79;
 	private JLabel lbl_38;
 	private JLabel lbl_37;
-	private JLabel label_56;
+	private JLabel lbl_78;
 	private JLabel lbl_31;
 	private JLabel lbl_25;
 	private JLabel lbl_26;
 	private JLabel lbl_27;
 	private JLabel lbl_28;
 	private JLabel lbl_29;
-	private JLabel label_62;
-	private JLabel label_63;
-	private JLabel label_64;
-	private JLabel label_65;
+	private JLabel lbl_80;
+	private JLabel lbl_81;
+	private JLabel lbl_82;
+	private JLabel lbl_83;
 	private JLabel lbl_42;
 	private JLabel lbl_41;
 	private JLabel lbl_40;
 	private JLabel lbl_39;
 	private JPanel pnlYellowSide;
 	private JLabel lbl_8;
-	private JLabel label_71;
+	private JLabel lbl_75;
 	private JLabel lbl_60;
 	private JLabel lbl_7;
-	private JLabel label_74;
+	private JLabel lbl_74;
 	private JLabel lbl_61;
 	private JLabel lbl_5;
-	private JLabel label_77;
+	private JLabel lbl_72;
 	private JLabel lbl_63;
 	private JLabel lbl_62;
-	private JLabel label_80;
+	private JLabel lbl_73;
 	private JLabel lbl_6;
 	private JLabel lbl_1;
 	private JLabel lbl_2;
 	private JLabel lbl_3;
 	private JLabel lbl_4;
-	private JLabel label_86;
-	private JLabel label_87;
-	private JLabel label_88;
+	private JLabel lbl_71;
+	private JLabel lbl_70;
+	private JLabel lbl_69;
 	private JLabel lbl_68;
 	private JLabel lbl_67;
 	private JLabel lbl_66;
@@ -198,13 +198,13 @@ public class LudoUI extends JFrame implements GameUI {
 	private int playerTurn;
 	private int myPlayer;
 	private int dice;
+	private int sixes;
 	private JLabel[] squares;
 	private JLabel[] yellowPieces;
 	private JLabel[] redPieces;
 	private JLabel[] bluePieces;
 	private JLabel[] greenPieces;
 	private boolean[] enabledSquares;
-	private int[][] boardUI;
 
 	private boolean throwing;
 	private ThrowDiceThread throwDice;
@@ -212,13 +212,13 @@ public class LudoUI extends JFrame implements GameUI {
 	public LudoUI(String username, Game game) {
 		this.username = username;
 		this.game = game;
-		squares = new JLabel[69];
-		enabledSquares = new boolean[69];
+		squares = new JLabel[101];
+		enabledSquares = new boolean[101];
 		yellowPieces = new JLabel[4];
 		redPieces = new JLabel[4];
 		bluePieces = new JLabel[4];
 		greenPieces = new JLabel[4];
-		boardUI = new int[69][2];
+		sixes = 0;
 		destinatary = "";
 		initGUI();
 		initPlayers();
@@ -346,22 +346,6 @@ public class LudoUI extends JFrame implements GameUI {
 
 	}
 
-	private void addPieceUI(int player, int square) {
-		if (boardUI[square][0] == Ludo.EMPTY) {
-			boardUI[square][0] = player;
-		} else {
-			boardUI[square][1] = player;
-		}
-	}
-
-	private void removePieceUI(int player, int square) {
-		if (boardUI[square][0] == player) {
-			boardUI[square][0] = Ludo.EMPTY;
-		} else {
-			boardUI[square][1] = Ludo.EMPTY;
-		}
-	}
-
 	private void initGUI() {
 		setSize(new Dimension(647, 850));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -485,6 +469,7 @@ public class LudoUI extends JFrame implements GameUI {
 					.getResource("/images/Ludo/blue_final_square.png")));
 			lblEndBlue.setBounds(0, 0, 60, 120);
 			lblEndBlue.setBackground(new Color(0, 0, 255));
+			squares[92] = lblEndBlue;
 		}
 		return lblEndBlue;
 	}
@@ -496,6 +481,7 @@ public class LudoUI extends JFrame implements GameUI {
 					.getResource("/images/Ludo/yellow_final_square.png")));
 			lblEndYellow.setBounds(0, 0, 120, 60);
 			lblEndYellow.setBackground(new Color(255, 255, 255));
+			squares[76] = lblEndYellow;
 		}
 		return lblEndYellow;
 	}
@@ -507,6 +493,7 @@ public class LudoUI extends JFrame implements GameUI {
 					.getResource("/images/Ludo/green_final_square.png")));
 			lblEndGreen.setBounds(60, 0, 60, 120);
 			lblEndGreen.setBackground(new Color(50, 205, 50));
+			squares[100] = lblEndGreen;
 		}
 		return lblEndGreen;
 	}
@@ -518,6 +505,7 @@ public class LudoUI extends JFrame implements GameUI {
 					.getResource("/images/Ludo/red_final_square.png")));
 			lblEndRed.setBounds(0, 60, 120, 60);
 			lblEndRed.setBackground(new Color(255, 255, 255));
+			squares[84] = lblEndRed;
 		}
 		return lblEndRed;
 	}
@@ -750,13 +738,13 @@ public class LudoUI extends JFrame implements GameUI {
 			pnlBlueSide.add(getLbl_10());
 			pnlBlueSide.add(getLbl_9());
 			pnlBlueSide.add(getLbl_17());
-			pnlBlueSide.add(getLabel_4());
-			pnlBlueSide.add(getLabel_5());
-			pnlBlueSide.add(getLabel_7());
-			pnlBlueSide.add(getLabel_8());
-			pnlBlueSide.add(getLabel_10());
-			pnlBlueSide.add(getLabel_11());
-			pnlBlueSide.add(getLabel_13());
+			pnlBlueSide.add(getLbl_85());
+			pnlBlueSide.add(getLbl_86());
+			pnlBlueSide.add(getLbl_87());
+			pnlBlueSide.add(getLbl_88());
+			pnlBlueSide.add(getLbl_89());
+			pnlBlueSide.add(getLbl_90());
+			pnlBlueSide.add(getLbl_91());
 			pnlBlueSide.add(getLbl_18());
 			pnlBlueSide.add(getLbl_19());
 			pnlBlueSide.add(getLbl_20());
@@ -859,95 +847,95 @@ public class LudoUI extends JFrame implements GameUI {
 		return lbl_17;
 	}
 
-	private JLabel getLabel_4() {
-		if (label_4 == null) {
-			label_4 = new JLabel("");
-			label_4.setHorizontalAlignment(SwingConstants.CENTER);
-			label_4.setOpaque(true);
-			label_4.setBackground(new Color(0, 0, 255));
-			label_4.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_4.setBounds(30, 60, 30, 60);
-			squares[4] = lbl_4;
+	private JLabel getLbl_85() {
+		if (lbl_85 == null) {
+			lbl_85 = new JLabel("");
+			lbl_85.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_85.setOpaque(true);
+			lbl_85.setBackground(new Color(0, 0, 255));
+			lbl_85.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_85.setBounds(30, 60, 30, 60);
+			squares[85] = lbl_85;
 		}
-		return label_4;
+		return lbl_85;
 	}
 
-	private JLabel getLabel_5() {
-		if (label_5 == null) {
-			label_5 = new JLabel("");
-			label_5.setHorizontalAlignment(SwingConstants.CENTER);
-			label_5.setOpaque(true);
-			label_5.setBackground(new Color(0, 0, 255));
-			label_5.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_5.setBounds(60, 60, 30, 60);
-			squares[5] = lbl_5;
+	private JLabel getLbl_86() {
+		if (lbl_86 == null) {
+			lbl_86 = new JLabel("");
+			lbl_86.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_86.setOpaque(true);
+			lbl_86.setBackground(new Color(0, 0, 255));
+			lbl_86.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_86.setBounds(60, 60, 30, 60);
+			squares[86] = lbl_86;
 		}
-		return label_5;
+		return lbl_86;
 	}
 
-	private JLabel getLabel_7() {
-		if (label_7 == null) {
-			label_7 = new JLabel("");
-			label_7.setHorizontalAlignment(SwingConstants.CENTER);
-			label_7.setOpaque(true);
-			label_7.setBackground(new Color(0, 0, 255));
-			label_7.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_7.setBounds(90, 60, 30, 60);
-			squares[7] = lbl_7;
+	private JLabel getLbl_87() {
+		if (lbl_87 == null) {
+			lbl_87 = new JLabel("");
+			lbl_87.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_87.setOpaque(true);
+			lbl_87.setBackground(new Color(0, 0, 255));
+			lbl_87.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_87.setBounds(90, 60, 30, 60);
+			squares[87] = lbl_87;
 		}
-		return label_7;
+		return lbl_87;
 	}
 
-	private JLabel getLabel_8() {
-		if (label_8 == null) {
-			label_8 = new JLabel("");
-			label_8.setHorizontalAlignment(SwingConstants.CENTER);
-			label_8.setOpaque(true);
-			label_8.setBackground(new Color(0, 0, 255));
-			label_8.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_8.setBounds(120, 60, 30, 60);
-			squares[8] = lbl_8;
+	private JLabel getLbl_88() {
+		if (lbl_88 == null) {
+			lbl_88 = new JLabel("");
+			lbl_88.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_88.setOpaque(true);
+			lbl_88.setBackground(new Color(0, 0, 255));
+			lbl_88.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_88.setBounds(120, 60, 30, 60);
+			squares[88] = lbl_88;
 		}
-		return label_8;
+		return lbl_88;
 	}
 
-	private JLabel getLabel_10() {
-		if (label_10 == null) {
-			label_10 = new JLabel("");
-			label_10.setHorizontalAlignment(SwingConstants.CENTER);
-			label_10.setOpaque(true);
-			label_10.setBackground(new Color(0, 0, 255));
-			label_10.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_10.setBounds(150, 60, 30, 60);
-			squares[10] = lbl_10;
+	private JLabel getLbl_89() {
+		if (lbl_89 == null) {
+			lbl_89 = new JLabel("");
+			lbl_89.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_89.setOpaque(true);
+			lbl_89.setBackground(new Color(0, 0, 255));
+			lbl_89.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_89.setBounds(150, 60, 30, 60);
+			squares[89] = lbl_89;
 		}
-		return label_10;
+		return lbl_89;
 	}
 
-	private JLabel getLabel_11() {
-		if (label_11 == null) {
-			label_11 = new JLabel("");
-			label_11.setHorizontalAlignment(SwingConstants.CENTER);
-			label_11.setOpaque(true);
-			label_11.setBackground(new Color(0, 0, 255));
-			label_11.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_11.setBounds(180, 60, 30, 60);
-			squares[11] = lbl_11;
+	private JLabel getLbl_90() {
+		if (lbl_90 == null) {
+			lbl_90 = new JLabel("");
+			lbl_90.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_90.setOpaque(true);
+			lbl_90.setBackground(new Color(0, 0, 255));
+			lbl_90.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_90.setBounds(180, 60, 30, 60);
+			squares[90] = lbl_90;
 		}
-		return label_11;
+		return lbl_90;
 	}
 
-	private JLabel getLabel_13() {
-		if (label_13 == null) {
-			label_13 = new JLabel("");
-			label_13.setHorizontalAlignment(SwingConstants.CENTER);
-			label_13.setOpaque(true);
-			label_13.setBackground(new Color(0, 0, 255));
-			label_13.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_13.setBounds(210, 60, 30, 60);
-			squares[13] = lbl_13;
+	private JLabel getLbl_91() {
+		if (lbl_91 == null) {
+			lbl_91 = new JLabel("");
+			lbl_91.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_91.setOpaque(true);
+			lbl_91.setBackground(new Color(0, 0, 255));
+			lbl_91.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_91.setBounds(210, 60, 30, 60);
+			squares[91] = lbl_91;
 		}
-		return label_13;
+		return lbl_91;
 	}
 
 	private JLabel getLbl_18() {
@@ -1085,6 +1073,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_22() {
 		if (lbl_22 == null) {
 			lbl_22 = new JLabel("22");
+			lbl_22.setVerticalTextPosition(SwingConstants.TOP);
 			lbl_22.setHorizontalTextPosition(SwingConstants.CENTER);
 			lbl_22.addMouseListener(new MouseAdapter() {
 				@Override
@@ -1194,13 +1183,13 @@ public class LudoUI extends JFrame implements GameUI {
 			pnlGreenSide.add(getLbl_54());
 			pnlGreenSide.add(getLbl_53());
 			pnlGreenSide.add(getLbl_52());
-			pnlGreenSide.add(getLabel_31());
-			pnlGreenSide.add(getLabel_32());
-			pnlGreenSide.add(getLabel_33());
-			pnlGreenSide.add(getLabel_34());
-			pnlGreenSide.add(getLabel_35());
-			pnlGreenSide.add(getLabel_36());
-			pnlGreenSide.add(getLabel_37());
+			pnlGreenSide.add(getLbl_99());
+			pnlGreenSide.add(getLbl_98());
+			pnlGreenSide.add(getLbl_97());
+			pnlGreenSide.add(getLbl_96());
+			pnlGreenSide.add(getLbl_95());
+			pnlGreenSide.add(getLbl_94());
+			pnlGreenSide.add(getLbl_93());
 			pnlGreenSide.add(getLbl_51());
 			pnlGreenSide.add(getLbl_43());
 			pnlGreenSide.add(getLbl_44());
@@ -1472,95 +1461,95 @@ public class LudoUI extends JFrame implements GameUI {
 		return lbl_52;
 	}
 
-	private JLabel getLabel_31() {
-		if (label_31 == null) {
-			label_31 = new JLabel("");
-			label_31.setHorizontalAlignment(SwingConstants.CENTER);
-			label_31.setBackground(new Color(50, 205, 50));
-			label_31.setOpaque(true);
-			label_31.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_31.setBounds(0, 60, 30, 60);
-			squares[31] = lbl_31;
+	private JLabel getLbl_99() {
+		if (lbl_99 == null) {
+			lbl_99 = new JLabel("");
+			lbl_99.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_99.setBackground(new Color(50, 205, 50));
+			lbl_99.setOpaque(true);
+			lbl_99.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_99.setBounds(0, 60, 30, 60);
+			squares[99] = lbl_99;
 		}
-		return label_31;
+		return lbl_99;
 	}
 
-	private JLabel getLabel_32() {
-		if (label_32 == null) {
-			label_32 = new JLabel("");
-			label_32.setHorizontalAlignment(SwingConstants.CENTER);
-			label_32.setBackground(new Color(50, 205, 50));
-			label_32.setOpaque(true);
-			label_32.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_32.setBounds(30, 60, 30, 60);
-			squares[32] = lbl_32;
+	private JLabel getLbl_98() {
+		if (lbl_98 == null) {
+			lbl_98 = new JLabel("");
+			lbl_98.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_98.setBackground(new Color(50, 205, 50));
+			lbl_98.setOpaque(true);
+			lbl_98.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_98.setBounds(30, 60, 30, 60);
+			squares[98] = lbl_98;
 		}
-		return label_32;
+		return lbl_98;
 	}
 
-	private JLabel getLabel_33() {
-		if (label_33 == null) {
-			label_33 = new JLabel("");
-			label_33.setHorizontalAlignment(SwingConstants.CENTER);
-			label_33.setBackground(new Color(50, 205, 50));
-			label_33.setOpaque(true);
-			label_33.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_33.setBounds(60, 60, 30, 60);
-			squares[33] = lbl_33;
+	private JLabel getLbl_97() {
+		if (lbl_97 == null) {
+			lbl_97 = new JLabel("");
+			lbl_97.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_97.setBackground(new Color(50, 205, 50));
+			lbl_97.setOpaque(true);
+			lbl_97.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_97.setBounds(60, 60, 30, 60);
+			squares[97] = lbl_97;
 		}
-		return label_33;
+		return lbl_97;
 	}
 
-	private JLabel getLabel_34() {
-		if (label_34 == null) {
-			label_34 = new JLabel("");
-			label_34.setHorizontalAlignment(SwingConstants.CENTER);
-			label_34.setBackground(new Color(50, 205, 50));
-			label_34.setOpaque(true);
-			label_34.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_34.setBounds(90, 60, 30, 60);
-			squares[34] = lbl_34;
+	private JLabel getLbl_96() {
+		if (lbl_96 == null) {
+			lbl_96 = new JLabel("");
+			lbl_96.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_96.setBackground(new Color(50, 205, 50));
+			lbl_96.setOpaque(true);
+			lbl_96.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_96.setBounds(90, 60, 30, 60);
+			squares[96] = lbl_96;
 		}
-		return label_34;
+		return lbl_96;
 	}
 
-	private JLabel getLabel_35() {
-		if (label_35 == null) {
-			label_35 = new JLabel("");
-			label_35.setHorizontalAlignment(SwingConstants.CENTER);
-			label_35.setBackground(new Color(50, 205, 50));
-			label_35.setOpaque(true);
-			label_35.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_35.setBounds(120, 60, 30, 60);
-			squares[35] = lbl_35;
+	private JLabel getLbl_95() {
+		if (lbl_95 == null) {
+			lbl_95 = new JLabel("");
+			lbl_95.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_95.setBackground(new Color(50, 205, 50));
+			lbl_95.setOpaque(true);
+			lbl_95.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_95.setBounds(120, 60, 30, 60);
+			squares[95] = lbl_95;
 		}
-		return label_35;
+		return lbl_95;
 	}
 
-	private JLabel getLabel_36() {
-		if (label_36 == null) {
-			label_36 = new JLabel("");
-			label_36.setHorizontalAlignment(SwingConstants.CENTER);
-			label_36.setBackground(new Color(50, 205, 50));
-			label_36.setOpaque(true);
-			label_36.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_36.setBounds(150, 60, 30, 60);
-			squares[36] = lbl_36;
+	private JLabel getLbl_94() {
+		if (lbl_94 == null) {
+			lbl_94 = new JLabel("");
+			lbl_94.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_94.setBackground(new Color(50, 205, 50));
+			lbl_94.setOpaque(true);
+			lbl_94.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_94.setBounds(150, 60, 30, 60);
+			squares[94] = lbl_94;
 		}
-		return label_36;
+		return lbl_94;
 	}
 
-	private JLabel getLabel_37() {
-		if (label_37 == null) {
-			label_37 = new JLabel("");
-			label_37.setHorizontalAlignment(SwingConstants.CENTER);
-			label_37.setBackground(new Color(50, 205, 50));
-			label_37.setOpaque(true);
-			label_37.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_37.setBounds(180, 60, 30, 60);
-			squares[37] = lbl_37;
+	private JLabel getLbl_93() {
+		if (lbl_93 == null) {
+			lbl_93 = new JLabel("");
+			lbl_93.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_93.setBackground(new Color(50, 205, 50));
+			lbl_93.setOpaque(true);
+			lbl_93.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_93.setBounds(180, 60, 30, 60);
+			squares[93] = lbl_93;
 		}
-		return label_37;
+		return lbl_93;
 	}
 
 	private JLabel getLbl_51() {
@@ -1861,22 +1850,22 @@ public class LudoUI extends JFrame implements GameUI {
 			pnlRedSide.add(getLbl_34());
 			pnlRedSide.add(getLbl_35());
 			pnlRedSide.add(getLbl_32());
-			pnlRedSide.add(getLabel_50());
+			pnlRedSide.add(getLbl_77());
 			pnlRedSide.add(getLbl_36());
 			pnlRedSide.add(getLbl_30());
-			pnlRedSide.add(getLabel_53());
+			pnlRedSide.add(getLbl_79());
 			pnlRedSide.add(getLbl_38());
 			pnlRedSide.add(getLbl_37());
-			pnlRedSide.add(getLabel_56());
+			pnlRedSide.add(getLbl_78());
 			pnlRedSide.add(getLbl_31());
 			pnlRedSide.add(getLbl_26());
 			pnlRedSide.add(getLbl_27());
 			pnlRedSide.add(getLbl_28());
 			pnlRedSide.add(getLbl_29());
-			pnlRedSide.add(getLabel_62());
-			pnlRedSide.add(getLabel_63());
-			pnlRedSide.add(getLabel_64());
-			pnlRedSide.add(getLabel_65());
+			pnlRedSide.add(getLbl_80());
+			pnlRedSide.add(getLbl_81());
+			pnlRedSide.add(getLbl_82());
+			pnlRedSide.add(getLbl_83());
 			pnlRedSide.add(getLbl_42());
 			pnlRedSide.add(getLbl_41());
 			pnlRedSide.add(getLbl_40());
@@ -2005,17 +1994,17 @@ public class LudoUI extends JFrame implements GameUI {
 		return lbl_32;
 	}
 
-	private JLabel getLabel_50() {
-		if (label_50 == null) {
-			label_50 = new JLabel("");
-			label_50.setHorizontalAlignment(SwingConstants.CENTER);
-			label_50.setBackground(new Color(255, 0, 0));
-			label_50.setOpaque(true);
-			label_50.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_50.setBounds(60, 180, 60, 30);
-			squares[50] = lbl_50;
+	private JLabel getLbl_77() {
+		if (lbl_77 == null) {
+			lbl_77 = new JLabel("");
+			lbl_77.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_77.setBackground(new Color(255, 0, 0));
+			lbl_77.setOpaque(true);
+			lbl_77.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_77.setBounds(60, 180, 60, 30);
+			squares[77] = lbl_77;
 		}
-		return label_50;
+		return lbl_77;
 	}
 
 	private JLabel getLbl_36() {
@@ -2078,17 +2067,17 @@ public class LudoUI extends JFrame implements GameUI {
 		return lbl_30;
 	}
 
-	private JLabel getLabel_53() {
-		if (label_53 == null) {
-			label_53 = new JLabel("");
-			label_53.setHorizontalAlignment(SwingConstants.CENTER);
-			label_53.setBackground(new Color(255, 0, 0));
-			label_53.setOpaque(true);
-			label_53.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_53.setBounds(60, 120, 60, 30);
-			squares[53] = lbl_53;
+	private JLabel getLbl_79() {
+		if (lbl_79 == null) {
+			lbl_79 = new JLabel("");
+			lbl_79.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_79.setBackground(new Color(255, 0, 0));
+			lbl_79.setOpaque(true);
+			lbl_79.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_79.setBounds(60, 120, 60, 30);
+			squares[79] = lbl_79;
 		}
-		return label_53;
+		return lbl_79;
 	}
 
 	private JLabel getLbl_38() {
@@ -2151,17 +2140,17 @@ public class LudoUI extends JFrame implements GameUI {
 		return lbl_37;
 	}
 
-	private JLabel getLabel_56() {
-		if (label_56 == null) {
-			label_56 = new JLabel("");
-			label_56.setHorizontalAlignment(SwingConstants.CENTER);
-			label_56.setBackground(new Color(255, 0, 0));
-			label_56.setOpaque(true);
-			label_56.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_56.setBounds(60, 150, 60, 30);
-			squares[56] = lbl_56;
+	private JLabel getLbl_78() {
+		if (lbl_78 == null) {
+			lbl_78 = new JLabel("");
+			lbl_78.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_78.setBackground(new Color(255, 0, 0));
+			lbl_78.setOpaque(true);
+			lbl_78.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_78.setBounds(60, 150, 60, 30);
+			squares[78] = lbl_78;
 		}
-		return label_56;
+		return lbl_78;
 	}
 
 	private JLabel getLbl_31() {
@@ -2311,56 +2300,56 @@ public class LudoUI extends JFrame implements GameUI {
 		return lbl_29;
 	}
 
-	private JLabel getLabel_62() {
-		if (label_62 == null) {
-			label_62 = new JLabel("");
-			label_62.setHorizontalAlignment(SwingConstants.CENTER);
-			label_62.setBackground(new Color(255, 0, 0));
-			label_62.setOpaque(true);
-			label_62.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_62.setBounds(60, 90, 60, 30);
-			squares[62] = lbl_62;
+	private JLabel getLbl_80() {
+		if (lbl_80 == null) {
+			lbl_80 = new JLabel("");
+			lbl_80.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_80.setBackground(new Color(255, 0, 0));
+			lbl_80.setOpaque(true);
+			lbl_80.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_80.setBounds(60, 90, 60, 30);
+			squares[80] = lbl_80;
 		}
-		return label_62;
+		return lbl_80;
 	}
 
-	private JLabel getLabel_63() {
-		if (label_63 == null) {
-			label_63 = new JLabel("");
-			label_63.setHorizontalAlignment(SwingConstants.CENTER);
-			label_63.setBackground(new Color(255, 0, 0));
-			label_63.setOpaque(true);
-			label_63.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_63.setBounds(60, 60, 60, 30);
-			squares[63] = lbl_63;
+	private JLabel getLbl_81() {
+		if (lbl_81 == null) {
+			lbl_81 = new JLabel("");
+			lbl_81.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_81.setBackground(new Color(255, 0, 0));
+			lbl_81.setOpaque(true);
+			lbl_81.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_81.setBounds(60, 60, 60, 30);
+			squares[81] = lbl_81;
 		}
-		return label_63;
+		return lbl_81;
 	}
 
-	private JLabel getLabel_64() {
-		if (label_64 == null) {
-			label_64 = new JLabel("");
-			label_64.setHorizontalAlignment(SwingConstants.CENTER);
-			label_64.setBackground(new Color(255, 0, 0));
-			label_64.setOpaque(true);
-			label_64.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_64.setBounds(60, 30, 60, 30);
-			squares[64] = lbl_64;
+	private JLabel getLbl_82() {
+		if (lbl_82 == null) {
+			lbl_82 = new JLabel("");
+			lbl_82.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_82.setBackground(new Color(255, 0, 0));
+			lbl_82.setOpaque(true);
+			lbl_82.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_82.setBounds(60, 30, 60, 30);
+			squares[82] = lbl_82;
 		}
-		return label_64;
+		return lbl_82;
 	}
 
-	private JLabel getLabel_65() {
-		if (label_65 == null) {
-			label_65 = new JLabel("");
-			label_65.setHorizontalAlignment(SwingConstants.CENTER);
-			label_65.setBackground(new Color(255, 0, 0));
-			label_65.setOpaque(true);
-			label_65.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_65.setBounds(60, 0, 60, 30);
-			squares[65] = lbl_65;
+	private JLabel getLbl_83() {
+		if (lbl_83 == null) {
+			lbl_83 = new JLabel("");
+			lbl_83.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_83.setBackground(new Color(255, 0, 0));
+			lbl_83.setOpaque(true);
+			lbl_83.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_83.setBounds(60, 0, 60, 30);
+			squares[83] = lbl_83;
 		}
-		return label_65;
+		return lbl_83;
 	}
 
 	private JLabel getLbl_42() {
@@ -2488,24 +2477,24 @@ public class LudoUI extends JFrame implements GameUI {
 			pnlYellowSide.setLayout(null);
 			pnlYellowSide.setBounds(220, 10, 180, 240);
 			pnlYellowSide.add(getLbl_8());
-			pnlYellowSide.add(getLabel_71());
+			pnlYellowSide.add(getLbl_75());
 			pnlYellowSide.add(getLbl_60());
 			pnlYellowSide.add(getLbl_7());
-			pnlYellowSide.add(getLabel_74());
+			pnlYellowSide.add(getLbl_74());
 			pnlYellowSide.add(getLbl_61());
 			pnlYellowSide.add(getLbl_5());
-			pnlYellowSide.add(getLabel_77());
+			pnlYellowSide.add(getLbl_72());
 			pnlYellowSide.add(getLbl_63());
 			pnlYellowSide.add(getLbl_62());
-			pnlYellowSide.add(getLabel_80());
+			pnlYellowSide.add(getLbl_73());
 			pnlYellowSide.add(getLbl_6());
 			pnlYellowSide.add(getLbl_1());
 			pnlYellowSide.add(getLbl_2());
 			pnlYellowSide.add(getLbl_3());
 			pnlYellowSide.add(getLbl_4());
-			pnlYellowSide.add(getLabel_86());
-			pnlYellowSide.add(getLabel_87());
-			pnlYellowSide.add(getLabel_88());
+			pnlYellowSide.add(getLbl_71());
+			pnlYellowSide.add(getLbl_70());
+			pnlYellowSide.add(getLbl_69());
 			pnlYellowSide.add(getLbl_68());
 			pnlYellowSide.add(getLbl_67());
 			pnlYellowSide.add(getLbl_66());
@@ -2542,16 +2531,17 @@ public class LudoUI extends JFrame implements GameUI {
 		return lbl_8;
 	}
 
-	private JLabel getLabel_71() {
-		if (label_71 == null) {
-			label_71 = new JLabel("");
-			label_71.setHorizontalAlignment(SwingConstants.CENTER);
-			label_71.setBackground(new Color(255, 255, 0));
-			label_71.setOpaque(true);
-			label_71.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_71.setBounds(60, 210, 60, 30);
+	private JLabel getLbl_75() {
+		if (lbl_75 == null) {
+			lbl_75 = new JLabel("");
+			lbl_75.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_75.setBackground(new Color(255, 255, 0));
+			lbl_75.setOpaque(true);
+			lbl_75.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_75.setBounds(60, 210, 60, 30);
+			squares[75] = lbl_75;
 		}
-		return label_71;
+		return lbl_75;
 	}
 
 	private JLabel getLbl_60() {
@@ -2611,16 +2601,17 @@ public class LudoUI extends JFrame implements GameUI {
 		return lbl_7;
 	}
 
-	private JLabel getLabel_74() {
-		if (label_74 == null) {
-			label_74 = new JLabel("");
-			label_74.setHorizontalAlignment(SwingConstants.CENTER);
-			label_74.setOpaque(true);
-			label_74.setBackground(new Color(255, 255, 0));
-			label_74.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_74.setBounds(60, 180, 60, 30);
+	private JLabel getLbl_74() {
+		if (lbl_74 == null) {
+			lbl_74 = new JLabel("");
+			lbl_74.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_74.setOpaque(true);
+			lbl_74.setBackground(new Color(255, 255, 0));
+			lbl_74.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_74.setBounds(60, 180, 60, 30);
+			squares[74] = lbl_74;
 		}
-		return label_74;
+		return lbl_74;
 	}
 
 	private JLabel getLbl_61() {
@@ -2683,16 +2674,17 @@ public class LudoUI extends JFrame implements GameUI {
 		return lbl_5;
 	}
 
-	private JLabel getLabel_77() {
-		if (label_77 == null) {
-			label_77 = new JLabel("");
-			label_77.setHorizontalAlignment(SwingConstants.CENTER);
-			label_77.setOpaque(true);
-			label_77.setBackground(new Color(255, 255, 0));
-			label_77.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_77.setBounds(60, 120, 60, 30);
+	private JLabel getLbl_72() {
+		if (lbl_72 == null) {
+			lbl_72 = new JLabel("");
+			lbl_72.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_72.setOpaque(true);
+			lbl_72.setBackground(new Color(255, 255, 0));
+			lbl_72.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_72.setBounds(60, 120, 60, 30);
+			squares[72] = lbl_72;
 		}
-		return label_77;
+		return lbl_72;
 	}
 
 	private JLabel getLbl_63() {
@@ -2755,16 +2747,17 @@ public class LudoUI extends JFrame implements GameUI {
 		return lbl_62;
 	}
 
-	private JLabel getLabel_80() {
-		if (label_80 == null) {
-			label_80 = new JLabel("");
-			label_80.setHorizontalAlignment(SwingConstants.CENTER);
-			label_80.setOpaque(true);
-			label_80.setBackground(new Color(255, 255, 0));
-			label_80.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_80.setBounds(60, 150, 60, 30);
+	private JLabel getLbl_73() {
+		if (lbl_73 == null) {
+			lbl_73 = new JLabel("");
+			lbl_73.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_73.setOpaque(true);
+			lbl_73.setBackground(new Color(255, 255, 0));
+			lbl_73.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_73.setBounds(60, 150, 60, 30);
+			squares[73] = lbl_73;
 		}
-		return label_80;
+		return lbl_73;
 	}
 
 	private JLabel getLbl_6() {
@@ -2917,40 +2910,44 @@ public class LudoUI extends JFrame implements GameUI {
 		return lbl_4;
 	}
 
-	private JLabel getLabel_86() {
-		if (label_86 == null) {
-			label_86 = new JLabel("");
-			label_86.setHorizontalAlignment(SwingConstants.CENTER);
-			label_86.setOpaque(true);
-			label_86.setBackground(new Color(255, 255, 0));
-			label_86.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_86.setBounds(60, 90, 60, 30);
+	private JLabel getLbl_71() {
+		if (lbl_71 == null) {
+			lbl_71 = new JLabel("");
+			lbl_71.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_71.setOpaque(true);
+			lbl_71.setBackground(new Color(255, 255, 0));
+			lbl_71.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_71.setBounds(60, 90, 60, 30);
+			squares[71] = lbl_71;
 		}
-		return label_86;
+		return lbl_71;
 	}
 
-	private JLabel getLabel_87() {
-		if (label_87 == null) {
-			label_87 = new JLabel("");
-			label_87.setHorizontalAlignment(SwingConstants.CENTER);
-			label_87.setOpaque(true);
-			label_87.setBackground(new Color(255, 255, 0));
-			label_87.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_87.setBounds(60, 60, 60, 30);
+	private JLabel getLbl_70() {
+		if (lbl_70 == null) {
+			lbl_70 = new JLabel("");
+			lbl_70.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_70.setOpaque(true);
+			lbl_70.setBackground(new Color(255, 255, 0));
+			lbl_70.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_70.setBounds(60, 60, 60, 30);
+			squares[70] = lbl_70;
 		}
-		return label_87;
+		return lbl_70;
 	}
 
-	private JLabel getLabel_88() {
-		if (label_88 == null) {
-			label_88 = new JLabel("");
-			label_88.setHorizontalAlignment(SwingConstants.CENTER);
-			label_88.setOpaque(true);
-			label_88.setBackground(new Color(255, 255, 0));
-			label_88.setBorder(new LineBorder(new Color(0, 0, 0)));
-			label_88.setBounds(60, 30, 60, 30);
+	private JLabel getLbl_69() {
+		if (lbl_69 == null) {
+			lbl_69 = new JLabel("");
+			lbl_69.setHorizontalAlignment(SwingConstants.CENTER);
+			lbl_69.setOpaque(true);
+			lbl_69.setBackground(new Color(255, 255, 0));
+			lbl_69.setBorder(new LineBorder(new Color(0, 0, 0)));
+			lbl_69.setBounds(60, 30, 60, 30);
+			squares[69] = lbl_69;
+
 		}
-		return label_88;
+		return lbl_69;
 	}
 
 	private JLabel getLbl_68() {
@@ -4791,36 +4788,62 @@ public class LudoUI extends JFrame implements GameUI {
 							myPlayer)) {
 						int piece = Ludo.takeOutPiece(game.getBoard(),
 								playerTurn);
+
+						Square square;
+						JLabel squareLabel;
 						switch (playerTurn) {
 						case Ludo.YELLOW:
-							squares[Ludo.YELLOW_INITIAL_SQUARE]
-									.setIcon(new ImageIcon(
-											LudoUI.class
-													.getResource("/images/Ludo/Pieces/yellow_1.png")));
+							square = Ludo.squareInfo(game.getBoard(),
+									Ludo.YELLOW_INITIAL_SQUARE);
+							squareLabel = squares[Ludo.YELLOW_INITIAL_SQUARE];
+							setSquareIcon(squareLabel, square);
+
 							pnlYellowPlayer.remove(yellowPieces[piece]);
 							pnlYellowPlayer.repaint();
 							break;
 						case Ludo.RED:
-							squares[Ludo.RED_INITIAL_SQUARE]
-									.setIcon(new ImageIcon(
-											LudoUI.class
-													.getResource("/images/Ludo/Pieces/red_1.png")));
+							square = Ludo.squareInfo(game.getBoard(),
+									Ludo.RED_INITIAL_SQUARE);
+							squareLabel = squares[Ludo.RED_INITIAL_SQUARE];
+							setSquareIcon(squareLabel, square);
+
 							pnlRedPlayer.remove(redPieces[piece]);
 							pnlRedPlayer.repaint();
 							break;
 						case Ludo.BLUE:
-							squares[Ludo.BLUE_INITIAL_SQUARE]
-									.setIcon(new ImageIcon(
-											LudoUI.class
-													.getResource("/images/Ludo/Pieces/blue_1.png")));
+							square = Ludo.squareInfo(game.getBoard(),
+									Ludo.BLUE_INITIAL_SQUARE);
+
+							if (square.numberOfPieces() == 1) {
+								squares[Ludo.BLUE_INITIAL_SQUARE]
+										.setIcon(new ImageIcon(
+												LudoUI.class
+														.getResource("/images/Ludo/Pieces/blue_1.png")));
+							} else {
+								squares[Ludo.BLUE_INITIAL_SQUARE]
+										.setIcon(new ImageIcon(
+												LudoUI.class
+														.getResource("/images/Ludo/Pieces/blue_2_vertical.png")));
+							}
 							pnlBluePlayer.remove(bluePieces[piece]);
 							pnlBluePlayer.repaint();
 							break;
 						case Ludo.GREEN:
-							squares[Ludo.GREEN_INITIAL_SQUARE]
-									.setIcon(new ImageIcon(
-											LudoUI.class
-													.getResource("/images/Ludo/Pieces/green_1.png")));
+							square = Ludo.squareInfo(game.getBoard(),
+									Ludo.GREEN_INITIAL_SQUARE);
+
+							if (square.numberOfPieces() == 1) {
+								squares[Ludo.GREEN_INITIAL_SQUARE]
+										.setIcon(new ImageIcon(
+												LudoUI.class
+														.getResource("/images/Ludo/Pieces/green_1.png")));
+							} else {
+								squares[Ludo.GREEN_INITIAL_SQUARE]
+										.setIcon(new ImageIcon(
+												LudoUI.class
+														.getResource("/images/Ludo/Pieces/green_2_vertical.png")));
+							}
+
 							pnlGreenPlayer.remove(greenPieces[piece]);
 							pnlGreenPlayer.repaint();
 							break;
@@ -4846,18 +4869,49 @@ public class LudoUI extends JFrame implements GameUI {
 				} else {
 					// Move piece
 					if (Ludo.isPieceOut(game.getBoard(), myPlayer)) {
-						lblState.setText("Elige la ficha que quieras mover");
-						enablePlayerSquares(myPlayer);
+						if (dice == 6) {
+							sixes++;
+							if (sixes == 3) {
+								sixes = 0;
+								changeTurn();
+								Controller.getInstance().updateDiceGame(
+										game.getName(), dice, -1);
+								diceAnimation(playerTurn);
+							} else {
+								lblState.setText("Elige la ficha que quieras mover");
+								enablePlayerSquares(myPlayer);
+							}
+						} else {
+							sixes = 0;
+							lblState.setText("Elige la ficha que quieras mover");
+							enablePlayerSquares(myPlayer);
+						}
+
 					} else {
-						changeTurn();
-						Controller.getInstance().updateDiceGame(game.getName(),
-								dice, -1);
-						diceAnimation(playerTurn);
+						if (dice == 6) {
+							sixes++;
+							if (sixes == 3) {
+								sixes = 0;
+								changeTurn();
+								Controller.getInstance().updateDiceGame(
+										game.getName(), dice, -1);
+								diceAnimation(playerTurn);
+							} else {
+								sixes = 0;
+								Controller.getInstance().updateDiceGame(
+										game.getName(), dice, -1);
+								enableDice(myPlayer);
+							}
+						} else {
+							changeTurn();
+							Controller.getInstance().updateDiceGame(
+									game.getName(), dice, -1);
+							diceAnimation(playerTurn);
+						}
 					}
+
 				}
-
 			}
-
 		}.start();
 	}
 
@@ -4867,9 +4921,12 @@ public class LudoUI extends JFrame implements GameUI {
 		int piece = Ludo.pieceInSquare(game.getBoard(), fromSquare, myPlayer);
 		Ludo.move(piece, dice, game.getBoard(), myPlayer);
 		moveAnimation(fromSquare, piece, myPlayer);
-		playerTurn = game.changeTurn();
+		if (dice != 6) {
+			playerTurn = game.changeTurn();
+			diceAnimation(playerTurn);
+		}
 		Controller.getInstance().updateDiceGame(game.getName(), dice, piece);
-		diceAnimation(playerTurn);
+
 	}
 
 	private void diceAnimation(int player) {
@@ -4882,37 +4939,27 @@ public class LudoUI extends JFrame implements GameUI {
 		new Thread() {
 			public void run() {
 				int toSquare = fromSquare + dice;
-				ImageIcon icon = null;
-
-				switch (player) {
-				case Ludo.YELLOW:
-					icon = new ImageIcon(
-							LudoUI.class
-									.getResource("/images/Ludo/Pieces/yellow_1.png"));
-					break;
-				case Ludo.RED:
-					icon = new ImageIcon(
-							LudoUI.class
-									.getResource("/images/Ludo/Pieces/red_1.png"));
-					break;
-				case Ludo.BLUE:
-					icon = new ImageIcon(
-							LudoUI.class
-									.getResource("/images/Ludo/Pieces/blue_1.png"));
-					break;
-				case Ludo.GREEN:
-					icon = new ImageIcon(
-							LudoUI.class
-									.getResource("/images/Ludo/Pieces/green_1.png"));
-					break;
-				}
 
 				for (int from = fromSquare + 1; from <= toSquare; from++) {
-					squares[from - 1].setIcon(null);
-					squares[from - 1].repaint();
-					squares[from].setIcon(icon);
-					squares[from].repaint();
+					if (toSquare > 68 && fromSquare <= 68 && from > 68) {
+						from = 1;
+						toSquare -= 68;
+					}
 
+					Square square;
+
+					if (from - 1 == 0) {
+						square = Ludo.squareInfo(game.getBoard(), 68);
+						setSquareIcon(squares[68], square);
+					} else {
+						square = Ludo.squareInfo(game.getBoard(), from - 1);
+						setSquareIcon(squares[from - 1], square);
+					}
+
+					square = Ludo.squareInfo(game.getBoard(), from);
+					if (from != toSquare)
+						square.addPiece(player);
+					setSquareIcon(squares[from], square);
 					try {
 						sleep(Constants.LudoPieceMoveTime);
 					} catch (InterruptedException e) {
@@ -4966,7 +5013,8 @@ public class LudoUI extends JFrame implements GameUI {
 		int[] piecesSquares = game.getBoard(player);
 		for (int piece = 0; piece < 4; piece++) {
 			int pieceSquare = piecesSquares[piece];
-			if (pieceSquare != Ludo.HOUSE) {
+			if (pieceSquare != Ludo.HOUSE
+					&& Ludo.validateMove(piece, dice, game.getBoard(), player) != MoveResult.Invalid) {
 				enabledSquares[pieceSquare] = true;
 			}
 		}
@@ -5027,15 +5075,15 @@ public class LudoUI extends JFrame implements GameUI {
 			if (dice == 5) {
 				int pieceSquare = game.getBoard()[playerTurn][movedPiece];
 
+				Square squareInfo = Ludo.squareInfo(game.getBoard(),
+						pieceSquare);
+
 				switch (playerTurn) {
 				case Ludo.YELLOW:
 					if (pieceSquare == Ludo.YELLOW_INITIAL_SQUARE) {
 						pnlYellowPlayer.remove(yellowPieces[movedPiece]);
 						pnlYellowPlayer.repaint();
-						this.squares[Ludo.YELLOW_INITIAL_SQUARE]
-								.setIcon(new ImageIcon(
-										LudoUI.class
-												.getResource("/images/Ludo/Pieces/yellow_1.png")));
+						setSquareIcon(this.squares[pieceSquare], squareInfo);
 					} else {
 						// The player moves a piece
 						int fromSquare = game.getBoard()[playerTurn][movedPiece]
@@ -5047,10 +5095,7 @@ public class LudoUI extends JFrame implements GameUI {
 					if (pieceSquare == Ludo.RED_INITIAL_SQUARE) {
 						pnlRedPlayer.remove(redPieces[movedPiece]);
 						pnlRedPlayer.repaint();
-						this.squares[Ludo.RED_INITIAL_SQUARE]
-								.setIcon(new ImageIcon(
-										LudoUI.class
-												.getResource("/images/Ludo/Pieces/red_1.png")));
+						setSquareIcon(this.squares[pieceSquare], squareInfo);
 					} else {
 						// The player moves a piece
 						int fromSquare = game.getBoard()[playerTurn][movedPiece]
@@ -5062,10 +5107,7 @@ public class LudoUI extends JFrame implements GameUI {
 					if (pieceSquare == Ludo.BLUE_INITIAL_SQUARE) {
 						pnlBluePlayer.remove(bluePieces[movedPiece]);
 						pnlBluePlayer.repaint();
-						this.squares[Ludo.BLUE_INITIAL_SQUARE]
-								.setIcon(new ImageIcon(
-										LudoUI.class
-												.getResource("/images/Ludo/Pieces/blue_1.png")));
+						setSquareIcon(this.squares[pieceSquare], squareInfo);
 					} else {
 						// The player moves a piece
 						int fromSquare = game.getBoard()[playerTurn][movedPiece]
@@ -5077,10 +5119,7 @@ public class LudoUI extends JFrame implements GameUI {
 					if (pieceSquare == Ludo.GREEN_INITIAL_SQUARE) {
 						pnlGreenPlayer.remove(greenPieces[movedPiece]);
 						pnlGreenPlayer.repaint();
-						this.squares[Ludo.GREEN_INITIAL_SQUARE]
-								.setIcon(new ImageIcon(
-										LudoUI.class
-												.getResource("/images/Ludo/Pieces/green_1.png")));
+						setSquareIcon(this.squares[pieceSquare], squareInfo);
 					} else {
 						// The player moves a piece
 						int fromSquare = game.getBoard()[playerTurn][movedPiece]
@@ -5094,6 +5133,9 @@ public class LudoUI extends JFrame implements GameUI {
 				// The player moves a piece
 				int fromSquare = game.getBoard()[playerTurn][movedPiece]
 						- squares;
+				if (fromSquare <= 0)
+					fromSquare += 68;
+
 				moveAnimation(fromSquare, movedPiece, playerTurn);
 			}
 
@@ -5128,6 +5170,249 @@ public class LudoUI extends JFrame implements GameUI {
 			diceAnimation(playerTurn);
 		}
 
+	}
+
+	private void setSquareIcon(JLabel lblSquare, Square square) {
+		int pieces = square.numberOfPieces();
+		int squareNum = square.getSquare();
+
+		switch (pieces) {
+		case 0:
+			lblSquare.setText(String.valueOf(square.getSquare()));
+			lblSquare.setIcon(null);
+
+			if ((squareNum >= 1 && squareNum <= 7)
+					|| (squareNum >= 27 && squareNum <= 33)) {
+				lblSquare.setHorizontalAlignment(SwingConstants.RIGHT);
+			} else if ((squareNum >= 61 && squareNum <= 67)
+					|| (squareNum >= 35 && squareNum <= 41)) {
+				lblSquare.setHorizontalAlignment(SwingConstants.LEFT);
+			}
+
+			break;
+		case 1:
+			switch (square.getFirstPiece()) {
+			case Ludo.YELLOW:
+				lblSquare.setIcon(new ImageIcon(LudoUI.class
+						.getResource("/images/Ludo/Pieces/yellow_1.png")));
+				break;
+			case Ludo.RED:
+				lblSquare.setIcon(new ImageIcon(LudoUI.class
+						.getResource("/images/Ludo/Pieces/red_1.png")));
+				break;
+			case Ludo.BLUE:
+				lblSquare.setIcon(new ImageIcon(LudoUI.class
+						.getResource("/images/Ludo/Pieces/blue_1.png")));
+				break;
+			case Ludo.GREEN:
+				lblSquare.setIcon(new ImageIcon(LudoUI.class
+						.getResource("/images/Ludo/Pieces/green_1.png")));
+				break;
+			}
+
+			if ((squareNum >= 1 && squareNum <= 7)
+					|| (squareNum >= 27 && squareNum <= 33)) {
+				lblSquare.setHorizontalAlignment(SwingConstants.RIGHT);
+			}
+
+			if ((squareNum >= 61 && squareNum <= 67)
+					|| (squareNum >= 35 && squareNum <= 41)) {
+				lblSquare.setHorizontalAlignment(SwingConstants.LEFT);
+			}
+
+			lblSquare.setText(String.valueOf(square.getSquare()));
+
+			break;
+		case 2:
+
+			// Same color
+			if (square.getFirstPiece() == square.getSecondPiece()) {
+				switch (square.getFirstPiece()) {
+				case Ludo.YELLOW:
+					if ((squareNum >= 1 && squareNum <= 7)
+							|| (squareNum >= 27 && squareNum <= 41)
+							|| (squareNum >= 61 && squareNum <= 68)) {
+						lblSquare
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/Pieces/yellow_2.png")));
+					} else {
+						lblSquare
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/Pieces/yellow_2_vertical.png")));
+					}
+
+					break;
+				case Ludo.RED:
+					if ((squareNum >= 1 && squareNum <= 7)
+							|| (squareNum >= 27 && squareNum <= 41)
+							|| (squareNum >= 61 && squareNum <= 68)) {
+						lblSquare.setIcon(new ImageIcon(LudoUI.class
+								.getResource("/images/Ludo/Pieces/red_2.png")));
+					} else {
+						lblSquare
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/Pieces/red_2_vertical.png")));
+					}
+					break;
+				case Ludo.BLUE:
+					if ((squareNum >= 1 && squareNum <= 7)
+							|| (squareNum >= 27 && squareNum <= 41)
+							|| (squareNum >= 61 && squareNum <= 68)) {
+						lblSquare
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/Pieces/blue_2.png")));
+					} else {
+						lblSquare
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/Pieces/blue_2_vertical.png")));
+					}
+					break;
+				case Ludo.GREEN:
+					if ((squareNum >= 1 && squareNum <= 7)
+							|| (squareNum >= 27 && squareNum <= 41)
+							|| (squareNum >= 61 && squareNum <= 68)) {
+						lblSquare
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/Pieces/green_2.png")));
+					} else {
+						lblSquare
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/Pieces/green_2_vertical.png")));
+					}
+					break;
+				}
+			} else
+			// Yellow-Red
+			if ((square.getFirstPiece() == Ludo.YELLOW && square
+					.getSecondPiece() == Ludo.RED)
+					|| (square.getFirstPiece() == Ludo.RED && square
+							.getSecondPiece() == Ludo.YELLOW)) {
+
+				if ((squareNum >= 1 && squareNum <= 7)
+						|| (squareNum >= 27 && squareNum <= 41)
+						|| (squareNum >= 61 && squareNum <= 68)) {
+					lblSquare
+							.setIcon(new ImageIcon(
+									LudoUI.class
+											.getResource("/images/Ludo/Pieces/yellow_red.png")));
+				} else {
+					lblSquare
+							.setIcon(new ImageIcon(
+									LudoUI.class
+											.getResource("/images/Ludo/Pieces/yellow_red_vertical.png")));
+				}
+
+			} else
+			// Yellow-Blue
+			if ((square.getFirstPiece() == Ludo.YELLOW && square
+					.getSecondPiece() == Ludo.BLUE)
+					|| (square.getFirstPiece() == Ludo.BLUE && square
+							.getSecondPiece() == Ludo.YELLOW)) {
+
+				if ((squareNum >= 1 && squareNum <= 7)
+						|| (squareNum >= 27 && squareNum <= 41)
+						|| (squareNum >= 61 && squareNum <= 68)) {
+					lblSquare
+							.setIcon(new ImageIcon(
+									LudoUI.class
+											.getResource("/images/Ludo/Pieces/yellow_blue.png")));
+				} else {
+					lblSquare
+							.setIcon(new ImageIcon(
+									LudoUI.class
+											.getResource("/images/Ludo/Pieces/yellow_blue_vertical.png")));
+				}
+
+			} else
+			// Yellow-Green
+			if ((square.getFirstPiece() == Ludo.YELLOW && square
+					.getSecondPiece() == Ludo.GREEN)
+					|| (square.getFirstPiece() == Ludo.GREEN && square
+							.getSecondPiece() == Ludo.YELLOW)) {
+
+				if ((squareNum >= 1 && squareNum <= 7)
+						|| (squareNum >= 27 && squareNum <= 41)
+						|| (squareNum >= 61 && squareNum <= 68)) {
+					lblSquare
+							.setIcon(new ImageIcon(
+									LudoUI.class
+											.getResource("/images/Ludo/Pieces/yellow_green.png")));
+				} else {
+					lblSquare
+							.setIcon(new ImageIcon(
+									LudoUI.class
+											.getResource("/images/Ludo/Pieces/yellow_green_vertical.png")));
+				}
+
+			} else
+			// Red-Blue
+			if ((square.getFirstPiece() == Ludo.RED && square.getSecondPiece() == Ludo.BLUE)
+					|| (square.getFirstPiece() == Ludo.BLUE && square
+							.getSecondPiece() == Ludo.RED)) {
+
+				if ((squareNum >= 1 && squareNum <= 7)
+						|| (squareNum >= 27 && squareNum <= 41)
+						|| (squareNum >= 61 && squareNum <= 68)) {
+					lblSquare.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/Pieces/red_blue.png")));
+				} else {
+					lblSquare
+							.setIcon(new ImageIcon(
+									LudoUI.class
+											.getResource("/images/Ludo/Pieces/red_blue_vertical.png")));
+				}
+
+			} else
+			// Red-Green
+			if ((square.getFirstPiece() == Ludo.RED && square.getSecondPiece() == Ludo.GREEN)
+					|| (square.getFirstPiece() == Ludo.GREEN && square
+							.getSecondPiece() == Ludo.RED)) {
+
+				if ((squareNum >= 1 && squareNum <= 7)
+						|| (squareNum >= 27 && squareNum <= 41)
+						|| (squareNum >= 61 && squareNum <= 68)) {
+					lblSquare.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/Pieces/red_green.png")));
+				} else {
+					lblSquare
+							.setIcon(new ImageIcon(
+									LudoUI.class
+											.getResource("/images/Ludo/Pieces/red_green_vertical.png")));
+				}
+
+			} else
+			// Blue-Green
+			if ((square.getFirstPiece() == Ludo.BLUE && square.getSecondPiece() == Ludo.GREEN)
+					|| (square.getFirstPiece() == Ludo.GREEN && square
+							.getSecondPiece() == Ludo.BLUE)) {
+
+				if ((squareNum >= 1 && squareNum <= 7)
+						|| (squareNum >= 27 && squareNum <= 41)
+						|| (squareNum >= 61 && squareNum <= 68)) {
+					lblSquare
+							.setIcon(new ImageIcon(
+									LudoUI.class
+											.getResource("/images/Ludo/Pieces/blue_green.png")));
+				} else {
+					lblSquare
+							.setIcon(new ImageIcon(
+									LudoUI.class
+											.getResource("/images/Ludo/Pieces/blue_green_vertical.png")));
+				}
+
+			}
+
+			lblSquare.setHorizontalAlignment(SwingConstants.CENTER);
+			lblSquare.setText(null);
+			break;
+		}
 	}
 
 	private class ThrowDiceThread extends Thread {
@@ -5173,4 +5458,5 @@ public class LudoUI extends JFrame implements GameUI {
 			}
 		}
 	}
+
 }
