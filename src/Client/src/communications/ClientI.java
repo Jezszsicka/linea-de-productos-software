@@ -88,8 +88,8 @@ public class ClientI extends _ClientDisp{
 
 	@Override
 	public void diceGameUpdated(String game, int nextTurn,
-			int[][] board, int dice, int movedPiece, Current __current) {
-		Controller.getInstance().diceGameUpdated(game,nextTurn,board,dice,movedPiece);
+			int[][] board, int fromSquare,int dice, int movedPiece, Current __current) {
+		Controller.getInstance().diceGameUpdated(game,nextTurn,board,fromSquare,dice,movedPiece);
 	}
 
 

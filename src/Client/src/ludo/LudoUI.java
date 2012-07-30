@@ -33,7 +33,6 @@ import presentation.GameUI;
 import ProductLine.Slot;
 import ProductLine.SlotState;
 import ProductLine.UserNotInGameException;
-import chess.Chess.Player;
 import constants.Constants;
 
 @SuppressWarnings("serial")
@@ -208,6 +207,7 @@ public class LudoUI extends JFrame implements GameUI {
 
 	private boolean throwing;
 	private ThrowDiceThread throwDice;
+	private JButton btnNewButton;
 
 	public LudoUI(String username, Game game) {
 		this.username = username;
@@ -366,6 +366,7 @@ public class LudoUI extends JFrame implements GameUI {
 			pnlBackground.add(getTxtMessage());
 			pnlBackground.add(getScrollPane());
 			pnlBackground.add(getLblState());
+			pnlBackground.add(getBtnNewButton());
 		}
 		return pnlBackground;
 	}
@@ -850,6 +851,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_85() {
 		if (lbl_85 == null) {
 			lbl_85 = new JLabel("");
+			lbl_85.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_85MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_85MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_85MouseExited(e);
+				}
+			});
 			lbl_85.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_85.setOpaque(true);
 			lbl_85.setBackground(new Color(0, 0, 255));
@@ -863,6 +880,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_86() {
 		if (lbl_86 == null) {
 			lbl_86 = new JLabel("");
+			lbl_86.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_86MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_86MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_86MouseExited(e);
+				}
+			});
 			lbl_86.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_86.setOpaque(true);
 			lbl_86.setBackground(new Color(0, 0, 255));
@@ -876,6 +909,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_87() {
 		if (lbl_87 == null) {
 			lbl_87 = new JLabel("");
+			lbl_87.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_87MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_87MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_87MouseExited(e);
+				}
+			});
 			lbl_87.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_87.setOpaque(true);
 			lbl_87.setBackground(new Color(0, 0, 255));
@@ -889,6 +938,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_88() {
 		if (lbl_88 == null) {
 			lbl_88 = new JLabel("");
+			lbl_88.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_88MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_88MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_88MouseExited(e);
+				}
+			});
 			lbl_88.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_88.setOpaque(true);
 			lbl_88.setBackground(new Color(0, 0, 255));
@@ -902,6 +967,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_89() {
 		if (lbl_89 == null) {
 			lbl_89 = new JLabel("");
+			lbl_89.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_89MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_89MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_89MouseExited(e);
+				}
+			});
 			lbl_89.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_89.setOpaque(true);
 			lbl_89.setBackground(new Color(0, 0, 255));
@@ -915,6 +996,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_90() {
 		if (lbl_90 == null) {
 			lbl_90 = new JLabel("");
+			lbl_90.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_90MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_90MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_90MouseExited(e);
+				}
+			});
 			lbl_90.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_90.setOpaque(true);
 			lbl_90.setBackground(new Color(0, 0, 255));
@@ -928,6 +1025,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_91() {
 		if (lbl_91 == null) {
 			lbl_91 = new JLabel("");
+			lbl_91.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_91MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_91MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_91MouseExited(e);
+				}
+			});
 			lbl_91.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_91.setOpaque(true);
 			lbl_91.setBackground(new Color(0, 0, 255));
@@ -1464,6 +1577,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_99() {
 		if (lbl_99 == null) {
 			lbl_99 = new JLabel("");
+			lbl_99.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_99MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_99MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_99MouseExited(e);
+				}
+			});
 			lbl_99.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_99.setBackground(new Color(50, 205, 50));
 			lbl_99.setOpaque(true);
@@ -1477,6 +1606,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_98() {
 		if (lbl_98 == null) {
 			lbl_98 = new JLabel("");
+			lbl_98.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_98MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_98MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_98MouseExited(e);
+				}
+			});
 			lbl_98.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_98.setBackground(new Color(50, 205, 50));
 			lbl_98.setOpaque(true);
@@ -1490,6 +1635,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_97() {
 		if (lbl_97 == null) {
 			lbl_97 = new JLabel("");
+			lbl_97.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_97MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_97MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_97MouseExited(e);
+				}
+			});
 			lbl_97.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_97.setBackground(new Color(50, 205, 50));
 			lbl_97.setOpaque(true);
@@ -1503,6 +1664,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_96() {
 		if (lbl_96 == null) {
 			lbl_96 = new JLabel("");
+			lbl_96.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_96MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_96MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_96MouseExited(e);
+				}
+			});
 			lbl_96.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_96.setBackground(new Color(50, 205, 50));
 			lbl_96.setOpaque(true);
@@ -1516,6 +1693,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_95() {
 		if (lbl_95 == null) {
 			lbl_95 = new JLabel("");
+			lbl_95.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_95MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_95MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_95MouseExited(e);
+				}
+			});
 			lbl_95.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_95.setBackground(new Color(50, 205, 50));
 			lbl_95.setOpaque(true);
@@ -1529,6 +1722,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_94() {
 		if (lbl_94 == null) {
 			lbl_94 = new JLabel("");
+			lbl_94.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_94MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_94MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_94MouseExited(e);
+				}
+			});
 			lbl_94.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_94.setBackground(new Color(50, 205, 50));
 			lbl_94.setOpaque(true);
@@ -1542,6 +1751,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_93() {
 		if (lbl_93 == null) {
 			lbl_93 = new JLabel("");
+			lbl_93.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_93MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_93MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_93MouseExited(e);
+				}
+			});
 			lbl_93.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_93.setBackground(new Color(50, 205, 50));
 			lbl_93.setOpaque(true);
@@ -1997,6 +2222,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_77() {
 		if (lbl_77 == null) {
 			lbl_77 = new JLabel("");
+			lbl_77.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_77MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_77MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_77MouseExited(e);
+				}
+			});
 			lbl_77.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_77.setBackground(new Color(255, 0, 0));
 			lbl_77.setOpaque(true);
@@ -2070,6 +2311,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_79() {
 		if (lbl_79 == null) {
 			lbl_79 = new JLabel("");
+			lbl_79.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_79MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_79MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_79MouseExited(e);
+				}
+			});
 			lbl_79.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_79.setBackground(new Color(255, 0, 0));
 			lbl_79.setOpaque(true);
@@ -2143,6 +2400,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_78() {
 		if (lbl_78 == null) {
 			lbl_78 = new JLabel("");
+			lbl_78.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_78MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_78MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_78MouseExited(e);
+				}
+			});
 			lbl_78.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_78.setBackground(new Color(255, 0, 0));
 			lbl_78.setOpaque(true);
@@ -2303,6 +2576,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_80() {
 		if (lbl_80 == null) {
 			lbl_80 = new JLabel("");
+			lbl_80.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_80MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_80MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_80MouseExited(e);
+				}
+			});
 			lbl_80.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_80.setBackground(new Color(255, 0, 0));
 			lbl_80.setOpaque(true);
@@ -2316,6 +2605,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_81() {
 		if (lbl_81 == null) {
 			lbl_81 = new JLabel("");
+			lbl_81.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_81MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_81MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_81MouseExited(e);
+				}
+			});
 			lbl_81.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_81.setBackground(new Color(255, 0, 0));
 			lbl_81.setOpaque(true);
@@ -2329,6 +2634,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_82() {
 		if (lbl_82 == null) {
 			lbl_82 = new JLabel("");
+			lbl_82.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_82MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_82MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_82MouseExited(e);
+				}
+			});
 			lbl_82.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_82.setBackground(new Color(255, 0, 0));
 			lbl_82.setOpaque(true);
@@ -2342,6 +2663,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_83() {
 		if (lbl_83 == null) {
 			lbl_83 = new JLabel("");
+			lbl_83.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_83MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_83MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_83MouseExited(e);
+				}
+			});
 			lbl_83.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_83.setBackground(new Color(255, 0, 0));
 			lbl_83.setOpaque(true);
@@ -2534,6 +2871,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_75() {
 		if (lbl_75 == null) {
 			lbl_75 = new JLabel("");
+			lbl_75.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_75MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_75MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_75MouseExited(e);
+				}
+			});
 			lbl_75.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_75.setBackground(new Color(255, 255, 0));
 			lbl_75.setOpaque(true);
@@ -2604,6 +2957,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_74() {
 		if (lbl_74 == null) {
 			lbl_74 = new JLabel("");
+			lbl_74.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_74MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_74MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_74MouseExited(e);
+				}
+			});
 			lbl_74.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_74.setOpaque(true);
 			lbl_74.setBackground(new Color(255, 255, 0));
@@ -2677,6 +3046,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_72() {
 		if (lbl_72 == null) {
 			lbl_72 = new JLabel("");
+			lbl_72.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_72MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_72MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_72MouseExited(e);
+				}
+			});
 			lbl_72.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_72.setOpaque(true);
 			lbl_72.setBackground(new Color(255, 255, 0));
@@ -2750,6 +3135,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_73() {
 		if (lbl_73 == null) {
 			lbl_73 = new JLabel("");
+			lbl_73.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					lbl_73MouseClicked(arg0);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_73MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent arg0) {
+					lbl_73MouseExited(arg0);
+				}
+			});
 			lbl_73.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_73.setOpaque(true);
 			lbl_73.setBackground(new Color(255, 255, 0));
@@ -2913,6 +3314,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_71() {
 		if (lbl_71 == null) {
 			lbl_71 = new JLabel("");
+			lbl_71.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_71MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_71MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_71MouseExited(e);
+				}
+			});
 			lbl_71.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_71.setOpaque(true);
 			lbl_71.setBackground(new Color(255, 255, 0));
@@ -2926,6 +3343,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_70() {
 		if (lbl_70 == null) {
 			lbl_70 = new JLabel("");
+			lbl_70.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_70MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_70MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_70MouseExited(e);
+				}
+			});
 			lbl_70.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_70.setOpaque(true);
 			lbl_70.setBackground(new Color(255, 255, 0));
@@ -2939,6 +3372,22 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLbl_69() {
 		if (lbl_69 == null) {
 			lbl_69 = new JLabel("");
+			lbl_69.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					lbl_69MouseClicked(e);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					lbl_69MouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					lbl_69MouseExited(e);
+				}
+			});
 			lbl_69.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_69.setOpaque(true);
 			lbl_69.setBackground(new Color(255, 255, 0));
@@ -3879,6 +4328,146 @@ public class LudoUI extends JFrame implements GameUI {
 			move(34);
 	}
 
+	protected void lbl_73MouseClicked(MouseEvent arg0) {
+		if (enabledSquares[73])
+			move(73);
+	}
+
+	protected void lbl_75MouseClicked(MouseEvent e) {
+		if (enabledSquares[75])
+			move(75);
+	}
+
+	protected void lbl_69MouseClicked(MouseEvent e) {
+		if (enabledSquares[69])
+			move(69);
+	}
+
+	protected void lbl_71MouseClicked(MouseEvent e) {
+		if (enabledSquares[71])
+			move(71);
+	}
+
+	protected void lbl_74MouseClicked(MouseEvent e) {
+		if (enabledSquares[74])
+			move(74);
+	}
+
+	protected void lbl_70MouseClicked(MouseEvent e) {
+		if (enabledSquares[70])
+			move(70);
+	}
+
+	protected void lbl_72MouseClicked(MouseEvent e) {
+		if (enabledSquares[72])
+			move(72);
+	}
+
+	protected void lbl_93MouseClicked(MouseEvent e) {
+		if (enabledSquares[93])
+			move(72);
+	}
+
+	protected void lbl_95MouseClicked(MouseEvent e) {
+		if (enabledSquares[95])
+			move(95);
+	}
+
+	protected void lbl_94MouseClicked(MouseEvent e) {
+		if (enabledSquares[94])
+			move(94);
+	}
+
+	protected void lbl_97MouseClicked(MouseEvent e) {
+		if (enabledSquares[97])
+			move(97);
+	}
+
+	protected void lbl_98MouseClicked(MouseEvent e) {
+		if (enabledSquares[98])
+			move(98);
+	}
+
+	protected void lbl_99MouseClicked(MouseEvent e) {
+		if (enabledSquares[99])
+			move(99);
+	}
+
+	protected void lbl_96MouseClicked(MouseEvent e) {
+		if (enabledSquares[96])
+			move(96);
+	}
+
+	protected void lbl_83MouseClicked(MouseEvent e) {
+		if (enabledSquares[83])
+			move(83);
+	}
+
+	protected void lbl_80MouseClicked(MouseEvent e) {
+		if (enabledSquares[80])
+			move(80);
+	}
+
+	protected void lbl_88MouseClicked(MouseEvent e) {
+		if (enabledSquares[88])
+			move(88);
+	}
+
+	protected void lbl_91MouseClicked(MouseEvent e) {
+		if (enabledSquares[91])
+			move(91);
+	}
+
+	protected void lbl_89MouseClicked(MouseEvent e) {
+		if (enabledSquares[89])
+			move(89);
+	}
+
+	protected void lbl_85MouseClicked(MouseEvent e) {
+		if (enabledSquares[85])
+			move(85);
+	}
+
+	protected void lbl_77MouseClicked(MouseEvent e) {
+		if (enabledSquares[77])
+			move(77);
+	}
+
+	protected void lbl_78MouseClicked(MouseEvent e) {
+		if (enabledSquares[78])
+			move(78);
+	}
+
+	protected void lbl_81MouseClicked(MouseEvent e) {
+		if (enabledSquares[81])
+			move(81);
+	}
+
+	protected void lbl_82MouseClicked(MouseEvent e) {
+		if (enabledSquares[82])
+			move(82);
+	}
+
+	protected void lbl_90MouseClicked(MouseEvent e) {
+		if (enabledSquares[90])
+			move(90);
+	}
+
+	protected void lbl_79MouseClicked(MouseEvent e) {
+		if (enabledSquares[79])
+			move(79);
+	}
+
+	protected void lbl_87MouseClicked(MouseEvent e) {
+		if (enabledSquares[87])
+			move(87);
+	}
+
+	protected void lbl_86MouseClicked(MouseEvent e) {
+		if (enabledSquares[86])
+			move(86);
+	}
+
 	// Cursors
 	protected void lbl_7MouseEntered(MouseEvent e) {
 		if (enabledSquares[7])
@@ -4217,6 +4806,146 @@ public class LudoUI extends JFrame implements GameUI {
 
 	protected void lbl_39MouseEntered(MouseEvent e) {
 		if (enabledSquares[39])
+			setHandCursor();
+	}
+
+	protected void lbl_70MouseEntered(MouseEvent e) {
+		if (enabledSquares[70])
+			setHandCursor();
+	}
+
+	protected void lbl_72MouseEntered(MouseEvent e) {
+		if (enabledSquares[72])
+			setHandCursor();
+	}
+
+	protected void lbl_71MouseEntered(MouseEvent e) {
+		if (enabledSquares[71])
+			setHandCursor();
+	}
+
+	protected void lbl_75MouseEntered(MouseEvent e) {
+		if (enabledSquares[75])
+			setHandCursor();
+	}
+
+	protected void lbl_73MouseEntered(MouseEvent e) {
+		if (enabledSquares[73])
+			setHandCursor();
+	}
+
+	protected void lbl_69MouseEntered(MouseEvent e) {
+		if (enabledSquares[69])
+			setHandCursor();
+	}
+
+	protected void lbl_93MouseEntered(MouseEvent e) {
+		if (enabledSquares[93])
+			setHandCursor();
+	}
+
+	protected void lbl_95MouseEntered(MouseEvent e) {
+		if (enabledSquares[95])
+			setHandCursor();
+	}
+
+	protected void lbl_98MouseEntered(MouseEvent e) {
+		if (enabledSquares[98])
+			setHandCursor();
+	}
+
+	protected void lbl_94MouseEntered(MouseEvent e) {
+		if (enabledSquares[94])
+			setHandCursor();
+	}
+
+	protected void lbl_97MouseEntered(MouseEvent e) {
+		if (enabledSquares[97])
+			setHandCursor();
+	}
+
+	protected void lbl_74MouseEntered(MouseEvent e) {
+		if (enabledSquares[74])
+			setHandCursor();
+	}
+
+	protected void lbl_96MouseEntered(MouseEvent e) {
+		if (enabledSquares[96])
+			setHandCursor();
+	}
+
+	protected void lbl_99MouseEntered(MouseEvent e) {
+		if (enabledSquares[99])
+			setHandCursor();
+	}
+
+	protected void lbl_81MouseEntered(MouseEvent e) {
+		if (enabledSquares[81])
+			setHandCursor();
+	}
+
+	protected void lbl_80MouseEntered(MouseEvent e) {
+		if (enabledSquares[80])
+			setHandCursor();
+	}
+
+	protected void lbl_87MouseEntered(MouseEvent e) {
+		if (enabledSquares[87])
+			setHandCursor();
+	}
+
+	protected void lbl_85MouseEntered(MouseEvent e) {
+		if (enabledSquares[85])
+			setHandCursor();
+	}
+
+	protected void lbl_83MouseEntered(MouseEvent e) {
+		if (enabledSquares[83])
+			setHandCursor();
+	}
+
+	protected void lbl_79MouseEntered(MouseEvent e) {
+		if (enabledSquares[79])
+			setHandCursor();
+	}
+
+	protected void lbl_89MouseEntered(MouseEvent e) {
+		if (enabledSquares[89])
+			setHandCursor();
+	}
+
+	protected void lbl_88MouseEntered(MouseEvent e) {
+		if (enabledSquares[88])
+			setHandCursor();
+	}
+
+	protected void lbl_82MouseEntered(MouseEvent e) {
+		if (enabledSquares[88])
+			setHandCursor();
+	}
+
+	protected void lbl_91MouseEntered(MouseEvent e) {
+		if (enabledSquares[91])
+			setHandCursor();
+	}
+
+	protected void lbl_78MouseEntered(MouseEvent e) {
+		if (enabledSquares[78])
+			setHandCursor();
+	}
+
+	protected void lbl_77MouseEntered(MouseEvent e) {
+		if (enabledSquares[77])
+			setHandCursor();
+	}
+
+	protected void lbl_86MouseEntered(MouseEvent e) {
+		if (enabledSquares[86])
+			setHandCursor();
+	}
+
+	protected void lbl_90MouseEntered(MouseEvent e) {
+		if (enabledSquares[90])
 			setHandCursor();
 	}
 
@@ -4560,6 +5289,146 @@ public class LudoUI extends JFrame implements GameUI {
 			setDefaultCursor();
 	}
 
+	protected void lbl_73MouseExited(MouseEvent arg0) {
+		if (enabledSquares[73])
+			setDefaultCursor();
+	}
+
+	protected void lbl_74MouseExited(MouseEvent e) {
+		if (enabledSquares[74])
+			setDefaultCursor();
+	}
+
+	protected void lbl_75MouseExited(MouseEvent e) {
+		if (enabledSquares[75])
+			setDefaultCursor();
+	}
+
+	protected void lbl_70MouseExited(MouseEvent e) {
+		if (enabledSquares[70])
+			setDefaultCursor();
+	}
+
+	protected void lbl_72MouseExited(MouseEvent e) {
+		if (enabledSquares[72])
+			setDefaultCursor();
+	}
+
+	protected void lbl_69MouseExited(MouseEvent e) {
+		if (enabledSquares[69])
+			setDefaultCursor();
+	}
+
+	protected void lbl_71MouseExited(MouseEvent e) {
+		if (enabledSquares[71])
+			setDefaultCursor();
+	}
+
+	protected void lbl_99MouseExited(MouseEvent e) {
+		if (enabledSquares[99])
+			setDefaultCursor();
+	}
+
+	protected void lbl_95MouseExited(MouseEvent e) {
+		if (enabledSquares[95])
+			setDefaultCursor();
+	}
+
+	protected void lbl_93MouseExited(MouseEvent e) {
+		if (enabledSquares[93])
+			setDefaultCursor();
+	}
+
+	protected void lbl_96MouseExited(MouseEvent e) {
+		if (enabledSquares[96])
+			setDefaultCursor();
+	}
+
+	protected void lbl_98MouseExited(MouseEvent e) {
+		if (enabledSquares[98])
+			setDefaultCursor();
+	}
+
+	protected void lbl_97MouseExited(MouseEvent e) {
+		if (enabledSquares[97])
+			setDefaultCursor();
+	}
+
+	protected void lbl_94MouseExited(MouseEvent e) {
+		if (enabledSquares[94])
+			setDefaultCursor();
+	}
+
+	protected void lbl_79MouseExited(MouseEvent e) {
+		if (enabledSquares[79])
+			setDefaultCursor();
+	}
+
+	protected void lbl_88MouseExited(MouseEvent e) {
+		if (enabledSquares[88])
+			setDefaultCursor();
+	}
+
+	protected void lbl_85MouseExited(MouseEvent e) {
+		if (enabledSquares[85])
+			setDefaultCursor();
+	}
+
+	protected void lbl_78MouseExited(MouseEvent e) {
+		if (enabledSquares[78])
+			setDefaultCursor();
+	}
+
+	protected void lbl_86MouseExited(MouseEvent e) {
+		if (enabledSquares[86])
+			setDefaultCursor();
+	}
+
+	protected void lbl_87MouseExited(MouseEvent e) {
+		if (enabledSquares[87])
+			setDefaultCursor();
+	}
+
+	protected void lbl_77MouseExited(MouseEvent e) {
+		if (enabledSquares[77])
+			setDefaultCursor();
+	}
+
+	protected void lbl_80MouseExited(MouseEvent e) {
+		if (enabledSquares[80])
+			setDefaultCursor();
+	}
+
+	protected void lbl_83MouseExited(MouseEvent e) {
+		if (enabledSquares[83])
+			setDefaultCursor();
+	}
+
+	protected void lbl_82MouseExited(MouseEvent e) {
+		if (enabledSquares[82])
+			setDefaultCursor();
+	}
+
+	protected void lbl_81MouseExited(MouseEvent e) {
+		if (enabledSquares[81])
+			setDefaultCursor();
+	}
+
+	protected void lbl_89MouseExited(MouseEvent e) {
+		if (enabledSquares[89])
+			setDefaultCursor();
+	}
+
+	protected void lbl_91MouseExited(MouseEvent e) {
+		if (enabledSquares[91])
+			setDefaultCursor();
+	}
+
+	protected void lbl_90MouseExited(MouseEvent e) {
+		if (enabledSquares[90])
+			setDefaultCursor();
+	}
+
 	protected void txtMessageKeyPressed(KeyEvent evt) {
 		if (evt.getKeyCode() == 10 && txtMessage.getText().length() > 0)
 			sendMessage();
@@ -4851,7 +5720,7 @@ public class LudoUI extends JFrame implements GameUI {
 
 						changeTurn();
 						Controller.getInstance().updateDiceGame(game.getName(),
-								5, piece);
+								0, 5, piece);
 						diceAnimation(playerTurn);
 					} else {
 						// Move piece
@@ -4861,7 +5730,7 @@ public class LudoUI extends JFrame implements GameUI {
 						} else {
 							changeTurn();
 							Controller.getInstance().updateDiceGame(
-									game.getName(), dice, -1);
+									game.getName(), -1, dice, -1);
 							diceAnimation(playerTurn);
 						}
 
@@ -4875,7 +5744,7 @@ public class LudoUI extends JFrame implements GameUI {
 								sixes = 0;
 								changeTurn();
 								Controller.getInstance().updateDiceGame(
-										game.getName(), dice, -1);
+										game.getName(), -1, dice, -1);
 								diceAnimation(playerTurn);
 							} else {
 								lblState.setText("Elige la ficha que quieras mover");
@@ -4894,18 +5763,18 @@ public class LudoUI extends JFrame implements GameUI {
 								sixes = 0;
 								changeTurn();
 								Controller.getInstance().updateDiceGame(
-										game.getName(), dice, -1);
+										game.getName(), -1, dice, -1);
 								diceAnimation(playerTurn);
 							} else {
 								sixes = 0;
 								Controller.getInstance().updateDiceGame(
-										game.getName(), dice, -1);
+										game.getName(), -1, dice, -1);
 								enableDice(myPlayer);
 							}
 						} else {
 							changeTurn();
 							Controller.getInstance().updateDiceGame(
-									game.getName(), dice, -1);
+									game.getName(), -1, dice, -1);
 							diceAnimation(playerTurn);
 						}
 					}
@@ -4925,7 +5794,8 @@ public class LudoUI extends JFrame implements GameUI {
 			playerTurn = game.changeTurn();
 			diceAnimation(playerTurn);
 		}
-		Controller.getInstance().updateDiceGame(game.getName(), dice, piece);
+		Controller.getInstance().updateDiceGame(game.getName(), fromSquare,
+				dice, piece);
 
 	}
 
@@ -4934,37 +5804,315 @@ public class LudoUI extends JFrame implements GameUI {
 		throwDice.start();
 	}
 
-	private void moveAnimation(final int fromSquare, int piece, final int player) {
+	private void moveAnimation(final int fromSquare, final int piece,
+			final int player) {
 
 		new Thread() {
 			public void run() {
+				Square square;
+
 				int toSquare = fromSquare + dice;
 
-				for (int from = fromSquare + 1; from <= toSquare; from++) {
-					if (toSquare > 68 && fromSquare <= 68 && from > 68) {
-						from = 1;
-						toSquare -= 68;
-					}
+				switch (player) {
+				case Ludo.YELLOW:
+					// Caso normal
+					if (fromSquare >= Ludo.YELLOW_INITIAL_SQUARE
+							&& toSquare <= Ludo.YELLOW_LAST_SQUARE) {
+						for (int from = fromSquare + 1; from <= toSquare; from++) {
+							square = Ludo.squareInfo(game.getBoard(), from - 1);
+							setSquareIcon(squares[from - 1], square);
 
-					Square square;
+							square = Ludo.squareInfo(game.getBoard(), from);
+							if (from != toSquare)
+								square.addPiece(player);
+							setSquareIcon(squares[from], square);
+							try {
+								sleep(Constants.LudoPieceMoveTime);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					} else
+					// En las casillas finales
+					if (fromSquare >= 69
+							&& fromSquare <= Ludo.YELLOW_FINAL_SQUARE - 1) {
+						// Nos pasamos de la casilla final
+						if (toSquare > Ludo.YELLOW_FINAL_SQUARE) {
 
-					if (from - 1 == 0) {
-						square = Ludo.squareInfo(game.getBoard(), 68);
-						setSquareIcon(squares[68], square);
-					} else {
-						square = Ludo.squareInfo(game.getBoard(), from - 1);
-						setSquareIcon(squares[from - 1], square);
-					}
+							toSquare = game.getBoard()[player][piece];
 
-					square = Ludo.squareInfo(game.getBoard(), from);
-					if (from != toSquare)
-						square.addPiece(player);
-					setSquareIcon(squares[from], square);
-					try {
-						sleep(Constants.LudoPieceMoveTime);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+							// Animación hacia arriba
+							for (int from = fromSquare + 1; from <= Ludo.YELLOW_FINAL_SQUARE; from++) {
+								square = Ludo.squareInfo(game.getBoard(),
+										from - 1);
+								setSquareIcon(squares[from - 1], square);
+
+								square = Ludo.squareInfo(game.getBoard(), from);
+								setSquareIcon(squares[from], square);
+
+								try {
+									sleep(Constants.LudoPieceMoveTime);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+
+							// Animación del rebote
+							for (int from = Ludo.YELLOW_FINAL_SQUARE - 1; from >= toSquare; from--) {
+
+								square = Ludo.squareInfo(game.getBoard(),
+										from + 1);
+								setSquareIcon(squares[from + 1], square);
+
+								square = Ludo.squareInfo(game.getBoard(), from);
+								if (from != toSquare)
+									square.addPiece(player);
+								setSquareIcon(squares[from], square);
+
+								try {
+									sleep(Constants.LudoPieceMoveTime);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+
+						}
+						// Llegamos justos o aún quedan casillas
+						else {
+
+							for (int from = fromSquare + 1; from <= toSquare; from++) {
+								square = Ludo.squareInfo(game.getBoard(),
+										from - 1);
+								setSquareIcon(squares[from - 1], square);
+
+								square = Ludo.squareInfo(game.getBoard(), from);
+								if (from != toSquare)
+									square.addPiece(player);
+								setSquareIcon(squares[from], square);
+								try {
+									sleep(Constants.LudoPieceMoveTime);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+					} else
+					// Entramos en las casillas finales
+					if (fromSquare <= Ludo.YELLOW_LAST_SQUARE
+							&& toSquare > Ludo.YELLOW_LAST_SQUARE) {
+
+						for (int from = fromSquare + 1; from <= toSquare; from++) {
+							square = Ludo.squareInfo(game.getBoard(), from - 1);
+							setSquareIcon(squares[from - 1], square);
+
+							square = Ludo.squareInfo(game.getBoard(), from);
+							if (from != toSquare)
+								square.addPiece(player);
+							setSquareIcon(squares[from], square);
+
+							try {
+								sleep(Constants.LudoPieceMoveTime);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
 					}
+					break;
+				case Ludo.RED:
+					// Caso normal 39-68 y Caso normal 1-34
+					if ((fromSquare >= Ludo.RED_INITIAL_SQUARE && toSquare <= 68)
+							|| (fromSquare >= 1 && toSquare <= Ludo.RED_LAST_SQUARE)) {
+						for (int from = fromSquare + 1; from <= toSquare; from++) {
+							square = Ludo.squareInfo(game.getBoard(), from - 1);
+							setSquareIcon(squares[from - 1], square);
+
+							square = Ludo.squareInfo(game.getBoard(), from);
+							if (from != toSquare)
+								square.addPiece(player);
+							setSquareIcon(squares[from], square);
+							try {
+								sleep(Constants.LudoPieceMoveTime);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+					} else
+					// Caso normal pasamos del tramo 1 al 2
+					if (fromSquare <= 68 && toSquare > 68) {
+						toSquare = game.getBoard()[player][piece];
+
+						for (int from = fromSquare + 1; from <= 68; from++) {
+							square = Ludo.squareInfo(game.getBoard(), from - 1);
+							setSquareIcon(squares[from - 1], square);
+
+							square = Ludo.squareInfo(game.getBoard(), from);
+							if (from != toSquare)
+								square.addPiece(player);
+							setSquareIcon(squares[from], square);
+							try {
+								sleep(Constants.LudoPieceMoveTime);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+
+						for (int from = 1; from <= toSquare; from++) {
+							if (from - 1 == 0) {
+								square = Ludo.squareInfo(game.getBoard(), 68);
+								setSquareIcon(squares[68], square);
+							} else {
+								square = Ludo.squareInfo(game.getBoard(),
+										from - 1);
+								setSquareIcon(squares[from - 1], square);
+							}
+
+							square = Ludo.squareInfo(game.getBoard(), from);
+							if (from != toSquare)
+								square.addPiece(player);
+							setSquareIcon(squares[from], square);
+							try {
+								sleep(Constants.LudoPieceMoveTime);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+						}
+
+					} else
+					// En las casillas finales
+					if (fromSquare >= 77
+							&& fromSquare <= Ludo.RED_FINAL_SQUARE - 1) {
+						// Nos pasamos de la casilla final
+						if (toSquare > Ludo.RED_FINAL_SQUARE) {
+
+							toSquare = game.getBoard()[player][piece];
+
+							// Animación hacia arriba
+							for (int from = fromSquare + 1; from <= Ludo.RED_FINAL_SQUARE; from++) {
+								square = Ludo.squareInfo(game.getBoard(),
+										from - 1);
+								setSquareIcon(squares[from - 1], square);
+
+								square = Ludo.squareInfo(game.getBoard(), from);
+								square.addPiece(player);
+								setSquareIcon(squares[from], square);
+
+								try {
+									sleep(Constants.LudoPieceMoveTime);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+
+							// Animación del rebote
+							for (int from = Ludo.RED_FINAL_SQUARE - 1; from >= toSquare; from--) {
+
+								square = Ludo.squareInfo(game.getBoard(),
+										from + 1);
+								setSquareIcon(squares[from + 1], square);
+
+								square = Ludo.squareInfo(game.getBoard(), from);
+								if (from != toSquare)
+									square.addPiece(player);
+								setSquareIcon(squares[from], square);
+
+								try {
+									sleep(Constants.LudoPieceMoveTime);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+
+						}// Llegamos justos o aún quedan casillas
+						else {
+							for (int from = fromSquare + 1; from <= toSquare; from++) {
+								square = Ludo.squareInfo(game.getBoard(),
+										from - 1);
+								setSquareIcon(squares[from - 1], square);
+
+								square = Ludo.squareInfo(game.getBoard(), from);
+								if (from != toSquare)
+									square.addPiece(player);
+								setSquareIcon(squares[from], square);
+								try {
+									sleep(Constants.LudoPieceMoveTime);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+					} else
+					// Entramos en las casillas finales
+					if (fromSquare <= Ludo.RED_LAST_SQUARE
+							&& toSquare > Ludo.RED_LAST_SQUARE) {
+
+						toSquare = game.getBoard()[player][piece];
+
+						if (fromSquare == Ludo.RED_LAST_SQUARE) {
+							for (int from = 77; from <= toSquare; from++) {
+								if (from == 77) {
+									square = Ludo.squareInfo(game.getBoard(),
+											34);
+									setSquareIcon(squares[34], square);
+								} else {
+									square = Ludo.squareInfo(game.getBoard(),
+											from - 1);
+									setSquareIcon(squares[from - 1], square);
+								}
+
+								square = Ludo.squareInfo(game.getBoard(), from);
+								if (from != toSquare)
+									square.addPiece(player);
+								setSquareIcon(squares[from], square);
+
+								try {
+									sleep(Constants.LudoPieceMoveTime);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+						} else {
+
+							for (int from = fromSquare + 1; from <= Ludo.RED_LAST_SQUARE; from++) {
+								square = Ludo.squareInfo(game.getBoard(),
+										from - 1);
+								setSquareIcon(squares[from - 1], square);
+
+								square = Ludo.squareInfo(game.getBoard(), from);
+								square.addPiece(player);
+								setSquareIcon(squares[from], square);
+
+								try {
+									sleep(Constants.LudoPieceMoveTime);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+
+							for (int from = 77; from <= toSquare; from++) {
+								if (from == 77) {
+									square = Ludo.squareInfo(game.getBoard(),
+											34);
+									setSquareIcon(squares[34], square);
+								} else {
+									square = Ludo.squareInfo(game.getBoard(),
+											from - 1);
+									setSquareIcon(squares[from - 1], square);
+								}
+
+								square = Ludo.squareInfo(game.getBoard(), from);
+								if (from != toSquare)
+									square.addPiece(player);
+								setSquareIcon(squares[from], square);
+
+								try {
+									sleep(Constants.LudoPieceMoveTime);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+						}
+					}
+					break;
 				}
 
 				if (playerTurn != myPlayer) {
@@ -5010,13 +6158,23 @@ public class LudoUI extends JFrame implements GameUI {
 	}
 
 	private void enablePlayerSquares(int player) {
+		boolean validMoves = false;
+
 		int[] piecesSquares = game.getBoard(player);
 		for (int piece = 0; piece < 4; piece++) {
 			int pieceSquare = piecesSquares[piece];
 			if (pieceSquare != Ludo.HOUSE
 					&& Ludo.validateMove(piece, dice, game.getBoard(), player) != MoveResult.Invalid) {
 				enabledSquares[pieceSquare] = true;
+				validMoves = true;
 			}
+		}
+
+		if (!validMoves) {
+			changeTurn();
+			Controller.getInstance().updateDiceGame(game.getName(), -1, dice,
+					-1);
+			diceAnimation(playerTurn);
 		}
 	}
 
@@ -5043,7 +6201,7 @@ public class LudoUI extends JFrame implements GameUI {
 
 	}
 
-	public void updateBoard(int squares, int movedPiece) {
+	public void updateBoard(int fromSquare, int squares, int movedPiece) {
 		throwing = false;
 		try {
 			throwDice.join();
@@ -5086,8 +6244,6 @@ public class LudoUI extends JFrame implements GameUI {
 						setSquareIcon(this.squares[pieceSquare], squareInfo);
 					} else {
 						// The player moves a piece
-						int fromSquare = game.getBoard()[playerTurn][movedPiece]
-								- squares;
 						moveAnimation(fromSquare, movedPiece, playerTurn);
 					}
 					break;
@@ -5098,8 +6254,6 @@ public class LudoUI extends JFrame implements GameUI {
 						setSquareIcon(this.squares[pieceSquare], squareInfo);
 					} else {
 						// The player moves a piece
-						int fromSquare = game.getBoard()[playerTurn][movedPiece]
-								- squares;
 						moveAnimation(fromSquare, movedPiece, playerTurn);
 					}
 					break;
@@ -5109,9 +6263,6 @@ public class LudoUI extends JFrame implements GameUI {
 						pnlBluePlayer.repaint();
 						setSquareIcon(this.squares[pieceSquare], squareInfo);
 					} else {
-						// The player moves a piece
-						int fromSquare = game.getBoard()[playerTurn][movedPiece]
-								- squares;
 						moveAnimation(fromSquare, movedPiece, playerTurn);
 					}
 					break;
@@ -5122,8 +6273,6 @@ public class LudoUI extends JFrame implements GameUI {
 						setSquareIcon(this.squares[pieceSquare], squareInfo);
 					} else {
 						// The player moves a piece
-						int fromSquare = game.getBoard()[playerTurn][movedPiece]
-								- squares;
 						moveAnimation(fromSquare, movedPiece, playerTurn);
 					}
 					break;
@@ -5131,11 +6280,6 @@ public class LudoUI extends JFrame implements GameUI {
 
 			} else {
 				// The player moves a piece
-				int fromSquare = game.getBoard()[playerTurn][movedPiece]
-						- squares;
-				if (fromSquare <= 0)
-					fromSquare += 68;
-
 				moveAnimation(fromSquare, movedPiece, playerTurn);
 			}
 
@@ -5178,35 +6322,113 @@ public class LudoUI extends JFrame implements GameUI {
 
 		switch (pieces) {
 		case 0:
-			lblSquare.setText(String.valueOf(square.getSquare()));
-			lblSquare.setIcon(null);
+			if (squareNum <= 68)
+				lblSquare.setText(String.valueOf(square.getSquare()));
 
-			if ((squareNum >= 1 && squareNum <= 7)
-					|| (squareNum >= 27 && squareNum <= 33)) {
-				lblSquare.setHorizontalAlignment(SwingConstants.RIGHT);
-			} else if ((squareNum >= 61 && squareNum <= 67)
-					|| (squareNum >= 35 && squareNum <= 41)) {
-				lblSquare.setHorizontalAlignment(SwingConstants.LEFT);
+			// Diagonal Squares
+			if (squareNum == 8 || squareNum == 9 || squareNum == 25
+					|| squareNum == 26 || squareNum == 42 || squareNum == 43
+					|| squareNum == 59 || squareNum == 60) {
+
+				lblSquare.setIcon(new ImageIcon(LudoUI.class
+						.getResource("/images/Ludo/square_" + squareNum
+								+ ".png")));
+			} else {
+				// Last squares
+				if (squareNum == 76 || squareNum == 84 || squareNum == 92
+						|| squareNum == 100) {
+
+					switch (playerTurn) {
+					case Ludo.YELLOW:
+						lblSquare
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/yellow_final_square.png")));
+						break;
+					case Ludo.RED:
+						lblSquare
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/red_final_square.png")));
+						break;
+					case Ludo.BLUE:
+						lblSquare
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/blue_final_square.png")));
+						break;
+					case Ludo.GREEN:
+						lblSquare
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/green_final_square.png")));
+						break;
+					}
+
+				} else {
+
+					lblSquare.setIcon(null);
+
+					if ((squareNum >= 1 && squareNum <= 7)
+							|| (squareNum >= 27 && squareNum <= 33)) {
+						lblSquare.setHorizontalAlignment(SwingConstants.RIGHT);
+					} else if ((squareNum >= 61 && squareNum <= 67)
+							|| (squareNum >= 35 && squareNum <= 41)) {
+						lblSquare.setHorizontalAlignment(SwingConstants.LEFT);
+					}
+				}
 			}
 
 			break;
 		case 1:
 			switch (square.getFirstPiece()) {
 			case Ludo.YELLOW:
-				lblSquare.setIcon(new ImageIcon(LudoUI.class
-						.getResource("/images/Ludo/Pieces/yellow_1.png")));
+				if (squareNum == 8 || squareNum == 9 || squareNum == 25
+						|| squareNum == 26 || squareNum == 42
+						|| squareNum == 43 || squareNum == 59
+						|| squareNum == 60)
+					lblSquare.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/square_" + squareNum
+									+ "_yellow.png")));
+				else
+					lblSquare.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/Pieces/yellow_1.png")));
 				break;
 			case Ludo.RED:
-				lblSquare.setIcon(new ImageIcon(LudoUI.class
-						.getResource("/images/Ludo/Pieces/red_1.png")));
+				if (squareNum == 8 || squareNum == 9 || squareNum == 25
+						|| squareNum == 26 || squareNum == 42
+						|| squareNum == 43 || squareNum == 59
+						|| squareNum == 60)
+					lblSquare.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/square_" + squareNum
+									+ "_red.png")));
+				else
+					lblSquare.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/Pieces/red_1.png")));
 				break;
 			case Ludo.BLUE:
-				lblSquare.setIcon(new ImageIcon(LudoUI.class
-						.getResource("/images/Ludo/Pieces/blue_1.png")));
+				if (squareNum == 8 || squareNum == 9 || squareNum == 25
+						|| squareNum == 26 || squareNum == 42
+						|| squareNum == 43 || squareNum == 59
+						|| squareNum == 60)
+					lblSquare.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/square_" + squareNum
+									+ "_blue.png")));
+				else
+					lblSquare.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/Pieces/blue_1.png")));
 				break;
 			case Ludo.GREEN:
-				lblSquare.setIcon(new ImageIcon(LudoUI.class
-						.getResource("/images/Ludo/Pieces/green_1.png")));
+				if (squareNum == 8 || squareNum == 9 || squareNum == 25
+						|| squareNum == 26 || squareNum == 42
+						|| squareNum == 43 || squareNum == 59
+						|| squareNum == 60)
+					lblSquare.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/square_" + squareNum
+									+ "_green.png")));
+				else
+					lblSquare.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/Pieces/green_1.png")));
 				break;
 			}
 
@@ -5220,7 +6442,8 @@ public class LudoUI extends JFrame implements GameUI {
 				lblSquare.setHorizontalAlignment(SwingConstants.LEFT);
 			}
 
-			lblSquare.setText(String.valueOf(square.getSquare()));
+			if (squareNum <= 68)
+				lblSquare.setText(String.valueOf(square.getSquare()));
 
 			break;
 		case 2:
@@ -5231,7 +6454,7 @@ public class LudoUI extends JFrame implements GameUI {
 				case Ludo.YELLOW:
 					if ((squareNum >= 1 && squareNum <= 7)
 							|| (squareNum >= 27 && squareNum <= 41)
-							|| (squareNum >= 61 && squareNum <= 68)) {
+							|| (squareNum >= 61 && squareNum <= 75)) {
 						lblSquare
 								.setIcon(new ImageIcon(
 										LudoUI.class
@@ -5247,7 +6470,8 @@ public class LudoUI extends JFrame implements GameUI {
 				case Ludo.RED:
 					if ((squareNum >= 1 && squareNum <= 7)
 							|| (squareNum >= 27 && squareNum <= 41)
-							|| (squareNum >= 61 && squareNum <= 68)) {
+							|| (squareNum >= 61 && squareNum <= 68)
+							|| (squareNum >= 77 && squareNum <= 83)) {
 						lblSquare.setIcon(new ImageIcon(LudoUI.class
 								.getResource("/images/Ludo/Pieces/red_2.png")));
 					} else {
@@ -5457,6 +6681,24 @@ public class LudoUI extends JFrame implements GameUI {
 				}
 			}
 		}
+	}
+
+	private JButton getBtnNewButton() {
+		if (btnNewButton == null) {
+			btnNewButton = new JButton("New button");
+			btnNewButton.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					btnNewButtonMouseClicked(arg0);
+				}
+			});
+			btnNewButton.setBounds(527, 655, 89, 23);
+		}
+		return btnNewButton;
+	}
+
+	protected void btnNewButtonMouseClicked(MouseEvent arg0) {
+		Ludo.printState(game.getBoard());
 	}
 
 }

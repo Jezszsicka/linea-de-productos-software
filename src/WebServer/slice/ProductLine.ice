@@ -131,7 +131,7 @@ module ProductLine {
 		GameList listGames(string user, string gameName, Filter gamesFilter);
 		void startGame(string game);
 		void updateGame(string game, string player, int nextTurn ,bidimensionalIntArray board);
-		void updateDiceGame(string game, string player, int nextTurn, bidimensionalIntArray board, int dice, int movedPiece);
+		void updateDiceGame(string game, string player, int nextTurn, bidimensionalIntArray board, int fromSquare,int dice, int movedPiece);
 		void finishGame(string game, string player);
     };
     
@@ -149,7 +149,7 @@ module ProductLine {
     	void kickedFromGame(string game);
     	void gameStarted(string game);
     	void gameUpdated(string game,int nextTurn,bidimensionalIntArray board);
-    	void diceGameUpdated(string game, int nextTurn,bidimensionalIntArray board,int dice, int movedPiece);
+    	void diceGameUpdated(string game, int nextTurn,bidimensionalIntArray board,int fromSquare,int dice, int movedPiece);
     	void gameFinished(string game);
     };
     
