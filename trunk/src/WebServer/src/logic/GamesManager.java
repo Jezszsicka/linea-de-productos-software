@@ -367,7 +367,7 @@ public class GamesManager {
 	}
 
 	public void updateDiceGame(String gameName, String player, int nextTurn,
-			int[][] board, int dice, int movedPiece) {
+			int[][] board, int fromSquare,int dice, int movedPiece) {
 		
 		//TODO Avisar a todos los jugadores con una nueva llamada
 		Game game = searchGame(gameName);
@@ -375,7 +375,7 @@ public class GamesManager {
 		for(Slot slot : game.getSlots()){
 			if(!slot.getPlayer().equalsIgnoreCase(player) && slot.getType()== SlotState.Human){
 				Session slotSession = UsersManager.getInstance().searchSession(slot.getPlayer());
-				slotSession.getCallback().diceGameUpdated(gameName,nextTurn,board,dice,movedPiece);
+				slotSession.getCallback().diceGameUpdated(gameName,nextTurn,board,fromSquare,dice,movedPiece);
 			}
 		}
 	}

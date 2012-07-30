@@ -42,7 +42,7 @@ import goose.GooseUI;
 public class Controller {
 	public static Controller controller;
 
-	//UI
+	// UI
 	private RegisterUI registerUI;
 	private ResetPasswordUI resetPasswordUI;
 	private LoginUI loginUI;
@@ -51,25 +51,23 @@ public class Controller {
 	private MessagesUI messagesUI;
 	private CreateGameUI createGameUI;
 	private JoinGameUI joinGameUI;
-	
+
 	private Hashtable<String, GameWaitingRoomUI> gameWaitingRooms;
 	private Hashtable<String, GameUI> gamesUI;
 
-	//Managers
+	// Managers
 	private Session session;
 	private SessionManager sessionManager;
 	private GamesManager gamesManager;
 	private LanguageManager language;
 	private MessagesManager messagesManager;
 
-	
-
 	private Controller() {
 		language = LanguageManager.language();
 		loginUI = new LoginUI();
 		sessionManager = new SessionManager();
 		gameWaitingRooms = new Hashtable<String, GameWaitingRoomUI>();
-		gamesUI = new Hashtable<String,GameUI>();
+		gamesUI = new Hashtable<String, GameUI>();
 	}
 
 	public static void initialize() {
@@ -112,7 +110,7 @@ public class Controller {
 		registerUI.dispose();
 		registerUI = null;
 	}
-	
+
 	public void loginUser(String username, String password) {
 		try {
 			session = sessionManager.loginUser(username, password);
@@ -141,11 +139,11 @@ public class Controller {
 	}
 
 	public void logoutUser() {
-			sessionManager.logoutUser();
-			gamesManager = null;
-			waitingRoomUI.dispose();
-			waitingRoomUI = null;
-			loginUI = new LoginUI();
+		sessionManager.logoutUser();
+		gamesManager = null;
+		waitingRoomUI.dispose();
+		waitingRoomUI = null;
+		loginUI = new LoginUI();
 	}
 
 	public void showCreateGameUI() {
@@ -174,24 +172,25 @@ public class Controller {
 		messagesManager.sendGeneralMessage(message);
 	}
 
-	public void sendPrivateMessage(String destinatary,
-			String message) throws UserNotLoggedException {
+	public void sendPrivateMessage(String destinatary, String message)
+			throws UserNotLoggedException {
 		messagesManager.sendPrivateMessage(destinatary, message);
 	}
-	
+
 	public void sendGameMessage(String game, String message) {
-		messagesManager.sendGameMessage(game,message);
+		messagesManager.sendGameMessage(game, message);
 	}
-	
-	public void sendGamePrivateMessage(String game,
-			String destinatary, String message) throws UserNotInGameException {
-		messagesManager.sendGamePrivateMessage(game,destinatary,message);
+
+	public void sendGamePrivateMessage(String game, String destinatary,
+			String message) throws UserNotInGameException {
+		messagesManager.sendGamePrivateMessage(game, destinatary, message);
 	}
-	
-	public void sendMessage(String to, String subject, String content) throws WrongInputException {
+
+	public void sendMessage(String to, String subject, String content)
+			throws WrongInputException {
 		messagesManager.sendMessage(to, subject, content);
 	}
-	
+
 	public void receiveGeneralMessage(String sender, String message) {
 		waitingRoomUI.receiveMessage(sender, message);
 	}
@@ -201,7 +200,8 @@ public class Controller {
 
 	}
 
-	public void receiveGameMessage(String gameName, String sender, String message) {
+	public void receiveGameMessage(String gameName, String sender,
+			String message) {
 		Game game = gamesManager.searchGame(gameName);
 		if (game.isStarted()) {
 			GameUI gameUI = gamesUI.get(gameName);
@@ -333,9 +333,10 @@ public class Controller {
 			createGameUI.dispose();
 			waitingRoomUI.setEnabled(true);
 			gameWaitingRooms.put(game.getName(), new GameWaitingRoomUI(session
-					.getUser().getUsername(), game,true));
+					.getUser().getUsername(), game, true));
 		} catch (GameAlreadyExistsException e) {
-			JOptionPane.showMessageDialog(createGameUI, "Please, choose another name for the game",
+			JOptionPane.showMessageDialog(createGameUI,
+					"Please, choose another name for the game",
 					"Game already exists", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		} catch (WrongInputException e) {
@@ -346,7 +347,7 @@ public class Controller {
 	}
 
 	public List<ProductLine.Game> listGames(String game, Filter filter) {
-		return gamesManager.listGames(game,filter);
+		return gamesManager.listGames(game, filter);
 	}
 
 	public void deleteGame(String gameName) {
@@ -359,7 +360,7 @@ public class Controller {
 		try {
 			Game game = gamesManager.joinGame(gameName);
 			gameWaitingRooms.put(game.getName(), new GameWaitingRoomUI(session
-					.getUser().getUsername(), game,false));
+					.getUser().getUsername(), game, false));
 			joinGameUI.dispose();
 			waitingRoomUI.setEnabled(true);
 		} catch (FullGameException e) {
@@ -369,7 +370,7 @@ public class Controller {
 		}
 
 	}
-	
+
 	public void leaveGame(String game) {
 		gamesManager.leaveGame(game);
 		gameWaitingRooms.remove(game);
@@ -384,17 +385,17 @@ public class Controller {
 
 	public void userLeaveGame(String gameName, String player) {
 		Game game = gamesManager.searchGame(gameName);
-		gamesManager.userLeaveGame(gameName,player);
-		if(game.isStarted()){
+		gamesManager.userLeaveGame(gameName, player);
+		if (game.isStarted()) {
 			GameUI gameUI = gamesUI.get(gameName);
 			gameUI.userLeaveGame(player);
 			gamesUI.remove(gameName);
-		}else{
+		} else {
 			GameWaitingRoomUI gameUI = gameWaitingRooms.get(gameName);
 			gameUI.userLeaveGame(player);
 		}
 	}
-	
+
 	public User searchUser(String username) {
 		if (session.getUser().getUsername().equalsIgnoreCase(username))
 			return session.getUser();
@@ -408,18 +409,20 @@ public class Controller {
 	}
 
 	public void kickedFromGame(String game) {
-		JOptionPane.showMessageDialog(gameWaitingRooms.get(game), "You haven been kicked from game",
-				"Kicked from game", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(gameWaitingRooms.get(game),
+				"You haven been kicked from game", "Kicked from game",
+				JOptionPane.INFORMATION_MESSAGE);
 		gameWaitingRooms.get(game).dispose();
 	}
-	
+
 	public void changeSlotState(String gameName, int slot, SlotState slotState) {
-		System.out.println("LLAMAOS AL CHANGE SLOT CON EL USUARIO "+session.getUser().getUsername());
-		gamesManager.changeSlotState(gameName,slot,slotState);
+		System.out.println("LLAMAOS AL CHANGE SLOT CON EL USUARIO "
+				+ session.getUser().getUsername());
+		gamesManager.changeSlotState(gameName, slot, slotState);
 	}
 
 	public void slotStateChanged(String gameName, int slot, SlotState state) {
-		System.out.println("HA CAMBIADO EL SLOT DE "+gameName);
+		System.out.println("HA CAMBIADO EL SLOT DE " + gameName);
 		gamesManager.slotStateChanged(gameName, slot, state);
 		GameWaitingRoomUI gameWaitingRoomUI = gameWaitingRooms.get(gameName);
 		gameWaitingRoomUI.slotStateChanged();
@@ -435,23 +438,28 @@ public class Controller {
 		messagesUI = null;
 		waitingRoomUI.setEnabled(true);
 		waitingRoomUI.toFront();
-		
+
 	}
 
 	public void showResetPasswordUI() {
 		resetPasswordUI = new ResetPasswordUI();
-	}	
-	
+	}
+
 	public void resetPassword(String identifier) {
 		try {
 			Client.getProxy().resetPassword(identifier);
-			JOptionPane.showMessageDialog(resetPasswordUI, "Su contraseña ha sido reseteada en breve recibirá un email",
-					"Contraseña reseteada", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane
+					.showMessageDialog(
+							resetPasswordUI,
+							"Su contraseña ha sido reseteada en breve recibirá un email",
+							"Contraseña reseteada",
+							JOptionPane.INFORMATION_MESSAGE);
 			resetPasswordUI.dispose();
 		} catch (InvalidLoggingException e) {
-			JOptionPane.showMessageDialog(resetPasswordUI, "El usuario introducido no existe",
-					"Cuenta errónea", JOptionPane.INFORMATION_MESSAGE);
-		}	
+			JOptionPane.showMessageDialog(resetPasswordUI,
+					"El usuario introducido no existe", "Cuenta errónea",
+					JOptionPane.INFORMATION_MESSAGE);
+		}
 	}
 
 	public void startGame(String game) throws NotEnoughPlayersException {
@@ -469,49 +477,52 @@ public class Controller {
 		gameUI.dispose();
 		gameWaitingRooms.remove(game.getName());
 		game.setStarted(true);
-		switch(game.getTypeGame()){
+		switch (game.getTypeGame()) {
 		case Connect4:
-			GameUI connect4UI = new Connect4UI(session.getUser().getUsername(),game);
-			gamesUI.put(gameName,connect4UI);
+			GameUI connect4UI = new Connect4UI(session.getUser().getUsername(),
+					game);
+			gamesUI.put(gameName, connect4UI);
 			break;
 		case Checkers:
-			GameUI checkersUI = new CheckersUI(session.getUser().getUsername(),game);
+			GameUI checkersUI = new CheckersUI(session.getUser().getUsername(),
+					game);
 			gamesUI.put(gameName, checkersUI);
 			break;
 		case Chess:
-			GameUI chessUI = new ChessUI(session.getUser().getUsername(),game);
+			GameUI chessUI = new ChessUI(session.getUser().getUsername(), game);
 			gamesUI.put(gameName, chessUI);
 			break;
 		case Goose:
-			GameUI gooseUI = new GooseUI(session.getUser().getUsername(),game);
+			GameUI gooseUI = new GooseUI(session.getUser().getUsername(), game);
 			gamesUI.put(gameName, gooseUI);
 			break;
 		case Ludo:
-			GameUI ludoUI = new LudoUI(session.getUser().getUsername(),game);
+			GameUI ludoUI = new LudoUI(session.getUser().getUsername(), game);
 			gamesUI.put(gameName, ludoUI);
 		}
 	}
 
 	public void gameUpdated(String gameName, int[][] board, int nextTurn) {
 		GameUI gameUI = gamesUI.get(gameName);
-		gamesManager.gameUpdated(gameName,board);
+		gamesManager.gameUpdated(gameName, board);
 		gameUI.updateBoard(nextTurn);
 	}
 
-	public void diceGameUpdated(String gameName, int nextTurn,
-			int[][] board, int dice, int movedPiece) {
+	public void diceGameUpdated(String gameName, int nextTurn, int[][] board,
+			int fromSquare, int dice, int movedPiece) {
 		LudoUI gameUI = (LudoUI) gamesUI.get(gameName);
-		gamesManager.gameUpdated(gameName,nextTurn,board);
-		gameUI.updateBoard(dice,movedPiece);
-		
+		gamesManager.gameUpdated(gameName, nextTurn, board);
+		gameUI.updateBoard(fromSquare, dice, movedPiece);
+
 	}
-	
+
 	public void updateGame(String gameName) {
 		gamesManager.updateGame(gameName);
 	}
-	
-	public void updateDiceGame(String gameName, int dice, int piece) {
-		gamesManager.updateDiceGame(gameName,dice,piece);
+
+	public void updateDiceGame(String gameName, int fromSquare, int dice,
+			int piece) {
+		gamesManager.updateDiceGame(gameName, fromSquare, dice, piece);
 	}
 
 	public void gameFinished(String game) {
@@ -521,11 +532,7 @@ public class Controller {
 	}
 
 	public void finishGame(String game, String winnerPlayer) {
-		gamesManager.finishGame(game,winnerPlayer);
+		gamesManager.finishGame(game, winnerPlayer);
 	}
-
-
-
-
 
 }

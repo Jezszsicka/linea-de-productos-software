@@ -164,11 +164,11 @@ public class GamesManager {
 		session.getProxy().updateGame(gameName, player,nextTurn, game.getBoard());		
 	}
 	
-	public void updateDiceGame(String gameName, int dice, int piece) {
+	public void updateDiceGame(String gameName,int fromSquare, int dice, int piece) {
 		Game game = searchGame(gameName);
 		int nextTurn = game.getTurn();
 		String player = session.getUser().getUsername();
-		session.getProxy().updateDiceGame(gameName, player,nextTurn, game.getBoard(),dice,piece);
+		session.getProxy().updateDiceGame(gameName, player,nextTurn, game.getBoard(),fromSquare,dice,piece);
 	}
 	
 	

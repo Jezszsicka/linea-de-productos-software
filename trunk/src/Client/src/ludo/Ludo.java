@@ -37,8 +37,8 @@ public class Ludo {
 	}
 
 	public static int throwDice() {
-		// return 5;
-		return (int) (Math.random() * 6 + 1);
+		return 5;
+		// return (int) (Math.random() * 6 + 1);
 	}
 
 	public static int pieceInSquare(int[][] board, int square, int player) {
@@ -69,22 +69,22 @@ public class Ludo {
 				from = 1;
 				toSquare -= 68;
 			}
-			
+
 			square = squareInfo(board, from);
-			
-			//There is a block on the way
-			if(square.numberOfPieces() == 2)
+
+			// There is a block on the way
+			if (square.numberOfPieces() == 2)
 				return MoveResult.Invalid;
 		}
-		
-		
-		//Catch a piece
+
+		// Catch a piece
 		if (square.numberOfPieces() == 1) {
 			int squareNum = square.getSquare();
-			//Check if the piece is not in a secure
-			if (square.getFirstPiece() != player && squareNum != 12 && squareNum != 63 && squareNum != 46 && squareNum != 29)
+			// Check if the piece is not in a secure
+			if (square.getFirstPiece() != player && squareNum != 12
+					&& squareNum != 63 && squareNum != 46 && squareNum != 29)
 				return MoveResult.Count20;
-			//Block on the target square
+			// Block on the target square
 		} else if (square.numberOfPieces() == 2)
 			return MoveResult.Invalid;
 
@@ -92,83 +92,154 @@ public class Ludo {
 	}
 
 	public static void move(int piece, int squares, int[][] board, int player) {
-		int square;
+
+		int fromSquare = board[player][piece];
+		int toSquare = fromSquare + squares;
+
 		switch (player) {
 		case YELLOW:
-			square = board[YELLOW][piece];
-			if (square >= YELLOW_LAST_SQUARE) {
-				int offset = YELLOW_FINAL_SQUARE - (square + squares);
-				if (offset < 0) // NOS HEMOS PASAO
-					board[YELLOW][piece] = YELLOW_FINAL_SQUARE - offset;
-				else
-					// AUN FALTA PARA LLEGAR o llegmaos justos
-					board[YELLOW][piece] += squares;
-			} else {
-				int toSquare = square + squares;
-				if (toSquare > 68)
-					toSquare -= 68;
-				board[YELLOW][piece] = toSquare;
+			// Caso normal
+			if (fromSquare >= YELLOW_INITIAL_SQUARE
+					&& toSquare <= YELLOW_LAST_SQUARE) {
+				board[player][piece] = toSquare;
+			} else
+			// En las casillas finales
+			if (fromSquare >= 69 && fromSquare <= YELLOW_FINAL_SQUARE - 1) {
+				// Nos pasamos de la casilla final
+				if (toSquare > YELLOW_FINAL_SQUARE) {
+					int offset = toSquare - YELLOW_FINAL_SQUARE;
+					toSquare = YELLOW_FINAL_SQUARE - offset;
+					board[player][piece] = toSquare;
+				}// Llegamos justos o aún quedan casillas
+				else {
+					board[player][piece] = toSquare;
+				}
+			} else
+			// Entramos en las casillas finales
+			if (fromSquare <= YELLOW_LAST_SQUARE
+					&& toSquare > YELLOW_LAST_SQUARE) {
+				board[player][piece] = toSquare;
 			}
-
 			break;
-
 		case RED:
-			square = board[RED][piece];
-			if ((square >= RED_INITIAL_SQUARE && square <= 68)
-					|| (square >= 1 && square <= RED_LAST_SQUARE)) {
-				int toSquare = square + squares;
-				if (toSquare > 68)
-					toSquare -= 68;
-				board[RED][piece] = toSquare;
-			} else {
-				int offset = RED_FINAL_SQUARE - (square + squares);
-				if (offset < 0) // NOS HEMOS PASAO
-					board[RED][piece] = RED_FINAL_SQUARE - offset;
-				else
-					// AUN FALTA PARA LLEGAR o llegmaos justos
-					board[RED][piece] += squares;
+			// Caso normal 39-68 y Caso normal 1-34
+			if ((fromSquare >= RED_INITIAL_SQUARE && toSquare <= 68)
+					|| (fromSquare >= 1 && toSquare <= RED_LAST_SQUARE)) {
+				board[player][piece] = toSquare;
+			} else
+			// Caso normal pasamos del tramo 1 al 2
+			if (fromSquare <= 68 && toSquare > 68) {
+				int squaresToChange = 68 - fromSquare;
+				toSquare = squares - squaresToChange;
+				board[player][piece] = toSquare;
+			} else
+			// En las casillas finales
+			if (fromSquare >= 77 && fromSquare <= RED_FINAL_SQUARE - 1) {
+				// Nos pasamos de la casilla final
+				if (toSquare > RED_FINAL_SQUARE) {
+					int offset = toSquare - RED_FINAL_SQUARE;
+					toSquare = RED_FINAL_SQUARE - offset;
+					board[player][piece] = toSquare;
+				}// Llegamos justos o aún quedan casillas
+				else {
+					board[player][piece] = toSquare;
+				}
+			} else
+			// Entramos en las casillas finales
+			if (fromSquare <= RED_LAST_SQUARE && toSquare > RED_LAST_SQUARE) {
+				int squaresToFinal = RED_LAST_SQUARE - fromSquare;
+				int innerSquares = squares - squaresToFinal;
+				toSquare = 76 + innerSquares;
+				board[player][piece] = toSquare;
 			}
-
 			break;
 		case BLUE:
-			square = board[BLUE][piece];
-
-			if ((square >= BLUE_INITIAL_SQUARE && square <= 68)
-					|| (square >= 1 && square <= BLUE_LAST_SQUARE)) {
-				int toSquare = square + squares;
-				if (toSquare > 68)
-					toSquare -= 68;
-				board[BLUE][piece] = toSquare;
-			} else {
-				int offset = BLUE_FINAL_SQUARE - (square + squares);
-				if (offset < 0) // NOS HEMOS PASAO
-					board[BLUE][piece] = BLUE_FINAL_SQUARE - offset;
-				else
-					// AUN FALTA PARA LLEGAR o llegmaos justos
-					board[BLUE][piece] += squares;
+			// Caso normal 22-68 y Caso normal 1-17
+			if ((fromSquare >= BLUE_INITIAL_SQUARE && toSquare <= 68)
+					|| (fromSquare >= 1 && toSquare <= BLUE_LAST_SQUARE)) {
+				board[player][piece] = toSquare;
+			} else
+			// Caso normal pasamos del tramo 1 al 2
+			if (fromSquare <= 68 && toSquare > 68) {
+				int squaresToChange = 68 - fromSquare;
+				toSquare = squares - squaresToChange;
+				board[player][piece] = toSquare;
+			} else
+			// En las casillas finales
+			if (fromSquare >= 77 && fromSquare <= BLUE_FINAL_SQUARE - 1) {
+				// Nos pasamos de la casilla final
+				if (toSquare > BLUE_FINAL_SQUARE) {
+					int offset = toSquare - BLUE_FINAL_SQUARE;
+					toSquare = BLUE_FINAL_SQUARE - offset;
+					board[player][piece] = toSquare;
+				}// Llegamos justos o aún quedan casillas
+				else {
+					board[player][piece] = toSquare;
+				}
+			} else
+			// Entramos en las casillas finales
+			if (fromSquare <= BLUE_LAST_SQUARE && toSquare > BLUE_LAST_SQUARE) {
+				int squaresToFinal = BLUE_LAST_SQUARE - fromSquare;
+				int innerSquares = squares - squaresToFinal;
+				toSquare = 84 + innerSquares;
+				board[player][piece] = toSquare;
 			}
-
 			break;
 		case GREEN:
-			square = board[GREEN][piece];
-
-			if ((square >= GREEN_INITIAL_SQUARE && square <= 68)
-					|| (square >= 1 && square <= GREEN_LAST_SQUARE)) {
-				int toSquare = square + squares;
-				if (toSquare > 68)
-					toSquare -= 68;
-				board[GREEN][piece] = toSquare;
-			} else {
-				int offset = GREEN_FINAL_SQUARE - (square + squares);
-				if (offset < 0) // NOS HEMOS PASAO
-					board[GREEN][piece] = GREEN_FINAL_SQUARE - offset;
-				else
-					// AUN FALTA PARA LLEGAR o llegmaos justos
-					board[GREEN][piece] += squares;
+			// Caso normal 56-68 y Caso normal 1-51
+			if ((fromSquare >= GREEN_INITIAL_SQUARE && toSquare <= 68)
+					|| (fromSquare >= 1 && toSquare <= GREEN_LAST_SQUARE)) {
+				board[player][piece] = toSquare;
+			} else
+			// Caso normal pasamos del tramo 1 al 2
+			if (fromSquare <= 68 && toSquare > 68) {
+				int squaresToChange = 68 - fromSquare;
+				toSquare = squares - squaresToChange;
+				board[player][piece] = toSquare;
+			} else
+			// En las casillas finales
+			if (fromSquare >= 77 && fromSquare <= GREEN_FINAL_SQUARE - 1) {
+				// Nos pasamos de la casilla final
+				if (toSquare > GREEN_FINAL_SQUARE) {
+					int offset = toSquare - GREEN_FINAL_SQUARE;
+					toSquare = GREEN_FINAL_SQUARE - offset;
+					board[player][piece] = toSquare;
+				}// Llegamos justos o aún quedan casillas
+				else {
+					board[player][piece] = toSquare;
+				}
+			} else
+			// Entramos en las casillas finales
+			if (fromSquare <= GREEN_LAST_SQUARE && toSquare > GREEN_LAST_SQUARE) {
+				int squaresToFinal = GREEN_LAST_SQUARE - fromSquare;
+				int innerSquares = squares - squaresToFinal;
+				toSquare = 93 + innerSquares;
+				board[player][piece] = toSquare;
 			}
-
 			break;
 		}
+
+		//Comprobar si hay que comer la ficha de la casilla en al que se cae
+		Square squareInfo = Ludo.squareInfo(board, toSquare);
+		int squareNum = squareInfo.getSquare();
+		if (squareInfo.numberOfPieces() == 2 && squareNum != 12
+				&& squareNum != 63 && squareNum != 46 && squareNum != 29) {
+			if (squareInfo.getFirstPiece() != player)
+				pieceToHouse(board, squareInfo.getFirstPiece(), squareNum);
+			else if (squareInfo.getSecondPiece() != player)
+				pieceToHouse(board, squareInfo.getSecondPiece(), squareNum);
+
+		}
+
+	}
+
+	private static void pieceToHouse(int[][] board, int player, int squareNum) {
+		for (int i = 0; i < 4; i++)
+			if (board[player][i] == squareNum) {
+				board[player][i] = Ludo.HOUSE;
+				break;
+			}
+
 	}
 
 	public static boolean isWinner(int[][] board, int player) {
@@ -300,6 +371,15 @@ public class Ludo {
 		}
 
 		return info;
+	}
+
+	public static void printState(int[][] board) {
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				System.out.print(board[i][j] + " ");
+			}
+			System.out.println();
+		}
 	}
 
 }

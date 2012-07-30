@@ -180,8 +180,8 @@ public class ServerI extends _ServerDisp{
 
 	@Override
 	public void updateDiceGame(String game, String player, int nextTurn,
-			int[][] board, int dice, int movedPiece, Current __current) {
-		GamesManager.getInstance().updateDiceGame(game,player,nextTurn,board,dice,movedPiece);
+			int[][] board,int fromSquare, int dice, int movedPiece, Current __current) {
+		GamesManager.getInstance().updateDiceGame(game,player,nextTurn,board,fromSquare,dice,movedPiece);
 	}
 	
 	@Override
