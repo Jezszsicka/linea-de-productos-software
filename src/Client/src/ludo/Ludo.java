@@ -37,8 +37,7 @@ public class Ludo {
 	}
 
 	public static int throwDice() {
-		return 5;
-		// return (int) (Math.random() * 6 + 1);
+		return (int) (Math.random() * 6 + 1);
 	}
 
 	public static int pieceInSquare(int[][] board, int square, int player) {
@@ -358,6 +357,32 @@ public class Ludo {
 		return false;
 	}
 
+	public static int piecesInFinalSquare(int [][] board,int player) {
+		int pieces = 0;
+		int finalSquare = 0;
+		
+		switch(player){
+		case YELLOW:
+			finalSquare = YELLOW_FINAL_SQUARE;
+			break;
+		case RED:
+			finalSquare = RED_FINAL_SQUARE;
+			break;
+		case BLUE:
+			finalSquare = BLUE_FINAL_SQUARE;
+			break;
+		case GREEN:
+			finalSquare = GREEN_FINAL_SQUARE;
+			break;
+		}
+		
+		for(int i= 0; i< 4; i++)
+			if(board[player][i]== finalSquare)
+				pieces++;
+		
+		return pieces;
+	}
+	
 	public static Square squareInfo(int[][] board, int square) {
 		Square info = new Square(square);
 
@@ -381,5 +406,7 @@ public class Ludo {
 			System.out.println();
 		}
 	}
+
+
 
 }

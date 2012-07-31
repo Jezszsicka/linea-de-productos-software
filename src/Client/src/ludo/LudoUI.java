@@ -4920,7 +4920,7 @@ public class LudoUI extends JFrame implements GameUI {
 	}
 
 	protected void lbl_82MouseEntered(MouseEvent e) {
-		if (enabledSquares[88])
+		if (enabledSquares[82])
 			setHandCursor();
 	}
 
@@ -6317,8 +6317,14 @@ public class LudoUI extends JFrame implements GameUI {
 	}
 
 	private void setSquareIcon(JLabel lblSquare, Square square) {
-		int pieces = square.numberOfPieces();
 		int squareNum = square.getSquare();
+		int pieces;
+
+		if (squareNum == 76 || squareNum == 84 || squareNum == 92
+				|| squareNum == 100)
+			pieces = Ludo.piecesInFinalSquare(game.getBoard(), playerTurn);
+		else
+			pieces = square.numberOfPieces();
 
 		switch (pieces) {
 		case 0:
@@ -6390,9 +6396,15 @@ public class LudoUI extends JFrame implements GameUI {
 					lblSquare.setIcon(new ImageIcon(LudoUI.class
 							.getResource("/images/Ludo/square_" + squareNum
 									+ "_yellow.png")));
-				else
+				else if (squareNum == 76)
+					lblSquare
+							.setIcon(new ImageIcon(
+									LudoUI.class
+											.getResource("/images/Ludo/Pieces/yellow_final_1_square.png")));
+				else {
 					lblSquare.setIcon(new ImageIcon(LudoUI.class
 							.getResource("/images/Ludo/Pieces/yellow_1.png")));
+				}
 				break;
 			case Ludo.RED:
 				if (squareNum == 8 || squareNum == 9 || squareNum == 25
@@ -6402,6 +6414,11 @@ public class LudoUI extends JFrame implements GameUI {
 					lblSquare.setIcon(new ImageIcon(LudoUI.class
 							.getResource("/images/Ludo/square_" + squareNum
 									+ "_red.png")));
+				else if (squareNum == 84)
+					lblSquare
+							.setIcon(new ImageIcon(
+									LudoUI.class
+											.getResource("/images/Ludo/red_final_1_square.png")));
 				else
 					lblSquare.setIcon(new ImageIcon(LudoUI.class
 							.getResource("/images/Ludo/Pieces/red_1.png")));
@@ -6414,6 +6431,11 @@ public class LudoUI extends JFrame implements GameUI {
 					lblSquare.setIcon(new ImageIcon(LudoUI.class
 							.getResource("/images/Ludo/square_" + squareNum
 									+ "_blue.png")));
+				else if (squareNum == 92)
+					lblSquare
+							.setIcon(new ImageIcon(
+									LudoUI.class
+											.getResource("/images/Ludo/blue_final_1_square.png")));
 				else
 					lblSquare.setIcon(new ImageIcon(LudoUI.class
 							.getResource("/images/Ludo/Pieces/blue_1.png")));
@@ -6426,6 +6448,11 @@ public class LudoUI extends JFrame implements GameUI {
 					lblSquare.setIcon(new ImageIcon(LudoUI.class
 							.getResource("/images/Ludo/square_" + squareNum
 									+ "_green.png")));
+				else if (squareNum == 100)
+					lblSquare
+							.setIcon(new ImageIcon(
+									LudoUI.class
+											.getResource("/images/Ludo/green_final_1_square.png")));
 				else
 					lblSquare.setIcon(new ImageIcon(LudoUI.class
 							.getResource("/images/Ludo/Pieces/green_1.png")));
@@ -6445,6 +6472,10 @@ public class LudoUI extends JFrame implements GameUI {
 			if (squareNum <= 68)
 				lblSquare.setText(String.valueOf(square.getSquare()));
 
+			if (squareNum == 17 || squareNum == 34 || squareNum == 51
+					|| squareNum == 68)
+				lblSquare.setText(null);
+
 			break;
 		case 2:
 
@@ -6452,13 +6483,25 @@ public class LudoUI extends JFrame implements GameUI {
 			if (square.getFirstPiece() == square.getSecondPiece()) {
 				switch (square.getFirstPiece()) {
 				case Ludo.YELLOW:
-					if ((squareNum >= 1 && squareNum <= 7)
+					if (squareNum == 76)
+						lblSquare
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/yellow_final_2_square.png")));
+					else if ((squareNum >= 1 && squareNum <= 7)
 							|| (squareNum >= 27 && squareNum <= 41)
 							|| (squareNum >= 61 && squareNum <= 75)) {
 						lblSquare
 								.setIcon(new ImageIcon(
 										LudoUI.class
 												.getResource("/images/Ludo/Pieces/yellow_2.png")));
+					} else if (squareNum == 8 || squareNum == 9
+							|| squareNum == 25 || squareNum == 26
+							|| squareNum == 42 || squareNum == 43
+							|| squareNum == 59 || squareNum == 60) {
+						lblSquare.setIcon(new ImageIcon(LudoUI.class
+								.getResource("/images/Ludo/square_" + squareNum
+										+ "_yellow_2.png")));
 					} else {
 						lblSquare
 								.setIcon(new ImageIcon(
@@ -6468,12 +6511,24 @@ public class LudoUI extends JFrame implements GameUI {
 
 					break;
 				case Ludo.RED:
-					if ((squareNum >= 1 && squareNum <= 7)
+					if (squareNum == 84)
+						lblSquare
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/red_final_2_square.png")));
+					else if ((squareNum >= 1 && squareNum <= 7)
 							|| (squareNum >= 27 && squareNum <= 41)
 							|| (squareNum >= 61 && squareNum <= 68)
 							|| (squareNum >= 77 && squareNum <= 83)) {
 						lblSquare.setIcon(new ImageIcon(LudoUI.class
 								.getResource("/images/Ludo/Pieces/red_2.png")));
+					} else if (squareNum == 8 || squareNum == 9
+							|| squareNum == 25 || squareNum == 26
+							|| squareNum == 42 || squareNum == 43
+							|| squareNum == 59 || squareNum == 60) {
+						lblSquare.setIcon(new ImageIcon(LudoUI.class
+								.getResource("/images/Ludo/square_" + squareNum
+										+ "_red_2.png")));
 					} else {
 						lblSquare
 								.setIcon(new ImageIcon(
@@ -6482,13 +6537,25 @@ public class LudoUI extends JFrame implements GameUI {
 					}
 					break;
 				case Ludo.BLUE:
-					if ((squareNum >= 1 && squareNum <= 7)
+					if (squareNum == 92)
+						lblSquare
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/blue_final_2_square.png")));
+					else if ((squareNum >= 1 && squareNum <= 7)
 							|| (squareNum >= 27 && squareNum <= 41)
 							|| (squareNum >= 61 && squareNum <= 68)) {
 						lblSquare
 								.setIcon(new ImageIcon(
 										LudoUI.class
 												.getResource("/images/Ludo/Pieces/blue_2.png")));
+					} else if (squareNum == 8 || squareNum == 9
+							|| squareNum == 25 || squareNum == 26
+							|| squareNum == 42 || squareNum == 43
+							|| squareNum == 59 || squareNum == 60) {
+						lblSquare.setIcon(new ImageIcon(LudoUI.class
+								.getResource("/images/Ludo/square_" + squareNum
+										+ "_blue_2.png")));
 					} else {
 						lblSquare
 								.setIcon(new ImageIcon(
@@ -6497,13 +6564,25 @@ public class LudoUI extends JFrame implements GameUI {
 					}
 					break;
 				case Ludo.GREEN:
-					if ((squareNum >= 1 && squareNum <= 7)
+					if (squareNum == 100)
+						lblSquare
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/yellow_final_2_square.png")));
+					else if ((squareNum >= 1 && squareNum <= 7)
 							|| (squareNum >= 27 && squareNum <= 41)
 							|| (squareNum >= 61 && squareNum <= 68)) {
 						lblSquare
 								.setIcon(new ImageIcon(
 										LudoUI.class
 												.getResource("/images/Ludo/Pieces/green_2.png")));
+					} else if (squareNum == 8 || squareNum == 9
+							|| squareNum == 25 || squareNum == 26
+							|| squareNum == 42 || squareNum == 43
+							|| squareNum == 59 || squareNum == 60) {
+						lblSquare.setIcon(new ImageIcon(LudoUI.class
+								.getResource("/images/Ludo/square_" + squareNum
+										+ "_green_2.png")));
 					} else {
 						lblSquare
 								.setIcon(new ImageIcon(
@@ -6518,6 +6597,14 @@ public class LudoUI extends JFrame implements GameUI {
 					.getSecondPiece() == Ludo.RED)
 					|| (square.getFirstPiece() == Ludo.RED && square
 							.getSecondPiece() == Ludo.YELLOW)) {
+				if (squareNum == 8 || squareNum == 9 || squareNum == 25
+						|| squareNum == 26 || squareNum == 42
+						|| squareNum == 43 || squareNum == 59
+						|| squareNum == 60) {
+					lblSquare.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/square_" + squareNum
+									+ "_yellow_red.png")));
+				} else
 
 				if ((squareNum >= 1 && squareNum <= 7)
 						|| (squareNum >= 27 && squareNum <= 41)
@@ -6539,6 +6626,14 @@ public class LudoUI extends JFrame implements GameUI {
 					.getSecondPiece() == Ludo.BLUE)
 					|| (square.getFirstPiece() == Ludo.BLUE && square
 							.getSecondPiece() == Ludo.YELLOW)) {
+				if (squareNum == 8 || squareNum == 9 || squareNum == 25
+						|| squareNum == 26 || squareNum == 42
+						|| squareNum == 43 || squareNum == 59
+						|| squareNum == 60) {
+					lblSquare.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/square_" + squareNum
+									+ "_yellow_blue.png")));
+				} else
 
 				if ((squareNum >= 1 && squareNum <= 7)
 						|| (squareNum >= 27 && squareNum <= 41)
@@ -6561,7 +6656,14 @@ public class LudoUI extends JFrame implements GameUI {
 					|| (square.getFirstPiece() == Ludo.GREEN && square
 							.getSecondPiece() == Ludo.YELLOW)) {
 
-				if ((squareNum >= 1 && squareNum <= 7)
+				if (squareNum == 8 || squareNum == 9 || squareNum == 25
+						|| squareNum == 26 || squareNum == 42
+						|| squareNum == 43 || squareNum == 59
+						|| squareNum == 60) {
+					lblSquare.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/square_" + squareNum
+									+ "_yellow_green.png")));
+				} else if ((squareNum >= 1 && squareNum <= 7)
 						|| (squareNum >= 27 && squareNum <= 41)
 						|| (squareNum >= 61 && squareNum <= 68)) {
 					lblSquare
@@ -6581,7 +6683,15 @@ public class LudoUI extends JFrame implements GameUI {
 					|| (square.getFirstPiece() == Ludo.BLUE && square
 							.getSecondPiece() == Ludo.RED)) {
 
-				if ((squareNum >= 1 && squareNum <= 7)
+				if (squareNum == 8 || squareNum == 9 || squareNum == 25
+						|| squareNum == 26 || squareNum == 42
+						|| squareNum == 43 || squareNum == 59
+						|| squareNum == 60) {
+					lblSquare.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/square_" + squareNum
+									+ "_red_blue.png")));
+
+				} else if ((squareNum >= 1 && squareNum <= 7)
 						|| (squareNum >= 27 && squareNum <= 41)
 						|| (squareNum >= 61 && squareNum <= 68)) {
 					lblSquare.setIcon(new ImageIcon(LudoUI.class
@@ -6598,6 +6708,15 @@ public class LudoUI extends JFrame implements GameUI {
 			if ((square.getFirstPiece() == Ludo.RED && square.getSecondPiece() == Ludo.GREEN)
 					|| (square.getFirstPiece() == Ludo.GREEN && square
 							.getSecondPiece() == Ludo.RED)) {
+
+				if (squareNum == 8 || squareNum == 9 || squareNum == 25
+						|| squareNum == 26 || squareNum == 42
+						|| squareNum == 43 || squareNum == 59
+						|| squareNum == 60) {
+					lblSquare.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/square_" + squareNum
+									+ "_red_green.png")));
+				} else
 
 				if ((squareNum >= 1 && squareNum <= 7)
 						|| (squareNum >= 27 && squareNum <= 41)
@@ -6617,6 +6736,15 @@ public class LudoUI extends JFrame implements GameUI {
 					|| (square.getFirstPiece() == Ludo.GREEN && square
 							.getSecondPiece() == Ludo.BLUE)) {
 
+				if (squareNum == 8 || squareNum == 9 || squareNum == 25
+						|| squareNum == 26 || squareNum == 42
+						|| squareNum == 43 || squareNum == 59
+						|| squareNum == 60) {
+					lblSquare.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/square_" + squareNum
+									+ "_blue_green.png")));
+				} else
+
 				if ((squareNum >= 1 && squareNum <= 7)
 						|| (squareNum >= 27 && squareNum <= 41)
 						|| (squareNum >= 61 && squareNum <= 68)) {
@@ -6635,6 +6763,50 @@ public class LudoUI extends JFrame implements GameUI {
 
 			lblSquare.setHorizontalAlignment(SwingConstants.CENTER);
 			lblSquare.setText(null);
+			break;
+		case 3:
+			switch (playerTurn) {
+			case Ludo.YELLOW:
+				lblSquare
+						.setIcon(new ImageIcon(
+								LudoUI.class
+										.getResource("/images/Ludo/yellow_final_3_square.png")));
+				break;
+			case Ludo.RED:
+				lblSquare.setIcon(new ImageIcon(LudoUI.class
+						.getResource("/images/Ludo/red_final_3_square.png")));
+				break;
+			case Ludo.BLUE:
+				lblSquare.setIcon(new ImageIcon(LudoUI.class
+						.getResource("/images/Ludo/blue_final_3_square.png")));
+				break;
+			case Ludo.GREEN:
+				lblSquare.setIcon(new ImageIcon(LudoUI.class
+						.getResource("/images/Ludo/green_final_3_square.png")));
+				break;
+			}
+			break;
+		case 4:
+			switch (playerTurn) {
+			case Ludo.YELLOW:
+				lblSquare
+						.setIcon(new ImageIcon(
+								LudoUI.class
+										.getResource("/images/Ludo/yellow_final_4_square.png")));
+				break;
+			case Ludo.RED:
+				lblSquare.setIcon(new ImageIcon(LudoUI.class
+						.getResource("/images/Ludo/red_final_4_square.png")));
+				break;
+			case Ludo.BLUE:
+				lblSquare.setIcon(new ImageIcon(LudoUI.class
+						.getResource("/images/Ludo/blue_final_4_square.png")));
+				break;
+			case Ludo.GREEN:
+				lblSquare.setIcon(new ImageIcon(LudoUI.class
+						.getResource("/images/Ludo/green_final_4_square.png")));
+				break;
+			}
 			break;
 		}
 	}
