@@ -219,7 +219,11 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				User user = Controller.getInstance().searchUser(
 						slot.getPlayer());
 				playerPanel.setPlayer(user.getUsername());
-				playerPanel.setAvatar(new ImageIcon(user.getAvatar()));
+				ImageIcon image = new ImageIcon(user.getAvatar());
+				image = new ImageIcon(image.getImage().getScaledInstance(
+						userIconLabelWidth, userIconLabelHeight,
+						Image.SCALE_SMOOTH));
+				playerPanel.setAvatar(image);
 				playerPanel.setCountry(user.getCountry());
 				break;
 			case Empty:

@@ -1,6 +1,5 @@
 package ludo;
 
-import constants.Constants;
 
 public class Ludo {
 
@@ -53,15 +52,16 @@ public class Ludo {
 		return piece;
 	}
 
-	public static MoveResult validateMove(int piece, int squares,
+	public static boolean validateMove(int piece, int squares,
 			int[][] board, int player) {
-		int fromSquare = board[player][piece];
+		/*int fromSquare = board[player][piece];
 		int toSquare = fromSquare + squares;
 
 		if (toSquare > 68 && fromSquare <= 68 && player != YELLOW)
 			toSquare = toSquare - 68;
 
 		Square square = squareInfo(board, toSquare);
+		int squareNum = square.getSquare();
 
 		for (int from = fromSquare + 1; from <= toSquare; from++) {
 			if (toSquare > 68 && fromSquare <= 68 && from > 68) {
@@ -78,19 +78,311 @@ public class Ludo {
 
 		// Catch a piece
 		if (square.numberOfPieces() == 1) {
-			int squareNum = square.getSquare();
 			// Check if the piece is not in a secure
-			if (square.getFirstPiece() != player && squareNum != 12
-					&& squareNum != 63 && squareNum != 46 && squareNum != 29)
+			if (square.getFirstPiece() != player && squareNum != 5
+					&& squareNum != 12 && squareNum != 22 && squareNum != 29
+					&& squareNum != 39 && squareNum != 46 && squareNum != 56
+					&& squareNum != 63)
 				return MoveResult.Count20;
 			// Block on the target square
-		} else if (square.numberOfPieces() == 2)
+		} else if (square.numberOfPieces() == 2 && squareNum != 76
+				&& squareNum != 84 && squareNum != 92 && squareNum != 100)
 			return MoveResult.Invalid;
 
-		return MoveResult.Valid;
+		return MoveResult.Valid;*/
+		
+		int fromSquare = board[player][piece];
+		int toSquare = fromSquare + squares;
+		Square square;
+
+		switch (player) {
+		case YELLOW:
+			// Caso normal
+			if (fromSquare >= YELLOW_INITIAL_SQUARE
+					&& toSquare <= YELLOW_LAST_SQUARE) {
+				
+				for (int from = fromSquare + 1; from <= toSquare; from++) {
+					square = squareInfo(board, from);
+					if (square.numberOfPieces() == 2)
+						return false;
+				}
+				
+			} else
+			// En las casillas finales
+			if (fromSquare >= 69 && fromSquare <= YELLOW_FINAL_SQUARE - 1) {
+				// Nos pasamos de la casilla final
+				if (toSquare > YELLOW_FINAL_SQUARE) {
+					int offset = toSquare - YELLOW_FINAL_SQUARE;
+					toSquare = YELLOW_FINAL_SQUARE - offset;
+					
+					for (int from = fromSquare + 1; from <= YELLOW_FINAL_SQUARE-1; from++) {
+						square = squareInfo(board, from);
+						if (square.numberOfPieces() == 2)
+							return false;
+					}
+					
+					for (int from = YELLOW_FINAL_SQUARE-1; from >= toSquare; from--) {
+						square = squareInfo(board, from);
+						if (square.numberOfPieces() == 2)
+							return false;
+					}
+					
+					
+					
+				}// Llegamos justos o aún quedan casillas
+				else {
+					for (int from = fromSquare + 1; from <= toSquare; from++) {
+						square = squareInfo(board, from);
+						if (square.numberOfPieces() == 2 && from != YELLOW_FINAL_SQUARE)
+							return false;
+					}
+				}
+			} else
+			// Entramos en las casillas finales
+			if (fromSquare <= YELLOW_LAST_SQUARE
+					&& toSquare > YELLOW_LAST_SQUARE) {
+				
+				for (int from = fromSquare + 1; from <= toSquare; from++) {
+					square = squareInfo(board, from);
+					if (square.numberOfPieces() == 2)
+						return false;
+				}
+			}
+			break;
+		case RED:
+			// Caso normal 39-68 y Caso normal 1-34
+			if ((fromSquare >= RED_INITIAL_SQUARE && toSquare <= 68)
+					|| (fromSquare >= 1 && toSquare <= RED_LAST_SQUARE)) {
+				
+				for (int from = fromSquare + 1; from <= toSquare; from++) {
+					square = squareInfo(board, from);
+					if (square.numberOfPieces() == 2)
+						return false;
+				}
+				
+			} else
+			// Caso normal pasamos del tramo 1 al 2
+			if (fromSquare <= 68 && toSquare > 68) {
+				for (int from = fromSquare + 1; from <= toSquare; from++) {
+					if (toSquare > 68 && fromSquare <= 68 && from > 68) {
+						from = 1;
+						toSquare -= 68;
+					}
+
+					square = squareInfo(board, from);
+
+					if (square.numberOfPieces() == 2)
+						return false;
+				}
+			} else
+			// En las casillas finales
+			if (fromSquare >= 77 && fromSquare <= RED_FINAL_SQUARE - 1) {
+				// Nos pasamos de la casilla final
+				if (toSquare > RED_FINAL_SQUARE) {
+					int offset = toSquare - RED_FINAL_SQUARE;
+					toSquare = RED_FINAL_SQUARE - offset;
+					
+					for (int from = fromSquare + 1; from <= RED_FINAL_SQUARE-1; from++) {
+						square = squareInfo(board, from);
+						if (square.numberOfPieces() == 2)
+							return false;
+					}
+					
+					for (int from = RED_FINAL_SQUARE-1; from >= toSquare; from--) {
+						square = squareInfo(board, from);
+						if (square.numberOfPieces() == 2)
+							return false;
+					}
+					
+				}// Llegamos justos o aún quedan casillas
+				else {
+					for (int from = fromSquare + 1; from <= toSquare; from++) {
+						square = squareInfo(board, from);
+						if (square.numberOfPieces() == 2)
+							return false;
+					}
+				}
+			} else
+			// Entramos en las casillas finales
+			if (fromSquare <= RED_LAST_SQUARE && toSquare > RED_LAST_SQUARE) {
+				int squaresToFinal = RED_LAST_SQUARE - fromSquare;
+				int innerSquares = squares - squaresToFinal;
+				toSquare = 76 + innerSquares;
+				
+				for (int from = fromSquare + 1; from <= RED_LAST_SQUARE; from++) {
+					square = squareInfo(board, from);
+					if (square.numberOfPieces() == 2)
+						return false;
+				}
+				
+				for (int from = 77; from <= toSquare; from++) {
+					square = squareInfo(board, from);
+					if (square.numberOfPieces() == 2)
+						return false;
+				}
+				
+			}
+			break;
+		case BLUE:
+			// Caso normal 22-68 y Caso normal 1-17
+			if ((fromSquare >= BLUE_INITIAL_SQUARE && toSquare <= 68)
+					|| (fromSquare >= 1 && toSquare <= BLUE_LAST_SQUARE)) {
+				for (int from = fromSquare + 1; from <= toSquare; from++) {
+					square = squareInfo(board, from);
+					if (square.numberOfPieces() == 2)
+						return false;
+				}
+			} else
+			// Caso normal pasamos del tramo 1 al 2
+			if (fromSquare <= 68 && toSquare > 68) {
+				int squaresToChange = 68 - fromSquare;
+				toSquare = squares - squaresToChange;
+
+				for (int from = fromSquare + 1; from <= toSquare; from++) {
+					if (toSquare > 68 && fromSquare <= 68 && from > 68) {
+						from = 1;
+						toSquare -= 68;
+					}
+
+					square = squareInfo(board, from);
+
+					if (square.numberOfPieces() == 2)
+						return false;
+				}
+				
+			} else
+			// En las casillas finales
+			if (fromSquare >= 77 && fromSquare <= BLUE_FINAL_SQUARE - 1) {
+				// Nos pasamos de la casilla final
+				if (toSquare > BLUE_FINAL_SQUARE) {
+					int offset = toSquare - BLUE_FINAL_SQUARE;
+					toSquare = BLUE_FINAL_SQUARE - offset;
+					
+					for (int from = fromSquare + 1; from <= BLUE_FINAL_SQUARE-1; from++) {
+						square = squareInfo(board, from);
+						if (square.numberOfPieces() == 2)
+							return false;
+					}
+					
+					for (int from = BLUE_FINAL_SQUARE-1; from >= toSquare; from--) {
+						square = squareInfo(board, from);
+						if (square.numberOfPieces() == 2)
+							return false;
+					}
+					
+				}// Llegamos justos o aún quedan casillas
+				else {
+					for (int from = fromSquare + 1; from <= toSquare; from++) {
+						square = squareInfo(board, from);
+						if (square.numberOfPieces() == 2)
+							return false;
+					}
+				}
+			} else
+			// Entramos en las casillas finales
+			if (fromSquare <= BLUE_LAST_SQUARE && toSquare > BLUE_LAST_SQUARE) {
+				int squaresToFinal = BLUE_LAST_SQUARE - fromSquare;
+				int innerSquares = squares - squaresToFinal;
+				toSquare = 84 + innerSquares;
+				
+				for (int from = fromSquare + 1; from <= BLUE_LAST_SQUARE; from++) {
+					square = squareInfo(board, from);
+					if (square.numberOfPieces() == 2)
+						return false;
+				}
+				
+				for (int from = 85; from <= toSquare; from++) {
+					square = squareInfo(board, from);
+					if (square.numberOfPieces() == 2)
+						return false;
+				}
+			}
+			break;
+		case GREEN:
+			// Caso normal 56-68 y Caso normal 1-51
+			if ((fromSquare >= GREEN_INITIAL_SQUARE && toSquare <= 68)
+					|| (fromSquare >= 1 && toSquare <= GREEN_LAST_SQUARE)) {
+				
+				for (int from = fromSquare + 1; from <= toSquare; from++) {
+					square = squareInfo(board, from);
+					if (square.numberOfPieces() == 2)
+						return false;
+				}
+				
+			} else
+			// Caso normal pasamos del tramo 1 al 2
+			if (fromSquare <= 68 && toSquare > 68) {
+				int squaresToChange = 68 - fromSquare;
+				toSquare = squares - squaresToChange;
+				
+				for (int from = fromSquare + 1; from <= toSquare; from++) {
+					if (toSquare > 68 && fromSquare <= 68 && from > 68) {
+						from = 1;
+						toSquare -= 68;
+					}
+
+					square = squareInfo(board, from);
+
+					if (square.numberOfPieces() == 2)
+						return false;
+				}
+				
+			} else
+			// En las casillas finales
+			if (fromSquare >= 77 && fromSquare <= GREEN_FINAL_SQUARE - 1) {
+				// Nos pasamos de la casilla final
+				if (toSquare > GREEN_FINAL_SQUARE) {
+					int offset = toSquare - GREEN_FINAL_SQUARE;
+					toSquare = GREEN_FINAL_SQUARE - offset;
+					
+					for (int from = fromSquare + 1; from <= GREEN_FINAL_SQUARE-1; from++) {
+						square = squareInfo(board, from);
+						if (square.numberOfPieces() == 2)
+							return false;
+					}
+					
+					for (int from = GREEN_FINAL_SQUARE-1; from >= toSquare; from--) {
+						square = squareInfo(board, from);
+						if (square.numberOfPieces() == 2)
+							return false;
+					}
+					
+				}// Llegamos justos o aún quedan casillas
+				else {
+					for (int from = fromSquare + 1; from <= toSquare; from++) {
+						square = squareInfo(board, from);
+						if (square.numberOfPieces() == 2)
+							return false;
+					}
+				}
+			} else
+			// Entramos en las casillas finales
+			if (fromSquare <= GREEN_LAST_SQUARE && toSquare > GREEN_LAST_SQUARE) {
+				int squaresToFinal = GREEN_LAST_SQUARE - fromSquare;
+				int innerSquares = squares - squaresToFinal;
+				toSquare = 93 + innerSquares;
+
+				for (int from = fromSquare + 1; from <= GREEN_LAST_SQUARE; from++) {
+					square = squareInfo(board, from);
+					if (square.numberOfPieces() == 2)
+						return false;
+				}
+				
+				for (int from = 93; from <= toSquare; from++) {
+					square = squareInfo(board, from);
+					if (square.numberOfPieces() == 2)
+						return false;
+				}
+			}
+			break;
+			
+		}
+		
+		return true;
+		
 	}
 
-	public static void move(int piece, int squares, int[][] board, int player) {
+	public static boolean move(int piece, int squares, int[][] board, int player) {
 
 		int fromSquare = board[player][piece];
 		int toSquare = fromSquare + squares;
@@ -218,18 +510,25 @@ public class Ludo {
 			break;
 		}
 
-		//Comprobar si hay que comer la ficha de la casilla en al que se cae
+		// Comprobar si hay que comer la ficha de la casilla en al que se cae
 		Square squareInfo = Ludo.squareInfo(board, toSquare);
 		int squareNum = squareInfo.getSquare();
-		if (squareInfo.numberOfPieces() == 2 && squareNum != 12
-				&& squareNum != 63 && squareNum != 46 && squareNum != 29) {
-			if (squareInfo.getFirstPiece() != player)
+		if (squareInfo.numberOfPieces() == 2 && squareNum != 5
+				&& squareNum != 12 && squareNum != 22 && squareNum != 29
+				&& squareNum != 39 && squareNum != 46 && squareNum != 56
+				&& squareNum != 63) {
+			if (squareInfo.getFirstPiece() != player){
 				pieceToHouse(board, squareInfo.getFirstPiece(), squareNum);
-			else if (squareInfo.getSecondPiece() != player)
+				return true;
+			}
+			else if (squareInfo.getSecondPiece() != player){
 				pieceToHouse(board, squareInfo.getSecondPiece(), squareNum);
+				return true;
+			}
 
 		}
 
+		return false;
 	}
 
 	private static void pieceToHouse(int[][] board, int player, int squareNum) {
@@ -357,11 +656,11 @@ public class Ludo {
 		return false;
 	}
 
-	public static int piecesInFinalSquare(int [][] board,int player) {
+	public static int piecesInFinalSquare(int[][] board, int player) {
 		int pieces = 0;
 		int finalSquare = 0;
-		
-		switch(player){
+
+		switch (player) {
 		case YELLOW:
 			finalSquare = YELLOW_FINAL_SQUARE;
 			break;
@@ -375,14 +674,14 @@ public class Ludo {
 			finalSquare = GREEN_FINAL_SQUARE;
 			break;
 		}
-		
-		for(int i= 0; i< 4; i++)
-			if(board[player][i]== finalSquare)
+
+		for (int i = 0; i < 4; i++)
+			if (board[player][i] == finalSquare)
 				pieces++;
-		
+
 		return pieces;
 	}
-	
+
 	public static Square squareInfo(int[][] board, int square) {
 		Square info = new Square(square);
 
@@ -406,7 +705,5 @@ public class Ludo {
 			System.out.println();
 		}
 	}
-
-
 
 }
