@@ -62,6 +62,7 @@ module ProductLine {
 
 	["java:getset"]
 	class Ranking {
+		["protected"] int idRanking;
 		["protected"] int wonGames;
 		["protected"] int lostGames;
 		["protected"] GameType game;

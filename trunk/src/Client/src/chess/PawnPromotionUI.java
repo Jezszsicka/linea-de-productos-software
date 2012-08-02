@@ -100,7 +100,7 @@ public class PawnPromotionUI extends javax.swing.JFrame {
 			lblNext = new JLabel();
 			lblNext.setBounds(146, 55, 50, 50);
 			lblNext.setIcon(new ImageIcon(PawnPromotionUI.class
-					.getResource("/images/Forward.png")));
+					.getResource("/images/Chess/Forward.png")));
 			lblNext.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lblNextMouseClicked(evt);
@@ -115,7 +115,7 @@ public class PawnPromotionUI extends javax.swing.JFrame {
 			lblPrevious = new JLabel();
 			lblPrevious.setBounds(16, 55, 50, 50);
 			lblPrevious.setIcon(new ImageIcon(PawnPromotionUI.class
-					.getResource("/images/Backward.png")));
+					.getResource("/images/Chess/Backward.png")));
 			lblPrevious.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					lblPreviousMouseClicked(evt);

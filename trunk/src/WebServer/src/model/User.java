@@ -1,7 +1,10 @@
 package model;
 
 import java.util.Arrays;
+import java.util.List;
 
+import ProductLine.Message;
+import ProductLine.Ranking;
 import ProductLine.RoleType;
 
 @SuppressWarnings("serial")
@@ -25,6 +28,24 @@ public class User extends ProductLine.User {
 		this.role = role;
 		this.country = country;
 		this.avatar = avatar;
+	}
+
+	public User(String username, String name, String lastName, String password,
+			String email, RoleType role, int country, byte[] avatar,
+			List<String> friends,
+			List<Ranking> rankings, List<Message> messages) {
+		this.username = username;
+		this.name = name;
+		this.lastName = lastName;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		this.country = country;
+		this.avatar = avatar;
+		this.friends = friends;
+		this.rankings = rankings;
+		this.messages = messages;
+
 	}
 
 	@Override

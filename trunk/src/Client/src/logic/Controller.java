@@ -534,5 +534,5 @@ public class Controller {
 	public void finishGame(String game, String winnerPlayer) {
 		gamesManager.finishGame(game, winnerPlayer);
 	}
-
+	
 }

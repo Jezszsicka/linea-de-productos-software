@@ -209,6 +209,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private boolean count20;
 	private ThrowDiceThread throwDice;
 	private JButton btnNewButton;
+	private JLabel lblYellowPlayerCountry;
 
 	public LudoUI(String username, Game game) {
 		this.username = username;
@@ -406,6 +407,7 @@ public class LudoUI extends JFrame implements GameUI {
 			pnlYellowPlayer.add(getLblYellowPiece2());
 			pnlYellowPlayer.add(getLblYellowPiece3());
 			pnlYellowPlayer.add(getLblYellowPiece4());
+			pnlYellowPlayer.add(getLblYellowPlayerCountry());
 		}
 		return pnlYellowPlayer;
 	}
@@ -7328,4 +7330,15 @@ public class LudoUI extends JFrame implements GameUI {
 		Ludo.printState(game.getBoard());
 	}
 
+	private JLabel getLblYellowPlayerCountry() {
+		if (lblYellowPlayerCountry == null) {
+			lblYellowPlayerCountry = new JLabel("");
+			lblYellowPlayerCountry.setIcon(new ImageIcon(LudoUI.class
+					.getResource("/images/Flags/es_small.png")));
+			lblYellowPlayerCountry
+					.setHorizontalAlignment(SwingConstants.CENTER);
+			lblYellowPlayerCountry.setBounds(120, 11, 46, 20);
+		}
+		return lblYellowPlayerCountry;
+	}
 }

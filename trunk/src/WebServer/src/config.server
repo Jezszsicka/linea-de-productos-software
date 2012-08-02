@@ -3,8 +3,8 @@
 # "Callback.Server". The following line sets the endpoints for this
 # adapter.
 #
-#ProductLine.Server.Endpoints=tcp -h 192.168.1.12 -p 9997
-ProductLine.Server.Endpoints=tcp -p 9997
+ProductLine.Server.Endpoints=tcp -h 192.168.1.12 -p 9997
+#ProductLine.Server.Endpoints=tcp -p 9997
 #
 # Warn about connection exceptions
 #

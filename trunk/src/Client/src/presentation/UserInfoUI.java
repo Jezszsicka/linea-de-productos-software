@@ -70,11 +70,6 @@ public class UserInfoUI extends javax.swing.JFrame {
 		language = LanguageManager.language();
 		initGUI();
 
-		ArrayList<Ranking> rank = new ArrayList<Ranking>();
-		rank.add(new Ranking(20, 5, GameType.Checkers));
-		rank.add(new Ranking(20, 67, GameType.Chess));
-		user.setRankings(rank);
-
 		loadRankings(user);
 		lblUserNickname.setText(user.getUsername());
 		lblUserName.setText(user.getName() + " " + user.getLastName());
@@ -104,15 +99,44 @@ public class UserInfoUI extends javax.swing.JFrame {
 			format.setMaximumFractionDigits(1);
 			format.setMinimumFractionDigits(1);
 			Ranking ranking = user.getRankings().get(i);
-			JLabel lblGame = new JLabel(ranking.getGame().toString());
-			JLabel lblPlayed = new JLabel(String.valueOf(ranking.getWonGames()
-					+ ranking.getLostGames()));
-			JLabel lblWon = new JLabel(String.valueOf(ranking.getWonGames()));
-			JLabel lblLost = new JLabel(String.valueOf(ranking.getLostGames()));
-			JLabel lblRate = new JLabel(String.valueOf(format.format(ranking
-					.getWonGames()
-					/ Double.parseDouble(lblPlayed.getText())
-					* 100) + " %"));
+
+			int played = ranking.getWonGames() + ranking.getLostGames();
+			int won = ranking.getWonGames();
+			int lost = ranking.getLostGames();
+			double rate;
+
+			if (played == 0)
+				rate = 0;
+			else
+				rate = won / played * 100;
+
+			String txtGame = null;
+
+			switch (ranking.getGame()) {
+			case Checkers:
+				txtGame = "Damas";
+				break;
+			case Chess:
+				txtGame = "Ajedrez";
+				break;
+			case Connect4:
+				txtGame = "Conecta 4";
+				break;
+			case Goose:
+				txtGame = "Oca";
+				break;
+			case Ludo:
+				txtGame = "Parchís";
+				break;
+			}
+
+			JLabel lblGame = new JLabel(txtGame);
+			JLabel lblPlayed = new JLabel(String.valueOf(played));
+			JLabel lblWon = new JLabel(String.valueOf(won));
+			JLabel lblLost = new JLabel(String.valueOf(lost));
+			JLabel lblRate = new JLabel(String.valueOf(format.format(rate))
+					+ " %");
+
 			lblGame.setBounds(0, 25 + i * lblRankingHeight, lblRankingWidth,
 					lblRankingHeight);
 			lblGame.setHorizontalTextPosition(SwingConstants.CENTER);

@@ -3,21 +3,22 @@
                                    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
 	<class name="ProductLine.Ranking" table="RANKINGS">
-	<!--  	<id column="game" name="game">
+		<id column="idRanking" name="idRanking" type="int">
+			<generator class="native" />
+		</id>
+
+		<property name="game">
+			<column name="GAME" />
 			<type name="org.hibernate.type.EnumType">
 				<param name="enumClass">ProductLine.GameType</param>
 				<param name="type">12</param>
 			</type>
-			<generator class="assigned" />
-		</id>
-		<property generated="never" lazy="false" name="wonGames"
-			type="int">
+
+		</property>
+		<property name="wonGames" type="int">
 			<column name="WONGAMES" />
-		</property>-->
-		 <id name="wonGames" type="int"> <column name="WONGAMES" /> <generator 
-			class="assigned" /> </id>
-		<property generated="never" lazy="false" name="lostGames"
-			type="int">
+		</property>
+		<property name="lostGames" type="int">
 			<column name="LOSTGAMES" />
 		</property>
 	</class>

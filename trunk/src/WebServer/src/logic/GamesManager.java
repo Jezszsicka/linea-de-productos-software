@@ -8,10 +8,12 @@ import java.util.List;
 
 import model.Game;
 import model.Session;
+import model.User;
 import ProductLine.Filter;
 import ProductLine.FullGameException;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
+import ProductLine.Ranking;
 import ProductLine.Slot;
 import ProductLine.SlotState;
 
@@ -369,7 +371,6 @@ public class GamesManager {
 	public void updateDiceGame(String gameName, String player, int nextTurn,
 			int[][] board, int fromSquare,int dice, int movedPiece) {
 		
-		//TODO Avisar a todos los jugadores con una nueva llamada
 		Game game = searchGame(gameName);
 		game.setBoard(board);
 		for(Slot slot : game.getSlots()){
@@ -381,15 +382,52 @@ public class GamesManager {
 	}
 	
 	public void finishGame(String gameName, String winnerPlayer) {
-		//TODO eso solo vale para juegos de dos jugadores
 		Game game = searchGame(gameName);
-		String turn;
-		if (game.getSlot(0).getPlayer().equals(winnerPlayer))
-			turn = game.getSlot(1).getPlayer();
-		else
-			turn = game.getSlot(0).getPlayer();
-		Session turnSession = UsersManager.getInstance().searchSession(turn);
-		turnSession.getCallback().gameFinished(gameName);
+		switch(game.getTypeGame()){
+		case Checkers:
+		case Chess:
+		case Connect4:
+		String looserPlayer;
+			
+		if(game.getSlot(0).getPlayer().equalsIgnoreCase(winnerPlayer)){
+			looserPlayer = game.getSlot(1).getPlayer();
+		}else{
+			looserPlayer = game.getSlot(0).getPlayer();
+		}
+		
+		Session looserSession = UsersManager.getInstance().searchSession(looserPlayer);
+		looserSession.getCallback().gameFinished(gameName);
+		
+		User winnerUser = UsersManager.getInstance().searchSession(winnerPlayer).getUser();
+		User looserUser = looserSession.getUser();
+		
+		for(Ranking ranking : winnerUser.getRankings()){
+			if(ranking.getGame() == game.getTypeGame()){
+				int wonGames = ranking.getWonGames(); 
+				ranking.setWonGames(++wonGames);
+				break;
+			}
+		}
+		
+		for(Ranking ranking : looserUser.getRankings()){
+			if(ranking.getGame() == game.getTypeGame()){
+				int lostGames = ranking.getLostGames(); 
+				ranking.setLostGames(++lostGames);
+				break;
+			}
+		}
+		
+		UsersManager.getInstance().saveUser(winnerUser);
+		UsersManager.getInstance().saveUser(looserUser);
+		
+			break;
+		case Goose:
+		case Ludo:
+			
+			//TODO ganador en juego de mas de 2 jugadores
+			break;
+		}
+		
 		games.remove(game);
 	}
 
