@@ -505,7 +505,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 		if (lblGooseIcon == null) {
 			lblGooseIcon = new JLabel();
 			lblGooseIcon.setIcon(new ImageIcon(CreateGameUI.class
-					.getResource("/images/Games/trivial_small_icon.png")));
+					.getResource("/images/Games/goose_icon_small.png")));
 			lblGooseIcon.setBounds(153, 6, 25, 25);
 		}
 		return lblGooseIcon;
@@ -563,6 +563,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblLudoIcon() {
 		if (lblLudoIcon == null) {
 			lblLudoIcon = new JLabel();
+			lblLudoIcon.setIcon(new ImageIcon(CreateGameUI.class
+					.getResource("/images/Games/ludo_small_icon.png")));
 			lblLudoIcon.setBounds(153, 6, 25, 25);
 		}
 		return lblLudoIcon;
@@ -571,7 +573,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblLudo() {
 		if (lblLudo == null) {
 			lblLudo = new JLabel();
-			lblLudo.setText("Ludo");
+			lblLudo.setText("Parchís");
 			lblLudo.setHorizontalAlignment(SwingConstants.CENTER);
 			lblLudo.setBounds(70, 6, 59, 25);
 		}
@@ -581,7 +583,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblLudoPlayers() {
 		if (lblLudoPlayers == null) {
 			lblLudoPlayers = new JLabel();
-			lblLudoPlayers.setText("8");
+			lblLudoPlayers.setText("4");
 			lblLudoPlayers.setHorizontalAlignment(SwingConstants.CENTER);
 			lblLudoPlayers.setBounds(10, 6, 21, 25);
 		}
@@ -658,19 +660,21 @@ public class CreateGameUI extends javax.swing.JFrame {
 	}
 
 	private void gooseSelected() {
-		lblGameTitle.setText("Goose");
-		txtGameDescription.setText("El juego de la oca");
+		lblGameTitle.setText("Juego de la oca");
+		txtGameDescription
+				.setText("El juego de la oca es un juego de mesa en el que cada jugador avanza su ficha por un tablero con 63 casillas con dibujos. Dependiendo de la casilla en la que se caiga se puede avanzar o por el contrario retroceder y en algunas de ellas está indicado un castigo. En su turno cada jugador tira el dado que le indica el número de casillas que debe avanzar. Gana el juego el primer jugador que llega a la casilla 63, el jardín de la oca.");
 		lblGameImage.setIcon(new ImageIcon(CreateGameUI.class
-				.getResource("/images/Games/trivial_icon.png")));
+				.getResource("/images/Games/goose_icon.png")));
 		lblGamePlayers.setText("2-8 jugadores");
 		selectedGame = GameType.Goose;
 	}
 
 	private void ludoSelected() {
-		lblGameTitle.setText("Ludo");
-		txtGameDescription.setText("El parchís es un juego teta");
+		lblGameTitle.setText("Parchís");
+		txtGameDescription
+				.setText("El parchís es un juego de mesa que se juega con 1 dado y 4 fichas para cada uno de los jugadores. El objeto del juego es que cada jugador lleve sus fichas desde la salida hasta la meta intentando, en el camino, comerse a las demás. El primero en conseguirlo será el ganador.");
 		lblGameImage.setIcon(new ImageIcon(CreateGameUI.class
-				.getResource("/images/Games/trivial_icon.png")));
+				.getResource("/images/Games/ludo_icon.png")));
 		lblGamePlayers.setText("2-4 jugadores");
 		selectedGame = GameType.Ludo;
 	}

@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
@@ -38,6 +39,8 @@ import javax.swing.text.html.HTMLEditorKit;
 import logic.Controller;
 import logic.LanguageManager;
 import model.User;
+import ProductLine.GameType;
+import ProductLine.Ranking;
 import ProductLine.UserNotLoggedException;
 
 @SuppressWarnings("serial")

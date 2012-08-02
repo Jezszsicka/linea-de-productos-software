@@ -201,4 +201,9 @@ public class UsersManager {
 		
 	}
 
+	public void saveUser(User user) {
+		userDAO.update(user);
+		
+	}
+
 }

@@ -151,16 +151,17 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private void gooseSelected() {
 		lblGame.setText("Juego de la oca");
 		txtGameDescription
-				.setText("El juego de la oca es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+				.setText("El juego de la oca es un juego de mesa en el que cada jugador avanza su ficha por un tablero con 63 casillas con dibujos. Dependiendo de la casilla en la que se caiga se puede avanzar o por el contrario retroceder y en algunas de ellas está indicado un castigo. En su turno cada jugador tira el dado que le indica el número de casillas que debe avanzar. Gana el juego el primer jugador que llega a la casilla 63, el jardín de la oca.");
 		lblGameImage.setIcon(new ImageIcon(GameWaitingRoomUI.class
-				.getResource("/images/Games/trivial_icon.png")));
+				.getResource("/images/Games/goose_icon.png")));
 	}
 
 	private void ludoSelected() {
-		lblGame.setText("Ludo");
-		txtGameDescription.setText("El parchis chupi way");
+		lblGame.setText("Parchís");
+		txtGameDescription
+				.setText("El parchís es un juego de mesa que se juega con 1 dado y 4 fichas para cada uno de los jugadores. El objeto del juego es que cada jugador lleve sus fichas desde la salida hasta la meta intentando, en el camino, comerse a las demás. El primero en conseguirlo será el ganador.");
 		lblGameImage.setIcon(new ImageIcon(GameWaitingRoomUI.class
-				.getResource("/images/Games/trivial_icon.png")));
+				.getResource("/images/Games/ludo_icon.png")));
 	}
 
 	private void initPlayers() {
