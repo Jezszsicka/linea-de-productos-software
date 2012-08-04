@@ -2,13 +2,16 @@ package logic;
 
 import java.util.List;
 
+import model.Session;
+import model.User;
+import persistence.UserDAO;
 import ProductLine.Message;
-import ProductLine.SlotState;
+import ProductLine.MessageType;
 import ProductLine.Slot;
+import ProductLine.SlotState;
+import ProductLine.UserNotExistsException;
 import ProductLine.UserNotInGameException;
 import ProductLine.UserNotLoggedException;
-
-import model.Session;
 
 public class MessagesManager {
 	private static MessagesManager controller;
@@ -24,6 +27,116 @@ public class MessagesManager {
 		return controller;
 	}
 
+	public void sendMessage(Message msg) throws UserNotExistsException {
+		User user = null;
+		Session userSession = UsersManager.getInstance().searchSession(
+				msg.getReceiver());
+		if (userSession == null) {
+
+			user = UserDAO.getDAO().loadByID(msg.getReceiver());
+
+			if (user == null) {
+				throw new UserNotExistsException();
+			} else {
+				user.getMessages().add(msg);
+				UserDAO.getDAO().update(user);
+				MailSender.getMailSender().sendMessage(msg.getContent(), msg.getSubject(), user.getEmail());
+			}
+
+		} else {
+			user = userSession.getUser();
+			user.getMessages().add(msg);
+			UserDAO.getDAO().update(user);
+			userSession.getCallback().receiveMessage(msg);
+		}
+
+	}
+
+	public void deleteMessage(String username, int messageID) {
+		User user = UsersManager.getInstance().searchSession(username).getUser();
+		Message message = null;
+		
+		for(Message msg : user.getMessages()){
+			if(msg.getMessageID() == messageID){
+				message = msg;
+				break;
+			}
+		}
+		
+		user.getMessages().remove(message);
+		UserDAO.getDAO().update(user);
+	}
+
+	
+	public void friendRequestResponse(String friend, String username,
+			boolean accepted) throws UserNotExistsException {
+		User friendUser = null;
+		String content;
+		String subject;
+		Session friendSession = UsersManager.getInstance().searchSession(
+				friend);
+		User user = UsersManager.getInstance().searchSession(username).getUser();
+		
+		//User not connected
+		if (friendSession == null) {
+
+			friendUser = UserDAO.getDAO().loadByID(friend);
+
+			if (friendUser == null) {
+				throw new UserNotExistsException();
+			} else {
+				if(accepted){
+					user.getFriends().add(friend);
+					friendUser.getFriends().add(username);
+					subject = "Petición de amistad aceptada";
+					content = username+" y tu sois amigos";
+				}else{
+					subject = "Petición de amistad rechazada";
+					content = username+" ha rechazado tu petición de amistad";
+				}
+				Message msg = new model.Message(username,friend,subject,content,MessageType.Normal);
+				friendUser.getMessages().add(msg);
+				UserDAO.getDAO().update(friendUser);
+				UserDAO.getDAO().update(user);
+				MailSender.getMailSender().sendMessage(content, subject, friendUser.getEmail());
+			}
+
+		} else {
+			friendUser = friendSession.getUser();
+			if(accepted){
+				user.getFriends().add(friend);
+				friendUser.getFriends().add(username);
+				subject = "Petición de amistad aceptada";
+				content = username+" y tu sois amigos";
+			}else{
+				subject = "Petición de amistad rechazada";
+				content = username+" ha rechazado tu petición de amistad";
+			}
+			Message msg = new model.Message(username,friend,subject,content,MessageType.Normal);
+			friendUser.getMessages().add(msg);
+			UserDAO.getDAO().update(friendUser);
+			UserDAO.getDAO().update(user);
+			friendSession.getCallback().receiveMessage(msg);
+		}
+		
+	}
+	
+	public void markMessageAsRead(String username, int messageID) {
+		User user = UsersManager.getInstance().searchSession(username).getUser();
+		Message message = null;
+		
+		for(Message msg : user.getMessages()){
+			if(msg.getMessageID() == messageID){
+				message = msg;
+				break;
+			}
+		}
+		
+		message.setSeen(true);
+		UserDAO.getDAO().update(user);
+		
+	}	
+	
 	/**
 	 * Sends a message to all the users
 	 * 
@@ -125,8 +238,5 @@ public class MessagesManager {
 			throw new UserNotInGameException();
 	}
 
-	public void sendMessage(Message msg) {
-		//TODO guardamos el mensaje en la base de datos
-	}
 
 }

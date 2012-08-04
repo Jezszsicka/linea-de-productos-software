@@ -19,8 +19,10 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 
+import utils.Utils;
+
+import logic.Controller;
 import logic.LanguageManager;
-import logic.Utils;
 
 import ProductLine.GameType;
 import ProductLine.Ranking;
@@ -64,8 +66,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel lblRanking;
 	private LanguageManager language;
 
-	public UserInfoUI(WaitingRoomUI parent, User user) {
-		super();
+	public UserInfoUI(WaitingRoomUI parent, User user, boolean friend) {
 		this.parent = parent;
 		language = LanguageManager.language();
 		initGUI();
@@ -74,11 +75,21 @@ public class UserInfoUI extends javax.swing.JFrame {
 		lblUserNickname.setText(user.getUsername());
 		lblUserName.setText(user.getName() + " " + user.getLastName());
 		lblUserEmail.setText(user.getEmail());
-		lblAvatar.setIcon(new ImageIcon(user.getAvatar()));
+
+		if (user.getAvatar().length == 0) {
+			lblAvatar.setIcon(new ImageIcon(UserInfoUI.class
+					.getResource("/images/no_avatar_icon.png")));
+		} else {
+			lblAvatar.setIcon(new ImageIcon(user.getAvatar()));
+		}
+
 		lblFlag.setIcon(new ImageIcon(UserInfoUI.class.getResource(Utils
 				.countryImgPath(user.getCountry()))));
 		setVisible(true);
 		setLocationRelativeTo(null);
+
+		if (friend)
+			pnlBackground.remove(btnInvite);
 
 	}
 
@@ -108,7 +119,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 			if (played == 0)
 				rate = 0;
 			else
-				rate = won / played * 100;
+				rate = (double) won / played * 100.0;
 
 			String txtGame = null;
 
@@ -395,6 +406,11 @@ public class UserInfoUI extends javax.swing.JFrame {
 				public void mouseExited(MouseEvent e) {
 					btnInviteMouseExited(e);
 				}
+
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					btnInviteMouseClicked(arg0);
+				}
 			});
 			btnInvite.setText("Invitar amigo");
 			btnInvite.setBounds(479, 399, 95, 23);
@@ -454,5 +470,9 @@ public class UserInfoUI extends javax.swing.JFrame {
 
 	protected void btnBackMouseExited(MouseEvent e) {
 		setDefaultCursor();
+	}
+
+	protected void btnInviteMouseClicked(MouseEvent evt) {
+		new SendMessageUI(this, lblUserNickname.getText());
 	}
 }

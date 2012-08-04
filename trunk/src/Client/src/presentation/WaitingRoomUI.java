@@ -42,6 +42,7 @@ import model.User;
 import ProductLine.GameType;
 import ProductLine.Ranking;
 import ProductLine.UserNotLoggedException;
+import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
 public class WaitingRoomUI extends javax.swing.JFrame {
@@ -55,17 +56,14 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private List<User> users;
 	private JScrollPane scrollPnlUsers;
 	private JLabel btnMessages;
-	private JButton btnTopPlayers;
 
 	private JPanel pnlButtons;
 	private User user;
-
-	private JPanel pnlFriends;
 	private JTabbedPane tabPanel;
 	private JPanel pnlUsers;
 	private JLabel lblAvatar;
 	private JPanel pnlBackground;
-	private JButton btnProfile;
+	private JLabel btnProfile;
 	private JButton btnJoinGame;
 	private JButton btnSend;
 	private JButton btnCreateGame;
@@ -77,6 +75,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private HTMLEditorKit htmlEditor;
 	private HTMLDocument chatText;
 	private LanguageManager language;
+	private JScrollPane scrollPnlFriends;
+	private JPanel pnlFriends;
 
 	{
 		// Set Look & Feel
@@ -102,12 +102,13 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 		this.users = users;
 		if (user.getAvatar().length == 0) {
 			lblAvatar.setIcon(new ImageIcon(WaitingRoomUI.class
-					.getResource("/images/Avatars/1.jpg")));
+					.getResource("/images/no_avatar_icon.png")));
 		} else {
 			lblAvatar.setIcon(new ImageIcon(user.getAvatar()));
 		}
 		destinatary = "";
 		refreshUsersList();
+		refreshFriendList();
 	}
 
 	private void initGUI() {
@@ -137,6 +138,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 			pnlBackground.add(getLblAvatar());
 			pnlBackground.add(getJTabbedPane1());
 			pnlBackground.add(getPnlButtons());
+			pnlBackground.add(getBtnCreateGame());
+			pnlBackground.add(getBtnJoinGame());
 		}
 		return pnlBackground;
 	}
@@ -169,7 +172,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private JButton getBtnCreateGame() {
 		if (btnCreateGame == null) {
 			btnCreateGame = new JButton("Crear partida");
-			btnCreateGame.setBounds(11, 6, 66, 53);
+			btnCreateGame.setBounds(173, 15, 66, 53);
 			btnCreateGame.setText(language.getString("btnCreateGame"));
 			btnCreateGame.setFocusable(false);
 			btnCreateGame.addMouseListener(new MouseAdapter() {
@@ -264,8 +267,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private JButton getBtnJoinGame() {
 		if (btnJoinGame == null) {
 			btnJoinGame = new JButton();
+			btnJoinGame.setBounds(249, 15, 66, 53);
 			btnJoinGame.setText("Join game");
-			btnJoinGame.setBounds(103, 6, 66, 53);
 			btnJoinGame.setFocusable(false);
 			btnJoinGame.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -286,26 +289,13 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 		return btnJoinGame;
 	}
 
-	private JButton getBtnProfile() {
+	private JLabel getBtnProfile() {
 		if (btnProfile == null) {
-			btnProfile = new JButton();
-			btnProfile.setBounds(482, 6, 56, 58);
-			btnProfile.setFocusable(false);
-			btnProfile.setIcon(new ImageIcon(WaitingRoomUI.class
-					.getResource("/images/profile_icon.png")));
-			btnProfile.setBorder(BorderFactory
-					.createBevelBorder(BevelBorder.RAISED));
+			btnProfile = new JLabel();
 			btnProfile.addMouseListener(new MouseAdapter() {
-				public void mouseReleased(MouseEvent evt) {
-					btnProfileMouseReleased(evt);
-				}
-
-				public void mousePressed(MouseEvent evt) {
-					btnProfileMousePressed(evt);
-				}
-
-				public void mouseClicked(MouseEvent evt) {
-					btnProfileMouseClicked(evt);
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					btnProfileMouseClicked(e);
 				}
 
 				@Override
@@ -318,6 +308,11 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 					btnProfileMouseExited(e);
 				}
 			});
+			btnProfile.setHorizontalAlignment(SwingConstants.CENTER);
+			btnProfile.setBounds(77, 8, 60, 60);
+			btnProfile.setFocusable(false);
+			btnProfile.setIcon(new ImageIcon(WaitingRoomUI.class
+					.getResource("/images/profile_icon.png")));
 		}
 		return btnProfile;
 	}
@@ -325,6 +320,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private JLabel getLblAvatar() {
 		if (lblAvatar == null) {
 			lblAvatar = new JLabel();
+			lblAvatar.setHorizontalAlignment(SwingConstants.CENTER);
 			lblAvatar.setBounds(23, 15, 100, 120);
 			lblAvatar.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
@@ -415,6 +411,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 			e.printStackTrace();
 		}
 		refreshUsersList();
+		refreshFriendList();
 	}
 
 	public void userLeave(String user) {
@@ -427,6 +424,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 			e.printStackTrace();
 		}
 		refreshUsersList();
+		refreshFriendList();
 	}
 
 	private void refreshUsersList() {
@@ -442,8 +440,13 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 			JLabel userAvatarLabel = new JLabel();
 			if (users.get(i).getAvatar().length == 0) {
-				userAvatarLabel.setIcon(new ImageIcon(WaitingRoomUI.class
-						.getResource("/images/Avatars/1.jpg")));
+				ImageIcon image = new ImageIcon(
+						WaitingRoomUI.class
+								.getResource("/images/no_avatar_icon.png"));
+				image = new ImageIcon(image.getImage().getScaledInstance(
+						userIconLabelWidth, userIconLabelHeight,
+						Image.SCALE_SMOOTH));
+				userAvatarLabel.setIcon(image);
 			} else {
 				ImageIcon image = new ImageIcon(users.get(i).getAvatar());
 				image = new ImageIcon(image.getImage().getScaledInstance(
@@ -469,6 +472,20 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					userClicked(evt, userNameLabel.getText());
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent evt) {
+					setHandCursor();
+					JPanel userPanel = (JPanel) evt.getComponent();
+					userPanel.setBorder(new LineBorder(Color.BLACK, 2, false));
+				}
+
+				@Override
+				public void mouseExited(MouseEvent evt) {
+					setDefaultCursor();
+					JPanel userPanel = (JPanel) evt.getComponent();
+					userPanel.setBorder(new LineBorder(Color.BLACK, 1, false));
+				}
 			});
 		}
 		size += margin;
@@ -480,6 +497,103 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 		pnlUsers.setPreferredSize(new Dimension(pnlUsers.getWidth(), size));
 		pnlUsers.setSize(pnlUsers.getWidth(), size);
 		pnlUsers.repaint();
+	}
+
+	private User isOnline(String username) {
+		for (User user : users)
+			if (user.getUsername().equalsIgnoreCase(username))
+				return user;
+		return null;
+	}
+
+	public void refreshFriendList() {
+		int size = 0;
+		pnlFriends.removeAll();
+
+		for (int i = 0; i < user.getFriends().size(); i++) {
+			String friendName = user.getFriends().get(i);
+			JPanel pnlUser = new JPanel();
+			pnlUser.setLayout(null);
+			pnlUser.setBounds(margin, margin + i * pnlUserHeight + i * margin,
+					pnlUsers.getWidth() - 2 * margin, pnlUserHeight);
+			pnlUser.setBorder(new LineBorder(Color.BLACK, 1, false));
+			pnlFriends.add(pnlUser);
+
+			User friend = isOnline(friendName);
+			JLabel userAvatarLabel = new JLabel();
+
+			if (friend != null) {
+				if (friend.getAvatar().length == 0) {
+					ImageIcon image = new ImageIcon(
+							WaitingRoomUI.class
+									.getResource("/images/no_avatar_icon.png"));
+					image = new ImageIcon(image.getImage().getScaledInstance(
+							userIconLabelWidth, userIconLabelHeight,
+							Image.SCALE_SMOOTH));
+					userAvatarLabel.setIcon(image);
+				} else {
+					ImageIcon image = new ImageIcon(friend.getAvatar());
+					image = new ImageIcon(image.getImage().getScaledInstance(
+							userIconLabelWidth, userIconLabelHeight,
+							Image.SCALE_SMOOTH));
+					userAvatarLabel.setIcon(image);
+				}
+			} else {
+				ImageIcon image = new ImageIcon(
+						WaitingRoomUI.class
+								.getResource("/images/no_avatar_icon.png"));
+				image = new ImageIcon(image.getImage().getScaledInstance(
+						userIconLabelWidth, userIconLabelHeight,
+						Image.SCALE_SMOOTH));
+				userAvatarLabel.setIcon(image);
+				pnlUser.setBackground(Color.GRAY);
+			}
+
+			userAvatarLabel.setBounds(margin, margin, userIconLabelWidth,
+					userIconLabelHeight);
+			userAvatarLabel.setBorder(BorderFactory
+					.createLineBorder(Color.BLACK));
+			pnlUser.add(userAvatarLabel);
+			final JLabel userNameLabel = new JLabel();
+			userNameLabel.setText(friendName);
+			userNameLabel.setBounds(60, margin, userNameLabelWidth,
+					userNameLabelHeight);
+			userNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
+			userNameLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+			userNameLabel.setFont(new Font("Courier New", Font.BOLD, 15));
+			pnlUser.add(userNameLabel);
+			size += margin + pnlUserHeight;
+
+			pnlUser.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent evt) {
+					userClicked(evt, userNameLabel.getText());
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent evt) {
+					setHandCursor();
+					JPanel userPanel = (JPanel) evt.getComponent();
+					userPanel.setBorder(new LineBorder(Color.BLACK, 2, false));
+				}
+
+				@Override
+				public void mouseExited(MouseEvent evt) {
+					setDefaultCursor();
+					JPanel userPanel = (JPanel) evt.getComponent();
+					userPanel.setBorder(new LineBorder(Color.BLACK, 1, false));
+				}
+			});
+		}
+
+		size += margin;
+		if (size > scrollPnlFriends.getHeight()) {
+			scrollPnlFriends.setBounds(scrollPnlFriends.getX(),
+					scrollPnlFriends.getY(), scrollPnlFriends.getWidth() + 20,
+					scrollPnlFriends.getHeight());
+		}
+		pnlFriends.setPreferredSize(new Dimension(pnlFriends.getWidth(), size));
+		pnlFriends.setSize(pnlFriends.getWidth(), size);
+		pnlFriends.repaint();
 	}
 
 	private void sendMessage() {
@@ -545,13 +659,10 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private JPanel getPnlButtons() {
 		if (pnlButtons == null) {
 			pnlButtons = new JPanel();
-			pnlButtons.setBounds(156, 15, 548, 70);
+			pnlButtons.setBounds(554, 15, 150, 75);
 			pnlButtons.setLayout(null);
-			pnlButtons.setBorder(BorderFactory.createTitledBorder(""));
-			pnlButtons.add(getBtnCreateGame());
-			pnlButtons.add(getBtnJoinGame());
+			pnlButtons.setBorder(null);
 			pnlButtons.add(getBtnProfile());
-			pnlButtons.add(getBtnTopPlayers());
 			pnlButtons.add(getBtnMessages());
 		}
 		return pnlButtons;
@@ -589,18 +700,9 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 			tabPanel.setBounds(554, 146, 150, 288);
 			tabPanel.addTab(language.getString("tabUsers"), null,
 					getJScrollPane1(), null);
-			tabPanel.addTab(language.getString("tabFriends"), null,
-					getPnlFriends(), null);
+			tabPanel.addTab("Friends", null, getScrollPnlFriends(), null);
 		}
 		return tabPanel;
-	}
-
-	private JPanel getPnlFriends() {
-		if (pnlFriends == null) {
-			pnlFriends = new JPanel();
-			pnlFriends.setLayout(null);
-		}
-		return pnlFriends;
 	}
 
 	private JScrollPane getJScrollPane1() {
@@ -622,16 +724,6 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 		tabPanel.setTitleAt(1, language.getString("tabFriends"));
 	}
 
-	private JButton getBtnTopPlayers() {
-		if (btnTopPlayers == null) {
-			btnTopPlayers = new JButton();
-			btnTopPlayers.setText("Top Players");
-			btnTopPlayers.setBounds(418, 6, 56, 58);
-			btnTopPlayers.setFocusable(false);
-		}
-		return btnTopPlayers;
-	}
-
 	private void userClicked(MouseEvent evt, String username) {
 		if (evt.getClickCount() == 2) {
 			User user = null;
@@ -640,24 +732,28 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 					user = aux;
 					break;
 				}
-			new UserInfoUI(this, user);
-		} else {
-			JPanel userPanel = (JPanel) evt.getComponent();
-			for (Component aux : evt.getComponent().getParent().getComponents())
-				if (aux != evt.getComponent())
-					((JPanel) aux).setBorder(new LineBorder(Color.BLACK, 1,
-							false));
-
-			userPanel.setBorder(new LineBorder(Color.BLACK, 2, false));
-
+			if (user == null)
+				user = Controller.getInstance().userInfo(username);
+			new UserInfoUI(this, user, isFriend(user.getUsername()));
 		}
+	}
+
+	private boolean isFriend(String username) {
+		List<String> friends = user.getFriends();
+		for (String friend : friends) {
+			if (friend.equalsIgnoreCase(username)) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private JLabel getBtnMessages() {
 		if (btnMessages == null) {
 			btnMessages = new JLabel();
-			btnMessages.setText("Messages");
-			btnMessages.setBounds(338, 7, 57, 56);
+			btnMessages.setHorizontalAlignment(SwingConstants.CENTER);
+			btnMessages.setBounds(7, 8, 60, 60);
 			btnMessages.setFocusable(false);
 			btnMessages.setIcon(new ImageIcon(WaitingRoomUI.class
 					.getResource("/images/mailIcon.png")));
@@ -736,5 +832,22 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 	protected void btnJoinGameMouseExited(MouseEvent e) {
 		setDefaultCursor();
+	}
+
+	private JScrollPane getScrollPnlFriends() {
+		if (scrollPnlFriends == null) {
+			scrollPnlFriends = new JScrollPane();
+			scrollPnlFriends.setBorder(new EmptyBorder(0, 0, 0, 0));
+			scrollPnlFriends.setViewportView(getPnlFriends());
+		}
+		return scrollPnlFriends;
+	}
+
+	private JPanel getPnlFriends() {
+		if (pnlFriends == null) {
+			pnlFriends = new JPanel();
+			pnlFriends.setLayout(null);
+		}
+		return pnlFriends;
 	}
 }

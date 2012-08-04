@@ -3,11 +3,10 @@ package logic;
 import java.util.ArrayList;
 import java.util.List;
 
-import model.Session;
-import model.User;
-
 import org.hibernate.HibernateException;
 
+import model.Session;
+import model.User;
 import persistence.UserDAO;
 import ProductLine.ClientPrx;
 import ProductLine.InvalidLoggingException;
@@ -56,6 +55,7 @@ public class UsersManager {
 		} catch (HibernateException e) {
 			e.printStackTrace();
 		}
+		
 	}
 
 	/**
@@ -203,7 +203,11 @@ public class UsersManager {
 
 	public void saveUser(User user) {
 		userDAO.update(user);
-		
+	}
+
+	public ProductLine.User userInfo(String username) {
+		User user = userDAO.loadByID(username);
+		return user;
 	}
 
 }

@@ -87,6 +87,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private JButton getBtnUpload() {
 		if (btnUpload == null) {
 			btnUpload = new JButton("Subir imagen");
+			btnUpload.setFocusable(false);
 			btnUpload.setText(language.getString("btnUpload"));
 			btnUpload.setBounds(389, 303, 97, 23);
 			btnUpload.addMouseListener(new MouseAdapter() {
@@ -332,11 +333,13 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private void lblAvatar1MouseEntered(MouseEvent evt) {
 		lblAvatar1.setBorder(BorderFactory
 				.createBevelBorder(BevelBorder.RAISED));
+		setHandCursor();
 	}
 
 	private void lblAvatar1MouseExited(MouseEvent evt) {
 		lblAvatar1.setBorder(BorderFactory
 				.createBevelBorder(BevelBorder.LOWERED));
+		setDefaultCursor();
 	}
 
 	private void lblAvatar1MousePressed(MouseEvent evt) {
@@ -347,20 +350,24 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private void lblAvatar2MouseEntered(MouseEvent evt) {
 		lblAvatar2.setBorder(BorderFactory
 				.createBevelBorder(BevelBorder.RAISED));
+		setHandCursor();
 	}
 
 	private void lblAvatar2MouseExited(MouseEvent evt) {
 		lblAvatar2.setBorder(BorderFactory
 				.createBevelBorder(BevelBorder.LOWERED));
+		setDefaultCursor();
 	}
 
 	private void lblAvatar2MousePressed(MouseEvent evt) {
 		lblAvatar2.setBorder(BorderFactory
 				.createBevelBorder(BevelBorder.LOWERED));
+		setHandCursor();
 	}
 
 	private void lblAvatar2MouseClicked(MouseEvent evt) {
 		changeAvatar(2);
+		setDefaultCursor();
 	}
 
 	private void changeAvatar(int avatar) {
@@ -382,6 +389,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
 			btnCancel = new JButton("Cancelar");
+			btnCancel.setFocusable(false);
 			btnCancel.setText(language.getString("btnCancel"));
 			btnCancel.setBounds(389, 332, 97, 23);
 			btnCancel.addMouseListener(new MouseAdapter() {
@@ -412,6 +420,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private void lblAvatar3MouseEntered(MouseEvent evt) {
 		lblAvatar3.setBorder(BorderFactory
 				.createBevelBorder(BevelBorder.RAISED));
+		setHandCursor();
 	}
 
 	private void lblAvatar3MousePressed(MouseEvent evt) {
@@ -422,6 +431,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private void lblAvatar3MouseExited(MouseEvent evt) {
 		lblAvatar3.setBorder(BorderFactory
 				.createBevelBorder(BevelBorder.LOWERED));
+		setDefaultCursor();
 	}
 
 	private void lblAvatar3MouseClicked(MouseEvent evt) {

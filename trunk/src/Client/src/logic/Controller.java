@@ -24,10 +24,13 @@ import ProductLine.FullGameException;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
 import ProductLine.InvalidLoggingException;
+import ProductLine.Message;
+import ProductLine.MessageType;
 import ProductLine.NotEnoughPlayersException;
 import ProductLine.SlotState;
 import ProductLine.UserAlreadyExistsException;
 import ProductLine.UserAlreadyLoggedException;
+import ProductLine.UserNotExistsException;
 import ProductLine.UserNotInGameException;
 import ProductLine.UserNotLoggedException;
 import checkers.CheckersUI;
@@ -186,9 +189,15 @@ public class Controller {
 		messagesManager.sendGamePrivateMessage(game, destinatary, message);
 	}
 
-	public void sendMessage(String to, String subject, String content)
-			throws WrongInputException {
-		messagesManager.sendMessage(to, subject, content);
+	public void sendMessage(String to, String subject, String content,
+			MessageType type) throws WrongInputException {
+		try {
+			messagesManager.sendMessage(to, subject, content, type);
+		} catch (UserNotExistsException e) {
+			JOptionPane.showMessageDialog(messagesUI,
+					"El destinatario del mensaje no existe",
+					"Destinatario erróneo", JOptionPane.WARNING_MESSAGE);
+		}
 	}
 
 	public void receiveGeneralMessage(String sender, String message) {
@@ -385,11 +394,19 @@ public class Controller {
 
 	public void userLeaveGame(String gameName, String player) {
 		Game game = gamesManager.searchGame(gameName);
-		gamesManager.userLeaveGame(gameName, player);
+
+		if (game.getTypeGame() != GameType.Ludo)
+			gamesManager.userLeaveGame(gameName, player);
+
 		if (game.isStarted()) {
 			GameUI gameUI = gamesUI.get(gameName);
 			gameUI.userLeaveGame(player);
-			gamesUI.remove(gameName);
+			if (game.players() <= 1)
+				gamesUI.remove(gameName);
+
+			if (game.getTypeGame() == GameType.Ludo)
+				gamesManager.userLeaveGame(gameName, player);
+			
 		} else {
 			GameWaitingRoomUI gameUI = gameWaitingRooms.get(gameName);
 			gameUI.userLeaveGame(player);
@@ -416,20 +433,17 @@ public class Controller {
 	}
 
 	public void changeSlotState(String gameName, int slot, SlotState slotState) {
-		System.out.println("LLAMAOS AL CHANGE SLOT CON EL USUARIO "
-				+ session.getUser().getUsername());
 		gamesManager.changeSlotState(gameName, slot, slotState);
 	}
 
 	public void slotStateChanged(String gameName, int slot, SlotState state) {
-		System.out.println("HA CAMBIADO EL SLOT DE " + gameName);
 		gamesManager.slotStateChanged(gameName, slot, state);
 		GameWaitingRoomUI gameWaitingRoomUI = gameWaitingRooms.get(gameName);
 		gameWaitingRoomUI.slotStateChanged();
 	}
 
 	public void showMessagesUI() {
-		messagesUI = new MessagesUI();
+		messagesUI = new MessagesUI(session.getUser().getMessages());
 		waitingRoomUI.setEnabled(false);
 	}
 
@@ -534,5 +548,33 @@ public class Controller {
 	public void finishGame(String game, String winnerPlayer) {
 		gamesManager.finishGame(game, winnerPlayer);
 	}
-	
+
+	public void markMessageAsRead(Message message) {
+		messagesManager.markMessageAsRead(message);
+
+	}
+
+	public void deleteMessage(Message message) {
+		messagesManager.deleteMessage(message);
+
+	}
+
+	public void friendRequestResponse(String friend, boolean accepted) {
+		messagesManager.friendRequestResponse(friend, accepted);
+		if (accepted)
+			waitingRoomUI.refreshFriendList();
+	}
+
+	public User userInfo(String username) {
+		User user = null;
+		try {
+			user = sessionManager.userInfo(username);
+		} catch (UserNotExistsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user;
+
+	}
+
 }

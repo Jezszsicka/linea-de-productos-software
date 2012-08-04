@@ -43,29 +43,35 @@ public class MailSender {
 		return myInstance;
 	}
 
-	public void sendMessage(String text, String subject, String address) {
+	public void sendMessage(final String text, final String subject, final String address) {
+		
+		new Thread(){
+			public void run(){
+				MimeMessage message = new MimeMessage(session);
+				try {
+					message.setFrom(new InternetAddress(MailConstants.Account));
+					message.addRecipient(RecipientType.TO, new InternetAddress(address));
 
-		MimeMessage message = new MimeMessage(session);
-		try {
-			message.setFrom(new InternetAddress(MailConstants.Account));
-			message.addRecipient(RecipientType.TO, new InternetAddress(address));
+					// Subject and text
 
-			// Subject and text
+					message.setSubject(MailConstants.Subject+subject);
+					message.setText(text);
+					SMTPTransport t = (SMTPTransport) session.getTransport("smtp");
 
-			message.setSubject(MailConstants.Subject+subject);
-			message.setText(text);
-			SMTPTransport t = (SMTPTransport) session.getTransport("smtp");
+					t.connect(MailConstants.Account, MailConstants.Password);
+					t.sendMessage(message, message.getAllRecipients());
 
-			t.connect(MailConstants.Account, MailConstants.Password);
-			t.sendMessage(message, message.getAllRecipients());
+					t.close();
+				} catch (AddressException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (MessagingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}.start();
 
-			t.close();
-		} catch (AddressException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (MessagingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
 	}
 }

@@ -50,16 +50,20 @@ module ProductLine {
 		void removePlayers(Players numPlayers);
 	};
 	
+	
 	["java:getset"]
 	class Message{
-		["protected"] string from;
-		["protected"] string to;
+		["protected"] int messageID;
+		["protected"] string sender;
+		["protected"] string receiver;
 		["protected"] string subject;
 		["protected"] string content;
 		["protected"] MessageType type;
-		["protected"] bool read; 
+		["protected"] bool seen;
+		
 	};
-
+	
+	
 	["java:getset"]
 	class Ranking {
 		["protected"] int idRanking;
@@ -71,6 +75,7 @@ module ProductLine {
 	["java:type:java.util.ArrayList<Ranking>"] sequence<Ranking> RankingList;
 	["java:type:java.util.ArrayList<Game>"] sequence<Game> GameList;
 	["java:type:java.util.ArrayList<Message>"] sequence<Message> MessageList;
+	
 	sequence<byte> Image;
 	
 	["java:getset"]
@@ -97,6 +102,7 @@ module ProductLine {
 	exception UserAlreadyLoggedException extends genericException{};
 	exception UserNotLoggedException extends genericException{};
 	exception UserAlreadyExistsException extends genericException{};
+	exception UserNotExistsException extends genericException{};
 	exception InvalidLoggingException extends genericException{};
 	exception GameAlreadyExistsException extends genericException{};
 	exception UserNotInGameException extends genericException{};
@@ -109,6 +115,7 @@ module ProductLine {
 		void logoutUser(string username);
 		UserList listUsers(string username);
 		void resetPassword(string identifier) throws InvalidLoggingException;
+		User userInfo(string username) throws UserNotExistsException;
 		
 		void changeName(string username, string name, string lastname, string password) throws InvalidLoggingException;
 		void changePassword(string username, string password, string newPassword) throws InvalidLoggingException;
@@ -121,7 +128,10 @@ module ProductLine {
 		void sendPrivateMessage(string sender, string receiver, string message) throws UserNotLoggedException;
 		void sendGameMessage(string game,string sender, string message);
 		void sendGamePrivateMessage(string game, string sender, string receiver, string message) throws UserNotInGameException;
-		void sendMessage(Message msg);
+		void sendMessage(Message msg) throws UserNotExistsException;
+		void deleteMessage(string user, int messageID);
+		void markMessageAsRead(string user, int messageID);
+		void friendRequestResponse(string friend, string user, bool accepted)  throws UserNotExistsException;
 		
 		void createGame(string game,string creator, GameType type) throws GameAlreadyExistsException;
 		Game joinGame(string game, string player) throws FullGameException;
@@ -137,6 +147,7 @@ module ProductLine {
     };
     
     interface Client {
+    	void receiveMessage(Message msg);
     	void receiveGeneralMessage(string sender, string message);
     	void receivePrivateMessage(string sender, string message);
     	void receiveGameMessage(string game,string sender, string message);

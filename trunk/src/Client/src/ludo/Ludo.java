@@ -54,42 +54,6 @@ public class Ludo {
 
 	public static boolean validateMove(int piece, int squares,
 			int[][] board, int player) {
-		/*int fromSquare = board[player][piece];
-		int toSquare = fromSquare + squares;
-
-		if (toSquare > 68 && fromSquare <= 68 && player != YELLOW)
-			toSquare = toSquare - 68;
-
-		Square square = squareInfo(board, toSquare);
-		int squareNum = square.getSquare();
-
-		for (int from = fromSquare + 1; from <= toSquare; from++) {
-			if (toSquare > 68 && fromSquare <= 68 && from > 68) {
-				from = 1;
-				toSquare -= 68;
-			}
-
-			square = squareInfo(board, from);
-
-			// There is a block on the way
-			if (square.numberOfPieces() == 2)
-				return MoveResult.Invalid;
-		}
-
-		// Catch a piece
-		if (square.numberOfPieces() == 1) {
-			// Check if the piece is not in a secure
-			if (square.getFirstPiece() != player && squareNum != 5
-					&& squareNum != 12 && squareNum != 22 && squareNum != 29
-					&& squareNum != 39 && squareNum != 46 && squareNum != 56
-					&& squareNum != 63)
-				return MoveResult.Count20;
-			// Block on the target square
-		} else if (square.numberOfPieces() == 2 && squareNum != 76
-				&& squareNum != 84 && squareNum != 92 && squareNum != 100)
-			return MoveResult.Invalid;
-
-		return MoveResult.Valid;*/
 		
 		int fromSquare = board[player][piece];
 		int toSquare = fromSquare + squares;

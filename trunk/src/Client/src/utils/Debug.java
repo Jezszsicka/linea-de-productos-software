@@ -1,4 +1,4 @@
-package logic;
+package utils;
 
 public class Debug {
 	private static boolean debug = true;

@@ -181,7 +181,14 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		} else {
 			User opponent = Controller.getInstance().searchUser(
 					opponentSlot.getPlayer());
-			lblOpponentAvatar.setIcon(new ImageIcon(opponent.getAvatar()));
+
+			if (opponent.getAvatar().length == 0) {
+				lblOpponentAvatar.setIcon(new ImageIcon(CheckersUI.class
+						.getResource("/images/no_avatar_icon.png")));
+			} else {
+				lblOpponentAvatar.setIcon(new ImageIcon(opponent.getAvatar()));
+			}
+
 			lblOpponentName.setText(opponent.getUsername());
 
 			if (playerTurn == myPlayer) {
@@ -299,6 +306,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLblOpponentAvatar() {
 		if (lblOpponentAvatar == null) {
 			lblOpponentAvatar = new JLabel();
+			lblOpponentAvatar.setHorizontalAlignment(SwingConstants.CENTER);
 			lblOpponentAvatar.setBounds(522, 11, 101, 124);
 			lblOpponentAvatar.setBorder(new SoftBevelBorder(
 					BevelBorder.LOWERED, null, null, null, null));

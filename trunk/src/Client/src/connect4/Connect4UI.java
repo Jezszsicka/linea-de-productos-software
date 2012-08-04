@@ -146,7 +146,13 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 		} else {
 			User opponent = Controller.getInstance().searchUser(
 					opponentSlot.getPlayer());
-			lblOpponentAvatar.setIcon(new ImageIcon(opponent.getAvatar()));
+			if (opponent.getAvatar().length == 0) {
+				lblOpponentAvatar.setIcon(new ImageIcon(Connect4UI.class
+						.getResource("/images/no_avatar_icon.png")));
+			} else {
+				lblOpponentAvatar.setIcon(new ImageIcon(opponent.getAvatar()));
+			}
+
 			lblOpponentName.setText(opponent.getUsername());
 
 			if (playerTurn != myPlayer) {
@@ -194,6 +200,7 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLblOpponentAvatar() {
 		if (lblOpponentAvatar == null) {
 			lblOpponentAvatar = new JLabel();
+			lblOpponentAvatar.setHorizontalAlignment(SwingConstants.CENTER);
 			lblOpponentAvatar.setBounds(635, 13, 100, 120);
 			lblOpponentAvatar.setBorder(new SoftBevelBorder(
 					BevelBorder.LOWERED, null, null, null, null));
@@ -1134,11 +1141,11 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 		if (fila != -1) {
 			Connect4.ponerFicha(game.getBoard(), columna, playerTurn);
 			if (playerTurn == Connect4.RED) {
-				boardUI[fila][columna].setIcon(new ImageIcon(Connect4UI.class.getResource(
-								"/images/ConnectFour/Red.jpg")));
+				boardUI[fila][columna].setIcon(new ImageIcon(Connect4UI.class
+						.getResource("/images/ConnectFour/Red.jpg")));
 			} else {
-				boardUI[fila][columna].setIcon(new ImageIcon(Connect4UI.class.getResource(
-								"/images/ConnectFour/Blue.jpg")));
+				boardUI[fila][columna].setIcon(new ImageIcon(Connect4UI.class
+						.getResource("/images/ConnectFour/Blue.jpg")));
 			}
 
 			// Checks winner
@@ -1219,7 +1226,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 		int movimiento = minimax.minimax(game.getBoard(), playerTurn);
 		int fila = libre(movimiento);
 		Connect4.ponerFicha(game.getBoard(), movimiento, playerTurn);
-		boardUI[fila][movimiento].setIcon(new ImageIcon(Connect4UI.class.getResource("/images/ConnectFour/Blue.jpg")));
+		boardUI[fila][movimiento].setIcon(new ImageIcon(Connect4UI.class
+				.getResource("/images/ConnectFour/Blue.jpg")));
 		playerTurn = game.changeTurn();
 
 		// Computer has won the game
@@ -1277,12 +1285,12 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 			for (int j = 0; j < boardUI[0].length; j++) {
 				switch (board[i][j]) {
 				case 0:
-					boardUI[i][j].setIcon(new ImageIcon(Connect4UI.class.getResource(
-									"/images/ConnectFour/Red.jpg")));
+					boardUI[i][j].setIcon(new ImageIcon(Connect4UI.class
+							.getResource("/images/ConnectFour/Red.jpg")));
 					break;
 				case 1:
-					boardUI[i][j].setIcon(new ImageIcon(Connect4UI.class.getResource(
-									"/images/ConnectFour/Blue.jpg")));
+					boardUI[i][j].setIcon(new ImageIcon(Connect4UI.class
+							.getResource("/images/ConnectFour/Blue.jpg")));
 					break;
 				}
 			}

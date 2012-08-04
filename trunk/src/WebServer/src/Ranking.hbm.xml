@@ -13,8 +13,8 @@
 				<param name="enumClass">ProductLine.GameType</param>
 				<param name="type">12</param>
 			</type>
-
 		</property>
+		
 		<property name="wonGames" type="int">
 			<column name="WONGAMES" />
 		</property>

@@ -3,6 +3,7 @@ package communications;
 
 import logic.Controller;
 import Ice.Current;
+import ProductLine.Message;
 import ProductLine.SlotState;
 import ProductLine.User;
 import ProductLine._ClientDisp;
@@ -91,6 +92,14 @@ public class ClientI extends _ClientDisp{
 			int[][] board, int fromSquare,int dice, int movedPiece, Current __current) {
 		Controller.getInstance().diceGameUpdated(game,nextTurn,board,fromSquare,dice,movedPiece);
 	}
+
+	@Override
+	public void receiveMessage(Message msg, Current __current) {
+		//TODO
+		
+	}
+
+
 
 
 

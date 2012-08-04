@@ -113,10 +113,11 @@ public class ProfileUI extends javax.swing.JFrame {
 			int lost = ranking.getLostGames();
 			double rate;
 
-			if (played == 0)
+			if (played == 0) {
 				rate = 0;
-			else
-				rate = won / played * 100;
+			} else {
+				rate = (double) won / played * 100.0;
+			}
 
 			String txtGame = null;
 

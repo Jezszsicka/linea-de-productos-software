@@ -37,8 +37,9 @@ import javax.swing.text.StyleConstants;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
+import utils.Utils;
+
 import logic.Controller;
-import logic.Utils;
 import model.Game;
 import model.User;
 import ProductLine.NotEnoughPlayersException;
@@ -220,29 +221,46 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				User user = Controller.getInstance().searchUser(
 						slot.getPlayer());
 				playerPanel.setPlayer(user.getUsername());
-				ImageIcon image = new ImageIcon(user.getAvatar());
-				image = new ImageIcon(image.getImage().getScaledInstance(
-						userIconLabelWidth, userIconLabelHeight,
-						Image.SCALE_SMOOTH));
-				playerPanel.setAvatar(image);
+
+				if (user.getAvatar().length == 0) {
+					ImageIcon image = new ImageIcon(
+							GameWaitingRoomUI.class
+									.getResource("/images/no_avatar_icon.png"));
+					image = new ImageIcon(image.getImage().getScaledInstance(
+							userIconLabelWidth, userIconLabelHeight,
+							Image.SCALE_SMOOTH));
+					playerPanel.setAvatar(image);
+				} else {
+
+					ImageIcon image = new ImageIcon(user.getAvatar());
+					image = new ImageIcon(image.getImage().getScaledInstance(
+							userIconLabelWidth, userIconLabelHeight,
+							Image.SCALE_SMOOTH));
+					playerPanel.setAvatar(image);
+				}
 				playerPanel.setCountry(user.getCountry());
 				break;
 			case Empty:
 				playerPanel.setPlayer("Free");
 				playerPanel.setAvatar(new ImageIcon(GameWaitingRoomUI.class
-						.getResource("/images/contact_icon.png")));
+						.getResource("/images/empty_icon.png")));
 				playerPanel.setCountry(-1);
 				break;
 			case Computer:
 				playerPanel.setPlayer("Computer");
-				playerPanel.setAvatar(new ImageIcon(GameWaitingRoomUI.class
-						.getResource("/images/contact_icon.png")));
+				ImageIcon image = new ImageIcon(
+						GameWaitingRoomUI.class
+								.getResource("/images/computer.png"));
+				image = new ImageIcon(image.getImage().getScaledInstance(
+						userIconLabelWidth, userIconLabelHeight,
+						Image.SCALE_SMOOTH));
+				playerPanel.setAvatar(image);
 				playerPanel.setCountry(-1);
 				break;
 			case Closed:
 				playerPanel.setPlayer("Closed");
 				playerPanel.setAvatar(new ImageIcon(GameWaitingRoomUI.class
-						.getResource("/images/contact_icon.png")));
+						.getResource("/images/empty_icon.png")));
 				playerPanel.setCountry(-1);
 				break;
 			}
@@ -700,27 +718,32 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			add(getPlayerType());
 			setLayout(null);
 			lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
-					.getResource("/images/contact_icon.png")));
+					.getResource("/images/empty_icon.png")));
 			if (!creator)
 				playerType.setEnabled(false);
 			switch (state) {
 			case Empty: // Empty
 				lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
-						.getResource("/images/contact_icon.png")));
+						.getResource("/images/empty_icon.png")));
 				lblPlayer.setText("Free");
 				lblCountry.setIcon(null);
 				playerType.setSelectedIndex(0);
 				break;
 			case Computer: // Computer
-				lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
-						.getResource("/images/contact_icon.png")));
+				ImageIcon image = new ImageIcon(
+						GameWaitingRoomUI.class
+								.getResource("/images/computer.png"));
+				image = new ImageIcon(image.getImage().getScaledInstance(
+						userIconLabelWidth, userIconLabelHeight,
+						Image.SCALE_SMOOTH));
+				lblAvatar.setIcon(image);
 				lblPlayer.setText("Computer");
 				lblCountry.setIcon(null);
 				playerType.setSelectedIndex(1);
 				break;
 			case Closed: // Closed
 				lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
-						.getResource("/images/contact_icon.png")));
+						.getResource("/images/empty_icon.png")));
 				lblPlayer.setText("Closed");
 				lblCountry.setIcon(null);
 				playerType.setSelectedIndex(2);
@@ -740,12 +763,24 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			if (!(creator && slot == 0)) {
 				add(getPlayerType());
 			}
-			ImageIcon image = new ImageIcon(player.getAvatar());
-			image = new ImageIcon(image.getImage()
-					.getScaledInstance(userIconLabelWidth, userIconLabelHeight,
-							Image.SCALE_SMOOTH));
-			lblAvatar.setIcon(image);
+
+			if (player.getAvatar().length == 0) {
+				ImageIcon image = new ImageIcon(
+						GameWaitingRoomUI.class
+								.getResource("/images/no_avatar_icon.png"));
+				image = new ImageIcon(image.getImage().getScaledInstance(
+						userIconLabelWidth, userIconLabelHeight,
+						Image.SCALE_SMOOTH));
+				lblAvatar.setIcon(image);
+			} else {
+				ImageIcon image = new ImageIcon(player.getAvatar());
+				image = new ImageIcon(image.getImage().getScaledInstance(
+						userIconLabelWidth, userIconLabelHeight,
+						Image.SCALE_SMOOTH));
+				lblAvatar.setIcon(image);
+			}
 			lblPlayer.setText(player.getUsername());
+
 			lblCountry.setIcon(new ImageIcon(
 					GameWaitingRoomUI.class.getResource(Utils
 							.countrySmallImgPath(player.getCountry()))));
@@ -762,6 +797,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 						userIconLabelHeight);
 				lblAvatar.setBorder(BorderFactory
 						.createBevelBorder(BevelBorder.LOWERED));
+				lblAvatar.setHorizontalAlignment(SwingConstants.CENTER);
 			}
 			return lblAvatar;
 		}
@@ -810,15 +846,20 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 					Controller.getInstance().changeSlotState(game.getName(),
 							slot, SlotState.Empty);
 					lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
-							.getResource("/images/contact_icon.png")));
+							.getResource("/images/empty_icon.png")));
 					lblPlayer.setText("Free");
 					lblCountry.setIcon(null);
 					break;
 				case 1: // Computer
 					Controller.getInstance().changeSlotState(game.getName(),
 							slot, SlotState.Computer);
-					lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
-							.getResource("/images/contact_icon.png")));
+					ImageIcon image = new ImageIcon(
+							GameWaitingRoomUI.class
+									.getResource("/images/computer.png"));
+					image = new ImageIcon(image.getImage().getScaledInstance(
+							userIconLabelWidth, userIconLabelHeight,
+							Image.SCALE_SMOOTH));
+					lblAvatar.setIcon(image);
 					lblPlayer.setText("Computer");
 					lblCountry.setIcon(null);
 					break;
@@ -826,7 +867,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 					Controller.getInstance().changeSlotState(game.getName(),
 							slot, SlotState.Closed);
 					lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
-							.getResource("/images/contact_icon.png")));
+							.getResource("/images/empty_icon.png")));
 					lblPlayer.setText("Closed");
 					lblCountry.setIcon(null);
 					break;
