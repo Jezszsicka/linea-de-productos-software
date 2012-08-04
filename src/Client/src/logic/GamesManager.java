@@ -120,8 +120,20 @@ public class GamesManager {
 	 * @param game
 	 *            Name of the game to leave
 	 **/
-	public void leaveGame(String game) {
-		session.getProxy().leaveGame(game, session.getUser().getUsername());
+	public void leaveGame(String gameName) {
+		session.getProxy().leaveGame(gameName, session.getUser().getUsername());
+		Game game = searchGame(gameName);
+		
+		if (game.isStarted()) {
+			for (Ranking ranking : session.getUser().getRankings()) {
+				if (ranking.getGame() == game.getTypeGame()) {
+					int lostGames = ranking.getLostGames();
+					ranking.setLostGames(++lostGames);
+					break;
+				}
+			}
+		}
+
 	}
 
 	/**
@@ -146,10 +158,15 @@ public class GamesManager {
 	 **/
 	public void userLeaveGame(String gameName, String player) {
 		Game game = searchGame(gameName);
-		if (game.isStarted())
-			games.remove(gameName);
-		else
+		if (game.isStarted()){
+			if(game.players() <= 1){
+				games.remove(gameName);
+			}else{
+				game.removePlayer(player);
+			}
+		}else{
 			game.removePlayer(player);
+		}
 	}
 
 	/**
@@ -269,7 +286,7 @@ public class GamesManager {
 							break;
 						}
 					}
-				}else{
+				} else {
 					User winner = Controller.getInstance().searchUser(
 							slot.getPlayer());
 					for (Ranking ranking : winner.getRankings()) {
@@ -295,16 +312,14 @@ public class GamesManager {
 	public void finishGame(String gameName) {
 		Game game = searchGame(gameName);
 
-		//TODO me hace falta saber quien es el ganador del juego
+		// TODO me hace falta saber quien es el ganador del juego
 		for (Ranking ranking : session.getUser().getRankings()) {
 			if (ranking.getGame() == game.getTypeGame()) {
 				int lostGames = ranking.getLostGames();
 				ranking.setLostGames(++lostGames);
 			}
 		}
-		
-		
-		
+
 		// TODO comprobar que se llama siempre siendo el perdedor
 		games.remove(game);
 	}

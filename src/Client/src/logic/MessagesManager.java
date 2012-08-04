@@ -1,10 +1,11 @@
 package logic;
 
-import java.util.Date;
 
-import model.Message;
 import model.Session;
+import model.User;
+import ProductLine.Message;
 import ProductLine.MessageType;
+import ProductLine.UserNotExistsException;
 import ProductLine.UserNotInGameException;
 import ProductLine.UserNotLoggedException;
 import exceptions.WrongInputException;
@@ -37,15 +38,27 @@ public class MessagesManager {
 	 * @param to Recipient of the message
 	 * @param subject Subject of the message
 	 * @param content Content of the message
-	 * @throws WrongInputException **/
-	public void sendMessage(String to, String subject, String content) throws WrongInputException{
+	 * @throws WrongInputException 
+	 * @throws UserNotExistsException **/
+	public void sendMessage(String to, String subject, String content, MessageType type) throws WrongInputException, UserNotExistsException{
 		if(to.isEmpty()){
 			throw new WrongInputException("Empty receiver","Please specify a receiver");
 		}
 		String from = session.getUser().getUsername();
-		Date date = new Date();
-		Message message = new Message(from,to,subject,content,date,MessageType.Normal);
+		Message message = new model.Message(from,to,subject,content,type);
 		session.getProxy().sendMessage(message);
+	}
+	
+	public void markMessageAsRead(Message message) {
+		message.setSeen(true);
+		session.getProxy().markMessageAsRead(session.getUser().getUsername(), message.getMessageID());
+		
+	}
+
+	public void deleteMessage(Message message) {
+		User user = session.getUser();
+		user.getMessages().remove(message);
+		session.getProxy().deleteMessage(user.getUsername(), message.getMessageID());
 	}
 
 	/**Sends a chat message to all the players in a game
@@ -69,5 +82,19 @@ public class MessagesManager {
 		session.getProxy().sendGamePrivateMessage(game, sender, destinatary,
 				message);
 	}
+
+	public void friendRequestResponse(String friend,
+			boolean accepted) {
+		try {
+			session.getProxy().friendRequestResponse(friend,session.getUser().getUsername() , accepted);
+			if(accepted)
+				session.getUser().getFriends().add(friend);
+			
+		} catch (UserNotExistsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}	
+	}
+
 	
 }

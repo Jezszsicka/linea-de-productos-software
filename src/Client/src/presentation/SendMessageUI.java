@@ -5,30 +5,25 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-
 import javax.swing.WindowConstants;
-import javax.swing.SwingUtilities;
-
-import exceptions.WrongInputException;
 
 import ProductLine.MessageType;
 
 import logic.Controller;
-import model.Message;
+import exceptions.WrongInputException;
 
 @SuppressWarnings("serial")
 public class SendMessageUI extends javax.swing.JFrame {
-	private MessagesUI messagesUI;
+
 	private JPanel pnlBackground;
 	private JLabel lblTo;
 	private JTextField txtSubject;
@@ -39,11 +34,29 @@ public class SendMessageUI extends javax.swing.JFrame {
 	private JTextPane txtMessage;
 	private JScrollPane pnlMessageScroll;
 
-	public SendMessageUI(MessagesUI messagesUI) {
-		super();
+	private JFrame parentUI;
+	private MessageType type;
+
+	/**
+	 * @wbp.parser.constructor
+	 */
+	public SendMessageUI(JFrame parent) {
 		initGUI();
-		this.messagesUI = messagesUI;
-		messagesUI.setVisible(false);
+		this.parentUI = parent;
+		this.type = MessageType.Normal;
+		parent.setVisible(false);
+	}
+
+	public SendMessageUI(JFrame parent, String friend) {
+		initGUI();
+		this.parentUI = parent;
+		this.type = MessageType.Invitation;
+		parent.setEnabled(false);
+		txtSubject.setText("Petición de amistad");
+		txtSubject.setEditable(false);
+		txtReceiver.setText(friend);
+		txtReceiver.setEditable(false);
+
 	}
 
 	private void initGUI() {
@@ -180,7 +193,8 @@ public class SendMessageUI extends javax.swing.JFrame {
 	}
 
 	private void btnCancelMouseClicked(MouseEvent evt) {
-		messagesUI.setVisible(true);
+		parentUI.setVisible(true);
+		parentUI.setEnabled(true);
 		dispose();
 	}
 
@@ -188,23 +202,44 @@ public class SendMessageUI extends javax.swing.JFrame {
 		String to = txtReceiver.getText();
 		String subject = txtSubject.getText();
 		String content = txtMessage.getText();
-		int option = JOptionPane.showConfirmDialog(this,
-				"¿Quieres mandar el mensaje sin asunto? ", "Asunto vacío",
-				JOptionPane.YES_NO_OPTION);
-		if (option == JOptionPane.YES_OPTION) {
+		if (txtSubject.getText().isEmpty()) {
+
+			int option = JOptionPane.showConfirmDialog(this,
+					"¿Quieres mandar el mensaje sin asunto? ", "Asunto vacío",
+					JOptionPane.YES_NO_OPTION);
+			if (option == JOptionPane.YES_OPTION) {
+				try {
+					Controller.getInstance().sendMessage(to, subject, content,
+							type);
+					if (type == MessageType.Normal)
+						parentUI.setVisible(true);
+					else
+						parentUI.setEnabled(true);
+					dispose();
+				} catch (WrongInputException e) {
+					JOptionPane.showMessageDialog(parentUI, e.getMessage(),
+							e.getError(), JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		} else {
 			try {
-				Controller.getInstance().sendMessage(to, subject, content);
-				messagesUI.setVisible(true);
+				Controller.getInstance()
+						.sendMessage(to, subject, content, type);
+				if (type == MessageType.Normal)
+					parentUI.setVisible(true);
+				else
+					parentUI.setEnabled(true);
 				dispose();
 			} catch (WrongInputException e) {
-				JOptionPane.showMessageDialog(messagesUI, e.getMessage(),
+				JOptionPane.showMessageDialog(parentUI, e.getMessage(),
 						e.getError(), JOptionPane.ERROR_MESSAGE);
 			}
+
 		}
 	}
 
 	private void thisWindowClosing(WindowEvent evt) {
-		messagesUI.setVisible(true);
+		parentUI.setVisible(true);
 		dispose();
 	}
 

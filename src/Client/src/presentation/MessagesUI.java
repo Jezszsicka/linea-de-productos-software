@@ -5,8 +5,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -19,19 +17,10 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logic.Controller;
-import model.Message;
-import ProductLine.MessageType;
+import ProductLine.Message;
 
-/**
- * This code was edited or generated using CloudGarden's Jigloo SWT/Swing GUI
- * Builder, which is free for non-commercial use. If Jigloo is being used
- * commercially (ie, by a corporation, company or business for any purpose
- * whatever) then you should purchase a license for each developer using Jigloo.
- * Please visit www.cloudgarden.com for details. Use of Jigloo implies
- * acceptance of these licensing terms. A COMMERCIAL LICENSE HAS NOT BEEN
- * PURCHASED FOR THIS MACHINE, SO JIGLOO OR THIS CODE CANNOT BE USED LEGALLY FOR
- * ANY CORPORATE OR COMMERCIAL PURPOSE.
- */
+import javax.swing.ScrollPaneConstants;
+
 @SuppressWarnings("serial")
 public class MessagesUI extends javax.swing.JFrame {
 	private JPanel pnlBackground;
@@ -45,14 +34,12 @@ public class MessagesUI extends javax.swing.JFrame {
 	private DefaultTableModel tblMessagesModel;
 	private List<Message> messages;
 
-	public MessagesUI() {
-		super();
-		messages = new ArrayList<Message>();
-		messages.add(new Message("Pepe", "Juan", "Asuntaco",
-				"la puta que lo pariooo", new Date(), MessageType.Normal));
+	public MessagesUI(List<Message> messages) {
+		this.messages = messages;
+
 		initGUI();
 		for (Message message : messages) {
-			tblMessagesModel.addRow(new String[] { message.getFrom(),
+			tblMessagesModel.addRow(new String[] { message.getSender(),
 					message.getSubject() });
 		}
 		setLocationRelativeTo(null);
@@ -149,6 +136,11 @@ public class MessagesUI extends javax.swing.JFrame {
 				public void mouseExited(MouseEvent e) {
 					btnDeleteMouseExited(e);
 				}
+
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					btnDeleteMouseClicked(arg0);
+				}
 			});
 			btnDelete.setText("Eliminar");
 			btnDelete.setBounds(260, 256, 74, 23);
@@ -160,6 +152,8 @@ public class MessagesUI extends javax.swing.JFrame {
 	private JScrollPane getJScrollPane1() {
 		if (messagesScroll == null) {
 			messagesScroll = new JScrollPane();
+			messagesScroll
+					.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			messagesScroll.setBounds(10, 33, 453, 212);
 			messagesScroll.setBorder(new LineBorder(
 					new java.awt.Color(0, 0, 0), 1, false));
@@ -224,26 +218,6 @@ public class MessagesUI extends javax.swing.JFrame {
 		return tblMessages;
 	}
 
-	private void btnSendMouseClicked(MouseEvent evt) {
-		new SendMessageUI(this);
-	}
-
-	private void btnBackMouseClicked(MouseEvent evt) {
-		Controller.getInstance().closeMessagesUI();
-	}
-
-	private void tblMessagesMouseClicked(MouseEvent evt) {
-		if (evt.getClickCount() == 2) {
-			int row = tblMessages.getSelectedRow();
-			new ReadMessageUI(messages.get(row), this);
-		}
-	}
-
-	private void btnReadMouseClicked(MouseEvent evt) {
-		int row = tblMessages.getSelectedRow();
-		new ReadMessageUI(messages.get(row), this);
-	}
-
 	private void thisWindowClosing(WindowEvent evt) {
 		Controller.getInstance().closeMessagesUI();
 	}
@@ -287,4 +261,37 @@ public class MessagesUI extends javax.swing.JFrame {
 	protected void btnBackMouseExited(MouseEvent e) {
 		setDefaultCursor();
 	}
+
+	private void btnSendMouseClicked(MouseEvent evt) {
+		new SendMessageUI(this);
+	}
+
+	private void btnBackMouseClicked(MouseEvent evt) {
+		Controller.getInstance().closeMessagesUI();
+	}
+
+	private void tblMessagesMouseClicked(MouseEvent evt) {
+		if (evt.getClickCount() == 2) {
+			int row = tblMessages.getSelectedRow();
+			new ReadMessageUI(messages.get(row), this);
+		}
+	}
+
+	private void btnReadMouseClicked(MouseEvent evt) {
+		int row = tblMessages.getSelectedRow();
+		new ReadMessageUI(messages.get(row), this);
+	}
+
+	protected void btnDeleteMouseClicked(MouseEvent evt) {
+		int row = tblMessages.getSelectedRow();
+		Controller.getInstance().deleteMessage(messages.get(row));
+		tblMessagesModel.removeRow(row);
+	}
+
+	public void removeMessage() {
+		int row = tblMessages.getSelectedRow();
+		Controller.getInstance().deleteMessage(messages.get(row));
+		tblMessagesModel.removeRow(row);
+	}
+
 }

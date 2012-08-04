@@ -1,6 +1,7 @@
 package presentation;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -126,8 +127,18 @@ public class RegisterUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent arg0) {
 					do_btnRegister_mouseClicked(arg0);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnRegisterMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnRegisterMouseExited(e);
+				}
 			});
-			btnRegister.setBounds(82, 292, 89, 23);
+			btnRegister.setBounds(80, 292, 89, 23);
 			btnRegister.setFocusable(false);
 		}
 		return btnRegister;
@@ -142,8 +153,18 @@ public class RegisterUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent e) {
 					do_btnCancel_mouseClicked(e);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnCancelMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnCancelMouseExited(e);
+				}
 			});
-			btnCancel.setBounds(320, 292, 89, 23);
+			btnCancel.setBounds(329, 292, 89, 23);
 			btnCancel.setFocusable(false);
 		}
 		return btnCancel;
@@ -182,7 +203,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtUsername() {
 		if (txtUsername == null) {
 			txtUsername = new JTextField();
-			txtUsername.setBounds(337, 34, 120, 20);
+			txtUsername.setBounds(337, 34, 139, 20);
 			txtUsername.setColumns(10);
 		}
 		return txtUsername;
@@ -191,7 +212,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JPasswordField getTxtPassword() {
 		if (txtPassword == null) {
 			txtPassword = new JPasswordField();
-			txtPassword.setBounds(337, 154, 120, 20);
+			txtPassword.setBounds(337, 154, 139, 20);
 			txtPassword.setColumns(10);
 		}
 		return txtPassword;
@@ -200,7 +221,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtEmail() {
 		if (txtEmail == null) {
 			txtEmail = new JTextField();
-			txtEmail.setBounds(337, 215, 120, 20);
+			txtEmail.setBounds(337, 215, 139, 20);
 			txtEmail.setColumns(10);
 		}
 		return txtEmail;
@@ -209,7 +230,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JPasswordField getTxtPasswordR() {
 		if (txtPasswordR == null) {
 			txtPasswordR = new JPasswordField();
-			txtPasswordR.setBounds(337, 184, 120, 20);
+			txtPasswordR.setBounds(337, 184, 139, 20);
 			txtPasswordR.setColumns(10);
 		}
 		return txtPasswordR;
@@ -218,7 +239,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtEmailR() {
 		if (txtEmailR == null) {
 			txtEmailR = new JTextField();
-			txtEmailR.setBounds(337, 246, 120, 20);
+			txtEmailR.setBounds(337, 246, 139, 20);
 			txtEmailR.setColumns(10);
 		}
 		return txtEmailR;
@@ -270,7 +291,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtName() {
 		if (txtName == null) {
 			txtName = new JTextField();
-			txtName.setBounds(337, 60, 120, 20);
+			txtName.setBounds(337, 60, 139, 20);
 		}
 		return txtName;
 	}
@@ -278,7 +299,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtLastname() {
 		if (txtLastname == null) {
 			txtLastname = new JTextField();
-			txtLastname.setBounds(337, 86, 120, 20);
+			txtLastname.setBounds(337, 86, 139, 20);
 		}
 		return txtLastname;
 	}
@@ -320,12 +341,11 @@ public class RegisterUI extends javax.swing.JFrame {
 				}
 			}
 			ComboBoxRenderer renderer = new ComboBoxRenderer(icons, description);
-			renderer.setPreferredSize(new Dimension(120, 24));
+			renderer.setPreferredSize(new Dimension(139, 24));
 			selectedCountry = new JComboBox(intArray);
 			selectedCountry.setRenderer(renderer);
-			selectedCountry.setBounds(337, 117, 120, 20);
+			selectedCountry.setBounds(337, 117, 139, 20);
 			selectedCountry.setFocusable(false);
-			selectedCountry.setSize(120, 24);
 
 		}
 		return selectedCountry;
@@ -337,6 +357,8 @@ public class RegisterUI extends javax.swing.JFrame {
 			lblAvatar.setBounds(14, 34, 100, 120);
 			lblAvatar.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
+			lblAvatar.setIcon(new ImageIcon(RegisterUI.class
+					.getResource("/images/no_avatar_icon.png")));
 		}
 		return lblAvatar;
 	}
@@ -350,6 +372,16 @@ public class RegisterUI extends javax.swing.JFrame {
 			btnAvatar.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnAvatarMouseClicked(evt);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnAvatarMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnAvatarMouseExited(e);
 				}
 			});
 		}
@@ -407,5 +439,37 @@ public class RegisterUI extends javax.swing.JFrame {
 			e.printStackTrace();
 		}
 		lblAvatar.setIcon(new ImageIcon(avatar));
+	}
+
+	private void setHandCursor() {
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+
+	private void setDefaultCursor() {
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	protected void btnAvatarMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnAvatarMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnRegisterMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnRegisterMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnCancelMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnCancelMouseExited(MouseEvent e) {
+		setDefaultCursor();
 	}
 }

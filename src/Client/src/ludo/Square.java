@@ -4,49 +4,48 @@ public class Square {
 	private int square;
 	private int firstPiece;
 	private int secondPiece;
-	
-	public Square(int square){
+
+	public Square(int square) {
 		this.square = square;
 		firstPiece = Ludo.EMPTY;
 		secondPiece = Ludo.EMPTY;
 	}
-	
-	public Square (int firstPiece, int secondPiece){
+
+	public Square(int firstPiece, int secondPiece) {
 		this.firstPiece = firstPiece;
 		this.secondPiece = secondPiece;
 	}
 
-	public void addPiece(int player){
+	public void addPiece(int player) {
 		if (firstPiece == Ludo.EMPTY) {
 			firstPiece = player;
 		} else {
-			secondPiece = player;
+			if (secondPiece == Ludo.EMPTY)
+				secondPiece = player;
 		}
 	}
-	
-	public void removePiece(int player){
+
+	public void removePiece(int player) {
 		if (firstPiece == player) {
 			firstPiece = Ludo.EMPTY;
 		} else {
 			secondPiece = player;
 		}
 	}
-	
-	
-	public int numberOfPieces(){
+
+	public int numberOfPieces() {
 		int pieces = 0;
-		
-		if(firstPiece != Ludo.EMPTY)
+
+		if (firstPiece != Ludo.EMPTY)
 			pieces++;
-		
-		if(secondPiece != Ludo.EMPTY)
+
+		if (secondPiece != Ludo.EMPTY)
 			pieces++;
-		
+
 		return pieces;
-			
-		
+
 	}
-	
+
 	/**
 	 * @return the square
 	 */
@@ -55,7 +54,8 @@ public class Square {
 	}
 
 	/**
-	 * @param square the square to set
+	 * @param square
+	 *            the square to set
 	 */
 	public void setSquare(int square) {
 		this.square = square;
@@ -69,7 +69,8 @@ public class Square {
 	}
 
 	/**
-	 * @param firstPiece the firstPiece to set
+	 * @param firstPiece
+	 *            the firstPiece to set
 	 */
 	public void setFirstPiece(int firstPiece) {
 		this.firstPiece = firstPiece;
@@ -83,7 +84,8 @@ public class Square {
 	}
 
 	/**
-	 * @param secondPiece the secondPiece to set
+	 * @param secondPiece
+	 *            the secondPiece to set
 	 */
 	public void setSecondPiece(int secondPiece) {
 		this.secondPiece = secondPiece;

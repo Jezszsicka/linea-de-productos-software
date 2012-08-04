@@ -3,11 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import ProductLine.GameType;
-import ProductLine.Message;
-import model.Ranking;
 import ProductLine.RoleType;
+
 
 @SuppressWarnings("serial")
 public class User extends ProductLine.User {
@@ -36,13 +34,13 @@ public class User extends ProductLine.User {
 		rankings.add(new Ranking(0,0,GameType.Connect4));
 		rankings.add(new Ranking(0,0,GameType.Goose));
 		rankings.add(new Ranking(0,0,GameType.Ludo));
-		this.messages = new ArrayList<Message>();
+		this.messages = new ArrayList<ProductLine.Message>();
 	}
 
 	public User(String username, String name, String lastName, String password,
 			String email, RoleType role, int country, byte[] avatar,
 			List<String> friends,
-			List<ProductLine.Ranking> rankings, List<Message> messages) {
+			List<ProductLine.Ranking> rankings, List<ProductLine.Message> messages) {
 		this.username = username;
 		this.name = name;
 		this.lastName = lastName;

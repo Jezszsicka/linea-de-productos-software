@@ -14,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -34,6 +35,8 @@ import ProductLine.Slot;
 import ProductLine.SlotState;
 import ProductLine.UserNotInGameException;
 import constants.Constants;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 @SuppressWarnings("serial")
 public class LudoUI extends JFrame implements GameUI {
@@ -161,7 +164,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel lblRedDice;
 	private JLabel lblGreenDice;
 	private JLabel lblYellowDice;
-	private JButton button;
+	private JButton btnQuit;
 	private JTextField txtMessage;
 	private JScrollPane scrollPane;
 	private JTextPane txtChat;
@@ -208,10 +211,15 @@ public class LudoUI extends JFrame implements GameUI {
 	private boolean throwing;
 	private boolean count20;
 	private ThrowDiceThread throwDice;
-	private JButton btnNewButton;
 	private JLabel lblYellowPlayerCountry;
 
 	public LudoUI(String username, Game game) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				thisWindowClosing(arg0);
+			}
+		});
 		this.username = username;
 		this.game = game;
 		squares = new JLabel[101];
@@ -250,7 +258,13 @@ public class LudoUI extends JFrame implements GameUI {
 				} else {
 					User slotUser = Controller.getInstance().searchUser(
 							slotName);
-					icon = new ImageIcon(slotUser.getAvatar());
+					if (slotUser.getAvatar().length != 0)
+						icon = new ImageIcon(slotUser.getAvatar());
+					else
+						icon = new ImageIcon(
+								LudoUI.class
+										.getResource("/images/no_avatar_icon.png"));
+
 				}
 
 				int player = -1;
@@ -270,11 +284,15 @@ public class LudoUI extends JFrame implements GameUI {
 					player = Ludo.BLUE;
 					lblBluePlayerName.setText(slotName);
 					lblBluePlayerAvatar.setIcon(icon);
+					lblBluePlayerAvatar.setBorder(new BevelBorder(
+							BevelBorder.LOWERED, null, null, null, null));
 					break;
 				case Ludo.GREEN:
 					player = Ludo.GREEN;
 					lblGreenPlayerName.setText(slotName);
 					lblGreenPlayerAvatar.setIcon(icon);
+					lblGreenPlayerAvatar.setBorder(new BevelBorder(
+							BevelBorder.LOWERED, null, null, null, null));
 					break;
 				}
 
@@ -364,11 +382,10 @@ public class LudoUI extends JFrame implements GameUI {
 			pnlBackground.setBounds(0, 0, 642, 822);
 			pnlBackground.setLayout(null);
 			pnlBackground.add(getPnlBoard());
-			pnlBackground.add(getButton());
+			pnlBackground.add(getBtnQuit());
 			pnlBackground.add(getTxtMessage());
 			pnlBackground.add(getScrollPane());
 			pnlBackground.add(getLblState());
-			pnlBackground.add(getBtnNewButton());
 		}
 		return pnlBackground;
 	}
@@ -3555,10 +3572,9 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLblYellowPlayerAvatar() {
 		if (lblYellowPlayerAvatar == null) {
 			lblYellowPlayerAvatar = new JLabel("");
+			lblYellowPlayerAvatar.setHorizontalAlignment(SwingConstants.CENTER);
 			lblYellowPlayerAvatar.setBorder(new BevelBorder(
 					BevelBorder.LOWERED, null, null, null, null));
-			lblYellowPlayerAvatar.setIcon(new ImageIcon(LudoUI.class
-					.getResource("/images/Avatars/2.jpg")));
 			lblYellowPlayerAvatar.setBounds(10, 30, 100, 120);
 		}
 		return lblYellowPlayerAvatar;
@@ -3577,8 +3593,6 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLblGreenPlayerAvatar() {
 		if (lblGreenPlayerAvatar == null) {
 			lblGreenPlayerAvatar = new JLabel("");
-			lblGreenPlayerAvatar.setBorder(new BevelBorder(BevelBorder.LOWERED,
-					null, null, null, null));
 			lblGreenPlayerAvatar.setHorizontalAlignment(SwingConstants.CENTER);
 			lblGreenPlayerAvatar.setBounds(100, 30, 100, 120);
 		}
@@ -3619,8 +3633,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLblBluePlayerAvatar() {
 		if (lblBluePlayerAvatar == null) {
 			lblBluePlayerAvatar = new JLabel("");
-			lblBluePlayerAvatar.setBorder(new BevelBorder(BevelBorder.LOWERED,
-					null, null, null, null));
+			lblBluePlayerAvatar.setBorder(null);
 			lblBluePlayerAvatar.setHorizontalAlignment(SwingConstants.CENTER);
 			lblBluePlayerAvatar.setBounds(10, 65, 100, 120);
 		}
@@ -3936,13 +3949,19 @@ public class LudoUI extends JFrame implements GameUI {
 		return lblGreenPiece4;
 	}
 
-	private JButton getButton() {
-		if (button == null) {
-			button = new JButton();
-			button.setText("Quit");
-			button.setBounds(538, 788, 86, 23);
+	private JButton getBtnQuit() {
+		if (btnQuit == null) {
+			btnQuit = new JButton();
+			btnQuit.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					btnQuitMouseClicked(arg0);
+				}
+			});
+			btnQuit.setText("Quit");
+			btnQuit.setBounds(538, 788, 86, 23);
 		}
-		return button;
+		return btnQuit;
 	}
 
 	private JTextField getTxtMessage() {
@@ -5580,8 +5599,8 @@ public class LudoUI extends JFrame implements GameUI {
 
 	@Override
 	public void lostGame() {
-		// TODO Auto-generated method stub
-
+		JOptionPane.showMessageDialog(this, "Has perdido el juego!");
+		dispose();
 	}
 
 	@Override
@@ -5612,8 +5631,93 @@ public class LudoUI extends JFrame implements GameUI {
 	}
 
 	@Override
-	public void userLeaveGame(String player) {
-		// TODO Auto-generated method stub
+	public void userLeaveGame(String playerName) {
+
+		if (game.players() > 2) {
+
+			try {
+				htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
+						+ playerName + " has left the game</b> ", 0, 0, null);
+			} catch (BadLocationException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
+			int playerIndex = 0;
+
+			for (int i = 0; i < 4; i++) {
+				if (game.getSlot(i).getPlayer().equalsIgnoreCase(playerName)) {
+					playerIndex = i;
+					break;
+				}
+			}
+
+			for (int piece = 0; piece < 4; piece++) {
+				int square = game.getBoard()[playerIndex][piece];
+				if (square != Ludo.HOUSE) {
+					game.getBoard()[playerIndex][piece] = Ludo.HOUSE;
+					Square squareInfo = Ludo
+							.squareInfo(game.getBoard(), square);
+					setSquareIcon(squares[square], squareInfo, playerTurn);
+				}
+			}
+
+			switch (playerIndex) {
+			case Ludo.YELLOW:
+				for (JLabel lbl : yellowPieces) {
+					lbl.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/pieces/yellow_1.png")));
+					lblYellowPlayerAvatar.setIcon(null);
+					lblYellowPlayerAvatar.setBorder(null);
+					lblYellowPlayerName.setText(null);
+				}
+				break;
+			case Ludo.RED:
+				for (JLabel lbl : redPieces) {
+					lbl.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/pieces/red_1.png")));
+					lblRedPlayerAvatar.setIcon(null);
+					lblRedPlayerAvatar.setBorder(null);
+					lblRedPlayerName.setText(null);
+				}
+				break;
+			case Ludo.BLUE:
+				for (JLabel lbl : bluePieces) {
+					lbl.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/pieces/blue_1.png")));
+					lblBluePlayerAvatar.setIcon(null);
+					lblBluePlayerAvatar.setBorder(null);
+					lblBluePlayerName.setText(null);
+				}
+				break;
+			case Ludo.GREEN:
+				for (JLabel lbl : greenPieces) {
+					lbl.setIcon(new ImageIcon(LudoUI.class
+							.getResource("/images/Ludo/pieces/green_1.png")));
+					lblGreenPlayerAvatar.setIcon(null);
+					lblGreenPlayerAvatar.setBorder(null);
+					lblGreenPlayerName.setText(null);
+				}
+				break;
+			}
+
+			if (playerIndex == playerTurn) {
+				throwing = false;
+				try {
+					throwDice.join();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				changeTurn();
+				if (playerTurn != myPlayer)
+					diceAnimation(playerTurn);
+
+			}
+		} else {
+			JOptionPane.showMessageDialog(this, "Has ganado el juego!");
+			dispose();
+		}
 
 	}
 
@@ -6609,6 +6713,7 @@ public class LudoUI extends JFrame implements GameUI {
 		}
 
 		if (!validMoves) {
+			disableDices();
 			changeTurn();
 			Controller.getInstance().updateDiceGame(game.getName(), -1, dice,
 					-1);
@@ -7312,24 +7417,6 @@ public class LudoUI extends JFrame implements GameUI {
 		}
 	}
 
-	private JButton getBtnNewButton() {
-		if (btnNewButton == null) {
-			btnNewButton = new JButton("New button");
-			btnNewButton.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent arg0) {
-					btnNewButtonMouseClicked(arg0);
-				}
-			});
-			btnNewButton.setBounds(527, 655, 89, 23);
-		}
-		return btnNewButton;
-	}
-
-	protected void btnNewButtonMouseClicked(MouseEvent arg0) {
-		Ludo.printState(game.getBoard());
-	}
-
 	private JLabel getLblYellowPlayerCountry() {
 		if (lblYellowPlayerCountry == null) {
 			lblYellowPlayerCountry = new JLabel("");
@@ -7340,5 +7427,15 @@ public class LudoUI extends JFrame implements GameUI {
 			lblYellowPlayerCountry.setBounds(120, 11, 46, 20);
 		}
 		return lblYellowPlayerCountry;
+	}
+
+	protected void btnQuitMouseClicked(MouseEvent arg0) {
+		Controller.getInstance().leaveGame(game.getName());
+		dispose();
+	}
+
+	protected void thisWindowClosing(WindowEvent arg0) {
+		Controller.getInstance().leaveGame(game.getName());
+		dispose();
 	}
 }

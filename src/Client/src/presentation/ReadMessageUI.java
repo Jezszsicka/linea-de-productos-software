@@ -13,7 +13,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.WindowConstants;
 
-import model.Message;
+import logic.Controller;
+
+import ProductLine.Message;
+import ProductLine.MessageType;
 
 @SuppressWarnings("serial")
 public class ReadMessageUI extends javax.swing.JFrame {
@@ -27,15 +30,26 @@ public class ReadMessageUI extends javax.swing.JFrame {
 	private JLabel txtFrom;
 	private JLabel lblSubject;
 	private JLabel txtSubject;
+	private MessageType type;
+	private Message message;
 
 	public ReadMessageUI(Message message, MessagesUI messagesUI) {
-		super();
 		initGUI();
-		txtFrom.setText(message.getFrom());
+		txtFrom.setText(message.getSender());
 		txtSubject.setText(message.getSubject());
 		txtMessage.setText(message.getContent());
 		this.messagesUI = messagesUI;
+		this.message = message;
 		messagesUI.setVisible(false);
+		type = message.getType();
+
+		if (type == MessageType.Invitation) {
+			btnDelete.setText("Aceptar");
+			btnBack.setText("Rechazar");
+		}
+
+		if (!message.isSeen())
+			Controller.getInstance().markMessageAsRead(message);
 	}
 
 	private void initGUI() {
@@ -128,7 +142,7 @@ public class ReadMessageUI extends javax.swing.JFrame {
 		if (btnBack == null) {
 			btnBack = new JButton();
 			btnBack.setText("Volver");
-			btnBack.setBounds(398, 283, 76, 23);
+			btnBack.setBounds(386, 283, 88, 23);
 			btnBack.setFocusable(false);
 			btnBack.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -162,22 +176,17 @@ public class ReadMessageUI extends javax.swing.JFrame {
 				public void mouseExited(MouseEvent e) {
 					btnDeleteMouseExited(e);
 				}
+
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					btnDeleteMouseClicked(arg0);
+				}
 			});
 			btnDelete.setText("Delete");
-			btnDelete.setBounds(398, 254, 76, 23);
+			btnDelete.setBounds(386, 254, 88, 23);
 			btnDelete.setFocusable(false);
 		}
 		return btnDelete;
-	}
-
-	private void btnBackMouseClicked(MouseEvent evt) {
-		messagesUI.setVisible(true);
-		dispose();
-	}
-
-	private void thisWindowClosing(WindowEvent evt) {
-		messagesUI.setVisible(true);
-		dispose();
 	}
 
 	private void setHandCursor() {
@@ -203,4 +212,34 @@ public class ReadMessageUI extends javax.swing.JFrame {
 	protected void btnBackMouseExited(MouseEvent e) {
 		setDefaultCursor();
 	}
+
+	protected void btnDeleteMouseClicked(MouseEvent evt) {
+		if (type == MessageType.Invitation) {
+
+			Controller.getInstance().friendRequestResponse(message.getSender(),
+					true);
+		}
+		messagesUI.setVisible(true);
+		messagesUI.removeMessage();
+		dispose();
+	}
+
+	private void btnBackMouseClicked(MouseEvent evt) {
+		if (type == MessageType.Invitation) {
+
+			Controller.getInstance().friendRequestResponse(message.getSender(),
+					false);
+			Controller.getInstance().deleteMessage(message);
+
+		}
+		messagesUI.setVisible(true);
+		messagesUI.removeMessage();
+		dispose();
+	}
+
+	private void thisWindowClosing(WindowEvent evt) {
+		messagesUI.setVisible(true);
+		dispose();
+	}
+
 }

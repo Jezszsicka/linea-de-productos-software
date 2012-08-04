@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import utils.Utils;
+
 import model.Session;
 import model.User;
 import Ice.Identity;
 import ProductLine.InvalidLoggingException;
 import ProductLine.UserAlreadyExistsException;
 import ProductLine.UserAlreadyLoggedException;
+import ProductLine.UserNotExistsException;
 
 import communications.Client;
 
@@ -300,5 +303,9 @@ public class SessionManager {
 				.compile("^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$");
 		Matcher matcher = pattern.matcher(email);
 		return matcher.matches();
+	}
+
+	public User userInfo(String username) throws UserNotExistsException {
+		return (User)session.getProxy().userInfo(username);
 	}
 }

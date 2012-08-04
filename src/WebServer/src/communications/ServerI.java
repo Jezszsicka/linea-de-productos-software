@@ -21,6 +21,7 @@ import ProductLine.SlotState;
 import ProductLine.User;
 import ProductLine.UserAlreadyExistsException;
 import ProductLine.UserAlreadyLoggedException;
+import ProductLine.UserNotExistsException;
 import ProductLine.UserNotInGameException;
 import ProductLine.UserNotLoggedException;
 import ProductLine._ServerDisp;
@@ -156,7 +157,7 @@ public class ServerI extends _ServerDisp{
 	}
 
 	@Override
-	public void sendMessage(Message msg, Current __current) {
+	public void sendMessage(Message msg, Current __current) throws UserNotExistsException {
 		MessagesManager.getInstance().sendMessage(msg);
 	}
 
@@ -187,6 +188,31 @@ public class ServerI extends _ServerDisp{
 	@Override
 	public void finishGame(String game, String player, Current __current) {
 		GamesManager.getInstance().finishGame(game,player);
+	}
+
+	@Override
+	public void deleteMessage(String user,int messageID, Current __current) {
+		MessagesManager.getInstance().deleteMessage(user,messageID);
+		
+	}
+
+	@Override
+	public void markMessageAsRead(String user,int messageID, Current __current) {
+		MessagesManager.getInstance().markMessageAsRead(user,messageID);
+		
+	}
+
+	@Override
+	public void friendRequestResponse(String friend, String user,
+			boolean accepted, Current __current) throws UserNotExistsException {
+		MessagesManager.getInstance().friendRequestResponse(friend,user,accepted);
+		
+	}
+
+	@Override
+	public User userInfo(String username, Current __current)
+			throws UserNotExistsException {
+		return UsersManager.getInstance().userInfo(username);
 	}
 
 

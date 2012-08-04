@@ -114,19 +114,20 @@ public class GamesManager {
 			}
 		}
 
-		// TODO Comportamiento según el juego
 		if (game.isStarted()) {
-			switch (game.getTypeGame()) {
-			case Checkers:
-			case Chess:
-			case Connect4:
+
+			User leavedUser = UsersManager.getInstance().searchSession(player)
+					.getUser();
+			for (Ranking ranking : leavedUser.getRankings()) {
+				if (ranking.getGame() == game.getTypeGame()) {
+					int lostGames = ranking.getLostGames();
+					ranking.setLostGames(++lostGames);
+					break;
+				}
+			}
+
+			if (game.players() <= 1) {
 				games.remove(game);
-				break;
-			case Goose:
-			case Ludo:
-				// TODO avisar al resto de jugadores que alguien deja el juego y
-				// si solo queda uno darlo como ganador y borrar el juego
-				break;
 			}
 
 		}
@@ -333,7 +334,6 @@ public class GamesManager {
 
 	public void updateGame(String gameName, String player, int nextTurn,
 			int[][] board) {
-		// TODO Auto-generated method stub
 		Game game = searchGame(gameName);
 		switch (game.getTypeGame()) {
 		case Checkers:
@@ -342,9 +342,9 @@ public class GamesManager {
 			String checkersTurn = game.getSlot(nextTurn).getPlayer();
 			Session session = UsersManager.getInstance().searchSession(
 					checkersTurn);
-			
+
 			if (player.equalsIgnoreCase(session.getUser().getName())) {
-				
+
 				int updateUser = game.getTurn();
 				checkersTurn = game.getSlot(updateUser).getPlayer();
 				session = UsersManager.getInstance()
@@ -356,78 +356,84 @@ public class GamesManager {
 			break;
 		case Chess:
 		case Connect4:
-		case Goose:
-		case Ludo:
 			game.setBoard(board);
 			String turn = game.getSlot(nextTurn).getPlayer();
 			Session turnSession = UsersManager.getInstance()
 					.searchSession(turn);
 			turnSession.getCallback().gameUpdated(gameName, nextTurn, board);
 			break;
+		default:
+			System.out.println("Llamada erronea");
+			break;
 		}
 
 	}
 
 	public void updateDiceGame(String gameName, String player, int nextTurn,
-			int[][] board, int fromSquare,int dice, int movedPiece) {
-		
+			int[][] board, int fromSquare, int dice, int movedPiece) {
+
 		Game game = searchGame(gameName);
 		game.setBoard(board);
-		for(Slot slot : game.getSlots()){
-			if(!slot.getPlayer().equalsIgnoreCase(player) && slot.getType()== SlotState.Human){
-				Session slotSession = UsersManager.getInstance().searchSession(slot.getPlayer());
-				slotSession.getCallback().diceGameUpdated(gameName,nextTurn,board,fromSquare,dice,movedPiece);
+		for (Slot slot : game.getSlots()) {
+			if (!slot.getPlayer().equalsIgnoreCase(player)
+					&& slot.getType() == SlotState.Human) {
+				Session slotSession = UsersManager.getInstance().searchSession(
+						slot.getPlayer());
+				slotSession.getCallback().diceGameUpdated(gameName, nextTurn,
+						board, fromSquare, dice, movedPiece);
 			}
 		}
 	}
-	
+
 	public void finishGame(String gameName, String winnerPlayer) {
 		Game game = searchGame(gameName);
-		switch(game.getTypeGame()){
+		switch (game.getTypeGame()) {
 		case Checkers:
 		case Chess:
 		case Connect4:
-		String looserPlayer;
-			
-		if(game.getSlot(0).getPlayer().equalsIgnoreCase(winnerPlayer)){
-			looserPlayer = game.getSlot(1).getPlayer();
-		}else{
-			looserPlayer = game.getSlot(0).getPlayer();
-		}
-		
-		Session looserSession = UsersManager.getInstance().searchSession(looserPlayer);
-		looserSession.getCallback().gameFinished(gameName);
-		
-		User winnerUser = UsersManager.getInstance().searchSession(winnerPlayer).getUser();
-		User looserUser = looserSession.getUser();
-		
-		for(Ranking ranking : winnerUser.getRankings()){
-			if(ranking.getGame() == game.getTypeGame()){
-				int wonGames = ranking.getWonGames(); 
-				ranking.setWonGames(++wonGames);
-				break;
+			String looserPlayer;
+
+			if (game.getSlot(0).getPlayer().equalsIgnoreCase(winnerPlayer)) {
+				looserPlayer = game.getSlot(1).getPlayer();
+			} else {
+				looserPlayer = game.getSlot(0).getPlayer();
 			}
-		}
-		
-		for(Ranking ranking : looserUser.getRankings()){
-			if(ranking.getGame() == game.getTypeGame()){
-				int lostGames = ranking.getLostGames(); 
-				ranking.setLostGames(++lostGames);
-				break;
+
+			Session looserSession = UsersManager.getInstance().searchSession(
+					looserPlayer);
+			looserSession.getCallback().gameFinished(gameName);
+
+			User winnerUser = UsersManager.getInstance()
+					.searchSession(winnerPlayer).getUser();
+			User looserUser = looserSession.getUser();
+
+			for (Ranking ranking : winnerUser.getRankings()) {
+				if (ranking.getGame() == game.getTypeGame()) {
+					int wonGames = ranking.getWonGames();
+					ranking.setWonGames(++wonGames);
+					break;
+				}
 			}
-		}
-		
-		UsersManager.getInstance().saveUser(winnerUser);
-		UsersManager.getInstance().saveUser(looserUser);
-		
+
+			for (Ranking ranking : looserUser.getRankings()) {
+				if (ranking.getGame() == game.getTypeGame()) {
+					int lostGames = ranking.getLostGames();
+					ranking.setLostGames(++lostGames);
+					break;
+				}
+			}
+
+			UsersManager.getInstance().saveUser(winnerUser);
+			UsersManager.getInstance().saveUser(looserUser);
+
 			break;
 		case Goose:
 		case Ludo:
-			
-			//TODO ganador en juego de mas de 2 jugadores
+
+			// TODO ganador en juego de mas de 2 jugadores
 			break;
 		}
-		
+
 		games.remove(game);
 	}
 

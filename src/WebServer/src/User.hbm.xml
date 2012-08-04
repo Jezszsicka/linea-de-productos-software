@@ -44,5 +44,10 @@
 			<key column="idUser" />
 			<one-to-many class="ProductLine.Ranking" />
 		</bag>
+		<bag name="messages" cascade="all">
+			<key column="idUser" />
+			<one-to-many class="model.Message" />
+		</bag>
+		
 	</class>
 </hibernate-mapping>
