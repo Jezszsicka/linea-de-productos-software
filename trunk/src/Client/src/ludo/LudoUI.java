@@ -6176,45 +6176,6 @@ public class LudoUI extends JFrame implements GameUI {
 								}
 							}
 
-							// //////////////////////////////////////////////////
-							toSquare = game.getBoard()[player][piece];
-
-							// Animación hacia arriba
-							for (int from = fromSquare + 1; from <= Ludo.RED_FINAL_SQUARE; from++) {
-								square = Ludo.squareInfo(game.getBoard(),
-										from - 1);
-								setSquareIcon(squares[from - 1], square, player);
-
-								square = Ludo.squareInfo(game.getBoard(), from);
-								square.addPiece(player);
-								setSquareIcon(squares[from], square, player);
-
-								try {
-									sleep(Constants.LudoPieceMoveTime);
-								} catch (InterruptedException e) {
-									e.printStackTrace();
-								}
-							}
-
-							// Animación del rebote
-							for (int from = Ludo.RED_FINAL_SQUARE - 1; from >= toSquare; from--) {
-
-								square = Ludo.squareInfo(game.getBoard(),
-										from + 1);
-								setSquareIcon(squares[from + 1], square, player);
-
-								square = Ludo.squareInfo(game.getBoard(), from);
-								if (from != toSquare)
-									square.addPiece(player);
-								setSquareIcon(squares[from], square, player);
-
-								try {
-									sleep(Constants.LudoPieceMoveTime);
-								} catch (InterruptedException e) {
-									e.printStackTrace();
-								}
-							}
-
 						}// Llegamos justos o aún quedan casillas
 						else {
 							for (int from = fromSquare + 1; from <= toSquare; from++) {
@@ -6369,7 +6330,7 @@ public class LudoUI extends JFrame implements GameUI {
 
 					} else
 					// En las casillas finales
-					if (fromSquare >= 77
+					if (fromSquare >= 85
 							&& fromSquare <= Ludo.BLUE_FINAL_SQUARE - 1) {
 						// Nos pasamos de la casilla final
 						if (toSquare > Ludo.BLUE_FINAL_SQUARE) {
@@ -6380,10 +6341,18 @@ public class LudoUI extends JFrame implements GameUI {
 							for (int from = fromSquare + 1; from <= Ludo.BLUE_FINAL_SQUARE; from++) {
 								square = Ludo.squareInfo(game.getBoard(),
 										from - 1);
+								if (from - 1 == toSquare)
+									square.removePiece(player);
 								setSquareIcon(squares[from - 1], square, player);
 
 								square = Ludo.squareInfo(game.getBoard(), from);
-								square.addPiece(player);
+								if (from != toSquare)
+									square.addPiece(player);
+
+								if (from == Ludo.BLUE_FINAL_SQUARE)
+									square.setPieces(Ludo.piecesInFinalSquare(
+											game.getBoard(), player) + 1);
+
 								setSquareIcon(squares[from], square, player);
 
 								try {
@@ -6395,7 +6364,6 @@ public class LudoUI extends JFrame implements GameUI {
 
 							// Animación del rebote
 							for (int from = Ludo.BLUE_FINAL_SQUARE - 1; from >= toSquare; from--) {
-
 								square = Ludo.squareInfo(game.getBoard(),
 										from + 1);
 								setSquareIcon(squares[from + 1], square, player);
@@ -6566,7 +6534,7 @@ public class LudoUI extends JFrame implements GameUI {
 
 					} else
 					// En las casillas finales
-					if (fromSquare >= 77
+					if (fromSquare >= 93
 							&& fromSquare <= Ludo.GREEN_FINAL_SQUARE - 1) {
 						// Nos pasamos de la casilla final
 						if (toSquare > Ludo.GREEN_FINAL_SQUARE) {
@@ -6577,10 +6545,18 @@ public class LudoUI extends JFrame implements GameUI {
 							for (int from = fromSquare + 1; from <= Ludo.GREEN_FINAL_SQUARE; from++) {
 								square = Ludo.squareInfo(game.getBoard(),
 										from - 1);
+								if (from - 1 == toSquare)
+									square.removePiece(player);
 								setSquareIcon(squares[from - 1], square, player);
 
 								square = Ludo.squareInfo(game.getBoard(), from);
-								square.addPiece(player);
+								if (from != toSquare)
+									square.addPiece(player);
+
+								if (from == Ludo.GREEN_FINAL_SQUARE)
+									square.setPieces(Ludo.piecesInFinalSquare(
+											game.getBoard(), player) + 1);
+
 								setSquareIcon(squares[from], square, player);
 
 								try {
@@ -6592,7 +6568,6 @@ public class LudoUI extends JFrame implements GameUI {
 
 							// Animación del rebote
 							for (int from = Ludo.GREEN_FINAL_SQUARE - 1; from >= toSquare; from--) {
-
 								square = Ludo.squareInfo(game.getBoard(),
 										from + 1);
 								setSquareIcon(squares[from + 1], square, player);
