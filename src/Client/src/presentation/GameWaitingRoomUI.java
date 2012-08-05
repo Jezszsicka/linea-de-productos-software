@@ -490,6 +490,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				Controller.getInstance().startGame(game.getName());
 				btnCancel.setEnabled(false);
 				btnStartGame.setEnabled(false);
+				setEnabled(false);
 				for (int i = 1; i < playerPanels.size(); i++) {
 					playerPanels.get(i).getPlayerType().setEnabled(false);
 				}
@@ -533,6 +534,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 
 	public void gameStarted() {
 		btnCancel.setEnabled(false);
+		setEnabled(false);
 		new Thread() {
 			public void run() {
 				for (int i = 5; i > 0; i--) {

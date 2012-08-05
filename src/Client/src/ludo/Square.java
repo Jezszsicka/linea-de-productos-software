@@ -2,6 +2,7 @@ package ludo;
 
 public class Square {
 	private int square;
+	private int pieces;
 	private int firstPiece;
 	private int secondPiece;
 
@@ -89,5 +90,33 @@ public class Square {
 	 */
 	public void setSecondPiece(int secondPiece) {
 		this.secondPiece = secondPiece;
+	}
+
+	/**
+	 * @return the pieces
+	 */
+	public int getPieces() {
+		pieces = 0;
+		
+		if (firstPiece != Ludo.EMPTY)
+			pieces++;
+
+		if (secondPiece != Ludo.EMPTY)
+			pieces++;
+		
+		return pieces;
+	}
+
+	/**
+	 * @param pieces the pieces to set
+	 */
+	public void setPieces(int pieces) {
+		this.pieces = pieces;
+	}
+
+	@Override
+	public String toString() {
+		return "Square [square=" + square + ", firstPiece=" + firstPiece
+				+ ", secondPiece=" + secondPiece + "]";
 	}
 }

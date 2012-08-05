@@ -211,7 +211,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private boolean throwing;
 	private boolean count20;
 	private ThrowDiceThread throwDice;
-	private JLabel lblYellowPlayerCountry;
+	private JButton btnNewButton;
 
 	public LudoUI(String username, Game game) {
 		addWindowListener(new WindowAdapter() {
@@ -386,6 +386,7 @@ public class LudoUI extends JFrame implements GameUI {
 			pnlBackground.add(getTxtMessage());
 			pnlBackground.add(getScrollPane());
 			pnlBackground.add(getLblState());
+			pnlBackground.add(getBtnNewButton());
 		}
 		return pnlBackground;
 	}
@@ -424,7 +425,6 @@ public class LudoUI extends JFrame implements GameUI {
 			pnlYellowPlayer.add(getLblYellowPiece2());
 			pnlYellowPlayer.add(getLblYellowPiece3());
 			pnlYellowPlayer.add(getLblYellowPiece4());
-			pnlYellowPlayer.add(getLblYellowPlayerCountry());
 		}
 		return pnlYellowPlayer;
 	}
@@ -5984,10 +5984,18 @@ public class LudoUI extends JFrame implements GameUI {
 							for (int from = fromSquare + 1; from <= Ludo.YELLOW_FINAL_SQUARE; from++) {
 								square = Ludo.squareInfo(game.getBoard(),
 										from - 1);
+								if (from - 1 == toSquare)
+									square.removePiece(player);
 								setSquareIcon(squares[from - 1], square, player);
 
 								square = Ludo.squareInfo(game.getBoard(), from);
-								square.addPiece(player);
+								if (from != toSquare)
+									square.addPiece(player);
+
+								if (from == Ludo.YELLOW_FINAL_SQUARE)
+									square.setPieces(Ludo.piecesInFinalSquare(
+											game.getBoard(), player) + 1);
+
 								setSquareIcon(squares[from], square, player);
 
 								try {
@@ -5999,7 +6007,6 @@ public class LudoUI extends JFrame implements GameUI {
 
 							// Animación del rebote
 							for (int from = Ludo.YELLOW_FINAL_SQUARE - 1; from >= toSquare; from--) {
-
 								square = Ludo.squareInfo(game.getBoard(),
 										from + 1);
 								setSquareIcon(squares[from + 1], square, player);
@@ -6124,6 +6131,52 @@ public class LudoUI extends JFrame implements GameUI {
 						// Nos pasamos de la casilla final
 						if (toSquare > Ludo.RED_FINAL_SQUARE) {
 
+							toSquare = game.getBoard()[player][piece];
+
+							// Animación hacia arriba
+							for (int from = fromSquare + 1; from <= Ludo.RED_FINAL_SQUARE; from++) {
+								square = Ludo.squareInfo(game.getBoard(),
+										from - 1);
+								if (from - 1 == toSquare)
+									square.removePiece(player);
+								setSquareIcon(squares[from - 1], square, player);
+
+								square = Ludo.squareInfo(game.getBoard(), from);
+								if (from != toSquare)
+									square.addPiece(player);
+
+								if (from == Ludo.RED_FINAL_SQUARE)
+									square.setPieces(Ludo.piecesInFinalSquare(
+											game.getBoard(), player) + 1);
+
+								setSquareIcon(squares[from], square, player);
+
+								try {
+									sleep(Constants.LudoPieceMoveTime);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+
+							// Animación del rebote
+							for (int from = Ludo.RED_FINAL_SQUARE - 1; from >= toSquare; from--) {
+								square = Ludo.squareInfo(game.getBoard(),
+										from + 1);
+								setSquareIcon(squares[from + 1], square, player);
+
+								square = Ludo.squareInfo(game.getBoard(), from);
+								if (from != toSquare)
+									square.addPiece(player);
+								setSquareIcon(squares[from], square, player);
+
+								try {
+									sleep(Constants.LudoPieceMoveTime);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+
+							// //////////////////////////////////////////////////
 							toSquare = game.getBoard()[player][piece];
 
 							// Animación hacia arriba
@@ -6651,6 +6704,19 @@ public class LudoUI extends JFrame implements GameUI {
 					break;
 				}
 
+				if (toSquare == Ludo.YELLOW_FINAL_SQUARE
+						|| toSquare == Ludo.RED_FINAL_SQUARE
+						|| toSquare == Ludo.BLUE_FINAL_SQUARE
+						|| toSquare == Ludo.GREEN_FINAL_SQUARE) {
+					if (Ludo.isWinner(game.getBoard(), myPlayer)) {
+						Controller.getInstance().finishGame(game.getName(),
+								username);
+						JOptionPane.showMessageDialog(LudoUI.this,
+								"¡Has ganado el juego!");
+						dispose();
+					}
+				} else
+
 				if (!count20) {
 					if (playerTurn != myPlayer) {
 						switch (playerTurn) {
@@ -6680,7 +6746,9 @@ public class LudoUI extends JFrame implements GameUI {
 					lblState.setText("Has comido una ficha, cuentate 20!");
 					enablePlayerSquares(player);
 					dice = 20;
+					// refreshInitialPieces();
 				}
+
 			}
 		}.start();
 
@@ -6870,23 +6938,74 @@ public class LudoUI extends JFrame implements GameUI {
 
 			if (squares != 20)
 				diceAnimation(playerTurn);
+			else
+				refreshInitialPieces();
 		}
 
+	}
+
+	private void refreshInitialPieces() {
+		for (int index = 0; index < 4; index++) {
+			for (int piece = 0; piece < 4; piece++) {
+				switch (index) {
+				case Ludo.YELLOW:
+					if (game.getBoard()[index][piece] == Ludo.HOUSE) {
+						yellowPieces[piece]
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/pieces/yellow_1.png")));
+						yellowPieces[piece].repaint();
+					}
+					break;
+				case Ludo.RED:
+					if (game.getBoard()[index][piece] == Ludo.HOUSE) {
+						redPieces[piece].setIcon(new ImageIcon(LudoUI.class
+								.getResource("/images/Ludo/pieces/red_1.png")));
+						redPieces[piece].repaint();
+					}
+					break;
+				case Ludo.BLUE:
+					if (game.getBoard()[index][piece] == Ludo.HOUSE) {
+						bluePieces[piece]
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/pieces/blue_1.png")));
+						bluePieces[piece].repaint();
+					}
+					break;
+				case Ludo.GREEN:
+					if (game.getBoard()[index][piece] == Ludo.HOUSE) {
+						greenPieces[piece]
+								.setIcon(new ImageIcon(
+										LudoUI.class
+												.getResource("/images/Ludo/pieces/green_1.png")));
+						greenPieces[piece].repaint();
+					}
+					break;
+				}
+			}
+		}
+
+		pnlYellowPlayer.repaint();
+		pnlRedPlayer.repaint();
+		pnlBluePlayer.repaint();
+		pnlGreenPlayer.repaint();
 	}
 
 	private void setSquareIcon(JLabel lblSquare, Square square, int player) {
 		int squareNum = square.getSquare();
 		int pieces;
 
-		if (squareNum == 76 || squareNum == 84 || squareNum == 92
-				|| squareNum == 100)
-			pieces = Ludo.piecesInFinalSquare(game.getBoard(), player);
-		else
-			pieces = square.numberOfPieces();
+		/*
+		 * if (squareNum == 76 || squareNum == 84 || squareNum == 92 ||
+		 * squareNum == 100) pieces = Ludo.piecesInFinalSquare(game.getBoard(),
+		 * player); else
+		 */
+		pieces = square.getPieces();
 
 		switch (pieces) {
 		case 0:
-			if (squareNum <= 69 && squareNum != 8 && squareNum != 9
+			if (squareNum < 69 && squareNum != 8 && squareNum != 9
 					&& squareNum != 25 && squareNum != 26 && squareNum != 42
 					&& squareNum != 43 && squareNum != 59 && squareNum != 60)
 				lblSquare.setText(String.valueOf(square.getSquare()));
@@ -7417,18 +7536,6 @@ public class LudoUI extends JFrame implements GameUI {
 		}
 	}
 
-	private JLabel getLblYellowPlayerCountry() {
-		if (lblYellowPlayerCountry == null) {
-			lblYellowPlayerCountry = new JLabel("");
-			lblYellowPlayerCountry.setIcon(new ImageIcon(LudoUI.class
-					.getResource("/images/Flags/es_small.png")));
-			lblYellowPlayerCountry
-					.setHorizontalAlignment(SwingConstants.CENTER);
-			lblYellowPlayerCountry.setBounds(120, 11, 46, 20);
-		}
-		return lblYellowPlayerCountry;
-	}
-
 	protected void btnQuitMouseClicked(MouseEvent arg0) {
 		Controller.getInstance().leaveGame(game.getName());
 		dispose();
@@ -7437,5 +7544,23 @@ public class LudoUI extends JFrame implements GameUI {
 	protected void thisWindowClosing(WindowEvent arg0) {
 		Controller.getInstance().leaveGame(game.getName());
 		dispose();
+	}
+
+	private JButton getBtnNewButton() {
+		if (btnNewButton == null) {
+			btnNewButton = new JButton("New button");
+			btnNewButton.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					btnNewButtonMouseClicked(arg0);
+				}
+			});
+			btnNewButton.setBounds(535, 660, 89, 23);
+		}
+		return btnNewButton;
+	}
+
+	protected void btnNewButtonMouseClicked(MouseEvent arg0) {
+		Ludo.printState(game.getBoard());
 	}
 }
