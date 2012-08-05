@@ -103,34 +103,55 @@ public class GamesManager {
 	 * @param player
 	 *            Player who leaves the game
 	 **/
-	public void leaveGame(String gameName, String player) {
-		Game game = searchGame(gameName);
-		game.removePlayer(player);
-		for (Slot slot : game.getSlots()) {
-			if (slot.getType().equals(SlotState.Human)) {
-				Session userSession = UsersManager.getInstance().searchSession(
-						slot.getPlayer());
-				userSession.getCallback().userLeaveGame(gameName, player);
-			}
-		}
-
-		if (game.isStarted()) {
-
-			User leavedUser = UsersManager.getInstance().searchSession(player)
-					.getUser();
-			for (Ranking ranking : leavedUser.getRankings()) {
-				if (ranking.getGame() == game.getTypeGame()) {
-					int lostGames = ranking.getLostGames();
-					ranking.setLostGames(++lostGames);
-					break;
+	public void leaveGame(final String gameName, final String player) {
+		
+		new Thread() {
+			public void run() {
+				Game game = searchGame(gameName);
+				game.removePlayer(player);
+				for (Slot slot : game.getSlots()) {
+					if (slot.getType().equals(SlotState.Human)) {
+						Session userSession = UsersManager.getInstance()
+								.searchSession(slot.getPlayer());
+						userSession.getCallback().userLeaveGame(gameName,
+								player);
+						if(game.players() <= 1){
+							for (Ranking ranking : userSession.getUser().getRankings()) {
+								if (ranking.getGame() == game.getTypeGame()) {
+									int wonGames = ranking.getWonGames();
+									ranking.setWonGames(++wonGames);
+									break;
+								}
+							}
+							
+							UsersManager.getInstance().saveUser(userSession.getUser());
+						}
+						
+					}
 				}
-			}
 
-			if (game.players() <= 1) {
-				games.remove(game);
-			}
+				if (game.isStarted()) {
 
-		}
+					User leaveUser = UsersManager.getInstance()
+							.searchSession(player).getUser();
+					for (Ranking ranking : leaveUser.getRankings()) {
+						if (ranking.getGame() == game.getTypeGame()) {
+							int lostGames = ranking.getLostGames();
+							ranking.setLostGames(++lostGames);
+							break;
+						}
+					}
+					
+					UsersManager.getInstance().saveUser(leaveUser);
+
+					if (game.players() <= 1) {
+						games.remove(game);
+					}
+
+				}
+
+			}
+		}.start();
 
 	}
 
