@@ -169,10 +169,9 @@ public class UsersManager {
 	public void deleteAccount(String username, String password)
 			throws InvalidLoggingException {
 		User user = searchSession(username).getUser();
-		if (user.getPassword().equals(password))
+		if (!user.getPassword().equals(password))
 			throw new InvalidLoggingException("Incorrect password");
 		userDAO.delete(user);
-
 	}
 
 	public Session searchSession(String username) {

@@ -216,7 +216,7 @@ public class Ludo {
 				
 			} else
 			// En las casillas finales
-			if (fromSquare >= 77 && fromSquare <= BLUE_FINAL_SQUARE - 1) {
+			if (fromSquare >= 85 && fromSquare <= BLUE_FINAL_SQUARE - 1) {
 				// Nos pasamos de la casilla final
 				if (toSquare > BLUE_FINAL_SQUARE) {
 					int offset = toSquare - BLUE_FINAL_SQUARE;
@@ -293,7 +293,7 @@ public class Ludo {
 				
 			} else
 			// En las casillas finales
-			if (fromSquare >= 77 && fromSquare <= GREEN_FINAL_SQUARE - 1) {
+			if (fromSquare >= 93 && fromSquare <= GREEN_FINAL_SQUARE - 1) {
 				// Nos pasamos de la casilla final
 				if (toSquare > GREEN_FINAL_SQUARE) {
 					int offset = toSquare - GREEN_FINAL_SQUARE;

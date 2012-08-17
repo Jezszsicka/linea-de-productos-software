@@ -216,7 +216,7 @@ public class LoginUI extends javax.swing.JFrame {
 	private JLabel getLblRemember() {
 		if (lblRemember == null) {
 			lblRemember = new JLabel();
-			lblRemember.setText("¿Has olvidado tu contraseña?");
+			lblRemember.setText(language.getString("lblRemember"));
 			lblRemember.setBounds(87, 207, 170, 14);
 			lblRemember.setFont(new java.awt.Font("Tahoma", 1, 11));
 			lblRemember.addMouseListener(new MouseAdapter() {

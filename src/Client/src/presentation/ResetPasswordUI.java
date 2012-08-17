@@ -11,22 +11,21 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 import logic.Controller;
+import logic.LanguageManager;
 
 @SuppressWarnings("serial")
 public class ResetPasswordUI extends javax.swing.JFrame {
 	private JPanel pnlBackground;
 	private JButton btnSearch;
 	private JButton btnCancel;
-	private JLabel lblAccount;
+	private JLabel lblUserOrEmail;
 	private JTextField txtAccount;
 	private JLabel lblIdentify;
 
-	/**
-	 * Auto-generated main method to display this JFrame
-	 */
+	private LanguageManager language;
 
 	public ResetPasswordUI() {
-		super();
+		language = LanguageManager.language();
 		initGUI();
 		setLocationRelativeTo(null);
 		setVisible(true);
@@ -35,7 +34,7 @@ public class ResetPasswordUI extends javax.swing.JFrame {
 	private void initGUI() {
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		getContentPane().setLayout(null);
-		this.setTitle("Identifica tu cuenta");
+		this.setTitle(language.getString("resetPasswordUITitle"));
 		getContentPane().add(getPnlBackground());
 		this.setSize(424, 207);
 	}
@@ -57,8 +56,7 @@ public class ResetPasswordUI extends javax.swing.JFrame {
 	private JLabel getLblIdentify() {
 		if (lblIdentify == null) {
 			lblIdentify = new JLabel();
-			lblIdentify
-					.setText("Para resetear tu contraseña, por favor primero identifica tu cuenta");
+			lblIdentify.setText(language.getString("lblIdentify"));
 			lblIdentify.setBounds(10, 21, 388, 14);
 			lblIdentify.setFont(new java.awt.Font("Tahoma", 0, 11));
 		}
@@ -74,19 +72,19 @@ public class ResetPasswordUI extends javax.swing.JFrame {
 	}
 
 	private JLabel getLblAccount() {
-		if (lblAccount == null) {
-			lblAccount = new JLabel();
-			lblAccount.setText("Usuario o email");
-			lblAccount.setBounds(20, 60, 128, 14);
-			lblAccount.setFont(new java.awt.Font("Tahoma", 1, 11));
+		if (lblUserOrEmail == null) {
+			lblUserOrEmail = new JLabel();
+			lblUserOrEmail.setText(language.getString("lblUserOrEmail"));
+			lblUserOrEmail.setBounds(20, 60, 128, 14);
+			lblUserOrEmail.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
-		return lblAccount;
+		return lblUserOrEmail;
 	}
 
 	private JButton getBtnSearch() {
 		if (btnSearch == null) {
 			btnSearch = new JButton();
-			btnSearch.setText("Buscar");
+			btnSearch.setText(language.getString("btnSearch"));
 			btnSearch.setBounds(242, 133, 71, 23);
 			btnSearch.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -110,7 +108,7 @@ public class ResetPasswordUI extends javax.swing.JFrame {
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
 			btnCancel = new JButton();
-			btnCancel.setText("Cancelar");
+			btnCancel.setText(language.getString("btnCancel"));
 			btnCancel.setBounds(323, 133, 75, 23);
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
