@@ -21,6 +21,7 @@ import javax.swing.text.SimpleAttributeSet;
 import javax.swing.text.StyleConstants;
 
 import logic.Controller;
+import logic.LanguageManager;
 import ProductLine.GameType;
 
 @SuppressWarnings("serial")
@@ -72,8 +73,10 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel lblLudo;
 	private JLabel lblLudoPlayers;
 
+	private LanguageManager language;
+
 	public CreateGameUI() {
-		super();
+		language = LanguageManager.language();
 		setResizable(false);
 		selectedGame = GameType.Checkers;
 		initGUI();
@@ -109,7 +112,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JButton getBtnCreate() {
 		if (btnCreate == null) {
 			btnCreate = new JButton();
-			btnCreate.setText("Create game");
+			btnCreate.setText(language.getString("btnCreateGame"));
 			btnCreate.setBounds(450, 362, 95, 23);
 			btnCreate.setFocusable(false);
 			btnCreate.addMouseListener(new MouseAdapter() {
@@ -134,7 +137,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblGameName() {
 		if (lblGameName == null) {
 			lblGameName = new JLabel();
-			lblGameName.setText("Game name");
+			lblGameName.setText(language.getString("lblGameName"));
 			lblGameName.setBounds(2, 13, 89, 20);
 			lblGameName.setHorizontalAlignment(SwingConstants.CENTER);
 			lblGameName.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -159,7 +162,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblGame() {
 		if (lblGame == null) {
 			lblGame = new JLabel();
-			lblGame.setText("Games");
+			lblGame.setText(language.getString("lblGames"));
 			lblGame.setBounds(12, 50, 61, 20);
 			lblGame.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblGame.setHorizontalAlignment(SwingConstants.LEFT);
@@ -170,7 +173,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
-			btnCancel = new JButton("Cancel");
+			btnCancel = new JButton(language.getString(language
+					.getString("btnCancel")));
 			btnCancel.setBounds(450, 391, 95, 23);
 			btnCancel.setText("Cancel");
 			btnCancel.setFocusable(false);
@@ -210,7 +214,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblCheckers() {
 		if (lblCheckers == null) {
 			lblCheckers = new JLabel();
-			lblCheckers.setText("Damas");
+			lblCheckers.setText(language.getString("checkersName"));
 			lblCheckers.setBounds(72, 8, 58, 25);
 			lblCheckers.setHorizontalAlignment(SwingConstants.CENTER);
 		}
@@ -296,7 +300,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getJLabel2() {
 		if (lblConnect4 == null) {
 			lblConnect4 = new JLabel();
-			lblConnect4.setText("Conecta 4");
+			lblConnect4.setText(language.getString("connect4Name"));
 			lblConnect4.setHorizontalAlignment(SwingConstants.CENTER);
 			lblConnect4.setBounds(70, 6, 59, 25);
 		}
@@ -327,7 +331,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getJLabel4() {
 		if (lblGameTitle == null) {
 			lblGameTitle = new JLabel();
-			lblGameTitle.setText("Damas");
+			lblGameTitle.setText(language.getString("checkersName"));
 			lblGameTitle.setBounds(2, 13, 253, 16);
 			lblGameTitle.setHorizontalAlignment(SwingConstants.CENTER);
 			lblGameTitle.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -354,7 +358,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblPlayers() {
 		if (lblPlayers == null) {
 			lblPlayers = new JLabel();
-			lblPlayers.setText("Jugadores:");
+			lblPlayers.setText(language.getString("lblPlayers"));
 			lblPlayers.setBounds(12, 129, 67, 18);
 			lblPlayers.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
@@ -364,7 +368,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblDescription() {
 		if (lblDescription == null) {
 			lblDescription = new JLabel();
-			lblDescription.setText("Descripción:");
+			lblDescription.setText(language.getString("lblDescription"));
 			lblDescription.setBounds(12, 158, 74, 14);
 			lblDescription.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
@@ -378,8 +382,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 			txtGameDescription = new JTextPane();
 			txtGameDescription.getStyledDocument().setParagraphAttributes(0,
 					txtGameDescription.getDocument().getLength(), style, false);
-			txtGameDescription
-					.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+			txtGameDescription.setText(language
+					.getString("checkersDescription"));
 			txtGameDescription.setBounds(12, 178, 234, 138);
 			txtGameDescription.setEditable(false);
 			txtGameDescription.setBackground(new java.awt.Color(240, 240, 240));
@@ -391,7 +395,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblGamePlayers() {
 		if (lblGamePlayers == null) {
 			lblGamePlayers = new JLabel();
-			lblGamePlayers.setText("2 jugadores");
+			lblGamePlayers.setText(language.getString("lblTwoPlayers"));
 			lblGamePlayers.setBounds(85, 129, 161, 18);
 		}
 		return lblGamePlayers;
@@ -456,7 +460,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblChess() {
 		if (lblChess == null) {
 			lblChess = new JLabel();
-			lblChess.setText("Ajedrez");
+			lblChess.setText(language.getString("chessName"));
 			lblChess.setHorizontalAlignment(SwingConstants.CENTER);
 			lblChess.setBounds(70, 8, 59, 25);
 		}
@@ -514,7 +518,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblGoose() {
 		if (lblGoose == null) {
 			lblGoose = new JLabel();
-			lblGoose.setText("Oca");
+			lblGoose.setText(language.getString("gooseName"));
 			lblGoose.setHorizontalAlignment(SwingConstants.CENTER);
 			lblGoose.setBounds(70, 6, 59, 25);
 		}
@@ -573,7 +577,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblLudo() {
 		if (lblLudo == null) {
 			lblLudo = new JLabel();
-			lblLudo.setText("Parchís");
+			lblLudo.setText(language.getString("ludoName"));
 			lblLudo.setHorizontalAlignment(SwingConstants.CENTER);
 			lblLudo.setBounds(70, 6, 59, 25);
 		}
@@ -630,52 +634,47 @@ public class CreateGameUI extends javax.swing.JFrame {
 	}
 
 	private void checkersSelected() {
-		lblGameTitle.setText("Damas");
-		txtGameDescription
-				.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+		lblGameTitle.setText(language.getString("checkersName"));
+		txtGameDescription.setText(language.getString("checkersDescription"));
 		lblGameImage.setIcon(new ImageIcon(CreateGameUI.class
 				.getResource("/images/Games/checkers_icon.png")));
-		lblGamePlayers.setText("2 jugadores");
+		lblGamePlayers.setText(language.getString("lblTwoPlayers"));
 		selectedGame = GameType.Checkers;
 	}
 
 	private void chessSelected() {
-		lblGameTitle.setText("Ajedrez");
-		txtGameDescription
-				.setText("El ajedrez es un juego competitivo entre dos personas, cada una de las cuales dispone de 16 piezas móviles que se colocan sobre un tablero dividido en 64 escaques.");
+		lblGameTitle.setText(language.getString("chessName"));
+		txtGameDescription.setText(language.getString("chessDescription"));
 		lblGameImage.setIcon(new ImageIcon(CreateGameUI.class
 				.getResource("/images/Games/chess_icon.png")));
-		lblGamePlayers.setText("2 jugadores");
+		lblGamePlayers.setText(language.getString("lblTwoPlayers"));
 		selectedGame = GameType.Chess;
 	}
 
 	private void connect4Selected() {
-		lblGameTitle.setText("Conecta 4");
-		txtGameDescription
-				.setText("Conecta 4 es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+		lblGameTitle.setText(language.getString("connect4Name"));
+		txtGameDescription.setText(language.getString("chessDescription"));
 		lblGameImage.setIcon(new ImageIcon(CreateGameUI.class
 				.getResource("/images/Games/connect4_icon.png")));
-		lblGamePlayers.setText("2 jugadores");
+		lblGamePlayers.setText(language.getString("lblTwoPlayers"));
 		selectedGame = GameType.Connect4;
 	}
 
 	private void gooseSelected() {
-		lblGameTitle.setText("Juego de la oca");
-		txtGameDescription
-				.setText("El juego de la oca es un juego de mesa en el que cada jugador avanza su ficha por un tablero con 63 casillas con dibujos. Dependiendo de la casilla en la que se caiga se puede avanzar o por el contrario retroceder y en algunas de ellas está indicado un castigo. En su turno cada jugador tira el dado que le indica el número de casillas que debe avanzar. Gana el juego el primer jugador que llega a la casilla 63, el jardín de la oca.");
+		lblGameTitle.setText(language.getString("gooseName"));
+		txtGameDescription.setText(language.getString("gooseDescription"));
 		lblGameImage.setIcon(new ImageIcon(CreateGameUI.class
 				.getResource("/images/Games/goose_icon.png")));
-		lblGamePlayers.setText("2-8 jugadores");
+		lblGamePlayers.setText(language.getString("lblTwoToEightPlayers"));
 		selectedGame = GameType.Goose;
 	}
 
 	private void ludoSelected() {
-		lblGameTitle.setText("Parchís");
-		txtGameDescription
-				.setText("El parchís es un juego de mesa que se juega con 1 dado y 4 fichas para cada uno de los jugadores. El objeto del juego es que cada jugador lleve sus fichas desde la salida hasta la meta intentando, en el camino, comerse a las demás. El primero en conseguirlo será el ganador.");
+		lblGameTitle.setText(language.getString("ludoName"));
+		txtGameDescription.setText(language.getString("ludoDescription"));
 		lblGameImage.setIcon(new ImageIcon(CreateGameUI.class
 				.getResource("/images/Games/ludo_icon.png")));
-		lblGamePlayers.setText("2-4 jugadores");
+		lblGamePlayers.setText(language.getString("lblTwoToFourPlayers"));
 		selectedGame = GameType.Ludo;
 	}
 

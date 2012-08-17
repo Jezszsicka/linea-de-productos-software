@@ -371,7 +371,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	}
 
 	private void btnJoinGameMouseClicked(MouseEvent evt) {
-		Controller.getInstance().showJoinGameUI();
+		Controller.getInstance().showGamesListUI();
 	}
 
 	public void receivePrivateMessage(String sender, String message) {
@@ -668,14 +668,6 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 		return pnlButtons;
 	}
 
-	private void btnProfileMousePressed(MouseEvent evt) {
-	}
-
-	private void btnProfileMouseReleased(MouseEvent evt) {
-		btnProfile.setBorder(BorderFactory
-				.createBevelBorder(BevelBorder.RAISED));
-	}
-
 	public void setAvatar(byte[] avatar) {
 		lblAvatar.setIcon(new ImageIcon(avatar));
 	}
@@ -700,7 +692,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 			tabPanel.setBounds(554, 146, 150, 288);
 			tabPanel.addTab(language.getString("tabUsers"), null,
 					getJScrollPane1(), null);
-			tabPanel.addTab("Friends", null, getScrollPnlFriends(), null);
+			tabPanel.addTab(language.getString("tabFriends"), null,
+					getScrollPnlFriends(), null);
 		}
 		return tabPanel;
 	}
@@ -725,17 +718,17 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	}
 
 	private void userClicked(MouseEvent evt, String username) {
-		if (evt.getClickCount() == 2) {
-			User user = null;
-			for (User aux : users)
-				if (aux.getUsername().equals(username)) {
-					user = aux;
-					break;
-				}
-			if (user == null)
-				user = Controller.getInstance().userInfo(username);
-			new UserInfoUI(this, user, isFriend(user.getUsername()));
-		}
+
+		User user = null;
+		for (User aux : users)
+			if (aux.getUsername().equals(username)) {
+				user = aux;
+				break;
+			}
+		if (user == null)
+			user = Controller.getInstance().userInfo(username);
+		new UserInfoUI(this, user, isFriend(user.getUsername()));
+
 	}
 
 	private boolean isFriend(String username) {

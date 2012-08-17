@@ -7,7 +7,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -19,12 +18,8 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 
-import utils.Utils;
-
-import logic.Controller;
 import logic.LanguageManager;
-
-import ProductLine.GameType;
+import utils.Utils;
 import ProductLine.Ranking;
 import ProductLine.User;
 
@@ -303,7 +298,6 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel getLblUserName() {
 		if (lblUserName == null) {
 			lblUserName = new JLabel();
-			lblUserName.setText("Juan Yáñez García-Catalán");
 			lblUserName.setBounds(264, 84, 159, 23);
 		}
 		return lblUserName;
@@ -311,7 +305,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 
 	private JLabel getLblName() {
 		if (lblName == null) {
-			lblName = new JLabel("Nombre");
+			lblName = new JLabel();
 			lblName.setText(language.getString("lblName"));
 			lblName.setFont(new java.awt.Font("Tahoma", 1, 11));
 			lblName.setBounds(164, 84, 82, 23);
@@ -333,7 +327,6 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel getLblUserNickname() {
 		if (lblUserNickname == null) {
 			lblUserNickname = new JLabel();
-			lblUserNickname.setText("Juan");
 			lblUserNickname.setHorizontalAlignment(SwingConstants.LEFT);
 			lblUserNickname.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblUserNickname.setBounds(264, 53, 159, 20);
@@ -364,7 +357,6 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel getLblUserEmail() {
 		if (lblUserEmail == null) {
 			lblUserEmail = new JLabel();
-			lblUserEmail.setText("juanyanezgc");
 			lblUserEmail.setBounds(264, 118, 159, 20);
 		}
 		return lblUserEmail;
@@ -412,7 +404,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 					btnInviteMouseClicked(arg0);
 				}
 			});
-			btnInvite.setText("Invitar amigo");
+			btnInvite.setText(language.getString("btnInvite"));
 			btnInvite.setBounds(479, 399, 95, 23);
 			btnInvite.setFocusable(false);
 		}
@@ -422,7 +414,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JButton getBtnBack() {
 		if (btnBack == null) {
 			btnBack = new JButton();
-			btnBack.setText("Volver");
+			btnBack.setText(language.getString("btnBack"));
 			btnBack.setBounds(479, 428, 95, 23);
 			btnBack.setFocusable(false);
 			btnBack.addMouseListener(new MouseAdapter() {

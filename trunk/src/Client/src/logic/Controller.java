@@ -13,7 +13,7 @@ import model.User;
 import presentation.CreateGameUI;
 import presentation.GameUI;
 import presentation.GameWaitingRoomUI;
-import presentation.JoinGameUI;
+import presentation.GamesListUI;
 import presentation.LoginUI;
 import presentation.MessagesUI;
 import presentation.ProfileUI;
@@ -53,7 +53,7 @@ public class Controller {
 	private WaitingRoomUI waitingRoomUI;
 	private MessagesUI messagesUI;
 	private CreateGameUI createGameUI;
-	private JoinGameUI joinGameUI;
+	private GamesListUI gamesListUI;
 
 	private Hashtable<String, GameWaitingRoomUI> gameWaitingRooms;
 	private Hashtable<String, GameUI> gamesUI;
@@ -246,9 +246,9 @@ public class Controller {
 		System.exit(0);
 	}
 
-	public void showJoinGameUI() {
+	public void showGamesListUI() {
 		waitingRoomUI.setEnabled(false);
-		joinGameUI = new JoinGameUI();
+		gamesListUI = new GamesListUI();
 	}
 
 	public void changeName(String name, String lastname, String password) {
@@ -312,7 +312,7 @@ public class Controller {
 	public void closeJoinGameUI() {
 		waitingRoomUI.setEnabled(true);
 		waitingRoomUI.toFront();
-		joinGameUI.dispose();
+		gamesListUI.dispose();
 	}
 
 	public void changeLanguage(int selectedLanguage) {
@@ -370,10 +370,10 @@ public class Controller {
 			Game game = gamesManager.joinGame(gameName);
 			gameWaitingRooms.put(game.getName(), new GameWaitingRoomUI(session
 					.getUser().getUsername(), game, false));
-			joinGameUI.dispose();
+			gamesListUI.dispose();
 			waitingRoomUI.setEnabled(true);
 		} catch (FullGameException e) {
-			JOptionPane.showMessageDialog(joinGameUI, "The game is full",
+			JOptionPane.showMessageDialog(gamesListUI, "The game is full",
 					"Full game", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
 		}

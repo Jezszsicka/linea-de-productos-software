@@ -31,7 +31,7 @@ import logic.Controller;
 import model.Filter;
 
 @SuppressWarnings("serial")
-public class JoinGameUI extends javax.swing.JFrame {
+public class GamesListUI extends javax.swing.JFrame {
 	private JPanel pnlFondo;
 	private JButton btnJoin;
 	private JButton btnCancel;
@@ -60,7 +60,7 @@ public class JoinGameUI extends javax.swing.JFrame {
 		}
 	}
 
-	public JoinGameUI() {
+	public GamesListUI() {
 		super();
 		filter = new Filter();
 		initGUI();

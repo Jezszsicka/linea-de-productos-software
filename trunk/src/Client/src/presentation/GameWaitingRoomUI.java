@@ -40,6 +40,7 @@ import javax.swing.text.html.HTMLEditorKit;
 import utils.Utils;
 
 import logic.Controller;
+import logic.LanguageManager;
 import model.Game;
 import model.User;
 import ProductLine.NotEnoughPlayersException;
@@ -87,11 +88,13 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private List<PlayerPanel> playerPanels;
 	private boolean creator;
 
+	private LanguageManager language;
+
 	public GameWaitingRoomUI(String username, Game game, boolean creator) {
-		super();
 		this.username = username;
 		this.game = game;
 		this.creator = creator;
+		language = LanguageManager.language();
 		playerPanels = new ArrayList<PlayerPanel>();
 		initGUI();
 		setVisible(true);
@@ -118,49 +121,45 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	}
 
 	private void checkersSelected() {
-		lblGame.setText("Damas");
-		txtGameDescription
-				.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+		lblGame.setText(language.getString("checkersName"));
+		txtGameDescription.setText(language.getString("checkersDescription"));
 		lblGameImage.setIcon(new ImageIcon(GameWaitingRoomUI.class
 				.getResource("/images/Games/checkers_icon.png")));
 	}
 
 	private void chessSelected() {
-		lblGame.setText("Ajedrez");
-		txtGameDescription
-				.setText("El ajedrez es un juego competitivo entre dos personas, cada una de las cuales dispone de 16 piezas móviles que se colocan sobre un tablero dividido en 64 escaques.");
+		lblGame.setText(language.getString("chessName"));
+		txtGameDescription.setText(language.getString("chessDescription"));
 		lblGameImage.setIcon(new ImageIcon(GameWaitingRoomUI.class
 				.getResource("/images/Games/chess_icon.png")));
 
 		for (PlayerPanel pnl : playerPanels) {
 			JComboBox<String> box = pnl.getPlayerType();
 			ComboBoxModel<String> playerTypeModel = new DefaultComboBoxModel<String>(
-					new String[] { "Jugador", "Cerrada" });
+					new String[] { language.getString("humanPlayer"),
+							language.getString("closePlayer") });
 			box.setModel(playerTypeModel);
 		}
 
 	}
 
 	private void connect4Selected() {
-		lblGame.setText("Conecta 4");
-		txtGameDescription
-				.setText("Conecta 4 es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+		lblGame.setText(language.getString("connect4Name"));
+		txtGameDescription.setText(language.getString("connect4Description"));
 		lblGameImage.setIcon(new ImageIcon(GameWaitingRoomUI.class
 				.getResource("/images/Games/connect4_icon.png")));
 	}
 
 	private void gooseSelected() {
-		lblGame.setText("Juego de la oca");
-		txtGameDescription
-				.setText("El juego de la oca es un juego de mesa en el que cada jugador avanza su ficha por un tablero con 63 casillas con dibujos. Dependiendo de la casilla en la que se caiga se puede avanzar o por el contrario retroceder y en algunas de ellas está indicado un castigo. En su turno cada jugador tira el dado que le indica el número de casillas que debe avanzar. Gana el juego el primer jugador que llega a la casilla 63, el jardín de la oca.");
+		lblGame.setText(language.getString("gooseName"));
+		txtGameDescription.setText(language.getString("gooseDescription"));
 		lblGameImage.setIcon(new ImageIcon(GameWaitingRoomUI.class
 				.getResource("/images/Games/goose_icon.png")));
 	}
 
 	private void ludoSelected() {
-		lblGame.setText("Parchís");
-		txtGameDescription
-				.setText("El parchís es un juego de mesa que se juega con 1 dado y 4 fichas para cada uno de los jugadores. El objeto del juego es que cada jugador lleve sus fichas desde la salida hasta la meta intentando, en el camino, comerse a las demás. El primero en conseguirlo será el ganador.");
+		lblGame.setText(language.getString("ludoName"));
+		txtGameDescription.setText(language.getString("ludoDescription"));
 		lblGameImage.setIcon(new ImageIcon(GameWaitingRoomUI.class
 				.getResource("/images/Games/ludo_icon.png")));
 	}
@@ -241,13 +240,13 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				playerPanel.setCountry(user.getCountry());
 				break;
 			case Empty:
-				playerPanel.setPlayer("Free");
+				playerPanel.setPlayer(language.getString("EmptyPlayer"));
 				playerPanel.setAvatar(new ImageIcon(GameWaitingRoomUI.class
 						.getResource("/images/empty_icon.png")));
 				playerPanel.setCountry(-1);
 				break;
 			case Computer:
-				playerPanel.setPlayer("Computer");
+				playerPanel.setPlayer(language.getString("computerPlayer"));
 				ImageIcon image = new ImageIcon(
 						GameWaitingRoomUI.class
 								.getResource("/images/computer.png"));
@@ -258,7 +257,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				playerPanel.setCountry(-1);
 				break;
 			case Closed:
-				playerPanel.setPlayer("Closed");
+				playerPanel.setPlayer(language.getString("closedPlayer"));
 				playerPanel.setAvatar(new ImageIcon(GameWaitingRoomUI.class
 						.getResource("/images/empty_icon.png")));
 				playerPanel.setCountry(-1);
@@ -365,7 +364,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JLabel getLblGame() {
 		if (lblGame == null) {
 			lblGame = new JLabel();
-			lblGame.setText("Damas");
+			lblGame.setText(language.getString("checkersName"));
 			lblGame.setHorizontalAlignment(SwingConstants.CENTER);
 			lblGame.setFont(new java.awt.Font("Tahoma", 1, 11));
 			lblGame.setBounds(2, 33, 261, 19);
@@ -388,7 +387,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JLabel getLblDescription() {
 		if (lblDescription == null) {
 			lblDescription = new JLabel();
-			lblDescription.setText("Descripción:");
+			lblDescription.setText(language.getString("lblDescription"));
 			lblDescription.setFont(new java.awt.Font("Tahoma", 1, 11));
 			lblDescription.setBounds(12, 129, 74, 14);
 		}
@@ -402,8 +401,8 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			txtGameDescription = new JTextPane();
 			txtGameDescription.getStyledDocument().setParagraphAttributes(0,
 					txtGameDescription.getDocument().getLength(), style, false);
-			txtGameDescription
-					.setText("Las damas es un juego de mesa para dos contrincantes. El juego consiste en mover las piezas en diagonal a través de los cuadros negros de un tablero de ajedrez con la intención de capturar (comer) las piezas del contrario saltando por encima de ellas.");
+			txtGameDescription.setText(language
+					.getString("checkersDescription"));
 			txtGameDescription.setEditable(false);
 			txtGameDescription.setBackground(new java.awt.Color(240, 240, 240));
 			txtGameDescription.setFocusable(false);
@@ -415,7 +414,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JButton getBtnStartGame() {
 		if (btnStartGame == null) {
 			btnStartGame = new JButton();
-			btnStartGame.setText("Empezar juego");
+			btnStartGame.setText(language.getString("btnStartGame"));
 			btnStartGame.setBounds(548, 356, 103, 23);
 			btnStartGame.setFocusable(false);
 			btnStartGame.addMouseListener(new MouseAdapter() {
@@ -431,9 +430,9 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		if (btnCancel == null) {
 			btnCancel = new JButton();
 			if (creator)
-				btnCancel.setText("Cancelar");
+				btnCancel.setText(language.getString("btnCancel"));
 			else
-				btnCancel.setText("Salir");
+				btnCancel.setText(language.getString("btnExit"));
 			btnCancel.setBounds(548, 385, 103, 23);
 			btnCancel.setFocusable(false);
 			btnCancel.addMouseListener(new MouseAdapter() {
@@ -458,7 +457,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JLabel getLblGameName() {
 		if (lblGameName == null) {
 			lblGameName = new JLabel();
-			lblGameName.setText("Nombre de la partida:");
+			lblGameName.setText(language.getString("lblGameName"));
 			lblGameName.setBounds(12, 13, 127, 14);
 			lblGameName.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
@@ -468,7 +467,6 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JLabel getLblName() {
 		if (lblName == null) {
 			lblName = new JLabel();
-			lblName.setText("Partidaca");
 			lblName.setBounds(149, 13, 114, 14);
 		}
 		return lblName;
@@ -498,10 +496,15 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 					public void run() {
 						for (int i = 5; i > 0; i--) {
 							try {
-								htmlEditor.insertHTML(chatText,
-										chatText.getLength(),
-										"<b>La partida empezará en " + i
-												+ " </b>", 0, 0, null);
+								htmlEditor
+										.insertHTML(
+												chatText,
+												chatText.getLength(),
+												"<b>"
+														+ language
+																.getString("gameStart")
+														+ " " + i + " </b>", 0,
+												0, null);
 								txtChat.setCaretPosition(txtChat.getDocument()
 										.getLength());
 								try {
@@ -524,8 +527,8 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				}.start();
 			} catch (NotEnoughPlayersException e1) {
 				JOptionPane.showMessageDialog(this,
-						"Que vas a jugar tu solo gañán!",
-						"Echandome un solitario",
+						language.getString("NotEnoughPlayersMessage"),
+						language.getString("NotEnoughPlayersTitle"),
 						JOptionPane.INFORMATION_MESSAGE);
 				e1.printStackTrace();
 			}
@@ -540,8 +543,8 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				for (int i = 5; i > 0; i--) {
 					try {
 						htmlEditor.insertHTML(chatText, chatText.getLength(),
-								"<b>La partida empezará en " + i + " </b>", 0,
-								0, null);
+								"<b>" + language.getString("gameStart") + " "
+										+ i + " </b>", 0, 0, null);
 						txtChat.setCaretPosition(txtChat.getDocument()
 								.getLength());
 						try {
@@ -590,10 +593,14 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 					}
 				} catch (UserNotInGameException e1) {
 					try {
-						htmlEditor.insertHTML(chatText, chatText.getLength(),
-								"<font color=\"gray\"><b>" + destinatary
-										+ " is not in game</b></font>", 0, 0,
-								null);
+						htmlEditor.insertHTML(
+								chatText,
+								chatText.getLength(),
+								"<font color=\"gray\"><b>"
+										+ destinatary
+										+ language
+												.getString("noUserChatMessage")
+										+ "</b></font>", 0, 0, null);
 					} catch (BadLocationException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
@@ -602,12 +609,12 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				}
 			} else {
 				try {
-					htmlEditor
-							.insertHTML(
-									chatText,
-									chatText.getLength(),
-									"<font color=\"gray\"><b>You can't send a message to yourself</b></font>",
-									0, 0, null);
+					htmlEditor.insertHTML(
+							chatText,
+							chatText.getLength(),
+							"<font color=\"gray\"><b>"
+									+ language.getString("selfMessage")
+									+ "</b></font>", 0, 0, null);
 				} catch (BadLocationException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
@@ -658,7 +665,8 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	public void userJoinGame(String player) {
 		try {
 			htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
-					+ player + " has joined the game</b> ", 0, 0, null);
+					+ player + " " + language.getString("userJoinGameMessage")
+					+ "</b> ", 0, 0, null);
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -670,7 +678,8 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	public void userLeaveGame(String player) {
 		try {
 			htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
-					+ player + " has left the game</b> ", 0, 0, null);
+					+ player + " " + language.getString("userLeaveGameMessage")
+					+ "</b> ", 0, 0, null);
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -727,7 +736,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			case Empty: // Empty
 				lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
 						.getResource("/images/empty_icon.png")));
-				lblPlayer.setText("Free");
+				lblPlayer.setText(language.getString("emptyPlayer"));
 				lblCountry.setIcon(null);
 				playerType.setSelectedIndex(0);
 				break;
@@ -739,14 +748,14 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 						userIconLabelWidth, userIconLabelHeight,
 						Image.SCALE_SMOOTH));
 				lblAvatar.setIcon(image);
-				lblPlayer.setText("Computer");
+				lblPlayer.setText(language.getString("computerPlayer"));
 				lblCountry.setIcon(null);
 				playerType.setSelectedIndex(1);
 				break;
 			case Closed: // Closed
 				lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
 						.getResource("/images/empty_icon.png")));
-				lblPlayer.setText("Closed");
+				lblPlayer.setText(language.getString("closedPlayer"));
 				lblCountry.setIcon(null);
 				playerType.setSelectedIndex(2);
 				break;
@@ -823,7 +832,9 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		private JComboBox<String> getPlayerType() {
 			if (playerType == null) {
 				ComboBoxModel<String> playerTypeModel = new DefaultComboBoxModel<String>(
-						new String[] { "Jugador", "Ordenador", "Cerrada" });
+						new String[] { language.getString("humanPlayer"),
+								language.getString("computerPlayer"),
+								language.getString("closedPlayer") });
 				playerType = new JComboBox<String>();
 				playerType.setModel(playerTypeModel);
 				playerType.setBounds(getWidth() - 105,
@@ -849,7 +860,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 							slot, SlotState.Empty);
 					lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
 							.getResource("/images/empty_icon.png")));
-					lblPlayer.setText("Free");
+					lblPlayer.setText(language.getString("emptyPlayer"));
 					lblCountry.setIcon(null);
 					break;
 				case 1: // Computer
@@ -862,7 +873,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 							userIconLabelWidth, userIconLabelHeight,
 							Image.SCALE_SMOOTH));
 					lblAvatar.setIcon(image);
-					lblPlayer.setText("Computer");
+					lblPlayer.setText(language.getString("computerPlayer"));
 					lblCountry.setIcon(null);
 					break;
 				case 2: // Closed
@@ -870,7 +881,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 							slot, SlotState.Closed);
 					lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
 							.getResource("/images/empty_icon.png")));
-					lblPlayer.setText("Closed");
+					lblPlayer.setText(language.getString("closedPlayer"));
 					lblCountry.setIcon(null);
 					break;
 				}
