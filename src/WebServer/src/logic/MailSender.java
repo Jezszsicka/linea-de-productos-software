@@ -15,11 +15,11 @@ import constants.MailConstants;
 
 public class MailSender {
 
-	public static MailSender myInstance = null;
+	private static MailSender manager = null;
 	Session session = null;
 	Properties props = null;
 
-	public MailSender() {
+	private MailSender() {
 		props = new Properties();
 
 		// SMTP host name
@@ -38,9 +38,9 @@ public class MailSender {
 	}
 
 	public static MailSender getMailSender() {
-		if (myInstance == null)
-			myInstance = new MailSender();
-		return myInstance;
+		if (manager == null)
+			manager = new MailSender();
+		return manager;
 	}
 
 	public void sendMessage(final String text, final String subject, final String address) {

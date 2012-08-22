@@ -15,10 +15,12 @@ import javax.swing.WindowConstants;
 
 import logic.Controller;
 import logic.LanguageManager;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class ChangePasswordUI extends javax.swing.JFrame {
-	private JPanel pnlBackground;
+	private JPanelRound pnlBackground;
 	private JLabel lblPassword;
 	private JPasswordField txtPassword;
 	private JLabel lblNewPassword;
@@ -60,9 +62,11 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 		});
 	}
 
-	private JPanel getPnlBackground() {
+	private JPanelRound getPnlBackground() {
 		if (pnlBackground == null) {
-			pnlBackground = new JPanel();
+			pnlBackground = new JPanelRound();
+			pnlBackground.setArcw(0);
+			pnlBackground.setArch(0);
 			pnlBackground.setLayout(null);
 			pnlBackground.setSize(400, 200);
 			pnlBackground.add(getBtnCancel());
@@ -130,7 +134,12 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 	private JPasswordField getTxtConfirmPassword() {
 		if (txtConfirmPassword == null) {
 			txtConfirmPassword = new JPasswordField();
-			txtConfirmPassword.setBounds(194, 81, 145, 20);
+			txtConfirmPassword.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtConfirmPassword.setBackground(Color.BLACK);
+			txtConfirmPassword.setCaretColor(Color.WHITE);
+			txtConfirmPassword.setForeground(Color.WHITE);
+			txtConfirmPassword.setBounds(194, 81, 145, 25);
 		}
 		return txtConfirmPassword;
 	}
@@ -138,10 +147,11 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 	private JLabel getLblConfirmPassword() {
 		if (lblConfirmPassword == null) {
 			lblConfirmPassword = new JLabel("Confirmar contraseña");
+			lblConfirmPassword.setForeground(Color.WHITE);
 			lblConfirmPassword
 					.setText(language.getString("lblConfirmPassword"));
 			lblConfirmPassword.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblConfirmPassword.setBounds(28, 81, 129, 20);
+			lblConfirmPassword.setBounds(28, 81, 129, 25);
 		}
 		return lblConfirmPassword;
 	}
@@ -149,7 +159,12 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 	private JPasswordField getTxtNewPassword() {
 		if (txtNewPassword == null) {
 			txtNewPassword = new JPasswordField();
-			txtNewPassword.setBounds(194, 50, 145, 20);
+			txtNewPassword.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtNewPassword.setBackground(Color.BLACK);
+			txtNewPassword.setCaretColor(Color.WHITE);
+			txtNewPassword.setForeground(Color.WHITE);
+			txtNewPassword.setBounds(194, 50, 145, 25);
 		}
 		return txtNewPassword;
 	}
@@ -157,9 +172,10 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 	private JLabel getLblNewPassword() {
 		if (lblNewPassword == null) {
 			lblNewPassword = new JLabel("Nueva contraseña");
+			lblNewPassword.setForeground(Color.WHITE);
 			lblNewPassword.setText(language.getString("lblNewPassword"));
 			lblNewPassword.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblNewPassword.setBounds(28, 51, 129, 20);
+			lblNewPassword.setBounds(28, 51, 129, 25);
 		}
 		return lblNewPassword;
 	}
@@ -167,7 +183,12 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 	private JPasswordField getTxtPassword() {
 		if (txtPassword == null) {
 			txtPassword = new JPasswordField();
-			txtPassword.setBounds(194, 19, 145, 20);
+			txtPassword.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtPassword.setBackground(Color.BLACK);
+			txtPassword.setCaretColor(Color.WHITE);
+			txtPassword.setForeground(Color.WHITE);
+			txtPassword.setBounds(194, 19, 145, 25);
 		}
 		return txtPassword;
 	}
@@ -175,9 +196,10 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 	private JLabel getLblPassword() {
 		if (lblPassword == null) {
 			lblPassword = new JLabel("Contraseña");
+			lblPassword.setForeground(Color.WHITE);
 			lblPassword.setText(language.getString("lblPassword"));
 			lblPassword.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblPassword.setBounds(28, 20, 129, 20);
+			lblPassword.setBounds(28, 20, 129, 25);
 		}
 		return lblPassword;
 	}

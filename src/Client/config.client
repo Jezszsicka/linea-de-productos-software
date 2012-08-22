@@ -2,8 +2,9 @@
 # The client reads this property to create the reference to the
 # "CallbackSender" object in the server.
 #
-#Server.Proxy=sender:tcp -p 9997
-Server.Proxy=sender:tcp -h 81.61.15.10 -p 9997
+Server.Proxy=sender:tcp -p 9997
+#Server.Proxy=sender:tcp -h 81.61.15.10 -p 9997
+#Server.Proxy=sender:tcp -h 192.168.2.104 -p 9997
 #
 # Warn about connection exceptions
 #

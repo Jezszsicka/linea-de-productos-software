@@ -23,6 +23,11 @@ import javax.swing.text.StyleConstants;
 import logic.Controller;
 import logic.LanguageManager;
 import ProductLine.GameType;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
+import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class CreateGameUI extends javax.swing.JFrame {
@@ -37,7 +42,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 		}
 	}
 
-	private JPanel pnlBackground;
+	private JPanelRound pnlBackground;
 	private JLabel lblConnect4lIcon;
 	private JPanel pnlConnect4;
 	private JPanel pnlCheckers;
@@ -59,11 +64,11 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel lblIconChess;
 	private JLabel lblChess;
 	private JPanel pnlChess;
-	private JPanel pnlGameSelection;
+	private JPanelRound pnlGameSelection;
 	private JLabel lblGamePlayers;
 	private JTextPane txtGameDescription;
 	private JLabel lblPlayers;
-	private JPanel pnlGame;
+	private JPanelRound pnlGame;
 	private JLabel lblGameImage;
 	private JLabel lblGameName;
 	private JButton btnCreate;
@@ -96,9 +101,11 @@ public class CreateGameUI extends javax.swing.JFrame {
 		getContentPane().add(getPnlBackground());
 	}
 
-	private JPanel getPnlBackground() {
+	private JPanelRound getPnlBackground() {
 		if (pnlBackground == null) {
-			pnlBackground = new JPanel();
+			pnlBackground = new JPanelRound();
+			pnlBackground.setArcw(0);
+			pnlBackground.setArch(0);
 			pnlBackground.setBounds(0, 0, 563, 426);
 			pnlBackground.setLayout(null);
 			pnlBackground.add(getBtnCreate());
@@ -112,6 +119,11 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JButton getBtnCreate() {
 		if (btnCreate == null) {
 			btnCreate = new JButton();
+			btnCreate.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					btnCreateActionPerformed(arg0);
+				}
+			});
 			btnCreate.setText(language.getString("btnCreateGame"));
 			btnCreate.setBounds(450, 362, 95, 23);
 			btnCreate.setFocusable(false);
@@ -137,8 +149,9 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblGameName() {
 		if (lblGameName == null) {
 			lblGameName = new JLabel();
+			lblGameName.setForeground(Color.WHITE);
 			lblGameName.setText(language.getString("lblGameName"));
-			lblGameName.setBounds(2, 13, 89, 20);
+			lblGameName.setBounds(2, 13, 89, 25);
 			lblGameName.setHorizontalAlignment(SwingConstants.CENTER);
 			lblGameName.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblGameName.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -149,7 +162,12 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JTextField getTxtGameName() {
 		if (txtGameName == null) {
 			txtGameName = new JTextField();
-			txtGameName.setBounds(101, 13, 152, 20);
+			txtGameName.setBackground(Color.BLACK);
+			txtGameName.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtGameName.setCaretColor(Color.WHITE);
+			txtGameName.setForeground(Color.WHITE);
+			txtGameName.setBounds(101, 13, 152, 25);
 			txtGameName.addKeyListener(new KeyAdapter() {
 				public void keyPressed(KeyEvent evt) {
 					txtGameNameKeyPressed(evt);
@@ -162,8 +180,9 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblGame() {
 		if (lblGame == null) {
 			lblGame = new JLabel();
+			lblGame.setForeground(Color.WHITE);
 			lblGame.setText(language.getString("lblGames"));
-			lblGame.setBounds(12, 50, 61, 20);
+			lblGame.setBounds(12, 60, 61, 20);
 			lblGame.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblGame.setHorizontalAlignment(SwingConstants.LEFT);
 			lblGame.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -173,10 +192,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
-			btnCancel = new JButton(language.getString(language
-					.getString("btnCancel")));
+			btnCancel = new JButton(language.getString("btnCancel"));
 			btnCancel.setBounds(450, 391, 95, 23);
-			btnCancel.setText("Cancel");
 			btnCancel.setFocusable(false);
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -204,6 +221,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblCheckersPlayers() {
 		if (lblCheckersPlayers == null) {
 			lblCheckersPlayers = new JLabel();
+			lblCheckersPlayers.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblCheckersPlayers.setForeground(Color.WHITE);
 			lblCheckersPlayers.setText("2");
 			lblCheckersPlayers.setBounds(10, 8, 21, 25);
 			lblCheckersPlayers.setHorizontalAlignment(SwingConstants.CENTER);
@@ -214,6 +233,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblCheckers() {
 		if (lblCheckers == null) {
 			lblCheckers = new JLabel();
+			lblCheckers.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblCheckers.setForeground(Color.WHITE);
 			lblCheckers.setText(language.getString("checkersName"));
 			lblCheckers.setBounds(72, 8, 58, 25);
 			lblCheckers.setHorizontalAlignment(SwingConstants.CENTER);
@@ -234,8 +255,9 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JPanel getPnlCheckers() {
 		if (pnlCheckers == null) {
 			pnlCheckers = new JPanel();
+			pnlCheckers.setBackground(Color.BLACK);
 			pnlCheckers.setLayout(null);
-			pnlCheckers.setBounds(10, 76, 243, 40);
+			pnlCheckers.setBounds(12, 95, 243, 40);
 			pnlCheckers.setBorder(BorderFactory.createTitledBorder(""));
 			pnlCheckers.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -262,8 +284,9 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JPanel getConnect4() {
 		if (pnlConnect4 == null) {
 			pnlConnect4 = new JPanel();
+			pnlConnect4.setBackground(Color.BLACK);
 			pnlConnect4.setLayout(null);
-			pnlConnect4.setBounds(10, 122, 243, 40);
+			pnlConnect4.setBounds(12, 141, 243, 40);
 			pnlConnect4.setBorder(BorderFactory.createTitledBorder(""));
 			pnlConnect4.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -300,6 +323,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getJLabel2() {
 		if (lblConnect4 == null) {
 			lblConnect4 = new JLabel();
+			lblConnect4.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblConnect4.setForeground(Color.WHITE);
 			lblConnect4.setText(language.getString("connect4Name"));
 			lblConnect4.setHorizontalAlignment(SwingConstants.CENTER);
 			lblConnect4.setBounds(70, 6, 59, 25);
@@ -310,6 +335,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getJLabel3() {
 		if (lblConnect4Players == null) {
 			lblConnect4Players = new JLabel();
+			lblConnect4Players.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblConnect4Players.setForeground(Color.WHITE);
 			lblConnect4Players.setText("2");
 			lblConnect4Players.setHorizontalAlignment(SwingConstants.CENTER);
 			lblConnect4Players.setBounds(10, 6, 21, 25);
@@ -331,6 +358,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getJLabel4() {
 		if (lblGameTitle == null) {
 			lblGameTitle = new JLabel();
+			lblGameTitle.setForeground(Color.WHITE);
 			lblGameTitle.setText(language.getString("checkersName"));
 			lblGameTitle.setBounds(2, 13, 253, 16);
 			lblGameTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -339,9 +367,12 @@ public class CreateGameUI extends javax.swing.JFrame {
 		return lblGameTitle;
 	}
 
-	private JPanel getPnlGame() {
+	private JPanelRound getPnlGame() {
 		if (pnlGame == null) {
-			pnlGame = new JPanel();
+			pnlGame = new JPanelRound();
+			pnlGame.setArcw(0);
+			pnlGame.setArch(0);
+			pnlGame.setBackground(Color.BLACK);
 			pnlGame.setLayout(null);
 			pnlGame.setBounds(292, 21, 258, 330);
 			pnlGame.setBorder(BorderFactory.createTitledBorder(""));
@@ -358,6 +389,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblPlayers() {
 		if (lblPlayers == null) {
 			lblPlayers = new JLabel();
+			lblPlayers.setForeground(Color.WHITE);
 			lblPlayers.setText(language.getString("lblPlayers"));
 			lblPlayers.setBounds(12, 129, 67, 18);
 			lblPlayers.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -368,6 +400,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblDescription() {
 		if (lblDescription == null) {
 			lblDescription = new JLabel();
+			lblDescription.setForeground(Color.WHITE);
 			lblDescription.setText(language.getString("lblDescription"));
 			lblDescription.setBounds(12, 158, 74, 14);
 			lblDescription.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -380,13 +413,16 @@ public class CreateGameUI extends javax.swing.JFrame {
 			SimpleAttributeSet style = new SimpleAttributeSet();
 			StyleConstants.setAlignment(style, StyleConstants.ALIGN_JUSTIFIED);
 			txtGameDescription = new JTextPane();
+			txtGameDescription.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtGameDescription.setForeground(Color.WHITE);
 			txtGameDescription.getStyledDocument().setParagraphAttributes(0,
 					txtGameDescription.getDocument().getLength(), style, false);
 			txtGameDescription.setText(language
 					.getString("checkersDescription"));
 			txtGameDescription.setBounds(12, 178, 234, 138);
 			txtGameDescription.setEditable(false);
-			txtGameDescription.setBackground(new java.awt.Color(240, 240, 240));
+			txtGameDescription.setBackground(Color.BLACK);
 			txtGameDescription.setFocusable(false);
 		}
 		return txtGameDescription;
@@ -395,15 +431,18 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblGamePlayers() {
 		if (lblGamePlayers == null) {
 			lblGamePlayers = new JLabel();
+			lblGamePlayers.setForeground(Color.WHITE);
 			lblGamePlayers.setText(language.getString("lblTwoPlayers"));
 			lblGamePlayers.setBounds(85, 129, 161, 18);
 		}
 		return lblGamePlayers;
 	}
 
-	private JPanel getPnlGameSelection() {
+	private JPanelRound getPnlGameSelection() {
 		if (pnlGameSelection == null) {
-			pnlGameSelection = new JPanel();
+			pnlGameSelection = new JPanelRound();
+			pnlGameSelection.setArch(0);
+			pnlGameSelection.setBackground(Color.BLACK);
 			pnlGameSelection.setLayout(null);
 			pnlGameSelection.setBounds(10, 21, 265, 330);
 			pnlGameSelection.setBorder(BorderFactory.createTitledBorder(""));
@@ -422,8 +461,9 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JPanel getPnlChess() {
 		if (pnlChess == null) {
 			pnlChess = new JPanel();
+			pnlChess.setBackground(Color.BLACK);
 			pnlChess.setLayout(null);
-			pnlChess.setBounds(10, 168, 243, 40);
+			pnlChess.setBounds(12, 187, 243, 40);
 			pnlChess.setBorder(BorderFactory.createTitledBorder(""));
 			pnlChess.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -460,6 +500,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblChess() {
 		if (lblChess == null) {
 			lblChess = new JLabel();
+			lblChess.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblChess.setForeground(Color.WHITE);
 			lblChess.setText(language.getString("chessName"));
 			lblChess.setHorizontalAlignment(SwingConstants.CENTER);
 			lblChess.setBounds(70, 8, 59, 25);
@@ -470,6 +512,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblChessPlayers() {
 		if (lblChessPlayers == null) {
 			lblChessPlayers = new JLabel();
+			lblChessPlayers.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblChessPlayers.setForeground(Color.WHITE);
 			lblChessPlayers.setText("2");
 			lblChessPlayers.setHorizontalAlignment(SwingConstants.CENTER);
 			lblChessPlayers.setBounds(9, 8, 21, 25);
@@ -480,9 +524,10 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JPanel getPnlGoose() {
 		if (pnlGoose == null) {
 			pnlGoose = new JPanel();
+			pnlGoose.setBackground(Color.BLACK);
 			pnlGoose.setBorder(BorderFactory.createTitledBorder(""));
 			pnlGoose.setLayout(null);
-			pnlGoose.setBounds(10, 214, 243, 40);
+			pnlGoose.setBounds(12, 233, 243, 40);
 			pnlGoose.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					pnlGooseMouseClicked(evt);
@@ -518,6 +563,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblGoose() {
 		if (lblGoose == null) {
 			lblGoose = new JLabel();
+			lblGoose.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblGoose.setForeground(Color.WHITE);
 			lblGoose.setText(language.getString("gooseName"));
 			lblGoose.setHorizontalAlignment(SwingConstants.CENTER);
 			lblGoose.setBounds(70, 6, 59, 25);
@@ -528,6 +575,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblGoosePlayers() {
 		if (lblGoosePlayers == null) {
 			lblGoosePlayers = new JLabel();
+			lblGoosePlayers.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblGoosePlayers.setForeground(Color.WHITE);
 			lblGoosePlayers.setText("8");
 			lblGoosePlayers.setHorizontalAlignment(SwingConstants.CENTER);
 			lblGoosePlayers.setBounds(10, 6, 21, 25);
@@ -538,6 +587,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JPanel getPnlLudo() {
 		if (pnlLudo == null) {
 			pnlLudo = new JPanel();
+			pnlLudo.setBackground(Color.BLACK);
 			pnlLudo.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {
@@ -556,7 +606,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 			});
 			pnlLudo.setLayout(null);
 			pnlLudo.setBorder(BorderFactory.createTitledBorder(""));
-			pnlLudo.setBounds(10, 265, 243, 40);
+			pnlLudo.setBounds(12, 279, 243, 40);
 			pnlLudo.add(getLblLudoIcon());
 			pnlLudo.add(getLblLudo());
 			pnlLudo.add(getLblLudoPlayers());
@@ -577,6 +627,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblLudo() {
 		if (lblLudo == null) {
 			lblLudo = new JLabel();
+			lblLudo.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblLudo.setForeground(Color.WHITE);
 			lblLudo.setText(language.getString("ludoName"));
 			lblLudo.setHorizontalAlignment(SwingConstants.CENTER);
 			lblLudo.setBounds(70, 6, 59, 25);
@@ -587,6 +639,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private JLabel getLblLudoPlayers() {
 		if (lblLudoPlayers == null) {
 			lblLudoPlayers = new JLabel();
+			lblLudoPlayers.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblLudoPlayers.setForeground(Color.WHITE);
 			lblLudoPlayers.setText("4");
 			lblLudoPlayers.setHorizontalAlignment(SwingConstants.CENTER);
 			lblLudoPlayers.setBounds(10, 6, 21, 25);
@@ -740,5 +794,8 @@ public class CreateGameUI extends javax.swing.JFrame {
 
 	protected void pnlLudoMouseExited(MouseEvent e) {
 		setDefaultCursor();
+	}
+
+	protected void btnCreateActionPerformed(ActionEvent arg0) {
 	}
 }

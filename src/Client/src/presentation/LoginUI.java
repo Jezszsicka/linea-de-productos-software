@@ -21,6 +21,7 @@ import logic.LanguageManager;
 import ludo.JDiagonalLabel;
 import javax.swing.SwingConstants;
 import java.awt.Color;
+import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class LoginUI extends javax.swing.JFrame {
@@ -34,7 +35,7 @@ public class LoginUI extends javax.swing.JFrame {
 		}
 	}
 
-	private JPanel pnlBackground;
+	private JPanelRound pnlBackground;
 	private JLabel lblRemember;
 	private JButton btnLogin;
 	private JTextField txtUsername;
@@ -53,7 +54,7 @@ public class LoginUI extends javax.swing.JFrame {
 
 	private void initGUI() {
 		setResizable(false);
-		this.setSize(466, 272);
+		this.setSize(466, 255);
 		getContentPane().setLayout(null);
 		getContentPane().add(getPnlBackground());
 		setLocationRelativeTo(null);
@@ -67,10 +68,12 @@ public class LoginUI extends javax.swing.JFrame {
 		});
 	}
 
-	private JPanel getPnlBackground() {
+	private JPanelRound getPnlBackground() {
 		if (pnlBackground == null) {
-			pnlBackground = new JPanel();
-			pnlBackground.setBounds(0, 0, 460, 244);
+			pnlBackground = new JPanelRound();
+			pnlBackground.setArcw(0);
+			pnlBackground.setArch(0);
+			pnlBackground.setBounds(0, 0, 460, 227);
 			pnlBackground.setLayout(null);
 			pnlBackground.add(getBtnLogin());
 			pnlBackground.add(getTxtUsername());
@@ -104,7 +107,7 @@ public class LoginUI extends javax.swing.JFrame {
 				}
 			});
 			btnLogin.setFocusable(false);
-			btnLogin.setBounds(244, 132, 89, 23);
+			btnLogin.setBounds(259, 142, 89, 23);
 		}
 		return btnLogin;
 	}
@@ -112,8 +115,13 @@ public class LoginUI extends javax.swing.JFrame {
 	private JTextField getTxtUsername() {
 		if (txtUsername == null) {
 			txtUsername = new JTextField();
+			txtUsername.setCaretColor(Color.WHITE);
+			txtUsername.setForeground(Color.WHITE);
+			txtUsername.setBackground(Color.BLACK);
+			txtUsername.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			txtUsername.setColumns(10);
-			txtUsername.setBounds(228, 57, 120, 20);
+			txtUsername.setBounds(228, 51, 120, 25);
 			txtUsername.addKeyListener(new KeyAdapter() {
 				public void keyPressed(KeyEvent evt) {
 					txtUsernameKeyPressed(evt);
@@ -126,8 +134,13 @@ public class LoginUI extends javax.swing.JFrame {
 	private JPasswordField getTxtPassword() {
 		if (txtPassword == null) {
 			txtPassword = new JPasswordField();
+			txtPassword.setCaretColor(Color.WHITE);
+			txtPassword.setForeground(Color.WHITE);
+			txtPassword.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtPassword.setBackground(Color.BLACK);
 			txtPassword.setColumns(10);
-			txtPassword.setBounds(228, 96, 120, 20);
+			txtPassword.setBounds(228, 87, 120, 25);
 			txtPassword.addKeyListener(new KeyAdapter() {
 				public void keyPressed(KeyEvent evt) {
 					txtPasswordKeyPressed(evt);
@@ -140,10 +153,11 @@ public class LoginUI extends javax.swing.JFrame {
 	private JLabel getLblUsername() {
 		if (lblUsername == null) {
 			lblUsername = new JLabel("Usuario");
+			lblUsername.setForeground(Color.WHITE);
 			lblUsername.setText(language.getString("lblUsername"));
 			lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12));
 			lblUsername.setAlignmentX(0.5f);
-			lblUsername.setBounds(87, 58, 96, 20);
+			lblUsername.setBounds(87, 51, 96, 25);
 		}
 		return lblUsername;
 	}
@@ -151,9 +165,10 @@ public class LoginUI extends javax.swing.JFrame {
 	private JLabel getLblPassword() {
 		if (lblPassword == null) {
 			lblPassword = new JLabel("Contraseña");
+			lblPassword.setForeground(Color.WHITE);
 			lblPassword.setText(language.getString("lblPassword"));
 			lblPassword.setFont(new Font("Tahoma", Font.BOLD, 12));
-			lblPassword.setBounds(87, 96, 98, 20);
+			lblPassword.setBounds(87, 87, 98, 23);
 		}
 		return lblPassword;
 	}
@@ -179,7 +194,7 @@ public class LoginUI extends javax.swing.JFrame {
 				}
 			});
 			btnRegister.setFocusable(false);
-			btnRegister.setBounds(244, 166, 89, 23);
+			btnRegister.setBounds(259, 176, 89, 23);
 		}
 		return btnRegister;
 	}
@@ -216,8 +231,9 @@ public class LoginUI extends javax.swing.JFrame {
 	private JLabel getLblRemember() {
 		if (lblRemember == null) {
 			lblRemember = new JLabel();
+			lblRemember.setForeground(Color.WHITE);
 			lblRemember.setText(language.getString("lblRemember"));
-			lblRemember.setBounds(87, 207, 170, 14);
+			lblRemember.setBounds(47, 180, 170, 14);
 			lblRemember.setFont(new java.awt.Font("Tahoma", 1, 11));
 			lblRemember.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {

@@ -34,7 +34,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	}
 
 	private JFrame parent;
-	private ImagePanel pnlBackground;
+	private JPanelRound pnlBackground;
 	private JButton btnUpload;
 	private JLabel lblAvatar4;
 	private JButton btnCancel;
@@ -63,13 +63,18 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 				thisWindowClosing(evt);
 			}
 		});
-		getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
+		getContentPane().setLayout(null);
+		getContentPane().add(getPnlBackground());
 		setSize(526, 404);
 	}
 
-	private ImagePanel getPnlBackground() {
+	private JPanelRound getPnlBackground() {
 		if (pnlBackground == null) {
-			pnlBackground = new ImagePanel("");
+			pnlBackground = new JPanelRound();
+			pnlBackground.setArch(0);
+			pnlBackground.setArcw(0);
+			pnlBackground.setBounds(0, 0, 510, 366);
+			pnlBackground.setLayout(null);
 			pnlBackground.add(getBtnUpload());
 			pnlBackground.add(getLblAvatar1());
 			pnlBackground.add(getLblAvatar2());
@@ -89,7 +94,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 			btnUpload = new JButton("Subir imagen");
 			btnUpload.setFocusable(false);
 			btnUpload.setText(language.getString("btnUpload"));
-			btnUpload.setBounds(389, 303, 97, 23);
+			btnUpload.setBounds(399, 303, 87, 23);
 			btnUpload.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnUploadMouseClicked(evt);
@@ -133,7 +138,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private JLabel getLblAvatar1() {
 		if (lblAvatar1 == null) {
 			lblAvatar1 = new JLabel();
-			lblAvatar1.setBounds(31, 26, 100, 120);
+			lblAvatar1.setBounds(32, 22, 104, 124);
 			lblAvatar1.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
 			lblAvatar1.setIcon(new ImageIcon(ChooseAvatarUI.class
@@ -163,7 +168,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private JLabel getLblAvatar2() {
 		if (lblAvatar2 == null) {
 			lblAvatar2 = new JLabel();
-			lblAvatar2.setBounds(146, 26, 100, 120);
+			lblAvatar2.setBounds(146, 22, 104, 124);
 			lblAvatar2.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
 			lblAvatar2.setIcon(new ImageIcon(ChooseAvatarUI.class
@@ -193,7 +198,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private JLabel getLblAvatar3() {
 		if (lblAvatar3 == null) {
 			lblAvatar3 = new JLabel();
-			lblAvatar3.setBounds(261, 26, 100, 120);
+			lblAvatar3.setBounds(260, 22, 104, 124);
 			lblAvatar3.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
 			lblAvatar3.setIcon(new ImageIcon(ChooseAvatarUI.class
@@ -234,7 +239,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 					lblAvatar4MouseExited(e);
 				}
 			});
-			lblAvatar4.setBounds(379, 26, 100, 120);
+			lblAvatar4.setBounds(374, 22, 104, 124);
 			lblAvatar4.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
 			lblAvatar4.setFocusable(false);
@@ -256,7 +261,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 					lblAvatar6MouseExited(e);
 				}
 			});
-			lblAvatar6.setBounds(146, 159, 100, 120);
+			lblAvatar6.setBounds(146, 157, 104, 124);
 			lblAvatar6.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
 			lblAvatar6.setFocusable(false);
@@ -278,7 +283,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 					lblAvatar7MouseExited(e);
 				}
 			});
-			lblAvatar7.setBounds(261, 159, 100, 120);
+			lblAvatar7.setBounds(260, 157, 104, 124);
 			lblAvatar7.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
 			lblAvatar7.setFocusable(false);
@@ -300,7 +305,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 					lblAvatar8MouseExited(e);
 				}
 			});
-			lblAvatar8.setBounds(379, 159, 100, 120);
+			lblAvatar8.setBounds(374, 157, 104, 124);
 			lblAvatar8.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
 			lblAvatar8.setFocusable(false);
@@ -322,7 +327,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 					lblAvatar5MouseExited(e);
 				}
 			});
-			lblAvatar5.setBounds(31, 159, 100, 120);
+			lblAvatar5.setBounds(32, 157, 104, 124);
 			lblAvatar5.setBorder(BorderFactory
 					.createBevelBorder(BevelBorder.LOWERED));
 			lblAvatar5.setFocusable(false);
@@ -391,7 +396,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 			btnCancel = new JButton("Cancelar");
 			btnCancel.setFocusable(false);
 			btnCancel.setText(language.getString("btnCancel"));
-			btnCancel.setBounds(389, 332, 97, 23);
+			btnCancel.setBounds(399, 332, 87, 23);
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnCancelMouseClicked(evt);

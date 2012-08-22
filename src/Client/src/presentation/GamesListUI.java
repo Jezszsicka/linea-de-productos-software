@@ -29,10 +29,12 @@ import java.awt.event.KeyEvent;
 
 import logic.Controller;
 import model.Filter;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class GamesListUI extends javax.swing.JFrame {
-	private JPanel pnlFondo;
+	private JPanelRound pnlFondo;
 	private JButton btnJoin;
 	private JButton btnCancel;
 	private JTable tblGames;
@@ -118,9 +120,11 @@ public class GamesListUI extends javax.swing.JFrame {
 		setSize(635, 362);
 	}
 
-	private JPanel getPnlFondo() {
+	private JPanelRound getPnlFondo() {
 		if (pnlFondo == null) {
-			pnlFondo = new JPanel();
+			pnlFondo = new JPanelRound();
+			pnlFondo.setArcw(0);
+			pnlFondo.setArch(0);
 			pnlFondo.setLayout(null);
 			pnlFondo.setBounds(0, 0, 619, 324);
 			pnlFondo.add(getBtnJoin());
@@ -200,7 +204,12 @@ public class GamesListUI extends javax.swing.JFrame {
 	private JTextField getTxtGameSearch() {
 		if (txtGameSearch == null) {
 			txtGameSearch = new JTextField();
-			txtGameSearch.setBounds(15, 20, 251, 20);
+			txtGameSearch.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtGameSearch.setBackground(Color.BLACK);
+			txtGameSearch.setCaretColor(Color.WHITE);
+			txtGameSearch.setForeground(Color.WHITE);
+			txtGameSearch.setBounds(15, 20, 251, 25);
 			txtGameSearch.addKeyListener(new KeyAdapter() {
 				public void keyPressed(KeyEvent evt) {
 					txtGameSearchKeyPressed(evt);
@@ -214,7 +223,7 @@ public class GamesListUI extends javax.swing.JFrame {
 		if (btnFilter == null) {
 			btnFilter = new JButton();
 			btnFilter.setText("Buscar");
-			btnFilter.setBounds(276, 20, 70, 21);
+			btnFilter.setBounds(276, 22, 70, 21);
 			btnFilter.setFocusable(false);
 			btnFilter.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -238,6 +247,7 @@ public class GamesListUI extends javax.swing.JFrame {
 	private JScrollPane getJScrollPane1() {
 		if (scrollGames == null) {
 			scrollGames = new JScrollPane();
+			scrollGames.setBackground(Color.BLACK);
 			scrollGames.setBounds(15, 57, 331, 256);
 			scrollGames.setBorder(BorderFactory.createTitledBorder(""));
 			scrollGames.setViewportView(getTblGames());
@@ -250,6 +260,8 @@ public class GamesListUI extends javax.swing.JFrame {
 			tblGamesModel = new presentation.TableModel(new String[][] {},
 					new String[] { "Nombre", "Juego", "Jugadores" });
 			tblGames = new JTable();
+			tblGames.setBackground(Color.BLACK);
+			tblGames.setForeground(Color.WHITE);
 			tblGames.setModel(tblGamesModel);
 			DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 			tcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -272,6 +284,8 @@ public class GamesListUI extends javax.swing.JFrame {
 	private JCheckBox getCheck3orMore() {
 		if (check3orMore == null) {
 			check3orMore = new JCheckBox();
+			check3orMore.setForeground(Color.WHITE);
+			check3orMore.setBackground(Color.BLACK);
 			check3orMore.setText("3 o más jugadores");
 			check3orMore.setBounds(115, 103, 115, 23);
 			check3orMore.setFocusable(false);
@@ -287,6 +301,8 @@ public class GamesListUI extends javax.swing.JFrame {
 	private JCheckBox getCheck2Players() {
 		if (check2Players == null) {
 			check2Players = new JCheckBox();
+			check2Players.setForeground(Color.WHITE);
+			check2Players.setBackground(Color.BLACK);
 			check2Players.setText("2 jugadores");
 			check2Players.setBounds(115, 77, 115, 23);
 			check2Players.setFocusable(false);
@@ -302,6 +318,7 @@ public class GamesListUI extends javax.swing.JFrame {
 	private JLabel getPlayers() {
 		if (Players == null) {
 			Players = new JLabel();
+			Players.setForeground(Color.WHITE);
 			Players.setText("Players");
 			Players.setFont(new java.awt.Font("Tahoma", 1, 11));
 			Players.setBounds(114, 42, 112, 21);
@@ -313,6 +330,8 @@ public class GamesListUI extends javax.swing.JFrame {
 	private JCheckBox getCheckGoose() {
 		if (checkGoose == null) {
 			checkGoose = new JCheckBox();
+			checkGoose.setForeground(Color.WHITE);
+			checkGoose.setBackground(Color.BLACK);
 			checkGoose.setText("Oca");
 			checkGoose.setBounds(23, 103, 94, 23);
 			checkGoose.setFocusable(false);
@@ -328,6 +347,8 @@ public class GamesListUI extends javax.swing.JFrame {
 	private JCheckBox getCheckCheckers() {
 		if (checkCheckers == null) {
 			checkCheckers = new JCheckBox();
+			checkCheckers.setBackground(Color.BLACK);
+			checkCheckers.setForeground(Color.WHITE);
 			checkCheckers.setText("Damas");
 			checkCheckers.setBounds(23, 78, 92, 21);
 			checkCheckers.setFocusable(false);
@@ -343,6 +364,7 @@ public class GamesListUI extends javax.swing.JFrame {
 	private JLabel getLblGame() {
 		if (lblGame == null) {
 			lblGame = new JLabel();
+			lblGame.setForeground(Color.WHITE);
 			lblGame.setText("Games");
 			lblGame.setFont(new java.awt.Font("Tahoma", 1, 11));
 			lblGame.setBounds(2, 42, 102, 21);
@@ -354,6 +376,7 @@ public class GamesListUI extends javax.swing.JFrame {
 	private JLabel getLblFilter() {
 		if (lblFilter == null) {
 			lblFilter = new JLabel();
+			lblFilter.setForeground(Color.WHITE);
 			lblFilter.setText("Filtro");
 			lblFilter.setBounds(12, 5, 214, 19);
 			lblFilter.setHorizontalAlignment(SwingConstants.CENTER);
@@ -365,6 +388,7 @@ public class GamesListUI extends javax.swing.JFrame {
 	private JPanel getPnlFilter() {
 		if (pnlFilter == null) {
 			pnlFilter = new JPanel();
+			pnlFilter.setBackground(Color.BLACK);
 			pnlFilter.setLayout(null);
 			pnlFilter.setBounds(371, 57, 238, 167);
 			pnlFilter.setBorder(BorderFactory.createTitledBorder(""));

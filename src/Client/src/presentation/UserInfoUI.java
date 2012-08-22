@@ -22,6 +22,8 @@ import logic.LanguageManager;
 import utils.Utils;
 import ProductLine.Ranking;
 import ProductLine.User;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class UserInfoUI extends javax.swing.JFrame {
@@ -39,7 +41,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private static final int lblRankingWidth = 75;
 	private static final int lblRankingHeight = 15;
 	private WaitingRoomUI parent;
-	private JPanel pnlBackground;
+	private JPanelRound pnlBackground;
 	private JScrollPane rankingScroll;
 	private JButton btnBack;
 	private JButton btnInvite;
@@ -96,7 +98,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 			}
 		});
 		getContentPane().add(getJPanel1(), BorderLayout.CENTER);
-		setSize(600, 500);
+		setSize(600, 471);
 	}
 
 	private void loadRankings(User user) {
@@ -164,6 +166,12 @@ public class UserInfoUI extends javax.swing.JFrame {
 			lblRate.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblRate.setHorizontalAlignment(SwingConstants.CENTER);
 
+			lblGame.setForeground(Color.WHITE);
+			lblPlayed.setForeground(Color.WHITE);
+			lblWon.setForeground(Color.WHITE);
+			lblLost.setForeground(Color.WHITE);
+			lblRate.setForeground(Color.WHITE);
+
 			pnlRanking.add(lblGame);
 			pnlRanking.add(lblPlayed);
 			pnlRanking.add(lblWon);
@@ -173,9 +181,11 @@ public class UserInfoUI extends javax.swing.JFrame {
 
 	}
 
-	private JPanel getJPanel1() {
+	private JPanelRound getJPanel1() {
 		if (pnlBackground == null) {
-			pnlBackground = new JPanel();
+			pnlBackground = new JPanelRound();
+			pnlBackground.setArcw(0);
+			pnlBackground.setArch(0);
 			pnlBackground.setLayout(null);
 			pnlBackground.add(getLblRanking());
 			pnlBackground.add(getRankingScroll());
@@ -197,11 +207,12 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel getLblRanking() {
 		if (lblRanking == null) {
 			lblRanking = new JLabel("Ranking");
+			lblRanking.setForeground(Color.WHITE);
 			lblRanking.setText(language.getString("lblRanking"));
 			lblRanking.setHorizontalAlignment(SwingConstants.LEFT);
 			lblRanking.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblRanking.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblRanking.setBounds(20, 221, 98, 20);
+			lblRanking.setBounds(20, 212, 98, 20);
 		}
 		return lblRanking;
 	}
@@ -209,9 +220,8 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JScrollPane getRankingScroll() {
 		if (rankingScroll == null) {
 			rankingScroll = new JScrollPane();
-			rankingScroll
-					.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-			rankingScroll.setBounds(86, 263, 377, 143);
+			rankingScroll.setBorder(null);
+			rankingScroll.setBounds(84, 244, 377, 143);
 			rankingScroll.setAutoscrolls(true);
 			rankingScroll
 					.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
@@ -223,6 +233,9 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JPanel getPnlRanking() {
 		if (pnlRanking == null) {
 			pnlRanking = new JPanel();
+			pnlRanking.setBackground(Color.BLACK);
+			pnlRanking.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			pnlRanking.setLayout(null);
 			pnlRanking.setBounds(130, 269, 375, 126);
 			pnlRanking.setLayout(null);
@@ -238,11 +251,12 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel getLblRate() {
 		if (lblRate == null) {
 			lblRate = new JLabel("Ratio");
+			lblRate.setForeground(Color.WHITE);
 			lblRate.setText(language.getString("lblRate"));
 			lblRate.setHorizontalAlignment(SwingConstants.CENTER);
 			lblRate.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblRate.setFont(new java.awt.Font("Tahoma", 3, 11));
-			lblRate.setBounds(300, 0, 75, 15);
+			lblRate.setBounds(300, 5, 75, 15);
 		}
 		return lblRate;
 	}
@@ -250,11 +264,12 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel getLblPlayed() {
 		if (lblPlayed == null) {
 			lblPlayed = new JLabel("Jugadas");
+			lblPlayed.setForeground(Color.WHITE);
 			lblPlayed.setText(language.getString("lblPlayed"));
 			lblPlayed.setHorizontalAlignment(SwingConstants.CENTER);
 			lblPlayed.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblPlayed.setFont(new java.awt.Font("Tahoma", 3, 11));
-			lblPlayed.setBounds(75, 0, 75, 15);
+			lblPlayed.setBounds(75, 5, 75, 15);
 		}
 		return lblPlayed;
 	}
@@ -262,11 +277,12 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel getLblLost() {
 		if (lblLost == null) {
 			lblLost = new JLabel("Perdidas");
+			lblLost.setForeground(Color.WHITE);
 			lblLost.setText(language.getString("lblLost"));
 			lblLost.setHorizontalAlignment(SwingConstants.CENTER);
 			lblLost.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblLost.setFont(new java.awt.Font("Tahoma", 3, 11));
-			lblLost.setBounds(225, 0, 75, 15);
+			lblLost.setBounds(225, 5, 75, 15);
 		}
 		return lblLost;
 	}
@@ -274,11 +290,12 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel getLblWins() {
 		if (lblWins == null) {
 			lblWins = new JLabel("Ganadas");
+			lblWins.setForeground(Color.WHITE);
 			lblWins.setText(language.getString("lblWins"));
 			lblWins.setHorizontalAlignment(SwingConstants.CENTER);
 			lblWins.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblWins.setFont(new java.awt.Font("Tahoma", 3, 11));
-			lblWins.setBounds(150, 0, 75, 15);
+			lblWins.setBounds(150, 5, 75, 15);
 		}
 		return lblWins;
 	}
@@ -286,11 +303,12 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel getLblGame() {
 		if (lblGame == null) {
 			lblGame = new JLabel("Juego");
+			lblGame.setForeground(Color.WHITE);
 			lblGame.setText(language.getString("lblGame"));
 			lblGame.setHorizontalAlignment(SwingConstants.CENTER);
 			lblGame.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblGame.setFont(new java.awt.Font("Tahoma", 3, 11));
-			lblGame.setBounds(0, 0, 75, 15);
+			lblGame.setBounds(0, 5, 75, 15);
 		}
 		return lblGame;
 	}
@@ -298,6 +316,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel getLblUserName() {
 		if (lblUserName == null) {
 			lblUserName = new JLabel();
+			lblUserName.setForeground(Color.WHITE);
 			lblUserName.setBounds(264, 84, 159, 23);
 		}
 		return lblUserName;
@@ -306,6 +325,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel getLblName() {
 		if (lblName == null) {
 			lblName = new JLabel();
+			lblName.setForeground(Color.WHITE);
 			lblName.setText(language.getString("lblName"));
 			lblName.setFont(new java.awt.Font("Tahoma", 1, 11));
 			lblName.setBounds(164, 84, 82, 23);
@@ -316,6 +336,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel getLblAccount() {
 		if (lblAccount == null) {
 			lblAccount = new JLabel("Información de la cuenta");
+			lblAccount.setForeground(Color.WHITE);
 			lblAccount.setText(language.getString("lblAccount"));
 			lblAccount.setHorizontalAlignment(SwingConstants.CENTER);
 			lblAccount.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -327,6 +348,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel getLblUserNickname() {
 		if (lblUserNickname == null) {
 			lblUserNickname = new JLabel();
+			lblUserNickname.setForeground(Color.WHITE);
 			lblUserNickname.setHorizontalAlignment(SwingConstants.LEFT);
 			lblUserNickname.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblUserNickname.setBounds(264, 53, 159, 20);
@@ -337,6 +359,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel getLblNickname() {
 		if (lblNickname == null) {
 			lblNickname = new JLabel("Usuario");
+			lblNickname.setForeground(Color.WHITE);
 			lblNickname.setText(language.getString("lblUsername"));
 			lblNickname.setFont(new java.awt.Font("Tahoma", 1, 11));
 			lblNickname.setBounds(164, 53, 82, 20);
@@ -357,6 +380,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel getLblUserEmail() {
 		if (lblUserEmail == null) {
 			lblUserEmail = new JLabel();
+			lblUserEmail.setForeground(Color.WHITE);
 			lblUserEmail.setBounds(264, 118, 159, 20);
 		}
 		return lblUserEmail;
@@ -365,6 +389,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private JLabel getLblEmail() {
 		if (lblEmail == null) {
 			lblEmail = new JLabel("E-mail");
+			lblEmail.setForeground(Color.WHITE);
 			lblEmail.setText(language.getString("lblEmail"));
 			lblEmail.setFont(new java.awt.Font("Tahoma", 1, 11));
 			lblEmail.setBounds(164, 118, 82, 20);
@@ -405,7 +430,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 				}
 			});
 			btnInvite.setText(language.getString("btnInvite"));
-			btnInvite.setBounds(479, 399, 95, 23);
+			btnInvite.setBounds(479, 370, 95, 23);
 			btnInvite.setFocusable(false);
 		}
 		return btnInvite;
@@ -415,7 +440,7 @@ public class UserInfoUI extends javax.swing.JFrame {
 		if (btnBack == null) {
 			btnBack = new JButton();
 			btnBack.setText(language.getString("btnBack"));
-			btnBack.setBounds(479, 428, 95, 23);
+			btnBack.setBounds(479, 399, 95, 23);
 			btnBack.setFocusable(false);
 			btnBack.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {

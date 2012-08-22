@@ -37,10 +37,12 @@ import ProductLine.UserNotInGameException;
 import constants.Constants;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import presentation.JPanelRound;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class LudoUI extends JFrame implements GameUI {
-	private JPanel pnlBackground;
+	private JPanelRound pnlBackground;
 	private JPanel pnlBoard;
 	private JPanel pnlYellowPlayer;
 	private JPanel pnlBluePlayer;
@@ -214,6 +216,9 @@ public class LudoUI extends JFrame implements GameUI {
 	private JButton btnNewButton;
 
 	public LudoUI(String username, Game game) {
+		setTitle("Ludo");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				LudoUI.class.getResource("/images/Games/ludo_icon.png")));
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
@@ -376,9 +381,11 @@ public class LudoUI extends JFrame implements GameUI {
 		setLocationRelativeTo(null);
 	}
 
-	private JPanel getPnlBackground() {
+	private JPanelRound getPnlBackground() {
 		if (pnlBackground == null) {
-			pnlBackground = new JPanel();
+			pnlBackground = new JPanelRound();
+			pnlBackground.setArcw(0);
+			pnlBackground.setArch(0);
 			pnlBackground.setBounds(0, 0, 642, 822);
 			pnlBackground.setLayout(null);
 			pnlBackground.add(getPnlBoard());
@@ -394,6 +401,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JPanel getPnlBoard() {
 		if (pnlBoard == null) {
 			pnlBoard = new JPanel();
+			pnlBoard.setBackground(Color.BLACK);
 			pnlBoard.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
 					TitledBorder.TOP, null, null));
 			pnlBoard.setBounds(10, 10, 622, 622);
@@ -3967,6 +3975,11 @@ public class LudoUI extends JFrame implements GameUI {
 	private JTextField getTxtMessage() {
 		if (txtMessage == null) {
 			txtMessage = new JTextField();
+			txtMessage.setCaretColor(Color.WHITE);
+			txtMessage.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtMessage.setBackground(Color.BLACK);
+			txtMessage.setForeground(Color.WHITE);
 			txtMessage.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyPressed(KeyEvent arg0) {
@@ -3974,7 +3987,7 @@ public class LudoUI extends JFrame implements GameUI {
 				}
 			});
 			txtMessage.setText((String) null);
-			txtMessage.setBounds(10, 791, 493, 20);
+			txtMessage.setBounds(10, 788, 493, 25);
 		}
 		return txtMessage;
 	}
@@ -3982,6 +3995,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JScrollPane getScrollPane() {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
+			scrollPane.setBorder(null);
 			scrollPane.setBounds(10, 655, 493, 128);
 			scrollPane.setViewportView(getTxtChat());
 		}
@@ -3994,6 +4008,9 @@ public class LudoUI extends JFrame implements GameUI {
 			chatText = new HTMLDocument();
 
 			txtChat = new JTextPane();
+			txtChat.setBackground(Color.BLACK);
+			txtChat.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+					TitledBorder.TOP, null, null));
 			txtChat.setEditable(false);
 			txtChat.setEditorKit(htmlEditor);
 			txtChat.setDocument(chatText);
@@ -4004,7 +4021,8 @@ public class LudoUI extends JFrame implements GameUI {
 	private JLabel getLblState() {
 		if (lblState == null) {
 			lblState = new JLabel();
-			lblState.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblState.setForeground(Color.WHITE);
+			lblState.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
 			lblState.setBounds(10, 635, 622, 14);
 		}
 		return lblState;
@@ -5573,8 +5591,9 @@ public class LudoUI extends JFrame implements GameUI {
 		} else {
 			Controller.getInstance().sendGameMessage(game.getName(), message);
 			try {
-				htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
-						+ username + ":</b> " + message, 0, 0, null);
+				htmlEditor.insertHTML(chatText, chatText.getLength(),
+						"<font color=\"white\"><b>" + username + ":</b> "
+								+ message + "</font>", 0, 0, null);
 			} catch (BadLocationException e) {
 				e.printStackTrace();
 			} catch (IOException e) {

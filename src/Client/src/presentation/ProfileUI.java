@@ -38,6 +38,8 @@ import logic.LanguageManager;
 import ProductLine.GameType;
 import ProductLine.Ranking;
 import ProductLine.User;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class ProfileUI extends javax.swing.JFrame {
@@ -59,7 +61,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JComboBox lstLanguages;
 	private JLabel lblLanguage;
 
-	private JPanel pnlBackground;
+	private JPanelRound pnlBackground;
 	private JLabel lblRate;
 	private JLabel lblPlayed;
 	private JLabel lblLost;
@@ -167,6 +169,11 @@ public class ProfileUI extends javax.swing.JFrame {
 			lblRate.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblRate.setHorizontalAlignment(SwingConstants.CENTER);
 
+			lblGame.setForeground(Color.WHITE);
+			lblPlayed.setForeground(Color.WHITE);
+			lblWon.setForeground(Color.WHITE);
+			lblLost.setForeground(Color.WHITE);
+			lblRate.setForeground(Color.WHITE);
 			pnlRanking.add(lblGame);
 			pnlRanking.add(lblPlayed);
 			pnlRanking.add(lblWon);
@@ -191,9 +198,11 @@ public class ProfileUI extends javax.swing.JFrame {
 		getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
 	}
 
-	private JPanel getPnlBackground() {
+	private JPanelRound getPnlBackground() {
 		if (pnlBackground == null) {
-			pnlBackground = new JPanel();
+			pnlBackground = new JPanelRound();
+			pnlBackground.setArcw(0);
+			pnlBackground.setArch(0);
 			pnlBackground.setLayout(null);
 			pnlBackground.setBounds(0, 0, 606, 440);
 			pnlBackground.add(getLblUserNickname());
@@ -223,6 +232,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblUserNickname() {
 		if (lblUserNickname == null) {
 			lblUserNickname = new JLabel();
+			lblUserNickname.setForeground(Color.WHITE);
 			lblUserNickname.setBounds(264, 47, 159, 20);
 			lblUserNickname.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblUserNickname.setHorizontalAlignment(SwingConstants.LEFT);
@@ -292,8 +302,9 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblGame() {
 		if (lblGame == null) {
 			lblGame = new JLabel("Juego");
+			lblGame.setForeground(Color.WHITE);
 			lblGame.setText(language.getString("lblGame"));
-			lblGame.setBounds(0, 0, 75, 15);
+			lblGame.setBounds(0, 0, 75, 20);
 			lblGame.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblGame.setHorizontalAlignment(SwingConstants.CENTER);
 			lblGame.setFont(new java.awt.Font("Tahoma", 3, 11));
@@ -304,8 +315,9 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblWins() {
 		if (lblWins == null) {
 			lblWins = new JLabel("Ganadas");
+			lblWins.setForeground(Color.WHITE);
 			lblWins.setText(language.getString("lblWins"));
-			lblWins.setBounds(150, 0, 75, 15);
+			lblWins.setBounds(150, 0, 75, 20);
 			lblWins.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblWins.setHorizontalAlignment(SwingConstants.CENTER);
 			lblWins.setFont(new java.awt.Font("Tahoma", 3, 11));
@@ -316,8 +328,9 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblLost() {
 		if (lblLost == null) {
 			lblLost = new JLabel("Perdidas");
+			lblLost.setForeground(Color.WHITE);
 			lblLost.setText(language.getString("lblLost"));
-			lblLost.setBounds(225, 0, 75, 15);
+			lblLost.setBounds(225, 0, 75, 20);
 			lblLost.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblLost.setHorizontalAlignment(SwingConstants.CENTER);
 			lblLost.setFont(new java.awt.Font("Tahoma", 3, 11));
@@ -328,8 +341,9 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblPlayed() {
 		if (lblPlayed == null) {
 			lblPlayed = new JLabel("Jugadas");
+			lblPlayed.setForeground(Color.WHITE);
 			lblPlayed.setText(language.getString("lblPlayed"));
-			lblPlayed.setBounds(75, 0, 75, 15);
+			lblPlayed.setBounds(75, 0, 75, 20);
 			lblPlayed.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblPlayed.setHorizontalAlignment(SwingConstants.CENTER);
 			lblPlayed.setFont(new java.awt.Font("Tahoma", 3, 11));
@@ -340,8 +354,9 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblRate() {
 		if (lblRate == null) {
 			lblRate = new JLabel("Ratio");
+			lblRate.setForeground(Color.WHITE);
 			lblRate.setText(language.getString("lblRate"));
-			lblRate.setBounds(300, 0, 75, 15);
+			lblRate.setBounds(300, 0, 75, 20);
 			lblRate.setHorizontalTextPosition(SwingConstants.CENTER);
 			lblRate.setHorizontalAlignment(SwingConstants.CENTER);
 			lblRate.setFont(new java.awt.Font("Tahoma", 3, 11));
@@ -418,6 +433,9 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JPanel getJPanel1() {
 		if (pnlRanking == null) {
 			pnlRanking = new JPanel();
+			pnlRanking.setBackground(Color.BLACK);
+			pnlRanking.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			pnlRanking.setLayout(null);
 			pnlRanking.setBounds(130, 269, 375, 126);
 			pnlRanking.add(getLblRate());
@@ -432,6 +450,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblAccount() {
 		if (lblAccount == null) {
 			lblAccount = new JLabel("Información de la cuenta");
+			lblAccount.setForeground(Color.WHITE);
 			lblAccount.setText(language.getString("lblAccount"));
 			lblAccount.setBounds(164, 11, 418, 14);
 			lblAccount.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -443,6 +462,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblEmail() {
 		if (lblEmail == null) {
 			lblEmail = new JLabel("E-mail");
+			lblEmail.setForeground(Color.WHITE);
 			lblEmail.setText(language.getString("lblEmail"));
 			lblEmail.setBounds(164, 146, 82, 20);
 			lblEmail.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -453,6 +473,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblUserEmail() {
 		if (lblUserEmail == null) {
 			lblUserEmail = new JLabel();
+			lblUserEmail.setForeground(Color.WHITE);
 			lblUserEmail.setBounds(264, 146, 159, 20);
 			lblUserEmail.setText("juanyanezgc");
 		}
@@ -462,6 +483,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblName() {
 		if (lblName == null) {
 			lblName = new JLabel("Nombre");
+			lblName.setForeground(Color.WHITE);
 			lblName.setText(language.getString("lblName"));
 			lblName.setBounds(164, 78, 82, 23);
 			lblName.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -472,6 +494,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblUserName() {
 		if (lblUserName == null) {
 			lblUserName = new JLabel();
+			lblUserName.setForeground(Color.WHITE);
 			lblUserName.setText("Juan Yáñez García-Catalán");
 			lblUserName.setBounds(264, 78, 159, 23);
 		}
@@ -481,6 +504,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblNickname() {
 		if (lblNickname == null) {
 			lblNickname = new JLabel("Usuario");
+			lblNickname.setForeground(Color.WHITE);
 			lblNickname.setText(language.getString("lblUsername"));
 			lblNickname.setBounds(164, 47, 82, 20);
 			lblNickname.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -511,6 +535,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblPassword() {
 		if (lblPassword == null) {
 			lblPassword = new JLabel("Contraseña");
+			lblPassword.setForeground(Color.WHITE);
 			lblPassword.setText(language.getString("lblPassword"));
 			lblPassword.setBounds(164, 112, 82, 20);
 			lblPassword.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -521,6 +546,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblUserPassword() {
 		if (lblUserPassword == null) {
 			lblUserPassword = new JLabel();
+			lblUserPassword.setForeground(Color.WHITE);
 			lblUserPassword.setText("********");
 			lblUserPassword.setBounds(264, 115, 159, 20);
 		}
@@ -552,8 +578,7 @@ public class ProfileUI extends javax.swing.JFrame {
 		if (rankingScroll == null) {
 			rankingScroll = new JScrollPane();
 			rankingScroll.setBounds(130, 269, 375, 143);
-			rankingScroll
-					.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+			rankingScroll.setBorder(null);
 			rankingScroll.setViewportView(getJPanel1());
 		}
 		return rankingScroll;
@@ -584,6 +609,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblLanguage() {
 		if (lblLanguage == null) {
 			lblLanguage = new JLabel("País");
+			lblLanguage.setForeground(Color.WHITE);
 			lblLanguage.setText(language.getString("lblLanguage"));
 			lblLanguage.setBounds(164, 178, 82, 20);
 			lblLanguage.setFont(new java.awt.Font("Tahoma", 1, 11));
