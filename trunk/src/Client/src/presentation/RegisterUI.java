@@ -30,11 +30,15 @@ import logic.Controller;
 import logic.LanguageManager;
 import model.User;
 import ProductLine.RoleType;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 @SuppressWarnings("serial")
 public class RegisterUI extends javax.swing.JFrame {
 
-	private JPanel pnlBackground;
+	private JPanelRound pnlBackground;
 	private JLabel lblLastname;
 	private JLabel lblName;
 	private JButton btnRegister;
@@ -76,7 +80,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	}
 
 	private void initGUI() {
-		this.setSize(518, 370);
+		this.setSize(518, 396);
 		getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
 		setLocationRelativeTo(null);
 		BorderLayout thisLayout = new BorderLayout();
@@ -89,10 +93,14 @@ public class RegisterUI extends javax.swing.JFrame {
 		});
 	}
 
-	private JPanel getPnlBackground() {
+	private JPanelRound getPnlBackground() {
 		if (pnlBackground == null) {
-			pnlBackground = new JPanel();
-			pnlBackground.setBounds(0, 0, 502, 332);
+			pnlBackground = new JPanelRound();
+			pnlBackground.setArcw(0);
+			pnlBackground.setArch(0);
+			pnlBackground.setBackground(Color.BLACK);
+			pnlBackground.setForeground(Color.WHITE);
+			pnlBackground.setBounds(0, 0, 502, 360);
 			pnlBackground.setLayout(null);
 			pnlBackground.add(getBtnRegister());
 			pnlBackground.add(getBtnCancel());
@@ -121,6 +129,11 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JButton getBtnRegister() {
 		if (btnRegister == null) {
 			btnRegister = new JButton("Registrar");
+			btnRegister.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent arg0) {
+					btnRegisterActionPerformed(arg0);
+				}
+			});
 			btnRegister.setText(language.getString("btnRegister"));
 			btnRegister.addMouseListener(new MouseAdapter() {
 				@Override
@@ -138,7 +151,7 @@ public class RegisterUI extends javax.swing.JFrame {
 					btnRegisterMouseExited(e);
 				}
 			});
-			btnRegister.setBounds(80, 292, 89, 23);
+			btnRegister.setBounds(80, 303, 89, 23);
 			btnRegister.setFocusable(false);
 		}
 		return btnRegister;
@@ -164,7 +177,7 @@ public class RegisterUI extends javax.swing.JFrame {
 					btnCancelMouseExited(e);
 				}
 			});
-			btnCancel.setBounds(329, 292, 89, 23);
+			btnCancel.setBounds(324, 303, 89, 23);
 			btnCancel.setFocusable(false);
 		}
 		return btnCancel;
@@ -173,9 +186,10 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JLabel getLblUsername() {
 		if (lblUsername == null) {
 			lblUsername = new JLabel("Usuario");
+			lblUsername.setForeground(Color.WHITE);
 			lblUsername.setText(language.getString("lblUsername"));
 			lblUsername.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblUsername.setBounds(165, 34, 129, 20);
+			lblUsername.setBounds(165, 35, 129, 25);
 		}
 		return lblUsername;
 	}
@@ -183,9 +197,10 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JLabel getLblPassword() {
 		if (lblPassword == null) {
 			lblPassword = new JLabel("Contraseña");
+			lblPassword.setForeground(Color.WHITE);
 			lblPassword.setText(language.getString("lblPassword"));
 			lblPassword.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblPassword.setBounds(165, 154, 129, 20);
+			lblPassword.setBounds(165, 155, 129, 25);
 		}
 		return lblPassword;
 	}
@@ -193,9 +208,10 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JLabel getLblEmail() {
 		if (lblEmail == null) {
 			lblEmail = new JLabel("E-mail");
+			lblEmail.setForeground(Color.WHITE);
 			lblEmail.setText(language.getString("lblEmail"));
 			lblEmail.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblEmail.setBounds(165, 215, 129, 20);
+			lblEmail.setBounds(165, 215, 129, 25);
 		}
 		return lblEmail;
 	}
@@ -203,7 +219,11 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtUsername() {
 		if (txtUsername == null) {
 			txtUsername = new JTextField();
-			txtUsername.setBounds(337, 34, 139, 20);
+			txtUsername.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtUsername.setForeground(Color.WHITE);
+			txtUsername.setBackground(Color.BLACK);
+			txtUsername.setBounds(337, 35, 139, 25);
 			txtUsername.setColumns(10);
 		}
 		return txtUsername;
@@ -212,7 +232,11 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JPasswordField getTxtPassword() {
 		if (txtPassword == null) {
 			txtPassword = new JPasswordField();
-			txtPassword.setBounds(337, 154, 139, 20);
+			txtPassword.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtPassword.setForeground(Color.WHITE);
+			txtPassword.setBackground(Color.BLACK);
+			txtPassword.setBounds(337, 155, 139, 25);
 			txtPassword.setColumns(10);
 		}
 		return txtPassword;
@@ -221,7 +245,11 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtEmail() {
 		if (txtEmail == null) {
 			txtEmail = new JTextField();
-			txtEmail.setBounds(337, 215, 139, 20);
+			txtEmail.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+					TitledBorder.TOP, null, null));
+			txtEmail.setForeground(Color.WHITE);
+			txtEmail.setBackground(Color.BLACK);
+			txtEmail.setBounds(337, 215, 139, 25);
 			txtEmail.setColumns(10);
 		}
 		return txtEmail;
@@ -230,7 +258,11 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JPasswordField getTxtPasswordR() {
 		if (txtPasswordR == null) {
 			txtPasswordR = new JPasswordField();
-			txtPasswordR.setBounds(337, 184, 139, 20);
+			txtPasswordR.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtPasswordR.setForeground(Color.WHITE);
+			txtPasswordR.setBackground(Color.BLACK);
+			txtPasswordR.setBounds(337, 185, 139, 25);
 			txtPasswordR.setColumns(10);
 		}
 		return txtPasswordR;
@@ -239,7 +271,11 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtEmailR() {
 		if (txtEmailR == null) {
 			txtEmailR = new JTextField();
-			txtEmailR.setBounds(337, 246, 139, 20);
+			txtEmailR.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtEmailR.setForeground(Color.WHITE);
+			txtEmailR.setBackground(Color.BLACK);
+			txtEmailR.setBounds(337, 245, 139, 25);
 			txtEmailR.setColumns(10);
 		}
 		return txtEmailR;
@@ -271,8 +307,9 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JLabel getLblName() {
 		if (lblName == null) {
 			lblName = new JLabel("Nombre");
+			lblName.setForeground(Color.WHITE);
 			lblName.setText(language.getString("lblName"));
-			lblName.setBounds(165, 60, 129, 20);
+			lblName.setBounds(165, 65, 129, 25);
 			lblName.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblName;
@@ -281,8 +318,9 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JLabel getLblLastname() {
 		if (lblLastname == null) {
 			lblLastname = new JLabel("Apellidos");
+			lblLastname.setForeground(Color.WHITE);
 			lblLastname.setText(language.getString("lblLastname"));
-			lblLastname.setBounds(165, 86, 129, 20);
+			lblLastname.setBounds(165, 95, 129, 25);
 			lblLastname.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblLastname;
@@ -291,7 +329,11 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtName() {
 		if (txtName == null) {
 			txtName = new JTextField();
-			txtName.setBounds(337, 60, 139, 20);
+			txtName.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+					TitledBorder.TOP, null, null));
+			txtName.setForeground(Color.WHITE);
+			txtName.setBackground(Color.BLACK);
+			txtName.setBounds(337, 65, 139, 25);
 		}
 		return txtName;
 	}
@@ -299,7 +341,11 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtLastname() {
 		if (txtLastname == null) {
 			txtLastname = new JTextField();
-			txtLastname.setBounds(337, 86, 139, 20);
+			txtLastname.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtLastname.setForeground(Color.WHITE);
+			txtLastname.setBackground(Color.BLACK);
+			txtLastname.setBounds(337, 95, 139, 25);
 		}
 		return txtLastname;
 	}
@@ -307,8 +353,9 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JLabel getLblCountry() {
 		if (lblCountry == null) {
 			lblCountry = new JLabel("Pais");
+			lblCountry.setForeground(Color.WHITE);
 			lblCountry.setText(language.getString("lblCountry"));
-			lblCountry.setBounds(165, 119, 129, 20);
+			lblCountry.setBounds(165, 125, 129, 25);
 			lblCountry.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblCountry;
@@ -344,7 +391,7 @@ public class RegisterUI extends javax.swing.JFrame {
 			renderer.setPreferredSize(new Dimension(139, 24));
 			selectedCountry = new JComboBox(intArray);
 			selectedCountry.setRenderer(renderer);
-			selectedCountry.setBounds(337, 117, 139, 20);
+			selectedCountry.setBounds(337, 129, 139, 20);
 			selectedCountry.setFocusable(false);
 
 		}
@@ -391,8 +438,9 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JLabel getLblRepeatPassword() {
 		if (lblRepeatPassword == null) {
 			lblRepeatPassword = new JLabel("Confirmar contraseña");
+			lblRepeatPassword.setForeground(Color.WHITE);
 			lblRepeatPassword.setText(language.getString("lblConfirmPassword"));
-			lblRepeatPassword.setBounds(165, 184, 129, 20);
+			lblRepeatPassword.setBounds(165, 185, 129, 25);
 			lblRepeatPassword.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblRepeatPassword;
@@ -401,8 +449,9 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JLabel getLblRepeatEmail() {
 		if (lblRepeatEmail == null) {
 			lblRepeatEmail = new JLabel("Confirmar e-mail");
+			lblRepeatEmail.setForeground(Color.WHITE);
 			lblRepeatEmail.setText(language.getString("lblConfirmEmail"));
-			lblRepeatEmail.setBounds(165, 246, 129, 20);
+			lblRepeatEmail.setBounds(165, 245, 129, 25);
 			lblRepeatEmail.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblRepeatEmail;
@@ -471,5 +520,8 @@ public class RegisterUI extends javax.swing.JFrame {
 
 	protected void btnCancelMouseExited(MouseEvent e) {
 		setDefaultCursor();
+	}
+
+	protected void btnRegisterActionPerformed(ActionEvent arg0) {
 	}
 }

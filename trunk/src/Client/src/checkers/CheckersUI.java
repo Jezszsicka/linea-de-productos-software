@@ -38,6 +38,11 @@ import ProductLine.Slot;
 import ProductLine.SlotState;
 import ProductLine.UserNotInGameException;
 import constants.Constants;
+import presentation.JPanelRound;
+import java.awt.Color;
+import java.awt.Font;
+import javax.swing.border.TitledBorder;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class CheckersUI extends javax.swing.JFrame implements GameUI {
@@ -118,7 +123,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 	private JLabel lbl_00;
 	private JPanel pnlBoard;
 	private JLabel lblOpponentAvatar;
-	private JPanel pnlBackground;
+	private JPanelRound pnlBackground;
 	private JLabel lblState;
 	private Thread timerThread;
 
@@ -146,6 +151,12 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 
 	public CheckersUI(String username, Game game) {
 		super();
+		setTitle("Checkers");
+		setIconImage(Toolkit
+				.getDefaultToolkit()
+				.getImage(
+						CheckersUI.class
+								.getResource("/images/Games/checkers_icon.png")));
 		this.username = username;
 		this.game = game;
 		destinatary = "";
@@ -275,8 +286,9 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		} else {
 			Controller.getInstance().sendGameMessage(game.getName(), message);
 			try {
-				htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
-						+ username + ":</b> " + message, 0, 0, null);
+				htmlEditor.insertHTML(chatText, chatText.getLength(),
+						"<font color=\"white\"><b>" + username + ":</b> "
+								+ message + "</font>", 0, 0, null);
 			} catch (BadLocationException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -286,9 +298,11 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		txtMessage.setText(null);
 	}
 
-	private JPanel getPnlBackground() {
+	private JPanelRound getPnlBackground() {
 		if (pnlBackground == null) {
-			pnlBackground = new JPanel();
+			pnlBackground = new JPanelRound();
+			pnlBackground.setArch(0);
+			pnlBackground.setArcw(0);
 			pnlBackground.setLayout(null);
 			pnlBackground.setBounds(0, 0, 644, 694);
 			pnlBackground.add(getLblOpponentAvatar());
@@ -317,6 +331,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 	private JPanel getPnlBoard() {
 		if (pnlBoard == null) {
 			pnlBoard = new JPanel();
+			pnlBoard.setBackground(Color.BLACK);
 			pnlBoard.setLayout(null);
 			pnlBoard.setBounds(10, 11, 493, 492);
 			pnlBoard.setBorder(BorderFactory.createTitledBorder(""));
@@ -1608,7 +1623,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (btnQuit == null) {
 			btnQuit = new JButton();
 			btnQuit.setText("Quit");
-			btnQuit.setBounds(538, 660, 86, 23);
+			btnQuit.setBounds(536, 661, 86, 23);
 			btnQuit.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnQuitMouseClicked(evt);
@@ -1621,8 +1636,13 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 	private JTextField getTxtMessage() {
 		if (txtMessage == null) {
 			txtMessage = new JTextField();
+			txtMessage.setCaretColor(Color.WHITE);
+			txtMessage.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtMessage.setBackground(Color.BLACK);
+			txtMessage.setForeground(Color.WHITE);
 			txtMessage.setText(null);
-			txtMessage.setBounds(10, 663, 493, 20);
+			txtMessage.setBounds(10, 660, 493, 25);
 			txtMessage.setText(null);
 			txtMessage.setText(null);
 			txtMessage.addKeyListener(new KeyAdapter() {
@@ -1637,6 +1657,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 	private JScrollPane getPnlChat() {
 		if (pnlChat == null) {
 			pnlChat = new JScrollPane();
+			pnlChat.setBorder(null);
 			pnlChat.setBounds(10, 527, 493, 128);
 			pnlChat.setViewportView(getTxtChat());
 		}
@@ -1651,6 +1672,10 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			chatText = new HTMLDocument();
 
 			txtChat = new JTextPane();
+			txtChat.setForeground(Color.WHITE);
+			txtChat.setBackground(Color.BLACK);
+			txtChat.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+					TitledBorder.TOP, null, null));
 			txtChat.setEditable(false);
 			txtChat.setEditorKit(htmlEditor);
 			txtChat.setDocument(chatText);
@@ -1661,10 +1686,11 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLblOpponentName() {
 		if (lblOpponentName == null) {
 			lblOpponentName = new JLabel();
+			lblOpponentName.setForeground(Color.WHITE);
 			lblOpponentName.setHorizontalAlignment(SwingConstants.CENTER);
 			lblOpponentName.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblOpponentName.setBorder(BorderFactory.createTitledBorder(""));
-			lblOpponentName.setBounds(522, 141, 102, 16);
+			lblOpponentName.setBorder(null);
+			lblOpponentName.setBounds(522, 141, 102, 25);
 		}
 		return lblOpponentName;
 	}
@@ -1992,7 +2018,8 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLblState() {
 		if (lblState == null) {
 			lblState = new JLabel();
-			lblState.setBounds(10, 503, 446, 18);
+			lblState.setForeground(Color.WHITE);
+			lblState.setBounds(10, 503, 493, 18);
 			lblState.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblState;
@@ -2001,6 +2028,8 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLblTimer() {
 		if (lblTimer == null) {
 			lblTimer = new JLabel();
+			lblTimer.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblTimer.setForeground(Color.WHITE);
 			lblTimer.setHorizontalAlignment(SwingConstants.CENTER);
 			lblTimer.setText(formatTurnTime(Constants.CheckersTurn));
 			lblTimer.setBounds(522, 337, 101, 14);

@@ -17,11 +17,13 @@ import logic.Controller;
 
 import ProductLine.Message;
 import ProductLine.MessageType;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class ReadMessageUI extends javax.swing.JFrame {
 	private MessagesUI messagesUI;
-	private JPanel pnlBackground;
+	private JPanelRound pnlBackground;
 	private JButton btnDelete;
 	private JButton btnBack;
 	private JTextPane txtMessage;
@@ -66,9 +68,11 @@ public class ReadMessageUI extends javax.swing.JFrame {
 		});
 	}
 
-	private JPanel getPnlBackground() {
+	private JPanelRound getPnlBackground() {
 		if (pnlBackground == null) {
-			pnlBackground = new JPanel();
+			pnlBackground = new JPanelRound();
+			pnlBackground.setArch(0);
+			pnlBackground.setArcw(0);
 			pnlBackground.setLayout(null);
 			pnlBackground.setBounds(0, 0, 484, 312);
 			pnlBackground.add(getTxtSubject());
@@ -85,7 +89,10 @@ public class ReadMessageUI extends javax.swing.JFrame {
 	private JLabel getTxtSubject() {
 		if (txtSubject == null) {
 			txtSubject = new JLabel();
-			txtSubject.setBounds(76, 42, 395, 20);
+			txtSubject.setBackground(Color.BLACK);
+			txtSubject.setOpaque(true);
+			txtSubject.setForeground(Color.WHITE);
+			txtSubject.setBounds(76, 42, 395, 25);
 			txtSubject.setBorder(BorderFactory.createTitledBorder(""));
 		}
 		return txtSubject;
@@ -94,9 +101,10 @@ public class ReadMessageUI extends javax.swing.JFrame {
 	private JLabel getLblSubject() {
 		if (lblSubject == null) {
 			lblSubject = new JLabel();
+			lblSubject.setForeground(Color.WHITE);
 			lblSubject.setText("Asunto:");
 			lblSubject.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblSubject.setBounds(10, 42, 45, 20);
+			lblSubject.setBounds(10, 42, 45, 25);
 		}
 		return lblSubject;
 	}
@@ -104,7 +112,10 @@ public class ReadMessageUI extends javax.swing.JFrame {
 	private JLabel getTxtFrom() {
 		if (txtFrom == null) {
 			txtFrom = new JLabel();
-			txtFrom.setBounds(76, 16, 395, 20);
+			txtFrom.setOpaque(true);
+			txtFrom.setBackground(Color.BLACK);
+			txtFrom.setForeground(Color.WHITE);
+			txtFrom.setBounds(76, 11, 395, 25);
 			txtFrom.setBorder(BorderFactory.createTitledBorder(""));
 		}
 		return txtFrom;
@@ -113,9 +124,10 @@ public class ReadMessageUI extends javax.swing.JFrame {
 	private JLabel getLblFrom() {
 		if (lblFrom == null) {
 			lblFrom = new JLabel();
+			lblFrom.setForeground(Color.WHITE);
 			lblFrom.setText("De:");
 			lblFrom.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblFrom.setBounds(10, 17, 45, 18);
+			lblFrom.setBounds(10, 11, 45, 25);
 		}
 		return lblFrom;
 	}
@@ -123,6 +135,8 @@ public class ReadMessageUI extends javax.swing.JFrame {
 	private JScrollPane getPnlMessageScroll() {
 		if (pnlMessageScroll == null) {
 			pnlMessageScroll = new JScrollPane();
+			pnlMessageScroll.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			pnlMessageScroll.setBounds(10, 77, 461, 167);
 			pnlMessageScroll.setViewportView(getTxtMessage());
 		}
@@ -132,6 +146,8 @@ public class ReadMessageUI extends javax.swing.JFrame {
 	private JTextPane getTxtMessage() {
 		if (txtMessage == null) {
 			txtMessage = new JTextPane();
+			txtMessage.setForeground(Color.WHITE);
+			txtMessage.setBackground(Color.BLACK);
 			txtMessage.setPreferredSize(new java.awt.Dimension(458, 166));
 			txtMessage.setEditable(false);
 		}

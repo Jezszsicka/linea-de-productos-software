@@ -12,10 +12,12 @@ import javax.swing.WindowConstants;
 
 import logic.Controller;
 import logic.LanguageManager;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class ResetPasswordUI extends javax.swing.JFrame {
-	private JPanel pnlBackground;
+	private JPanelRound pnlBackground;
 	private JButton btnSearch;
 	private JButton btnCancel;
 	private JLabel lblUserOrEmail;
@@ -39,9 +41,11 @@ public class ResetPasswordUI extends javax.swing.JFrame {
 		this.setSize(424, 207);
 	}
 
-	private JPanel getPnlBackground() {
+	private JPanelRound getPnlBackground() {
 		if (pnlBackground == null) {
-			pnlBackground = new JPanel();
+			pnlBackground = new JPanelRound();
+			pnlBackground.setArcw(0);
+			pnlBackground.setArch(0);
 			pnlBackground.setLayout(null);
 			pnlBackground.setBounds(0, 0, 408, 169);
 			pnlBackground.add(getLblIdentify());
@@ -56,6 +60,7 @@ public class ResetPasswordUI extends javax.swing.JFrame {
 	private JLabel getLblIdentify() {
 		if (lblIdentify == null) {
 			lblIdentify = new JLabel();
+			lblIdentify.setForeground(Color.WHITE);
 			lblIdentify.setText(language.getString("lblIdentify"));
 			lblIdentify.setBounds(10, 21, 388, 14);
 			lblIdentify.setFont(new java.awt.Font("Tahoma", 0, 11));
@@ -66,7 +71,12 @@ public class ResetPasswordUI extends javax.swing.JFrame {
 	private JTextField getTxtAccount() {
 		if (txtAccount == null) {
 			txtAccount = new JTextField();
-			txtAccount.setBounds(64, 90, 270, 20);
+			txtAccount.setCaretColor(Color.WHITE);
+			txtAccount.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtAccount.setBackground(Color.BLACK);
+			txtAccount.setForeground(Color.WHITE);
+			txtAccount.setBounds(64, 90, 270, 25);
 		}
 		return txtAccount;
 	}
@@ -74,6 +84,7 @@ public class ResetPasswordUI extends javax.swing.JFrame {
 	private JLabel getLblAccount() {
 		if (lblUserOrEmail == null) {
 			lblUserOrEmail = new JLabel();
+			lblUserOrEmail.setForeground(Color.WHITE);
 			lblUserOrEmail.setText(language.getString("lblUserOrEmail"));
 			lblUserOrEmail.setBounds(20, 60, 128, 14);
 			lblUserOrEmail.setFont(new java.awt.Font("Tahoma", 1, 11));

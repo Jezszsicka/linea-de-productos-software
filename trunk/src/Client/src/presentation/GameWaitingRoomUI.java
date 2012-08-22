@@ -47,6 +47,8 @@ import ProductLine.NotEnoughPlayersException;
 import ProductLine.Slot;
 import ProductLine.UserNotInGameException;
 import ProductLine.SlotState;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class GameWaitingRoomUI extends javax.swing.JFrame {
@@ -64,7 +66,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private static final int userIconLabelWidth = 38;
 	private static final int userIconLabelHeight = 45;
 
-	private JPanel pnlBackground;
+	private JPanelRound pnlBackground;
 	private JTextPane txtGameDescription;
 	private JLabel lblDescription;
 	private JScrollPane pnlPlayersScroll;
@@ -74,9 +76,9 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JButton btnStartGame;
 	private JLabel lblGameImage;
 	private JLabel lblGame;
-	private JPanel pnlGame;
+	private JPanelRound pnlGame;
 	private JTextPane txtChat;
-	private JPanel pnlPlayers;
+	private JPanelRound pnlPlayers;
 	private JScrollPane pnlChat;
 	private JTextField txtMessage;
 
@@ -185,11 +187,12 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				playerPanel = new PlayerPanel(i, SlotState.Closed);
 				break;
 			}
-			playerPanel.setLocation(2, 2 + i * 57);
+			playerPanel.setLocation(10, 10 + i * 62);
 			playerPanel.setBorder(BorderFactory.createTitledBorder(""));
+			playerPanel.setBackground(Color.BLACK);
 			pnlPlayers.add(playerPanel);
 			playerPanels.add(playerPanel);
-			size += 57;
+			size += 62;
 		}
 
 		if (size > pnlPlayersScroll.getHeight()) {
@@ -204,10 +207,6 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			}
 
 		}
-
-		pnlPlayers.setPreferredSize(new Dimension(pnlPlayers.getWidth(), size));
-		pnlPlayers.setSize(pnlPlayers.getWidth(), size);
-		pnlPlayers.repaint();
 
 	}
 
@@ -240,7 +239,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				playerPanel.setCountry(user.getCountry());
 				break;
 			case Empty:
-				playerPanel.setPlayer(language.getString("EmptyPlayer"));
+				playerPanel.setPlayer(language.getString("emptyPlayer"));
 				playerPanel.setAvatar(new ImageIcon(GameWaitingRoomUI.class
 						.getResource("/images/empty_icon.png")));
 				playerPanel.setCountry(-1);
@@ -280,14 +279,15 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
 			this.setSize(677, 450);
 		} catch (Exception e) {
-			// add your error handling code here
 			e.printStackTrace();
 		}
 	}
 
-	private JPanel getPnlBackground() {
+	private JPanelRound getPnlBackground() {
 		if (pnlBackground == null) {
-			pnlBackground = new JPanel();
+			pnlBackground = new JPanelRound();
+			pnlBackground.setArcw(0);
+			pnlBackground.setArch(0);
 			pnlBackground.setLayout(null);
 			pnlBackground.add(getTxtMessage());
 			pnlBackground.add(getPnlChat());
@@ -303,7 +303,12 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JTextField getTxtMessage() {
 		if (txtMessage == null) {
 			txtMessage = new JTextField();
-			txtMessage.setBounds(10, 386, 365, 20);
+			txtMessage.setForeground(Color.WHITE);
+			txtMessage.setCaretColor(Color.WHITE);
+			txtMessage.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtMessage.setBackground(Color.BLACK);
+			txtMessage.setBounds(10, 386, 365, 25);
 			txtMessage.addKeyListener(new KeyAdapter() {
 				public void keyPressed(KeyEvent evt) {
 					txtMessageKeyPressed(evt);
@@ -316,15 +321,22 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JScrollPane getPnlChat() {
 		if (pnlChat == null) {
 			pnlChat = new JScrollPane();
+			pnlChat.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+					TitledBorder.TOP, null, null));
+			pnlChat.setBackground(Color.BLACK);
 			pnlChat.setBounds(10, 273, 365, 107);
 			pnlChat.setViewportView(getTxtChat());
 		}
 		return pnlChat;
 	}
 
-	private JPanel getPnlPlayers() {
+	private JPanelRound getPnlPlayers() {
 		if (pnlPlayers == null) {
-			pnlPlayers = new JPanel();
+			pnlPlayers = new JPanelRound();
+			pnlPlayers.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			pnlPlayers.setArcw(0);
+			pnlPlayers.setArch(0);
 			pnlPlayers.setLayout(null);
 			pnlPlayers.setBounds(10, 16, 365, 246);
 			pnlPlayers.setAutoscrolls(true);
@@ -335,6 +347,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JTextPane getTxtChat() {
 		if (txtChat == null) {
 			txtChat = new JTextPane();
+			txtChat.setBackground(Color.BLACK);
 			txtChat.setPreferredSize(new java.awt.Dimension(330, 124));
 			htmlEditor = new HTMLEditorKit();
 			chatText = new HTMLDocument();
@@ -345,9 +358,12 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		return txtChat;
 	}
 
-	private JPanel getPnlGame() {
+	private JPanelRound getPnlGame() {
 		if (pnlGame == null) {
-			pnlGame = new JPanel();
+			pnlGame = new JPanelRound();
+			pnlGame.setArcw(0);
+			pnlGame.setArch(0);
+			pnlGame.setBackground(Color.BLACK);
 			pnlGame.setBorder(BorderFactory.createTitledBorder(""));
 			pnlGame.setLayout(null);
 			pnlGame.setBounds(385, 16, 265, 246);
@@ -364,10 +380,11 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JLabel getLblGame() {
 		if (lblGame == null) {
 			lblGame = new JLabel();
+			lblGame.setForeground(Color.WHITE);
 			lblGame.setText(language.getString("checkersName"));
 			lblGame.setHorizontalAlignment(SwingConstants.CENTER);
 			lblGame.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblGame.setBounds(2, 33, 261, 19);
+			lblGame.setBounds(2, 35, 261, 19);
 			lblGame.setFocusTraversalPolicyProvider(true);
 		}
 		return lblGame;
@@ -379,7 +396,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			lblGameImage.setHorizontalAlignment(SwingConstants.CENTER);
 			lblGameImage.setIcon(new ImageIcon(GameWaitingRoomUI.class
 					.getResource("/images/Games/checkers_icon.png")));
-			lblGameImage.setBounds(2, 57, 261, 60);
+			lblGameImage.setBounds(2, 58, 261, 60);
 		}
 		return lblGameImage;
 	}
@@ -387,6 +404,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JLabel getLblDescription() {
 		if (lblDescription == null) {
 			lblDescription = new JLabel();
+			lblDescription.setForeground(Color.WHITE);
 			lblDescription.setText(language.getString("lblDescription"));
 			lblDescription.setFont(new java.awt.Font("Tahoma", 1, 11));
 			lblDescription.setBounds(12, 129, 74, 14);
@@ -399,14 +417,17 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			SimpleAttributeSet style = new SimpleAttributeSet();
 			StyleConstants.setAlignment(style, StyleConstants.ALIGN_JUSTIFIED);
 			txtGameDescription = new JTextPane();
+			txtGameDescription.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtGameDescription.setForeground(Color.WHITE);
 			txtGameDescription.getStyledDocument().setParagraphAttributes(0,
 					txtGameDescription.getDocument().getLength(), style, false);
 			txtGameDescription.setText(language
 					.getString("checkersDescription"));
 			txtGameDescription.setEditable(false);
-			txtGameDescription.setBackground(new java.awt.Color(240, 240, 240));
+			txtGameDescription.setBackground(Color.BLACK);
 			txtGameDescription.setFocusable(false);
-			txtGameDescription.setBounds(12, 145, 241, 87);
+			txtGameDescription.setBounds(12, 145, 241, 90);
 		}
 		return txtGameDescription;
 	}
@@ -457,6 +478,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JLabel getLblGameName() {
 		if (lblGameName == null) {
 			lblGameName = new JLabel();
+			lblGameName.setForeground(Color.WHITE);
 			lblGameName.setText(language.getString("lblGameName"));
 			lblGameName.setBounds(12, 13, 127, 14);
 			lblGameName.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -467,6 +489,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JLabel getLblName() {
 		if (lblName == null) {
 			lblName = new JLabel();
+			lblName.setForeground(Color.WHITE);
 			lblName.setBounds(149, 13, 114, 14);
 		}
 		return lblName;
@@ -496,15 +519,14 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 					public void run() {
 						for (int i = 5; i > 0; i--) {
 							try {
-								htmlEditor
-										.insertHTML(
-												chatText,
-												chatText.getLength(),
-												"<b>"
-														+ language
-																.getString("gameStart")
-														+ " " + i + " </b>", 0,
-												0, null);
+								htmlEditor.insertHTML(
+										chatText,
+										chatText.getLength(),
+										"<font color=\"white\"><b>"
+												+ language
+														.getString("gameStart")
+												+ " " + i + " </b></font>", 0,
+										0, null);
 								txtChat.setCaretPosition(txtChat.getDocument()
 										.getLength());
 								try {
@@ -542,9 +564,12 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			public void run() {
 				for (int i = 5; i > 0; i--) {
 					try {
-						htmlEditor.insertHTML(chatText, chatText.getLength(),
-								"<b>" + language.getString("gameStart") + " "
-										+ i + " </b>", 0, 0, null);
+						htmlEditor.insertHTML(
+								chatText,
+								chatText.getLength(),
+								"<font color=\"white\"><b>"
+										+ language.getString("gameStart") + " "
+										+ i + " </b></font>", 0, 0, null);
 						txtChat.setCaretPosition(txtChat.getDocument()
 								.getLength());
 						try {
@@ -624,8 +649,9 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		} else {
 			Controller.getInstance().sendGameMessage(game.getName(), message);
 			try {
-				htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
-						+ username + ":</b> " + message, 0, 0, null);
+				htmlEditor.insertHTML(chatText, chatText.getLength(),
+						"<font color=\"white\"><b>" + username + ":</b> "
+								+ message + "</font>", 0, 0, null);
 			} catch (BadLocationException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -638,8 +664,9 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 
 	public void receiveMessage(String sender, String message) {
 		try {
-			htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
-					+ sender + ":</b> " + message, 0, 0, null);
+			htmlEditor.insertHTML(chatText, chatText.getLength(),
+					"<font color=\"white\"><b>" + sender + ":</b> " + message
+							+ "</font>", 0, 0, null);
 			txtChat.setCaretPosition(txtChat.getDocument().getLength());
 		} catch (BadLocationException e) {
 			e.printStackTrace();
@@ -664,9 +691,12 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 
 	public void userJoinGame(String player) {
 		try {
-			htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
-					+ player + " " + language.getString("userJoinGameMessage")
-					+ "</b> ", 0, 0, null);
+			htmlEditor.insertHTML(
+					chatText,
+					chatText.getLength(),
+					"<font color=\"white\"><b>" + player + " "
+							+ language.getString("userJoinGameMessage")
+							+ "</b></font> ", 0, 0, null);
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -677,9 +707,12 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 
 	public void userLeaveGame(String player) {
 		try {
-			htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
-					+ player + " " + language.getString("userLeaveGameMessage")
-					+ "</b> ", 0, 0, null);
+			htmlEditor.insertHTML(
+					chatText,
+					chatText.getLength(),
+					"<font color=\"white\"><b>" + player + " "
+							+ language.getString("userLeaveGameMessage")
+							+ "</b></font> ", 0, 0, null);
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -696,7 +729,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		if (pnlPlayersScroll == null) {
 			pnlPlayersScroll = new JScrollPane();
 			pnlPlayersScroll.setBounds(10, 16, 365, 246);
-			pnlPlayersScroll.setBorder(BorderFactory.createTitledBorder(""));
+			pnlPlayersScroll.setBorder(null);
 			pnlPlayersScroll
 					.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 			pnlPlayersScroll.setViewportView(getPnlPlayers());
@@ -722,11 +755,12 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		public PlayerPanel(int slot, SlotState state) {
 			super();
 			this.slot = slot;
-			setSize(pnlPlayers.getWidth() - 5, userIconLabelHeight + 10);
+			setSize(pnlPlayers.getWidth() - 20, userIconLabelHeight + 10);
 			add(getLblAvatar());
 			add(getLblCountry());
 			add(getLblPlayer());
 			add(getPlayerType());
+			lblPlayer.setForeground(Color.WHITE);
 			setLayout(null);
 			lblAvatar.setIcon(new ImageIcon(GameWaitingRoomUI.class
 					.getResource("/images/empty_icon.png")));
@@ -767,10 +801,11 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		public PlayerPanel(User player, int slot) {
 			super();
 			this.slot = slot;
-			setSize(pnlPlayers.getWidth() - 5, userIconLabelHeight + 10);
+			setSize(pnlPlayers.getWidth() - 20, userIconLabelHeight + 10);
 			add(getLblAvatar());
 			add(getLblCountry());
 			add(getLblPlayer());
+			lblPlayer.setForeground(Color.WHITE);
 			if (!(creator && slot == 0)) {
 				add(getPlayerType());
 			}
@@ -837,7 +872,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 								language.getString("closedPlayer") });
 				playerType = new JComboBox<String>();
 				playerType.setModel(playerTypeModel);
-				playerType.setBounds(getWidth() - 105,
+				playerType.setBounds(getWidth() - 115,
 						userIconLabelHeight / 2 - 5, 100, 20);
 				playerType.setFocusable(false);
 				if (creator) {

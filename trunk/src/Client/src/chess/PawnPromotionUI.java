@@ -12,10 +12,12 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 
 import chess.Chess.Player;
+import presentation.JPanelRound;
+import java.awt.Color;
 
 @SuppressWarnings("serial")
 public class PawnPromotionUI extends javax.swing.JFrame {
-	private JPanel pnlBackground;
+	private JPanelRound pnlBackground;
 	private JButton btnAceptar;
 	private JLabel lblPrevious;
 	private JLabel lblNext;
@@ -60,9 +62,11 @@ public class PawnPromotionUI extends javax.swing.JFrame {
 		}
 	}
 
-	private JPanel getPnlBackground() {
+	private JPanelRound getPnlBackground() {
 		if (pnlBackground == null) {
-			pnlBackground = new JPanel();
+			pnlBackground = new JPanelRound();
+			pnlBackground.setArch(0);
+			pnlBackground.setArcw(0);
 			pnlBackground.setLayout(null);
 			pnlBackground.setBounds(0, 0, 220, 162);
 			pnlBackground.add(getLblSelect());
@@ -77,6 +81,7 @@ public class PawnPromotionUI extends javax.swing.JFrame {
 	private JLabel getLblSelect() {
 		if (lblSelect == null) {
 			lblSelect = new JLabel();
+			lblSelect.setForeground(Color.WHITE);
 			lblSelect.setText("Select a piece for pawn promition");
 			lblSelect.setBounds(0, 5, 224, 14);
 			lblSelect.setHorizontalAlignment(SwingConstants.CENTER);
@@ -88,6 +93,8 @@ public class PawnPromotionUI extends javax.swing.JFrame {
 	private JLabel getLblPiece() {
 		if (lblPiece == null) {
 			lblPiece = new JLabel();
+			lblPiece.setOpaque(true);
+			lblPiece.setBackground(Color.BLACK);
 			lblPiece.setBounds(76, 50, 60, 60);
 			lblPiece.setBorder(BorderFactory.createTitledBorder(""));
 			lblPiece.setHorizontalAlignment(SwingConstants.CENTER);
@@ -129,7 +136,7 @@ public class PawnPromotionUI extends javax.swing.JFrame {
 		if (btnAceptar == null) {
 			btnAceptar = new JButton();
 			btnAceptar.setText("Aceptar");
-			btnAceptar.setBounds(75, 129, 71, 23);
+			btnAceptar.setBounds(70, 128, 71, 23);
 			btnAceptar.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnAceptarMouseClicked(evt);

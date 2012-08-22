@@ -35,10 +35,14 @@ import model.User;
 import ProductLine.Slot;
 import ProductLine.SlotState;
 import ProductLine.UserNotInGameException;
+import presentation.JPanelRound;
+import javax.swing.border.TitledBorder;
+import java.awt.Color;
+import java.awt.Font;
 
 @SuppressWarnings("serial")
 public class Connect4UI extends javax.swing.JFrame implements GameUI {
-	private JPanel pnlBackground;
+	private JPanelRound pnlBackground;
 	private JLabel lbl75;
 	private JLabel lblState;
 	private JLabel lblOpponentName;
@@ -179,9 +183,11 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 		});
 	}
 
-	private JPanel getPnlBackground() {
+	private JPanelRound getPnlBackground() {
 		if (pnlBackground == null) {
-			pnlBackground = new JPanel();
+			pnlBackground = new JPanelRound();
+			pnlBackground.setArch(0);
+			pnlBackground.setArcw(0);
 			pnlBackground.setLayout(null);
 			pnlBackground.setBounds(0, 0, 746, 623);
 			pnlBackground.add(getPnlBoard());
@@ -211,6 +217,7 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JScrollPane getPnlChat() {
 		if (pnlChat == null) {
 			pnlChat = new JScrollPane();
+			pnlChat.setBorder(null);
 			pnlChat.setBounds(10, 460, 615, 123);
 			pnlChat.setViewportView(getTxtChat());
 		}
@@ -220,6 +227,10 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JTextPane getTxtChat() {
 		if (txtChat == null) {
 			txtChat = new JTextPane();
+			txtChat.setForeground(Color.WHITE);
+			txtChat.setBackground(Color.BLACK);
+			txtChat.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+					TitledBorder.TOP, null, null));
 			htmlEditor = new HTMLEditorKit();
 			chatText = new HTMLDocument();
 			txtChat.setEditorKit(htmlEditor);
@@ -233,8 +244,13 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JTextField getTxtMessage() {
 		if (txtMessage == null) {
 			txtMessage = new JTextField();
+			txtMessage.setBackground(Color.BLACK);
+			txtMessage.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtMessage.setForeground(Color.WHITE);
+			txtMessage.setCaretColor(Color.WHITE);
 			txtMessage.setText(null);
-			txtMessage.setBounds(10, 592, 615, 20);
+			txtMessage.setBounds(10, 590, 615, 25);
 			txtMessage.addKeyListener(new KeyAdapter() {
 				public void keyPressed(KeyEvent evt) {
 					txtMessageKeyPressed(evt);
@@ -298,8 +314,9 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 		} else {
 			Controller.getInstance().sendGameMessage(game.getName(), message);
 			try {
-				htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
-						+ username + ":</b> " + message, 0, 0, null);
+				htmlEditor.insertHTML(chatText, chatText.getLength(),
+						"<font color=\"white\"><b>" + username + ":</b> "
+								+ message + "</font>", 0, 0, null);
 			} catch (BadLocationException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -313,6 +330,8 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JPanel getPnlBoard() {
 		if (pnlBoard == null) {
 			pnlBoard = new JPanel();
+			pnlBoard.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+					TitledBorder.TOP, null, null));
 			pnlBoard.setBackground(new java.awt.Color(0, 0, 0));
 			pnlBoard.setLayout(null);
 			pnlBoard.setBounds(10, 11, 615, 417);
@@ -1109,6 +1128,7 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JButton getBtnQuit() {
 		if (btnQuit == null) {
 			btnQuit = new JButton();
+			btnQuit.setFocusable(false);
 			btnQuit.setText("Quit");
 			btnQuit.setBounds(650, 589, 86, 23);
 			btnQuit.addMouseListener(new MouseAdapter() {
@@ -1123,10 +1143,11 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLblOpponentName() {
 		if (lblOpponentName == null) {
 			lblOpponentName = new JLabel();
-			lblOpponentName.setBounds(635, 143, 101, 17);
+			lblOpponentName.setForeground(Color.WHITE);
+			lblOpponentName.setBounds(635, 143, 101, 25);
 			lblOpponentName.setHorizontalAlignment(SwingConstants.CENTER);
 			lblOpponentName.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblOpponentName.setBorder(BorderFactory.createTitledBorder(""));
+			lblOpponentName.setBorder(null);
 		}
 		return lblOpponentName;
 	}
@@ -1177,7 +1198,12 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 
 			if (computer && !winner) {
 				lblState.setText("Pensando...");
-				computerMove();
+				new Thread() {
+					public void run() {
+						computerMove();
+					}
+				}.start();
+
 			} else {
 				if (!computer) {
 					if (!winner) {
@@ -1199,8 +1225,9 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLblState() {
 		if (lblState == null) {
 			lblState = new JLabel();
-			lblState.setBounds(10, 434, 333, 15);
-			lblState.setFont(new java.awt.Font("Tahoma", 1, 11));
+			lblState.setForeground(Color.WHITE);
+			lblState.setBounds(10, 434, 615, 15);
+			lblState.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 11));
 		}
 		return lblState;
 	}
@@ -1223,9 +1250,9 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	}
 
 	private void computerMove() {
-		int movimiento = minimax.minimax(game.getBoard(), playerTurn);
+		int movimiento = minimax.minimax(game.getBoard(), Connect4.BLUE);
 		int fila = libre(movimiento);
-		Connect4.ponerFicha(game.getBoard(), movimiento, playerTurn);
+		Connect4.ponerFicha(game.getBoard(), movimiento, Connect4.BLUE);
 		boardUI[fila][movimiento].setIcon(new ImageIcon(Connect4UI.class
 				.getResource("/images/ConnectFour/Blue.jpg")));
 		playerTurn = game.changeTurn();

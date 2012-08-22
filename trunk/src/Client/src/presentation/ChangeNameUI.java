@@ -1,25 +1,26 @@
 package presentation;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import javax.swing.JButton;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+import javax.swing.border.TitledBorder;
 
 import logic.Controller;
 import logic.LanguageManager;
 
 @SuppressWarnings("serial")
 public class ChangeNameUI extends javax.swing.JFrame {
-	private JPanel pnglBackground;
+	private JPanelRound pnglBackground;
 	private JTextField txtName;
 	private JPasswordField txtPassword;
 	private JLabel lblPassword;
@@ -53,9 +54,11 @@ public class ChangeNameUI extends javax.swing.JFrame {
 		});
 	}
 
-	private JPanel getPnglBackground() {
+	private JPanelRound getPnglBackground() {
 		if (pnglBackground == null) {
-			pnglBackground = new JPanel();
+			pnglBackground = new JPanelRound();
+			pnglBackground.setArcw(0);
+			pnglBackground.setArch(0);
 			pnglBackground.setLayout(null);
 			pnglBackground.setPreferredSize(new java.awt.Dimension(474, 130));
 			pnglBackground.add(getLblName());
@@ -73,8 +76,9 @@ public class ChangeNameUI extends javax.swing.JFrame {
 	private JLabel getLblName() {
 		if (lblName == null) {
 			lblName = new JLabel("Nombre");
+			lblName.setForeground(Color.WHITE);
 			lblName.setText(language.getString("lblName"));
-			lblName.setBounds(73, 21, 88, 20);
+			lblName.setBounds(73, 21, 88, 25);
 			lblName.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblName;
@@ -83,8 +87,9 @@ public class ChangeNameUI extends javax.swing.JFrame {
 	private JLabel getLblLastName() {
 		if (lblLastName == null) {
 			lblLastName = new JLabel("Apellidos");
+			lblLastName.setForeground(Color.WHITE);
 			lblLastName.setText(language.getString("lblLastname"));
-			lblLastName.setBounds(73, 52, 88, 20);
+			lblLastName.setBounds(73, 52, 88, 25);
 			lblLastName.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblLastName;
@@ -93,7 +98,12 @@ public class ChangeNameUI extends javax.swing.JFrame {
 	private JTextField getTxtName() {
 		if (txtName == null) {
 			txtName = new JTextField();
-			txtName.setBounds(179, 21, 149, 20);
+			txtName.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+					TitledBorder.TOP, null, null));
+			txtName.setCaretColor(Color.WHITE);
+			txtName.setBackground(Color.BLACK);
+			txtName.setForeground(Color.WHITE);
+			txtName.setBounds(179, 21, 149, 25);
 		}
 		return txtName;
 	}
@@ -101,7 +111,12 @@ public class ChangeNameUI extends javax.swing.JFrame {
 	private JTextField getTxtLastname() {
 		if (txtLastname == null) {
 			txtLastname = new JTextField();
-			txtLastname.setBounds(179, 52, 149, 20);
+			txtLastname.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtLastname.setCaretColor(Color.WHITE);
+			txtLastname.setBackground(Color.BLACK);
+			txtLastname.setForeground(Color.WHITE);
+			txtLastname.setBounds(179, 52, 149, 25);
 		}
 		return txtLastname;
 	}
@@ -170,8 +185,9 @@ public class ChangeNameUI extends javax.swing.JFrame {
 	private JLabel getLblPassword() {
 		if (lblPassword == null) {
 			lblPassword = new JLabel("Contraseña");
+			lblPassword.setForeground(Color.WHITE);
 			lblPassword.setText(language.getString("lblPassword"));
-			lblPassword.setBounds(73, 83, 88, 20);
+			lblPassword.setBounds(73, 83, 88, 25);
 			lblPassword.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblPassword;
@@ -180,7 +196,12 @@ public class ChangeNameUI extends javax.swing.JFrame {
 	private JPasswordField getTxtPassword() {
 		if (txtPassword == null) {
 			txtPassword = new JPasswordField();
-			txtPassword.setBounds(179, 83, 149, 20);
+			txtPassword.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtPassword.setCaretColor(Color.WHITE);
+			txtPassword.setBackground(Color.BLACK);
+			txtPassword.setForeground(Color.WHITE);
+			txtPassword.setBounds(179, 83, 149, 25);
 		}
 		return txtPassword;
 	}

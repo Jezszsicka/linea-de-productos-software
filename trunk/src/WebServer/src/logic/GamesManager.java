@@ -24,7 +24,7 @@ import ProductLine.SlotState;
 public class GamesManager {
 
 	/** The only GamesController instance **/
-	public static GamesManager controller;
+	public static GamesManager manager;
 	/** The list of created games **/
 	private List<Game> games;
 
@@ -39,11 +39,11 @@ public class GamesManager {
 	 * @return The only GamesController instance
 	 **/
 	public static GamesManager getInstance() {
-		if (controller == null) {
-			controller = new GamesManager();
+		if (manager == null) {
+			manager = new GamesManager();
 		}
 
-		return controller;
+		return manager;
 	}
 
 	/**

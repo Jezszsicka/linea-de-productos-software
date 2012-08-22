@@ -16,6 +16,8 @@ import javax.swing.WindowConstants;
 
 import logic.Controller;
 import logic.LanguageManager;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class ChangeEmailUI extends javax.swing.JFrame {
@@ -30,7 +32,7 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 		}
 	}
 
-	private JPanel pnlBackgroun;
+	private JPanelRound pnlBackgroun;
 	private JLabel lblConfirmEmail;
 	private JButton btnSave;
 	private JButton btnCancel;
@@ -63,9 +65,11 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 		});
 	}
 
-	private JPanel getPnlBackgroun() {
+	private JPanelRound getPnlBackgroun() {
 		if (pnlBackgroun == null) {
-			pnlBackgroun = new JPanel();
+			pnlBackgroun = new JPanelRound();
+			pnlBackgroun.setArcw(0);
+			pnlBackgroun.setArch(0);
 			pnlBackgroun.setLayout(null);
 			pnlBackgroun.add(getLblEmail());
 			pnlBackgroun.add(getLblConfirmEmail());
@@ -82,8 +86,9 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 	private JLabel getLblEmail() {
 		if (lblEmail == null) {
 			lblEmail = new JLabel("E-mail");
+			lblEmail.setForeground(Color.WHITE);
 			lblEmail.setText(language.getString("lblEmail"));
-			lblEmail.setBounds(56, 20, 101, 18);
+			lblEmail.setBounds(56, 20, 101, 25);
 			lblEmail.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblEmail;
@@ -92,8 +97,9 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 	private JLabel getLblConfirmEmail() {
 		if (lblConfirmEmail == null) {
 			lblConfirmEmail = new JLabel("Confirmar e-mail");
+			lblConfirmEmail.setForeground(Color.WHITE);
 			lblConfirmEmail.setText(language.getString("lblConfirmEmail"));
-			lblConfirmEmail.setBounds(56, 51, 101, 18);
+			lblConfirmEmail.setBounds(56, 51, 101, 25);
 			lblConfirmEmail.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblConfirmEmail;
@@ -102,8 +108,9 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 	private JLabel getLblPassword() {
 		if (lblPassword == null) {
 			lblPassword = new JLabel("Contraseña");
+			lblPassword.setForeground(Color.WHITE);
 			lblPassword.setText(language.getString("lblPassword"));
-			lblPassword.setBounds(56, 81, 101, 18);
+			lblPassword.setBounds(56, 81, 101, 25);
 			lblPassword.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblPassword;
@@ -112,7 +119,12 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 	private JTextField getTxtEmail() {
 		if (txtEmail == null) {
 			txtEmail = new JTextField();
-			txtEmail.setBounds(194, 19, 145, 20);
+			txtEmail.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
+					TitledBorder.TOP, null, null));
+			txtEmail.setBackground(Color.BLACK);
+			txtEmail.setCaretColor(Color.WHITE);
+			txtEmail.setForeground(Color.WHITE);
+			txtEmail.setBounds(194, 19, 145, 25);
 		}
 		return txtEmail;
 	}
@@ -120,7 +132,12 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 	private JTextField getTxtConfirmEmail() {
 		if (txtConfirmEmail == null) {
 			txtConfirmEmail = new JTextField();
-			txtConfirmEmail.setBounds(194, 50, 145, 20);
+			txtConfirmEmail.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtConfirmEmail.setBackground(Color.BLACK);
+			txtConfirmEmail.setCaretColor(Color.WHITE);
+			txtConfirmEmail.setForeground(Color.WHITE);
+			txtConfirmEmail.setBounds(194, 50, 145, 25);
 		}
 		return txtConfirmEmail;
 	}
@@ -128,7 +145,12 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 	private JPasswordField getTxtPassword() {
 		if (txtPassword == null) {
 			txtPassword = new JPasswordField();
-			txtPassword.setBounds(194, 81, 145, 20);
+			txtPassword.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtPassword.setBackground(Color.BLACK);
+			txtPassword.setCaretColor(Color.WHITE);
+			txtPassword.setForeground(Color.WHITE);
+			txtPassword.setBounds(194, 81, 145, 25);
 		}
 		return txtPassword;
 	}

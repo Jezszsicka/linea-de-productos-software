@@ -14,17 +14,17 @@ import ProductLine.UserNotInGameException;
 import ProductLine.UserNotLoggedException;
 
 public class MessagesManager {
-	private static MessagesManager controller;
+	private static MessagesManager manager;
 
 	private MessagesManager() {
 
 	}
 
 	public static MessagesManager getInstance() {
-		if (controller == null) {
-			controller = new MessagesManager();
+		if (manager == null) {
+			manager = new MessagesManager();
 		}
-		return controller;
+		return manager;
 	}
 
 	public void sendMessage(Message msg) throws UserNotExistsException {

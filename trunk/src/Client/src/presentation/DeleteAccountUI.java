@@ -14,11 +14,13 @@ import javax.swing.WindowConstants;
 
 import logic.Controller;
 import logic.LanguageManager;
+import java.awt.Color;
+import javax.swing.border.TitledBorder;
 
 @SuppressWarnings("serial")
 public class DeleteAccountUI extends javax.swing.JFrame {
 	private ProfileUI parent;
-	private JPanel pnlBackground;
+	private JPanelRound pnlBackground;
 	private JButton btnCancel;
 	private JButton btnDelete;
 	private JLabel lblPassword;
@@ -40,9 +42,11 @@ public class DeleteAccountUI extends javax.swing.JFrame {
 		setSize(360, 156);
 	}
 
-	private JPanel getPnlBackground() {
+	private JPanelRound getPnlBackground() {
 		if (pnlBackground == null) {
-			pnlBackground = new JPanel();
+			pnlBackground = new JPanelRound();
+			pnlBackground.setArch(0);
+			pnlBackground.setArcw(0);
 			pnlBackground.setLayout(null);
 			pnlBackground.add(getTxtPassword());
 			pnlBackground.add(getLblPassword());
@@ -55,7 +59,12 @@ public class DeleteAccountUI extends javax.swing.JFrame {
 	private JPasswordField getTxtPassword() {
 		if (txtPassword == null) {
 			txtPassword = new JPasswordField();
-			txtPassword.setBounds(157, 30, 145, 20);
+			txtPassword.setBackground(Color.BLACK);
+			txtPassword.setBorder(new TitledBorder(null, "",
+					TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			txtPassword.setCaretColor(Color.WHITE);
+			txtPassword.setForeground(Color.WHITE);
+			txtPassword.setBounds(156, 28, 145, 25);
 		}
 		return txtPassword;
 	}
@@ -63,9 +72,10 @@ public class DeleteAccountUI extends javax.swing.JFrame {
 	private JLabel getLblPassword() {
 		if (lblPassword == null) {
 			lblPassword = new JLabel("Contraseña");
+			lblPassword.setForeground(Color.WHITE);
 			lblPassword.setText(language.getString("lblPassword"));
 			lblPassword.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblPassword.setBounds(45, 30, 108, 20);
+			lblPassword.setBounds(45, 28, 108, 25);
 		}
 		return lblPassword;
 	}
