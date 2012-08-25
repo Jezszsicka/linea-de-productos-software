@@ -1,5 +1,6 @@
 package presentation;
 
+import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -9,9 +10,9 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.DefaultTableModel;
@@ -19,11 +20,9 @@ import javax.swing.table.DefaultTableModel;
 import logic.Controller;
 import ProductLine.Message;
 
-import javax.swing.ScrollPaneConstants;
-
 @SuppressWarnings("serial")
 public class MessagesUI extends javax.swing.JFrame {
-	private JPanel pnlBackground;
+	private JPanelRound pnlBackground;
 	private JTable tblMessages;
 	private JButton btnRead;
 	private JLabel lblMessages;
@@ -58,9 +57,11 @@ public class MessagesUI extends javax.swing.JFrame {
 		this.setSize(489, 323);
 	}
 
-	private JPanel getPnlBackground() {
+	private JPanelRound getPnlBackground() {
 		if (pnlBackground == null) {
-			pnlBackground = new JPanel();
+			pnlBackground = new JPanelRound();
+			pnlBackground.setArcw(0);
+			pnlBackground.setArch(0);
 			pnlBackground.setLayout(null);
 			pnlBackground.setBounds(0, 0, 473, 285);
 			pnlBackground.add(getBtnBack());
@@ -165,6 +166,7 @@ public class MessagesUI extends javax.swing.JFrame {
 	private JLabel getLblMessages() {
 		if (lblMessages == null) {
 			lblMessages = new JLabel();
+			lblMessages.setForeground(Color.WHITE);
 			lblMessages.setText("Messages");
 			lblMessages.setBounds(10, 11, 62, 16);
 			lblMessages.setFont(new java.awt.Font("Tahoma", 1, 11));
@@ -176,7 +178,7 @@ public class MessagesUI extends javax.swing.JFrame {
 		if (btnRead == null) {
 			btnRead = new JButton();
 			btnRead.setText("Leer");
-			btnRead.setBounds(135, 256, 73, 23);
+			btnRead.setBounds(144, 256, 73, 23);
 			btnRead.setFocusable(false);
 			btnRead.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {

@@ -2199,8 +2199,9 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 	@Override
 	public void receiveMessage(String sender, String message) {
 		try {
-			htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
-					+ sender + ":</b> " + message, 0, 0, null);
+			htmlEditor.insertHTML(chatText, chatText.getLength(),
+					"<font color=\"white\"><b>" + sender + ":</b> " + message
+							+ "</font>", 0, 0, null);
 			txtChat.setCaretPosition(txtChat.getDocument().getLength());
 		} catch (BadLocationException e) {
 			e.printStackTrace();

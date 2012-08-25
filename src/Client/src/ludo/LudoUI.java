@@ -5625,8 +5625,9 @@ public class LudoUI extends JFrame implements GameUI {
 	@Override
 	public void receiveMessage(String sender, String message) {
 		try {
-			htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
-					+ sender + ":</b> " + message, 0, 0, null);
+			htmlEditor.insertHTML(chatText, chatText.getLength(),
+					"<font color=\"white\"><b>" + sender + ":</b> " + message
+							+ "</font>", 0, 0, null);
 			txtChat.setCaretPosition(txtChat.getDocument().getLength());
 		} catch (BadLocationException e) {
 			e.printStackTrace();
@@ -5655,8 +5656,9 @@ public class LudoUI extends JFrame implements GameUI {
 		if (game.players() > 2) {
 
 			try {
-				htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
-						+ playerName + " has left the game</b> ", 0, 0, null);
+				htmlEditor.insertHTML(chatText, chatText.getLength(),
+						"<font color=\"white\"><b>" + playerName
+								+ " has left the game</b></font> ", 0, 0, null);
 			} catch (BadLocationException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
