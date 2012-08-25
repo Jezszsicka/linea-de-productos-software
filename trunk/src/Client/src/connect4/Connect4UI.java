@@ -1,5 +1,7 @@
 package connect4;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -7,7 +9,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
-import javax.swing.BorderFactory;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,24 +22,20 @@ import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
-import constants.Constants;
-
-import presentation.GameUI;
-
 import logic.Controller;
 import model.Game;
 import model.User;
+import presentation.GameUI;
+import presentation.JPanelRound;
 import ProductLine.Slot;
 import ProductLine.SlotState;
 import ProductLine.UserNotInGameException;
-import presentation.JPanelRound;
-import javax.swing.border.TitledBorder;
-import java.awt.Color;
-import java.awt.Font;
+import constants.Constants;
 
 @SuppressWarnings("serial")
 public class Connect4UI extends javax.swing.JFrame implements GameUI {
@@ -1280,8 +1277,9 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 	@Override
 	public void receiveMessage(String sender, String message) {
 		try {
-			htmlEditor.insertHTML(chatText, chatText.getLength(), "<b>"
-					+ sender + ":</b> " + message, 0, 0, null);
+			htmlEditor.insertHTML(chatText, chatText.getLength(),
+					"<font color=\"white\"><b>" + sender + ":</b> " + message
+							+ "</font>", 0, 0, null);
 			txtChat.setCaretPosition(txtChat.getDocument().getLength());
 		} catch (BadLocationException e) {
 			e.printStackTrace();

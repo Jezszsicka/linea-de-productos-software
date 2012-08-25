@@ -51,6 +51,9 @@ public class GamesListUI extends javax.swing.JFrame {
 	private JLabel lblFilter;
 	private JLabel lblGame;
 	private Filter filter;
+	private JCheckBox checkChess;
+	private JCheckBox checkLudo;
+	private JCheckBox checkConnect4;
 
 	{
 		// Set Look & Feel
@@ -287,7 +290,7 @@ public class GamesListUI extends javax.swing.JFrame {
 			check3orMore.setForeground(Color.WHITE);
 			check3orMore.setBackground(Color.BLACK);
 			check3orMore.setText("3 o más jugadores");
-			check3orMore.setBounds(115, 103, 115, 23);
+			check3orMore.setBounds(111, 77, 115, 23);
 			check3orMore.setFocusable(false);
 			check3orMore.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -304,7 +307,7 @@ public class GamesListUI extends javax.swing.JFrame {
 			check2Players.setForeground(Color.WHITE);
 			check2Players.setBackground(Color.BLACK);
 			check2Players.setText("2 jugadores");
-			check2Players.setBounds(115, 77, 115, 23);
+			check2Players.setBounds(111, 52, 115, 23);
 			check2Players.setFocusable(false);
 			check2Players.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -321,7 +324,7 @@ public class GamesListUI extends javax.swing.JFrame {
 			Players.setForeground(Color.WHITE);
 			Players.setText("Players");
 			Players.setFont(new java.awt.Font("Tahoma", 1, 11));
-			Players.setBounds(114, 42, 112, 21);
+			Players.setBounds(114, 28, 112, 21);
 			Players.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		return Players;
@@ -333,7 +336,7 @@ public class GamesListUI extends javax.swing.JFrame {
 			checkGoose.setForeground(Color.WHITE);
 			checkGoose.setBackground(Color.BLACK);
 			checkGoose.setText("Oca");
-			checkGoose.setBounds(23, 103, 94, 23);
+			checkGoose.setBounds(23, 77, 81, 23);
 			checkGoose.setFocusable(false);
 			checkGoose.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -350,7 +353,7 @@ public class GamesListUI extends javax.swing.JFrame {
 			checkCheckers.setBackground(Color.BLACK);
 			checkCheckers.setForeground(Color.WHITE);
 			checkCheckers.setText("Damas");
-			checkCheckers.setBounds(23, 78, 92, 21);
+			checkCheckers.setBounds(23, 53, 81, 21);
 			checkCheckers.setFocusable(false);
 			checkCheckers.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -361,13 +364,61 @@ public class GamesListUI extends javax.swing.JFrame {
 		return checkCheckers;
 	}
 
+	private JCheckBox getCheckChess() {
+		if (checkChess == null) {
+			checkChess = new JCheckBox("Ajedrez");
+			checkChess.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					checkChessMouseClicked(arg0);
+				}
+			});
+			checkChess.setBackground(Color.BLACK);
+			checkChess.setForeground(Color.WHITE);
+			checkChess.setBounds(23, 103, 81, 23);
+		}
+		return checkChess;
+	}
+
+	private JCheckBox getCheckLudo() {
+		if (checkLudo == null) {
+			checkLudo = new JCheckBox("Parchís");
+			checkLudo.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					checkLudoMouseClicked(e);
+				}
+			});
+			checkLudo.setBackground(Color.BLACK);
+			checkLudo.setForeground(Color.WHITE);
+			checkLudo.setBounds(23, 129, 81, 23);
+		}
+		return checkLudo;
+	}
+
+	private JCheckBox getCheckConnect4() {
+		if (checkConnect4 == null) {
+			checkConnect4 = new JCheckBox("Conecta 4");
+			checkConnect4.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					checkConnect4MouseClicked(e);
+				}
+			});
+			checkConnect4.setBackground(Color.BLACK);
+			checkConnect4.setForeground(Color.WHITE);
+			checkConnect4.setBounds(23, 155, 81, 23);
+		}
+		return checkConnect4;
+	}
+
 	private JLabel getLblGame() {
 		if (lblGame == null) {
 			lblGame = new JLabel();
 			lblGame.setForeground(Color.WHITE);
 			lblGame.setText("Games");
 			lblGame.setFont(new java.awt.Font("Tahoma", 1, 11));
-			lblGame.setBounds(2, 42, 102, 21);
+			lblGame.setBounds(2, 28, 102, 21);
 			lblGame.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		return lblGame;
@@ -390,7 +441,7 @@ public class GamesListUI extends javax.swing.JFrame {
 			pnlFilter = new JPanel();
 			pnlFilter.setBackground(Color.BLACK);
 			pnlFilter.setLayout(null);
-			pnlFilter.setBounds(371, 57, 238, 167);
+			pnlFilter.setBounds(371, 20, 238, 200);
 			pnlFilter.setBorder(BorderFactory.createTitledBorder(""));
 			pnlFilter.add(getLblFilter());
 			pnlFilter.add(getLblGame());
@@ -399,6 +450,9 @@ public class GamesListUI extends javax.swing.JFrame {
 			pnlFilter.add(getPlayers());
 			pnlFilter.add(getCheck2Players());
 			pnlFilter.add(getCheck3orMore());
+			pnlFilter.add(getCheckChess());
+			pnlFilter.add(getCheckLudo());
+			pnlFilter.add(getCheckConnect4());
 		}
 		return pnlFilter;
 	}
@@ -416,6 +470,30 @@ public class GamesListUI extends javax.swing.JFrame {
 			filter.addGame(GameType.Goose);
 		} else {
 			filter.removeGame(GameType.Goose);
+		}
+	}
+
+	protected void checkChessMouseClicked(MouseEvent arg0) {
+		if (checkChess.isSelected()) {
+			filter.addGame(GameType.Chess);
+		} else {
+			filter.removeGame(GameType.Chess);
+		}
+	}
+
+	protected void checkLudoMouseClicked(MouseEvent e) {
+		if (checkLudo.isSelected()) {
+			filter.addGame(GameType.Ludo);
+		} else {
+			filter.removeGame(GameType.Ludo);
+		}
+	}
+
+	protected void checkConnect4MouseClicked(MouseEvent e) {
+		if (checkConnect4.isSelected()) {
+			filter.addGame(GameType.Connect4);
+		} else {
+			filter.removeGame(GameType.Connect4);
 		}
 	}
 
@@ -475,4 +553,5 @@ public class GamesListUI extends javax.swing.JFrame {
 	protected void btnCancelMouseExited(MouseEvent e) {
 		setDefaultCursor();
 	}
+
 }
