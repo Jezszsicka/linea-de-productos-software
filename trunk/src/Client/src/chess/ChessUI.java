@@ -142,10 +142,11 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 	private int selectedColumn;
 	private boolean activeSquares;
 	private boolean turnPassed;
+	private JLabel lblLblturn;
 
 	public ChessUI(String username, Game game) {
 		super();
-		setTitle("Chess");
+		setTitle("Ajedrez");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				ChessUI.class.getResource("/images/Games/chess_icon.png")));
 		setResizable(false);
@@ -284,6 +285,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			pnlBackground.add(getLblOpponentName());
 			pnlBackground.add(getLblState());
 			pnlBackground.add(getLblTimer());
+			pnlBackground.add(getLblLblturn());
 		}
 		return pnlBackground;
 	}
@@ -1657,7 +1659,7 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 	private JButton getBtnQuit() {
 		if (btnQuit == null) {
 			btnQuit = new JButton();
-			btnQuit.setText("Quit");
+			btnQuit.setText("Salir");
 			btnQuit.setBounds(538, 660, 86, 23);
 			btnQuit.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -1732,8 +1734,10 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 	private JLabel getLblTimer() {
 		if (lblTimer == null) {
 			lblTimer = new JLabel();
+			lblTimer.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblTimer.setForeground(Color.WHITE);
 			lblTimer.setText(formatTurnTime(Constants.ChessTurn));
-			lblTimer.setBounds(521, 386, 102, 14);
+			lblTimer.setBounds(521, 472, 102, 23);
 			lblTimer.setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		return lblTimer;
@@ -2366,5 +2370,16 @@ public class ChessUI extends javax.swing.JFrame implements GameUI {
 			formattedTime += seconds;
 
 		return formattedTime;
+	}
+
+	private JLabel getLblLblturn() {
+		if (lblLblturn == null) {
+			lblLblturn = new JLabel("Tiempo de turno");
+			lblLblturn.setHorizontalAlignment(SwingConstants.CENTER);
+			lblLblturn.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblLblturn.setForeground(Color.WHITE);
+			lblLblturn.setBounds(513, 436, 121, 14);
+		}
+		return lblLblturn;
 	}
 }

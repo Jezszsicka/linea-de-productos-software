@@ -36,6 +36,7 @@ import ProductLine.Slot;
 import ProductLine.SlotState;
 import ProductLine.UserNotInGameException;
 import constants.Constants;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class Connect4UI extends javax.swing.JFrame implements GameUI {
@@ -114,6 +115,12 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 
 	public Connect4UI(String username, Game game) {
 		super();
+		setIconImage(Toolkit
+				.getDefaultToolkit()
+				.getImage(
+						Connect4UI.class
+								.getResource("/images/Games/checkers_icon.png")));
+		setTitle("Conecta 4");
 		this.username = username;
 		this.game = game;
 		playerTurn = Connect4.RED;
@@ -1126,7 +1133,7 @@ public class Connect4UI extends javax.swing.JFrame implements GameUI {
 		if (btnQuit == null) {
 			btnQuit = new JButton();
 			btnQuit.setFocusable(false);
-			btnQuit.setText("Quit");
+			btnQuit.setText("Salir");
 			btnQuit.setBounds(650, 589, 86, 23);
 			btnQuit.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {

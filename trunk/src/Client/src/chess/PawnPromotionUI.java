@@ -14,6 +14,7 @@ import javax.swing.WindowConstants;
 import chess.Chess.Player;
 import presentation.JPanelRound;
 import java.awt.Color;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class PawnPromotionUI extends javax.swing.JFrame {
@@ -31,6 +32,10 @@ public class PawnPromotionUI extends javax.swing.JFrame {
 
 	public PawnPromotionUI(ChessUI parent, Player player) {
 		super();
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				PawnPromotionUI.class
+						.getResource("/images/Games/chess_icon.png")));
+		setTitle("Promocionar");
 		parent.setEnabled(true);
 		this.parent = parent;
 		this.player = player;
@@ -82,7 +87,7 @@ public class PawnPromotionUI extends javax.swing.JFrame {
 		if (lblSelect == null) {
 			lblSelect = new JLabel();
 			lblSelect.setForeground(Color.WHITE);
-			lblSelect.setText("Select a piece for pawn promition");
+			lblSelect.setText("Selecciona una pieza para cambiar");
 			lblSelect.setBounds(0, 5, 224, 14);
 			lblSelect.setHorizontalAlignment(SwingConstants.CENTER);
 			lblSelect.setFont(new java.awt.Font("Tahoma", 1, 11));

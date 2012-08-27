@@ -649,9 +649,15 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 					}
 				} catch (UserNotLoggedException e1) {
 					try {
-						htmlEditor.insertHTML(chatText, chatText.getLength(),
-								"<font color=\"gray\"><b>" + destinatary
-										+ " is offline</b></font>", 0, 0, null);
+						htmlEditor.insertHTML(
+								chatText,
+								chatText.getLength(),
+								"<font color=\"gray\"><b>"
+										+ destinatary
+										+ " "
+										+ language
+												.getString("noUserChatMessage")
+										+ "</b></font>", 0, 0, null);
 					} catch (BadLocationException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
@@ -660,12 +666,12 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 				}
 			} else {
 				try {
-					htmlEditor
-							.insertHTML(
-									chatText,
-									chatText.getLength(),
-									"<font color=\"gray\"><b>You can't send a message to yourself</b></font>",
-									0, 0, null);
+					htmlEditor.insertHTML(
+							chatText,
+							chatText.getLength(),
+							"<font color=\"gray\"><b>"
+									+ language.getString("selfMessage")
+									+ "</b></font>", 0, 0, null);
 				} catch (BadLocationException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
