@@ -28,6 +28,7 @@ import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import java.awt.Font;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class CreateGameUI extends javax.swing.JFrame {
@@ -81,6 +82,9 @@ public class CreateGameUI extends javax.swing.JFrame {
 	private LanguageManager language;
 
 	public CreateGameUI() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				CreateGameUI.class.getResource("/images/icon.png")));
+		setTitle("Crear partida");
 		language = LanguageManager.language();
 		setResizable(false);
 		selectedGame = GameType.Checkers;

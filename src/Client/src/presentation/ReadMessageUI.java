@@ -19,6 +19,7 @@ import ProductLine.Message;
 import ProductLine.MessageType;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class ReadMessageUI extends javax.swing.JFrame {
@@ -36,6 +37,9 @@ public class ReadMessageUI extends javax.swing.JFrame {
 	private Message message;
 
 	public ReadMessageUI(Message message, MessagesUI messagesUI) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				ReadMessageUI.class.getResource("/images/icon.png")));
+		setTitle("Leer mensaje");
 		initGUI();
 		txtFrom.setText(message.getSender());
 		txtSubject.setText(message.getSubject());
@@ -198,7 +202,7 @@ public class ReadMessageUI extends javax.swing.JFrame {
 					btnDeleteMouseClicked(arg0);
 				}
 			});
-			btnDelete.setText("Delete");
+			btnDelete.setText("Eliminar");
 			btnDelete.setBounds(386, 254, 88, 23);
 			btnDelete.setFocusable(false);
 		}

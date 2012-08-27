@@ -16,6 +16,7 @@ import logic.Controller;
 import logic.LanguageManager;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class DeleteAccountUI extends javax.swing.JFrame {
@@ -29,6 +30,9 @@ public class DeleteAccountUI extends javax.swing.JFrame {
 
 	public DeleteAccountUI(ProfileUI parent) {
 		super();
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				DeleteAccountUI.class.getResource("/images/icon.png")));
+		setTitle("Borrar cuenta");
 		this.parent = parent;
 		this.language = LanguageManager.language();
 		initGUI();

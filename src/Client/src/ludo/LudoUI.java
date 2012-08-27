@@ -372,7 +372,7 @@ public class LudoUI extends JFrame implements GameUI {
 	}
 
 	private void initGUI() {
-		setSize(new Dimension(647, 850));
+		setSize(new Dimension(647, 822));
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		getContentPane().setLayout(null);
@@ -386,7 +386,7 @@ public class LudoUI extends JFrame implements GameUI {
 			pnlBackground = new JPanelRound();
 			pnlBackground.setArcw(0);
 			pnlBackground.setArch(0);
-			pnlBackground.setBounds(0, 0, 642, 822);
+			pnlBackground.setBounds(0, 0, 642, 797);
 			pnlBackground.setLayout(null);
 			pnlBackground.add(getPnlBoard());
 			pnlBackground.add(getBtnQuit());
@@ -3966,8 +3966,8 @@ public class LudoUI extends JFrame implements GameUI {
 					btnQuitMouseClicked(arg0);
 				}
 			});
-			btnQuit.setText("Quit");
-			btnQuit.setBounds(538, 788, 86, 23);
+			btnQuit.setText("Salir");
+			btnQuit.setBounds(535, 767, 86, 23);
 		}
 		return btnQuit;
 	}
@@ -3987,7 +3987,7 @@ public class LudoUI extends JFrame implements GameUI {
 				}
 			});
 			txtMessage.setText((String) null);
-			txtMessage.setBounds(10, 788, 493, 25);
+			txtMessage.setBounds(10, 763, 493, 25);
 		}
 		return txtMessage;
 	}
@@ -3996,7 +3996,7 @@ public class LudoUI extends JFrame implements GameUI {
 		if (scrollPane == null) {
 			scrollPane = new JScrollPane();
 			scrollPane.setBorder(null);
-			scrollPane.setBounds(10, 655, 493, 128);
+			scrollPane.setBounds(10, 655, 493, 100);
 			scrollPane.setViewportView(getTxtChat());
 		}
 		return scrollPane;
@@ -7545,6 +7545,7 @@ public class LudoUI extends JFrame implements GameUI {
 	private JButton getBtnNewButton() {
 		if (btnNewButton == null) {
 			btnNewButton = new JButton("New button");
+			btnNewButton.setVisible(false);
 			btnNewButton.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent arg0) {

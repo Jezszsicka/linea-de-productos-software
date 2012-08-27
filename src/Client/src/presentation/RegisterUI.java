@@ -34,6 +34,7 @@ import java.awt.Color;
 import javax.swing.border.TitledBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class RegisterUI extends javax.swing.JFrame {
@@ -80,6 +81,9 @@ public class RegisterUI extends javax.swing.JFrame {
 	}
 
 	private void initGUI() {
+		setTitle("Registrar usuario");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				RegisterUI.class.getResource("/images/icon.png")));
 		this.setSize(518, 396);
 		getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
 		setLocationRelativeTo(null);
@@ -219,6 +223,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtUsername() {
 		if (txtUsername == null) {
 			txtUsername = new JTextField();
+			txtUsername.setCaretColor(Color.WHITE);
 			txtUsername.setBorder(new TitledBorder(null, "",
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			txtUsername.setForeground(Color.WHITE);
@@ -232,6 +237,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JPasswordField getTxtPassword() {
 		if (txtPassword == null) {
 			txtPassword = new JPasswordField();
+			txtPassword.setCaretColor(Color.WHITE);
 			txtPassword.setBorder(new TitledBorder(null, "",
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			txtPassword.setForeground(Color.WHITE);
@@ -245,6 +251,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtEmail() {
 		if (txtEmail == null) {
 			txtEmail = new JTextField();
+			txtEmail.setCaretColor(Color.WHITE);
 			txtEmail.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
 					TitledBorder.TOP, null, null));
 			txtEmail.setForeground(Color.WHITE);
@@ -258,6 +265,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JPasswordField getTxtPasswordR() {
 		if (txtPasswordR == null) {
 			txtPasswordR = new JPasswordField();
+			txtPasswordR.setCaretColor(Color.WHITE);
 			txtPasswordR.setBorder(new TitledBorder(null, "",
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			txtPasswordR.setForeground(Color.WHITE);
@@ -271,6 +279,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtEmailR() {
 		if (txtEmailR == null) {
 			txtEmailR = new JTextField();
+			txtEmailR.setCaretColor(Color.WHITE);
 			txtEmailR.setBorder(new TitledBorder(null, "",
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			txtEmailR.setForeground(Color.WHITE);
@@ -329,6 +338,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtName() {
 		if (txtName == null) {
 			txtName = new JTextField();
+			txtName.setCaretColor(Color.WHITE);
 			txtName.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
 					TitledBorder.TOP, null, null));
 			txtName.setForeground(Color.WHITE);
@@ -341,6 +351,7 @@ public class RegisterUI extends javax.swing.JFrame {
 	private JTextField getTxtLastname() {
 		if (txtLastname == null) {
 			txtLastname = new JTextField();
+			txtLastname.setCaretColor(Color.WHITE);
 			txtLastname.setBorder(new TitledBorder(null, "",
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			txtLastname.setForeground(Color.WHITE);

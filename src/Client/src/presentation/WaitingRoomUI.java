@@ -40,6 +40,7 @@ import logic.Controller;
 import logic.LanguageManager;
 import model.User;
 import ProductLine.UserNotLoggedException;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class WaitingRoomUI extends javax.swing.JFrame {
@@ -59,9 +60,9 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private JLabel lblAvatar;
 	private JPanelRound pnlBackground;
 	private JLabel btnProfile;
-	private JButton btnJoinGame;
+	private JLabel btnJoinGame;
 	private JButton btnSend;
-	private JButton btnCreateGame;
+	private JLabel btnCreateGame;
 	private JButton btnExit;
 	private JTextField txtMessage;
 	private JScrollPane pnlChat;
@@ -85,6 +86,9 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 	public WaitingRoomUI(User user, List<User> users) {
 		super();
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				WaitingRoomUI.class.getResource("/images/icon.png")));
+		setTitle("Sala de espera");
 		setBounds(new Rectangle(0, 0, 710, 517));
 		getContentPane().setBounds(new Rectangle(0, 0, 710, 517));
 		setSize(new Dimension(710, 517));
@@ -167,12 +171,9 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 		return btnSend;
 	}
 
-	private JButton getBtnCreateGame() {
+	private JLabel getBtnCreateGame() {
 		if (btnCreateGame == null) {
-			btnCreateGame = new JButton("Crear partida");
-			btnCreateGame.setBounds(173, 15, 66, 53);
-			btnCreateGame.setText(language.getString("btnCreateGame"));
-			btnCreateGame.setFocusable(false);
+			btnCreateGame = new JLabel("Crear partida");
 			btnCreateGame.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -189,6 +190,11 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 					btnCreateGameMouseExited(e);
 				}
 			});
+			btnCreateGame.setIcon(new ImageIcon(WaitingRoomUI.class
+					.getResource("/images/createIcon.png")));
+			btnCreateGame.setBounds(151, 15, 60, 60);
+			btnCreateGame.setText(language.getString("btnCreateGame"));
+			btnCreateGame.setFocusable(false);
 		}
 		return btnCreateGame;
 	}
@@ -273,15 +279,13 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 		return txtChat;
 	}
 
-	private JButton getBtnJoinGame() {
+	private JLabel getBtnJoinGame() {
 		if (btnJoinGame == null) {
-			btnJoinGame = new JButton();
-			btnJoinGame.setBounds(249, 15, 66, 53);
-			btnJoinGame.setText("Join game");
-			btnJoinGame.setFocusable(false);
+			btnJoinGame = new JLabel();
 			btnJoinGame.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent evt) {
-					btnJoinGameMouseClicked(evt);
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					btnJoinGameMouseClicked(arg0);
 				}
 
 				@Override
@@ -294,6 +298,11 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 					btnJoinGameMouseExited(e);
 				}
 			});
+			btnJoinGame.setIcon(new ImageIcon(WaitingRoomUI.class
+					.getResource("/images/joinIcon.png")));
+			btnJoinGame.setBounds(221, 15, 60, 60);
+			btnJoinGame.setText("Join game");
+			btnJoinGame.setFocusable(false);
 		}
 		return btnJoinGame;
 	}
@@ -301,7 +310,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private JLabel getBtnProfile() {
 		if (btnProfile == null) {
 			btnProfile = new JLabel();
-			btnProfile.setBounds(632, 15, 60, 60);
+			btnProfile.setBounds(633, 15, 60, 60);
 			btnProfile.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -412,11 +421,14 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 		}
 	}
 
-	public void userLogged(String username) {
+	public void userLogged(String user) {
 		try {
-			htmlEditor.insertHTML(chatText, chatText.getLength(),
-					"<font color=\"white\"><b>" + username
-							+ " has joined</b></font> ", 0, 0, null);
+			htmlEditor.insertHTML(
+					chatText,
+					chatText.getLength(),
+					"<font color=\"white\"><b>" + user + " "
+							+ language.getString("userJoinGameMessage")
+							+ "</b></font> ", 0, 0, null);
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -428,9 +440,12 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 	public void userLeave(String user) {
 		try {
-			htmlEditor.insertHTML(chatText, chatText.getLength(),
-					"<font color=\"white\"><b>" + user
-							+ " has left</b></font> ", 0, 0, null);
+			htmlEditor.insertHTML(
+					chatText,
+					chatText.getLength(),
+					"<font color=\"white\"><b>" + user + " "
+							+ language.getString("userLeaveGameMessage")
+							+ "</b></font> ", 0, 0, null);
 		} catch (BadLocationException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -526,7 +541,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 
 		for (int i = 0; i < user.getFriends().size(); i++) {
 			String friendName = user.getFriends().get(i);
-			JPanel pnlUser = new JPanel();
+			JPanelRound pnlUser = new JPanelRound();
 			pnlUser.setLayout(null);
 			pnlUser.setBounds(margin, margin + i * pnlUserHeight + i * margin,
 					pnlUsers.getWidth() - 2 * margin, pnlUserHeight);
@@ -560,7 +575,8 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 						userIconLabelWidth, userIconLabelHeight,
 						Image.SCALE_SMOOTH));
 				userAvatarLabel.setIcon(image);
-				pnlUser.setBackground(Color.GRAY);
+				pnlUser.setColorPrimario(Color.GRAY);
+				pnlUser.setColorContorno(Color.DARK_GRAY);
 			}
 
 			userAvatarLabel.setBounds(margin, margin, userIconLabelWidth,
@@ -575,6 +591,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 			userNameLabel.setHorizontalAlignment(SwingConstants.LEFT);
 			userNameLabel.setHorizontalTextPosition(SwingConstants.LEFT);
 			userNameLabel.setFont(new Font("Courier New", Font.BOLD, 15));
+			userNameLabel.setForeground(Color.WHITE);
 			pnlUser.add(userNameLabel);
 			size += margin + pnlUserHeight;
 
@@ -693,7 +710,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 		if (tabPanel == null) {
 			tabPanel = new JTabbedPane();
 			tabPanel.setBackground(Color.BLACK);
-			tabPanel.setForeground(Color.WHITE);
+			tabPanel.setForeground(Color.BLACK);
 			tabPanel.setBounds(554, 146, 150, 288);
 			tabPanel.addTab(language.getString("tabUsers"), null,
 					getJScrollPane1(), null);
@@ -844,6 +861,7 @@ public class WaitingRoomUI extends javax.swing.JFrame {
 	private JPanel getPnlFriends() {
 		if (pnlFriends == null) {
 			pnlFriends = new JPanel();
+			pnlFriends.setBackground(Color.BLACK);
 			pnlFriends.setLayout(null);
 		}
 		return pnlFriends;

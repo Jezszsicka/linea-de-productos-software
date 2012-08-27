@@ -22,6 +22,7 @@ import logic.Controller;
 import exceptions.WrongInputException;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class SendMessageUI extends javax.swing.JFrame {
@@ -43,6 +44,9 @@ public class SendMessageUI extends javax.swing.JFrame {
 	 * @wbp.parser.constructor
 	 */
 	public SendMessageUI(JFrame parent) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				SendMessageUI.class.getResource("/images/icon.png")));
+		setTitle("Enviar mensaje");
 		initGUI();
 		this.parentUI = parent;
 		this.type = MessageType.Normal;
@@ -204,6 +208,7 @@ public class SendMessageUI extends javax.swing.JFrame {
 	private JTextField getTxtSubject() {
 		if (txtSubject == null) {
 			txtSubject = new JTextField();
+			txtSubject.setCaretColor(Color.WHITE);
 			txtSubject.setBackground(Color.BLACK);
 			txtSubject.setBorder(new TitledBorder(null, "",
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));

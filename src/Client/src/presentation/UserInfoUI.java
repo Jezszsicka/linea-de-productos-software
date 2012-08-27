@@ -24,6 +24,7 @@ import ProductLine.Ranking;
 import ProductLine.User;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class UserInfoUI extends javax.swing.JFrame {
@@ -64,6 +65,9 @@ public class UserInfoUI extends javax.swing.JFrame {
 	private LanguageManager language;
 
 	public UserInfoUI(WaitingRoomUI parent, User user, boolean friend) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				UserInfoUI.class.getResource("/images/icon.png")));
+		setTitle("Perfil de usuario");
 		this.parent = parent;
 		language = LanguageManager.language();
 		initGUI();

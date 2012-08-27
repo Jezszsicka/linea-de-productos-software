@@ -49,6 +49,7 @@ import ProductLine.UserNotInGameException;
 import ProductLine.SlotState;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class GameWaitingRoomUI extends javax.swing.JFrame {
@@ -93,6 +94,9 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private LanguageManager language;
 
 	public GameWaitingRoomUI(String username, Game game, boolean creator) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				GameWaitingRoomUI.class.getResource("/images/icon.png")));
+		setTitle("Sala de espera");
 		this.username = username;
 		this.game = game;
 		this.creator = creator;
@@ -139,7 +143,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			JComboBox<String> box = pnl.getPlayerType();
 			ComboBoxModel<String> playerTypeModel = new DefaultComboBoxModel<String>(
 					new String[] { language.getString("humanPlayer"),
-							language.getString("closePlayer") });
+							language.getString("closedPlayer") });
 			box.setModel(playerTypeModel);
 		}
 
@@ -277,7 +281,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				}
 			});
 			getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
-			this.setSize(677, 450);
+			this.setSize(677, 470);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -308,7 +312,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			txtMessage.setBorder(new TitledBorder(null, "",
 					TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			txtMessage.setBackground(Color.BLACK);
-			txtMessage.setBounds(10, 386, 365, 25);
+			txtMessage.setBounds(10, 406, 365, 25);
 			txtMessage.addKeyListener(new KeyAdapter() {
 				public void keyPressed(KeyEvent evt) {
 					txtMessageKeyPressed(evt);
@@ -324,7 +328,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			pnlChat.setBorder(new TitledBorder(null, "", TitledBorder.LEADING,
 					TitledBorder.TOP, null, null));
 			pnlChat.setBackground(Color.BLACK);
-			pnlChat.setBounds(10, 273, 365, 107);
+			pnlChat.setBounds(10, 291, 365, 107);
 			pnlChat.setViewportView(getTxtChat());
 		}
 		return pnlChat;
@@ -366,7 +370,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			pnlGame.setBackground(Color.BLACK);
 			pnlGame.setBorder(BorderFactory.createTitledBorder(""));
 			pnlGame.setLayout(null);
-			pnlGame.setBounds(385, 16, 265, 246);
+			pnlGame.setBounds(385, 16, 265, 264);
 			pnlGame.add(getLblGame());
 			pnlGame.add(getLblGameImage());
 			pnlGame.add(getLblDescription());
@@ -427,7 +431,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			txtGameDescription.setEditable(false);
 			txtGameDescription.setBackground(Color.BLACK);
 			txtGameDescription.setFocusable(false);
-			txtGameDescription.setBounds(12, 145, 241, 90);
+			txtGameDescription.setBounds(12, 145, 241, 108);
 		}
 		return txtGameDescription;
 	}
@@ -436,7 +440,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		if (btnStartGame == null) {
 			btnStartGame = new JButton();
 			btnStartGame.setText(language.getString("btnStartGame"));
-			btnStartGame.setBounds(548, 356, 103, 23);
+			btnStartGame.setBounds(547, 375, 103, 23);
 			btnStartGame.setFocusable(false);
 			btnStartGame.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -454,7 +458,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 				btnCancel.setText(language.getString("btnCancel"));
 			else
 				btnCancel.setText(language.getString("btnExit"));
-			btnCancel.setBounds(548, 385, 103, 23);
+			btnCancel.setBounds(547, 408, 103, 23);
 			btnCancel.setFocusable(false);
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -480,7 +484,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 			lblGameName = new JLabel();
 			lblGameName.setForeground(Color.WHITE);
 			lblGameName.setText(language.getString("lblGameName"));
-			lblGameName.setBounds(12, 13, 127, 14);
+			lblGameName.setBounds(12, 13, 80, 14);
 			lblGameName.setFont(new java.awt.Font("Tahoma", 1, 11));
 		}
 		return lblGameName;
@@ -490,7 +494,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 		if (lblName == null) {
 			lblName = new JLabel();
 			lblName.setForeground(Color.WHITE);
-			lblName.setBounds(149, 13, 114, 14);
+			lblName.setBounds(102, 13, 161, 14);
 		}
 		return lblName;
 	}
@@ -623,6 +627,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 								chatText.getLength(),
 								"<font color=\"gray\"><b>"
 										+ destinatary
+										+ " "
 										+ language
 												.getString("noUserChatMessage")
 										+ "</b></font>", 0, 0, null);
@@ -728,7 +733,7 @@ public class GameWaitingRoomUI extends javax.swing.JFrame {
 	private JScrollPane getJScrollPane1() {
 		if (pnlPlayersScroll == null) {
 			pnlPlayersScroll = new JScrollPane();
-			pnlPlayersScroll.setBounds(10, 16, 365, 246);
+			pnlPlayersScroll.setBounds(10, 16, 365, 264);
 			pnlPlayersScroll.setBorder(null);
 			pnlPlayersScroll
 					.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);

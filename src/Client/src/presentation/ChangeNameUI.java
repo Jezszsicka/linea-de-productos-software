@@ -17,6 +17,7 @@ import javax.swing.border.TitledBorder;
 
 import logic.Controller;
 import logic.LanguageManager;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class ChangeNameUI extends javax.swing.JFrame {
@@ -34,6 +35,9 @@ public class ChangeNameUI extends javax.swing.JFrame {
 
 	public ChangeNameUI(ProfileUI parent, String name, String lastname) {
 		super();
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				ChangeNameUI.class.getResource("/images/icon.png")));
+		setTitle("Cambiar nombre");
 		this.parent = parent;
 		this.language = LanguageManager.language();
 		initGUI();

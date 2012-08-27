@@ -18,6 +18,7 @@ import logic.Controller;
 import logic.LanguageManager;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class ChangeEmailUI extends javax.swing.JFrame {
@@ -46,6 +47,9 @@ public class ChangeEmailUI extends javax.swing.JFrame {
 
 	public ChangeEmailUI(ProfileUI parent, String email) {
 		super();
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				ChangeEmailUI.class.getResource("/images/icon.png")));
+		setTitle("Cambiar e-mail");
 		this.parent = parent;
 		this.language = LanguageManager.language();
 		initGUI();
