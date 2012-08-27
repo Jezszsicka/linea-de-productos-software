@@ -1,6 +1,7 @@
 package presentation;
 
 import java.awt.BorderLayout;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -40,6 +41,7 @@ import ProductLine.Ranking;
 import ProductLine.User;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class ProfileUI extends javax.swing.JFrame {
@@ -91,6 +93,9 @@ public class ProfileUI extends javax.swing.JFrame {
 
 	public ProfileUI(User user) {
 		super();
+		setTitle("Perfil");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				ProfileUI.class.getResource("/images/icon.png")));
 		this.language = LanguageManager.language();
 		this.user = user;
 		initGUI();
@@ -245,11 +250,21 @@ public class ProfileUI extends javax.swing.JFrame {
 		if (btnAvatar == null) {
 			btnAvatar = new JButton("Seleccionar avatar");
 			btnAvatar.setText(language.getString("btnSelectAvatar"));
-			btnAvatar.setBounds(10, 177, 132, 23);
+			btnAvatar.setBounds(20, 177, 105, 23);
 			btnAvatar.setFocusable(false);
 			btnAvatar.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnAvatarMouseClicked(evt);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnAvatarMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnAvatarMouseExited(e);
 				}
 			});
 		}
@@ -274,6 +289,7 @@ public class ProfileUI extends javax.swing.JFrame {
 	private JLabel getLblRanking() {
 		if (lblRanking == null) {
 			lblRanking = new JLabel("Ranking");
+			lblRanking.setForeground(Color.WHITE);
 			lblRanking.setText(language.getString("lblRanking"));
 			lblRanking.setBounds(15, 238, 98, 20);
 			lblRanking.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -293,6 +309,16 @@ public class ProfileUI extends javax.swing.JFrame {
 			btnBack.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnBackMouseClicked(evt);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnBackMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnBackMouseExited(e);
 				}
 			});
 		}
@@ -406,6 +432,16 @@ public class ProfileUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					btnChangePasswordMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnChangePasswordMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnChangePasswordMouseExited(e);
+				}
 			});
 		}
 		return btnChangePassword;
@@ -420,6 +456,16 @@ public class ProfileUI extends javax.swing.JFrame {
 			btnChangeEmail.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnChangeEmailMouseClicked(evt);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnChangeEmailMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnChangeEmailMouseExited(e);
 				}
 			});
 		}
@@ -452,7 +498,7 @@ public class ProfileUI extends javax.swing.JFrame {
 			lblAccount = new JLabel("Información de la cuenta");
 			lblAccount.setForeground(Color.WHITE);
 			lblAccount.setText(language.getString("lblAccount"));
-			lblAccount.setBounds(164, 11, 418, 14);
+			lblAccount.setBounds(20, 11, 576, 14);
 			lblAccount.setFont(new java.awt.Font("Tahoma", 1, 11));
 			lblAccount.setHorizontalAlignment(SwingConstants.CENTER);
 		}
@@ -526,6 +572,16 @@ public class ProfileUI extends javax.swing.JFrame {
 			btnChangeName.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnChangeNameMouseClicked(evt);
+				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnChangeNameMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnChangeNameMouseExited(e);
 				}
 			});
 		}
@@ -707,6 +763,16 @@ public class ProfileUI extends javax.swing.JFrame {
 				public void mouseClicked(MouseEvent evt) {
 					btnDeleteAccountMouseClicked(evt);
 				}
+
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnDeleteAccountMouseEntered(e);
+				}
+
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnDeleteAccountMouseExited(e);
+				}
 			});
 		}
 		return btnDeleteAccount;
@@ -714,5 +780,61 @@ public class ProfileUI extends javax.swing.JFrame {
 
 	private void btnDeleteAccountMouseClicked(MouseEvent evt) {
 		new DeleteAccountUI(this);
+	}
+
+	private void setHandCursor() {
+		setCursor(new Cursor(Cursor.HAND_CURSOR));
+	}
+
+	private void setDefaultCursor() {
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+	}
+
+	protected void btnAvatarMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnChangePasswordMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnBackMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnChangeEmailMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnDeleteAccountMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnChangeNameMouseEntered(MouseEvent e) {
+		setHandCursor();
+	}
+
+	protected void btnAvatarMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnChangePasswordMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnBackMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnChangeEmailMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnChangeNameMouseExited(MouseEvent e) {
+		setDefaultCursor();
+	}
+
+	protected void btnDeleteAccountMouseExited(MouseEvent e) {
+		setDefaultCursor();
 	}
 }

@@ -31,6 +31,7 @@ import logic.Controller;
 import model.Filter;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class GamesListUI extends javax.swing.JFrame {
@@ -67,6 +68,9 @@ public class GamesListUI extends javax.swing.JFrame {
 
 	public GamesListUI() {
 		super();
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				GamesListUI.class.getResource("/images/icon.png")));
+		setTitle("Lista de partidas");
 		filter = new Filter();
 		initGUI();
 		setVisible(true);
@@ -143,7 +147,7 @@ public class GamesListUI extends javax.swing.JFrame {
 	private JButton getBtnJoin() {
 		if (btnJoin == null) {
 			btnJoin = new JButton();
-			btnJoin.setText("Join game");
+			btnJoin.setText("Unirse");
 			btnJoin.setBounds(528, 261, 81, 23);
 			btnJoin.setFocusable(false);
 			btnJoin.addMouseListener(new MouseAdapter() {
@@ -168,7 +172,7 @@ public class GamesListUI extends javax.swing.JFrame {
 	private JButton getBtnCancel() {
 		if (btnCancel == null) {
 			btnCancel = new JButton();
-			btnCancel.setText("Cancel");
+			btnCancel.setText("Cancelar");
 			btnCancel.setBounds(528, 290, 81, 23);
 			btnCancel.setFocusable(false);
 			btnCancel.addMouseListener(new MouseAdapter() {
@@ -263,8 +267,8 @@ public class GamesListUI extends javax.swing.JFrame {
 			tblGamesModel = new presentation.TableModel(new String[][] {},
 					new String[] { "Nombre", "Juego", "Jugadores" });
 			tblGames = new JTable();
-			tblGames.setBackground(Color.BLACK);
-			tblGames.setForeground(Color.WHITE);
+			tblGames.setBackground(Color.WHITE);
+			tblGames.setForeground(Color.BLACK);
 			tblGames.setModel(tblGamesModel);
 			DefaultTableCellRenderer tcr = new DefaultTableCellRenderer();
 			tcr.setHorizontalAlignment(SwingConstants.CENTER);
@@ -322,7 +326,7 @@ public class GamesListUI extends javax.swing.JFrame {
 		if (Players == null) {
 			Players = new JLabel();
 			Players.setForeground(Color.WHITE);
-			Players.setText("Players");
+			Players.setText("Jugadores");
 			Players.setFont(new java.awt.Font("Tahoma", 1, 11));
 			Players.setBounds(114, 28, 112, 21);
 			Players.setHorizontalAlignment(SwingConstants.CENTER);
@@ -416,7 +420,7 @@ public class GamesListUI extends javax.swing.JFrame {
 		if (lblGame == null) {
 			lblGame = new JLabel();
 			lblGame.setForeground(Color.WHITE);
-			lblGame.setText("Games");
+			lblGame.setText("Juegos");
 			lblGame.setFont(new java.awt.Font("Tahoma", 1, 11));
 			lblGame.setBounds(2, 28, 102, 21);
 			lblGame.setHorizontalAlignment(SwingConstants.CENTER);

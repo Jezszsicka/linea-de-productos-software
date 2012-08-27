@@ -53,6 +53,7 @@ public class LoginUI extends javax.swing.JFrame {
 	}
 
 	private void initGUI() {
+		setTitle("Bienvenido");
 		setResizable(false);
 		this.setSize(466, 255);
 		getContentPane().setLayout(null);

@@ -17,6 +17,7 @@ import logic.Controller;
 import logic.LanguageManager;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class ChangePasswordUI extends javax.swing.JFrame {
@@ -50,6 +51,9 @@ public class ChangePasswordUI extends javax.swing.JFrame {
 	}
 
 	private void initGUI() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				ChangePasswordUI.class.getResource("/images/icon.png")));
+		setTitle("Cambiar contraseña");
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		getContentPane().add(getPnlBackground(), BorderLayout.CENTER);
 		this.setSize(400, 200);

@@ -14,6 +14,7 @@ import logic.Controller;
 import logic.LanguageManager;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class ResetPasswordUI extends javax.swing.JFrame {
@@ -27,6 +28,8 @@ public class ResetPasswordUI extends javax.swing.JFrame {
 	private LanguageManager language;
 
 	public ResetPasswordUI() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				ResetPasswordUI.class.getResource("/images/icon.png")));
 		language = LanguageManager.language();
 		initGUI();
 		setLocationRelativeTo(null);

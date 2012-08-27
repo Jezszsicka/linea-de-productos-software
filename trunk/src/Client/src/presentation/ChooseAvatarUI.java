@@ -19,6 +19,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.filechooser.FileFilter;
 
 import logic.LanguageManager;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class ChooseAvatarUI extends javax.swing.JFrame {
@@ -49,6 +50,9 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 
 	public ChooseAvatarUI(JFrame parentUI) {
 		super();
+		setTitle("Seleccionar avatar");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				ChooseAvatarUI.class.getResource("/images/icon.png")));
 		this.parent = parentUI;
 		this.language = LanguageManager.language();
 		initGUI();
@@ -94,7 +98,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 			btnUpload = new JButton("Subir imagen");
 			btnUpload.setFocusable(false);
 			btnUpload.setText(language.getString("btnUpload"));
-			btnUpload.setBounds(399, 303, 87, 23);
+			btnUpload.setBounds(382, 303, 104, 23);
 			btnUpload.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnUploadMouseClicked(evt);
@@ -228,6 +232,8 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private JLabel getLblAvatar4() {
 		if (lblAvatar4 == null) {
 			lblAvatar4 = new JLabel();
+			lblAvatar4.setIcon(new ImageIcon(ChooseAvatarUI.class
+					.getResource("/images/Avatars/4.jpg")));
 			lblAvatar4.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseEntered(MouseEvent e) {
@@ -237,6 +243,11 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 				@Override
 				public void mouseExited(MouseEvent e) {
 					lblAvatar4MouseExited(e);
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					lblAvatar4MouseClicked(arg0);
 				}
 			});
 			lblAvatar4.setBounds(374, 22, 104, 124);
@@ -250,6 +261,8 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private JLabel getLblAvatar6() {
 		if (lblAvatar6 == null) {
 			lblAvatar6 = new JLabel();
+			lblAvatar6.setIcon(new ImageIcon(ChooseAvatarUI.class
+					.getResource("/images/Avatars/6.jpg")));
 			lblAvatar6.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseEntered(MouseEvent e) {
@@ -259,6 +272,11 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 				@Override
 				public void mouseExited(MouseEvent e) {
 					lblAvatar6MouseExited(e);
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					lblAvatar6MouseClicked(arg0);
 				}
 			});
 			lblAvatar6.setBounds(146, 157, 104, 124);
@@ -272,6 +290,8 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private JLabel getLblAvatar7() {
 		if (lblAvatar7 == null) {
 			lblAvatar7 = new JLabel();
+			lblAvatar7.setIcon(new ImageIcon(ChooseAvatarUI.class
+					.getResource("/images/Avatars/7.jpg")));
 			lblAvatar7.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseEntered(MouseEvent e) {
@@ -281,6 +301,11 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 				@Override
 				public void mouseExited(MouseEvent e) {
 					lblAvatar7MouseExited(e);
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					lblAvatar7MouseClicked(arg0);
 				}
 			});
 			lblAvatar7.setBounds(260, 157, 104, 124);
@@ -294,6 +319,8 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private JLabel getLblAvatar8() {
 		if (lblAvatar8 == null) {
 			lblAvatar8 = new JLabel();
+			lblAvatar8.setIcon(new ImageIcon(ChooseAvatarUI.class
+					.getResource("/images/Avatars/8.jpg")));
 			lblAvatar8.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseEntered(MouseEvent e) {
@@ -303,6 +330,11 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 				@Override
 				public void mouseExited(MouseEvent e) {
 					lblAvatar8MouseExited(e);
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					lblAvatar8MouseClicked(arg0);
 				}
 			});
 			lblAvatar8.setBounds(374, 157, 104, 124);
@@ -316,6 +348,8 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	private JLabel getLblAvatar5() {
 		if (lblAvatar5 == null) {
 			lblAvatar5 = new JLabel();
+			lblAvatar5.setIcon(new ImageIcon(ChooseAvatarUI.class
+					.getResource("/images/Avatars/5.jpg")));
 			lblAvatar5.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseEntered(MouseEvent e) {
@@ -325,6 +359,11 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 				@Override
 				public void mouseExited(MouseEvent e) {
 					lblAvatar5MouseExited(e);
+				}
+
+				@Override
+				public void mouseClicked(MouseEvent arg0) {
+					lblAvatar5MouseClicked(arg0);
 				}
 			});
 			lblAvatar5.setBounds(32, 157, 104, 124);
@@ -396,7 +435,7 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 			btnCancel = new JButton("Cancelar");
 			btnCancel.setFocusable(false);
 			btnCancel.setText(language.getString("btnCancel"));
-			btnCancel.setBounds(399, 332, 87, 23);
+			btnCancel.setBounds(382, 332, 104, 23);
 			btnCancel.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
 					btnCancelMouseClicked(evt);
@@ -473,43 +512,83 @@ public class ChooseAvatarUI extends javax.swing.JFrame {
 	}
 
 	protected void lblAvatar4MouseEntered(MouseEvent e) {
+		lblAvatar4.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.RAISED));
 		setHandCursor();
 	}
 
 	protected void lblAvatar4MouseExited(MouseEvent e) {
+		lblAvatar4.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.LOWERED));
 		setDefaultCursor();
 	}
 
 	protected void lblAvatar5MouseEntered(MouseEvent e) {
+		lblAvatar5.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.RAISED));
 		setHandCursor();
 	}
 
 	protected void lblAvatar5MouseExited(MouseEvent e) {
+		lblAvatar5.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.LOWERED));
 		setDefaultCursor();
 	}
 
 	protected void lblAvatar6MouseEntered(MouseEvent e) {
+		lblAvatar6.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.RAISED));
 		setHandCursor();
 	}
 
 	protected void lblAvatar6MouseExited(MouseEvent e) {
+		lblAvatar6.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.LOWERED));
 		setDefaultCursor();
 	}
 
 	protected void lblAvatar7MouseEntered(MouseEvent e) {
+		lblAvatar7.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.RAISED));
 		setHandCursor();
 	}
 
 	protected void lblAvatar7MouseExited(MouseEvent e) {
+		lblAvatar7.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.LOWERED));
 		setDefaultCursor();
 	}
 
 	protected void lblAvatar8MouseEntered(MouseEvent e) {
+		lblAvatar8.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.RAISED));
 		setHandCursor();
 	}
 
 	protected void lblAvatar8MouseExited(MouseEvent e) {
+		lblAvatar8.setBorder(BorderFactory
+				.createBevelBorder(BevelBorder.LOWERED));
 		setDefaultCursor();
+	}
+
+	protected void lblAvatar5MouseClicked(MouseEvent arg0) {
+		changeAvatar(5);
+	}
+
+	protected void lblAvatar4MouseClicked(MouseEvent arg0) {
+		changeAvatar(4);
+	}
+
+	protected void lblAvatar8MouseClicked(MouseEvent arg0) {
+		changeAvatar(8);
+	}
+
+	protected void lblAvatar6MouseClicked(MouseEvent arg0) {
+		changeAvatar(6);
+	}
+
+	protected void lblAvatar7MouseClicked(MouseEvent arg0) {
+		changeAvatar(7);
 	}
 }
 

@@ -19,6 +19,7 @@ import javax.swing.table.DefaultTableModel;
 
 import logic.Controller;
 import ProductLine.Message;
+import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
 public class MessagesUI extends javax.swing.JFrame {
@@ -34,6 +35,9 @@ public class MessagesUI extends javax.swing.JFrame {
 	private List<Message> messages;
 
 	public MessagesUI(List<Message> messages) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(
+				MessagesUI.class.getResource("/images/icon.png")));
+		setTitle("Buzón de mensajes");
 		this.messages = messages;
 
 		initGUI();
