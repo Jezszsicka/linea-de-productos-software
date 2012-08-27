@@ -148,10 +148,11 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 	private boolean turnPassed;
 	private Minimax minimax;
 	private JLabel lblTimer;
+	private JLabel lblLblturn;
 
 	public CheckersUI(String username, Game game) {
 		super();
-		setTitle("Checkers");
+		setTitle("Damas");
 		setIconImage(Toolkit
 				.getDefaultToolkit()
 				.getImage(
@@ -313,6 +314,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			pnlBackground.add(getLblOpponentName());
 			pnlBackground.add(getLblState());
 			pnlBackground.add(getLblTimer());
+			pnlBackground.add(getLblLblturn());
 		}
 		return pnlBackground;
 	}
@@ -407,7 +409,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_00 == null) {
 			lbl_00 = new JLabel();
 			lbl_00.setBounds(7, 7, 60, 60);
-			lbl_00.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_00.setBackground(Color.BLACK);
 			lbl_00.setOpaque(true);
 			lbl_00.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
@@ -428,7 +430,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_01.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_01.setBounds(67, 7, 60, 60);
 			lbl_01.setOpaque(true);
-			lbl_01.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_01.setBackground(Color.WHITE);
 			lbl_01.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_01.addMouseListener(new MouseAdapter() {
@@ -445,7 +447,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_02 == null) {
 			lbl_02 = new JLabel();
 			lbl_02.setOpaque(true);
-			lbl_02.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_02.setBackground(Color.BLACK);
 			lbl_02.setBounds(127, 7, 60, 60);
 			lbl_02.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
@@ -465,7 +467,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_03 = new JLabel();
 			lbl_03.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_03.setOpaque(true);
-			lbl_03.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_03.setBackground(Color.WHITE);
 			lbl_03.setBounds(187, 7, 60, 60);
 			lbl_03.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
@@ -483,7 +485,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_04 == null) {
 			lbl_04 = new JLabel();
 			lbl_04.setOpaque(true);
-			lbl_04.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_04.setBackground(Color.BLACK);
 			lbl_04.setBounds(247, 7, 60, 60);
 			lbl_04.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
@@ -503,7 +505,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_05 = new JLabel();
 			lbl_05.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_05.setOpaque(true);
-			lbl_05.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_05.setBackground(Color.WHITE);
 			lbl_05.setBounds(307, 7, 60, 60);
 			lbl_05.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
@@ -521,7 +523,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_06 == null) {
 			lbl_06 = new JLabel();
 			lbl_06.setOpaque(true);
-			lbl_06.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_06.setBackground(Color.BLACK);
 			lbl_06.setBounds(367, 7, 60, 60);
 			lbl_06.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
@@ -541,7 +543,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_07 = new JLabel();
 			lbl_07.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_07.setBounds(427, 7, 60, 60);
-			lbl_07.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_07.setBackground(Color.WHITE);
 			lbl_07.setOpaque(true);
 			lbl_07.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
@@ -559,7 +561,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_17 == null) {
 			lbl_17 = new JLabel();
 			lbl_17.setOpaque(true);
-			lbl_17.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_17.setBackground(Color.BLACK);
 			lbl_17.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_17.setBounds(427, 67, 60, 60);
@@ -579,7 +581,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_16 = new JLabel();
 			lbl_16.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_16.setOpaque(true);
-			lbl_16.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_16.setBackground(Color.WHITE);
 			lbl_16.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_16.setBounds(367, 67, 60, 60);
@@ -597,7 +599,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_15 == null) {
 			lbl_15 = new JLabel();
 			lbl_15.setOpaque(true);
-			lbl_15.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_15.setBackground(Color.BLACK);
 			lbl_15.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_15.setBounds(307, 67, 60, 60);
@@ -617,7 +619,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_14 = new JLabel();
 			lbl_14.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_14.setOpaque(true);
-			lbl_14.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_14.setBackground(Color.WHITE);
 			lbl_14.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_14.setBounds(247, 67, 60, 60);
@@ -635,7 +637,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_13 == null) {
 			lbl_13 = new JLabel();
 			lbl_13.setOpaque(true);
-			lbl_13.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_13.setBackground(Color.BLACK);
 			lbl_13.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_13.setBounds(187, 67, 60, 60);
@@ -655,7 +657,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_12 = new JLabel();
 			lbl_12.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_12.setOpaque(true);
-			lbl_12.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_12.setBackground(Color.WHITE);
 			lbl_12.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_12.setBounds(127, 67, 60, 60);
@@ -673,7 +675,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_11 == null) {
 			lbl_11 = new JLabel();
 			lbl_11.setOpaque(true);
-			lbl_11.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_11.setBackground(Color.BLACK);
 			lbl_11.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_11.setBounds(67, 67, 60, 60);
@@ -693,7 +695,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_10 = new JLabel();
 			lbl_10.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_10.setOpaque(true);
-			lbl_10.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_10.setBackground(Color.WHITE);
 			lbl_10.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_10.setBounds(7, 67, 60, 60);
@@ -712,7 +714,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_27 = new JLabel();
 			lbl_27.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_27.setOpaque(true);
-			lbl_27.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_27.setBackground(Color.WHITE);
 			lbl_27.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_27.setBounds(427, 127, 60, 60);
@@ -730,7 +732,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_26 == null) {
 			lbl_26 = new JLabel();
 			lbl_26.setOpaque(true);
-			lbl_26.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_26.setBackground(Color.BLACK);
 			lbl_26.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_26.setBounds(367, 127, 60, 60);
@@ -750,7 +752,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_25 = new JLabel();
 			lbl_25.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_25.setOpaque(true);
-			lbl_25.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_25.setBackground(Color.WHITE);
 			lbl_25.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_25.setBounds(307, 127, 60, 60);
@@ -768,7 +770,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_24 == null) {
 			lbl_24 = new JLabel();
 			lbl_24.setOpaque(true);
-			lbl_24.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_24.setBackground(Color.BLACK);
 			lbl_24.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_24.setBounds(247, 127, 60, 60);
@@ -788,7 +790,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_23 = new JLabel();
 			lbl_23.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_23.setOpaque(true);
-			lbl_23.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_23.setBackground(Color.WHITE);
 			lbl_23.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_23.setBounds(187, 127, 60, 60);
@@ -806,7 +808,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_22 == null) {
 			lbl_22 = new JLabel();
 			lbl_22.setOpaque(true);
-			lbl_22.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_22.setBackground(Color.BLACK);
 			lbl_22.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_22.setBounds(127, 127, 60, 60);
@@ -826,7 +828,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_21 = new JLabel();
 			lbl_21.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_21.setOpaque(true);
-			lbl_21.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_21.setBackground(Color.WHITE);
 			lbl_21.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_21.setBounds(67, 127, 60, 60);
@@ -844,7 +846,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_20 == null) {
 			lbl_20 = new JLabel();
 			lbl_20.setOpaque(true);
-			lbl_20.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_20.setBackground(Color.BLACK);
 			lbl_20.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_20.setBounds(7, 127, 60, 60);
@@ -863,7 +865,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_37 == null) {
 			lbl_37 = new JLabel();
 			lbl_37.setOpaque(true);
-			lbl_37.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_37.setBackground(Color.BLACK);
 			lbl_37.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_37.setBounds(427, 186, 60, 60);
@@ -883,7 +885,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_36 = new JLabel();
 			lbl_36.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_36.setOpaque(true);
-			lbl_36.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_36.setBackground(Color.WHITE);
 			lbl_36.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_36.setBounds(367, 186, 60, 60);
@@ -901,7 +903,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_35 == null) {
 			lbl_35 = new JLabel();
 			lbl_35.setOpaque(true);
-			lbl_35.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_35.setBackground(Color.BLACK);
 			lbl_35.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_35.setBounds(307, 186, 60, 60);
@@ -921,7 +923,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_34 = new JLabel();
 			lbl_34.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_34.setOpaque(true);
-			lbl_34.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_34.setBackground(Color.WHITE);
 			lbl_34.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_34.setBounds(247, 186, 60, 60);
@@ -939,7 +941,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_33 == null) {
 			lbl_33 = new JLabel();
 			lbl_33.setOpaque(true);
-			lbl_33.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_33.setBackground(Color.BLACK);
 			lbl_33.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_33.setBounds(187, 186, 60, 60);
@@ -959,7 +961,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_32 = new JLabel();
 			lbl_32.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_32.setOpaque(true);
-			lbl_32.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_32.setBackground(Color.WHITE);
 			lbl_32.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_32.setBounds(127, 186, 60, 60);
@@ -977,7 +979,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_31 == null) {
 			lbl_31 = new JLabel();
 			lbl_31.setOpaque(true);
-			lbl_31.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_31.setBackground(Color.BLACK);
 			lbl_31.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_31.setBounds(67, 186, 60, 60);
@@ -997,7 +999,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_30 = new JLabel();
 			lbl_30.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_30.setOpaque(true);
-			lbl_30.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_30.setBackground(Color.WHITE);
 			lbl_30.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_30.setBounds(7, 186, 60, 60);
@@ -1016,7 +1018,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_47 = new JLabel();
 			lbl_47.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_47.setOpaque(true);
-			lbl_47.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_47.setBackground(Color.WHITE);
 			lbl_47.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_47.setBounds(427, 246, 60, 60);
@@ -1034,7 +1036,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_46 == null) {
 			lbl_46 = new JLabel();
 			lbl_46.setOpaque(true);
-			lbl_46.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_46.setBackground(Color.BLACK);
 			lbl_46.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_46.setBounds(367, 246, 60, 60);
@@ -1054,7 +1056,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_45 = new JLabel();
 			lbl_45.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_45.setOpaque(true);
-			lbl_45.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_45.setBackground(Color.WHITE);
 			lbl_45.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_45.setBounds(307, 246, 60, 60);
@@ -1072,7 +1074,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_44 == null) {
 			lbl_44 = new JLabel();
 			lbl_44.setOpaque(true);
-			lbl_44.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_44.setBackground(Color.BLACK);
 			lbl_44.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_44.setBounds(247, 246, 60, 60);
@@ -1092,7 +1094,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_43 = new JLabel();
 			lbl_43.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_43.setOpaque(true);
-			lbl_43.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_43.setBackground(Color.WHITE);
 			lbl_43.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_43.setBounds(187, 246, 60, 60);
@@ -1110,7 +1112,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_42 == null) {
 			lbl_42 = new JLabel();
 			lbl_42.setOpaque(true);
-			lbl_42.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_42.setBackground(Color.BLACK);
 			lbl_42.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_42.setBounds(127, 246, 60, 60);
@@ -1130,7 +1132,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_41 = new JLabel();
 			lbl_41.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_41.setOpaque(true);
-			lbl_41.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_41.setBackground(Color.WHITE);
 			lbl_41.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_41.setBounds(67, 246, 60, 60);
@@ -1148,7 +1150,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_40 == null) {
 			lbl_40 = new JLabel();
 			lbl_40.setOpaque(true);
-			lbl_40.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_40.setBackground(Color.BLACK);
 			lbl_40.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_40.setBounds(7, 246, 60, 60);
@@ -1167,7 +1169,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_57 == null) {
 			lbl_57 = new JLabel();
 			lbl_57.setOpaque(true);
-			lbl_57.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_57.setBackground(Color.BLACK);
 			lbl_57.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_57.setBounds(427, 306, 60, 60);
@@ -1186,7 +1188,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_55 == null) {
 			lbl_55 = new JLabel();
 			lbl_55.setOpaque(true);
-			lbl_55.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_55.setBackground(Color.BLACK);
 			lbl_55.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_55.setBounds(307, 306, 60, 60);
@@ -1206,7 +1208,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_56 = new JLabel();
 			lbl_56.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_56.setOpaque(true);
-			lbl_56.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_56.setBackground(Color.WHITE);
 			lbl_56.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_56.setBounds(367, 306, 60, 60);
@@ -1225,7 +1227,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_54 = new JLabel();
 			lbl_54.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_54.setOpaque(true);
-			lbl_54.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_54.setBackground(Color.WHITE);
 			lbl_54.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_54.setBounds(247, 306, 60, 60);
@@ -1243,7 +1245,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_53 == null) {
 			lbl_53 = new JLabel();
 			lbl_53.setOpaque(true);
-			lbl_53.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_53.setBackground(Color.BLACK);
 			lbl_53.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_53.setBounds(187, 306, 60, 60);
@@ -1263,7 +1265,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_52 = new JLabel();
 			lbl_52.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_52.setOpaque(true);
-			lbl_52.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_52.setBackground(Color.WHITE);
 			lbl_52.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_52.setBounds(127, 306, 60, 60);
@@ -1281,7 +1283,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_51 == null) {
 			lbl_51 = new JLabel();
 			lbl_51.setOpaque(true);
-			lbl_51.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_51.setBackground(Color.BLACK);
 			lbl_51.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_51.setBounds(67, 306, 60, 60);
@@ -1301,7 +1303,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_50 = new JLabel();
 			lbl_50.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_50.setOpaque(true);
-			lbl_50.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_50.setBackground(Color.WHITE);
 			lbl_50.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_50.setBounds(7, 306, 60, 60);
@@ -1320,7 +1322,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_67 = new JLabel();
 			lbl_67.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_67.setOpaque(true);
-			lbl_67.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_67.setBackground(Color.WHITE);
 			lbl_67.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_67.setBounds(427, 366, 60, 60);
@@ -1338,7 +1340,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_66 == null) {
 			lbl_66 = new JLabel();
 			lbl_66.setOpaque(true);
-			lbl_66.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_66.setBackground(Color.BLACK);
 			lbl_66.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_66.setBounds(367, 366, 60, 60);
@@ -1358,7 +1360,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_65 = new JLabel();
 			lbl_65.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_65.setOpaque(true);
-			lbl_65.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_65.setBackground(Color.WHITE);
 			lbl_65.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_65.setBounds(307, 366, 60, 60);
@@ -1376,7 +1378,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_64 == null) {
 			lbl_64 = new JLabel();
 			lbl_64.setOpaque(true);
-			lbl_64.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_64.setBackground(Color.BLACK);
 			lbl_64.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_64.setBounds(247, 366, 60, 60);
@@ -1396,7 +1398,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_63 = new JLabel();
 			lbl_63.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_63.setOpaque(true);
-			lbl_63.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_63.setBackground(Color.WHITE);
 			lbl_63.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_63.setBounds(187, 366, 60, 60);
@@ -1414,7 +1416,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_62 == null) {
 			lbl_62 = new JLabel();
 			lbl_62.setOpaque(true);
-			lbl_62.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_62.setBackground(Color.BLACK);
 			lbl_62.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_62.setBounds(127, 366, 60, 60);
@@ -1434,7 +1436,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_61 = new JLabel();
 			lbl_61.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_61.setOpaque(true);
-			lbl_61.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_61.setBackground(Color.WHITE);
 			lbl_61.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_61.setBounds(67, 366, 60, 60);
@@ -1452,7 +1454,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_60 == null) {
 			lbl_60 = new JLabel();
 			lbl_60.setOpaque(true);
-			lbl_60.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_60.setBackground(Color.BLACK);
 			lbl_60.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_60.setBounds(7, 366, 60, 60);
@@ -1472,7 +1474,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_70 = new JLabel();
 			lbl_70.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_70.setOpaque(true);
-			lbl_70.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_70.setBackground(Color.WHITE);
 			lbl_70.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_70.setBounds(7, 426, 60, 60);
@@ -1490,7 +1492,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_77 == null) {
 			lbl_77 = new JLabel();
 			lbl_77.setOpaque(true);
-			lbl_77.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_77.setBackground(Color.BLACK);
 			lbl_77.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_77.setBounds(427, 426, 60, 60);
@@ -1510,7 +1512,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_76 = new JLabel();
 			lbl_76.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_76.setOpaque(true);
-			lbl_76.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_76.setBackground(Color.WHITE);
 			lbl_76.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_76.setBounds(367, 426, 60, 60);
@@ -1528,7 +1530,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_75 == null) {
 			lbl_75 = new JLabel();
 			lbl_75.setOpaque(true);
-			lbl_75.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_75.setBackground(Color.BLACK);
 			lbl_75.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_75.setBounds(307, 426, 60, 60);
@@ -1548,7 +1550,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_74 = new JLabel();
 			lbl_74.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_74.setOpaque(true);
-			lbl_74.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_74.setBackground(Color.WHITE);
 			lbl_74.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_74.setBounds(247, 426, 60, 60);
@@ -1566,7 +1568,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_73 == null) {
 			lbl_73 = new JLabel();
 			lbl_73.setOpaque(true);
-			lbl_73.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_73.setBackground(Color.BLACK);
 			lbl_73.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_73.setBounds(187, 426, 60, 60);
@@ -1586,7 +1588,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lbl_72 = new JLabel();
 			lbl_72.setHorizontalAlignment(SwingConstants.CENTER);
 			lbl_72.setOpaque(true);
-			lbl_72.setBackground(UIManager.getColor("MenuBar.shadow"));
+			lbl_72.setBackground(Color.WHITE);
 			lbl_72.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_72.setBounds(127, 426, 60, 60);
@@ -1604,7 +1606,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 		if (lbl_71 == null) {
 			lbl_71 = new JLabel();
 			lbl_71.setOpaque(true);
-			lbl_71.setBackground(new java.awt.Color(255, 255, 255));
+			lbl_71.setBackground(Color.BLACK);
 			lbl_71.setBorder(new LineBorder(new java.awt.Color(0, 0, 0), 1,
 					false));
 			lbl_71.setBounds(67, 426, 60, 60);
@@ -1622,7 +1624,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 	private JButton getBtnQuit() {
 		if (btnQuit == null) {
 			btnQuit = new JButton();
-			btnQuit.setText("Quit");
+			btnQuit.setText("Salir");
 			btnQuit.setBounds(536, 661, 86, 23);
 			btnQuit.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent evt) {
@@ -2032,7 +2034,7 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			lblTimer.setForeground(Color.WHITE);
 			lblTimer.setHorizontalAlignment(SwingConstants.CENTER);
 			lblTimer.setText(formatTurnTime(Constants.CheckersTurn));
-			lblTimer.setBounds(522, 337, 101, 14);
+			lblTimer.setBounds(513, 462, 121, 23);
 		}
 		return lblTimer;
 	}
@@ -2369,5 +2371,16 @@ public class CheckersUI extends javax.swing.JFrame implements GameUI {
 			formattedTime += seconds;
 
 		return formattedTime;
+	}
+
+	private JLabel getLblLblturn() {
+		if (lblLblturn == null) {
+			lblLblturn = new JLabel("Tiempo de turno");
+			lblLblturn.setHorizontalAlignment(SwingConstants.CENTER);
+			lblLblturn.setFont(new Font("Tahoma", Font.BOLD, 11));
+			lblLblturn.setForeground(Color.WHITE);
+			lblLblturn.setBounds(513, 426, 121, 25);
+		}
+		return lblLblturn;
 	}
 }
