@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+                                   "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="ProductLine.Ranking" table="RANKINGS">
+		<id column="idRanking" name="idRanking" type="int">
+			<generator class="native" />
+		</id>
+
+		<property name="game">
+			<column name="GAME" />
+			<type name="org.hibernate.type.EnumType">
+				<param name="enumClass">ProductLine.GameType</param>
+				<param name="type">12</param>
+			</type>
+		</property>
+		
+		<property name="wonGames" type="int">
+			<column name="WONGAMES" />
+		</property>
+		<property name="lostGames" type="int">
+			<column name="LOSTGAMES" />
+		</property>
+	</class>
+</hibernate-mapping>
