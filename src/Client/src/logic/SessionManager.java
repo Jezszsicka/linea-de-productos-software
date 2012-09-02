@@ -15,7 +15,6 @@ import ProductLine.UserAlreadyExistsException;
 import ProductLine.UserAlreadyLoggedException;
 import ProductLine.UserNotExistsException;
 
-import communications.Client;
 
 import exceptions.WrongInputException;
 
@@ -75,7 +74,7 @@ public class SessionManager {
 		validateLoginInput(username, password);
 		Identity callback = Client.getCallback();
 		User user = (User) Client.getProxy().loginUser(username,
-				Utils.hashMD5_Base64(password), callback);
+				Utils.hashMD5_Base64(password),callback);
 		List<ProductLine.User> serverUsers = Client.getProxy().listUsers(
 				username);
 		List<User> users = new ArrayList<User>();

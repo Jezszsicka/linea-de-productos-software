@@ -10,9 +10,12 @@ import ProductLine.Players;
 public class Filter extends ProductLine.Filter {
 	
 	public Filter(){
+		super();
 		gamesFilter = new ArrayList<GameType>();
 		playersFilter = new ArrayList<Players>();
 	}
+	
+	
 
 	@Override
 	public void addGame(GameType game, Current __current) {
