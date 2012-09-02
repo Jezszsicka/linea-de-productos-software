@@ -29,13 +29,13 @@ import javax.swing.text.html.HTMLEditorKit;
 
 import logic.Controller;
 import model.Game;
-import presentation.GameUI;
+import presentation.IGame;
 import ProductLine.Slot;
 import ProductLine.UserNotInGameException;
 import chess.Chess.Player;
 
 @SuppressWarnings("serial")
-public class GooseUI extends javax.swing.JFrame implements GameUI {
+public class GooseUI extends javax.swing.JFrame implements IGame {
 
 	private HTMLEditorKit htmlEditor;
 	private HTMLDocument chatText;

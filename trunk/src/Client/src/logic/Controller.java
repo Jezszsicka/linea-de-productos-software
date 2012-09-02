@@ -1,25 +1,34 @@
 package logic;
 
+import identify.IIdentify;
+import identify.Identify;
+
 import java.util.Hashtable;
 import java.util.List;
 
 import javax.swing.JOptionPane;
-
+import mailBox.MailBox;
 import ludo.LudoUI;
+import mailBox.IMailBox;
 import model.Filter;
 import model.Game;
 import model.Session;
 import model.User;
 import presentation.CreateGameUI;
-import presentation.GameUI;
+import presentation.IGame;
 import presentation.GameWaitingRoomUI;
 import presentation.GamesListUI;
 import presentation.LoginUI;
 import presentation.MessagesUI;
 import presentation.ProfileUI;
 import presentation.RegisterUI;
-import presentation.ResetPasswordUI;
 import presentation.WaitingRoomUI;
+import register.IRegister;
+import register.Register;
+import resetPassword.ResetPassword;
+import resetPassword.ResetPasswordUI;
+import usersInfo.IUsersInfo;
+import usersInfo.UsersInfo;
 import ProductLine.FullGameException;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
@@ -33,12 +42,24 @@ import ProductLine.UserAlreadyLoggedException;
 import ProductLine.UserNotExistsException;
 import ProductLine.UserNotInGameException;
 import ProductLine.UserNotLoggedException;
+import chatGeneral.GeneralChat;
+import chatGeneral.IGeneralChat;
 import checkers.CheckersUI;
 import chess.ChessUI;
 
 
+import configAccount.ConfigAccount;
+import configAccount.IConfigAccount;
 import connect4.Connect4UI;
+import email.IEmail;
+import email.MailSender;
 import exceptions.WrongInputException;
+import friends.Friends;
+import friends.IFriends;
+import gameChat.GameChat;
+import gameChat.IGameChat;
+import gamesManagement.GamesManager;
+import gamesManagement.IGames;
 import goose.GooseUI;
 
 public class Controller {
@@ -55,21 +76,38 @@ public class Controller {
 	private GamesListUI gamesListUI;
 
 	private Hashtable<String, GameWaitingRoomUI> gameWaitingRooms;
-	private Hashtable<String, GameUI> gamesUI;
+	private Hashtable<String, IGame> gamesUI;
 
-	// Managers
+
 	private Session session;
-	private SessionManager sessionManager;
-	private GamesManager gamesManager;
 	private LanguageManager language;
-	private MessagesManager messagesManager;
+	
+	private IIdentify identify;
+	private IRegister register;
+	private IGames gamesManager;
+	private IUsersInfo usersInfo;
+	private IConfigAccount configAccount;
+	private IGeneralChat generalChat;
+	private IGameChat gameChat;
+	private IMailBox  mailBox;
+	private IFriends  friends;
+	private IEmail email;
+	
 
 	private Controller() {
+		usersInfo = new UsersInfo();
+		email = new MailSender();
+		register = new Register(email);
+		identify = new Identify(usersInfo);
+		configAccount = new ConfigAccount();
+		generalChat = new GeneralChat();
+		gameChat = new GameChat();
+		friends = new Friends();
+		mailBox = new MailBox();
 		language = LanguageManager.language();
 		loginUI = new LoginUI();
-		sessionManager = new SessionManager();
 		gameWaitingRooms = new Hashtable<String, GameWaitingRoomUI>();
-		gamesUI = new Hashtable<String, GameUI>();
+		gamesUI = new Hashtable<String, IGame>();
 	}
 
 	public static void initialize() {
@@ -85,7 +123,7 @@ public class Controller {
 	public void registerUser(User user, String retypedPassword,
 			String retypedEmail) {
 		try {
-			sessionManager.registerUser(user, retypedPassword, retypedEmail);
+			register.registerUser(user, retypedPassword, retypedEmail);
 			loginUI.setEnabled(true);
 			registerUI.dispose();
 			JOptionPane.showMessageDialog(registerUI,
@@ -115,10 +153,10 @@ public class Controller {
 
 	public void loginUser(String username, String password) {
 		try {
-			session = sessionManager.loginUser(username, password);
-			language.loadPreferences(session.getUser());
-			gamesManager = new GamesManager(session);
-			messagesManager = new MessagesManager(session);
+			identify.loginUser(username, password);
+			session = Session.getInstance();
+			language.loadPreferences();
+			gamesManager = new GamesManager();
 			waitingRoomUI = new WaitingRoomUI(session.getUser(),
 					session.getUsers());
 			loginUI.dispose();
@@ -141,7 +179,7 @@ public class Controller {
 	}
 
 	public void logoutUser() {
-		sessionManager.logoutUser();
+		identify.logoutUser();
 		gamesManager = null;
 		waitingRoomUI.dispose();
 		waitingRoomUI = null;
@@ -161,42 +199,52 @@ public class Controller {
 	}
 
 	public void userLogged(User user) {
-		sessionManager.userLogged(user);
+		usersInfo.userLogged(user);
 		waitingRoomUI.userLogged(user.getUsername());
 	}
 
 	public void userLeave(String user) {
-		sessionManager.userLeave(user);
+		usersInfo.userLeave(user);
 		waitingRoomUI.userLeave(user);
 	}
 
 	public void sendGeneralMessage(String message) {
-		messagesManager.sendGeneralMessage(message);
+		generalChat.sendGeneralMessage(message);
 	}
 
 	public void sendPrivateMessage(String destinatary, String message)
 			throws UserNotLoggedException {
-		messagesManager.sendPrivateMessage(destinatary, message);
+		generalChat.sendPrivateMessage(destinatary, message);
 	}
 
 	public void sendGameMessage(String game, String message) {
-		messagesManager.sendGameMessage(game, message);
+		gameChat.sendGameMessage(game, message);
 	}
 
 	public void sendGamePrivateMessage(String game, String destinatary,
 			String message) throws UserNotInGameException {
-		messagesManager.sendGamePrivateMessage(game, destinatary, message);
+		gameChat.sendGamePrivateMessage(game, destinatary, message);
 	}
 
 	public void sendMessage(String to, String subject, String content,
 			MessageType type) throws WrongInputException {
 		try {
-			messagesManager.sendMessage(to, subject, content, type);
+			mailBox.sendMessage(to, subject, content, type);
 		} catch (UserNotExistsException e) {
 			JOptionPane.showMessageDialog(messagesUI,
 					"El destinatario del mensaje no existe",
 					"Destinatario erróneo", JOptionPane.WARNING_MESSAGE);
 		}
+	}
+	
+	public void markMessageAsRead(Message message) {
+		mailBox.markMessageAsRead(message);
+
+	}
+
+	public void deleteMessage(Message message) {
+		mailBox.deleteMessage(message);
+
 	}
 
 	public void receiveGeneralMessage(String sender, String message) {
@@ -212,7 +260,7 @@ public class Controller {
 			String message) {
 		Game game = gamesManager.searchGame(gameName);
 		if (game.isStarted()) {
-			GameUI gameUI = gamesUI.get(gameName);
+			IGame gameUI = gamesUI.get(gameName);
 			gameUI.receiveMessage(sender, message);
 		} else
 			gameWaitingRooms.get(gameName).receiveMessage(sender, message);
@@ -222,7 +270,7 @@ public class Controller {
 			String message) {
 		Game game = gamesManager.searchGame(gameName);
 		if (game.isStarted()) {
-			GameUI gameUI = gamesUI.get(gameName);
+			IGame gameUI = gamesUI.get(gameName);
 			gameUI.receivePrivateMessage(sender, message);
 		} else
 			gameWaitingRooms.get(gameName).receivePrivateMessage(sender,
@@ -252,7 +300,7 @@ public class Controller {
 
 	public void changeName(String name, String lastname, String password) {
 		try {
-			sessionManager.changeName(name, lastname, password);
+			configAccount.changeName(name, lastname, password);
 			profileUI.closeChangeFrame();
 			profileUI.toFront();
 		} catch (InvalidLoggingException e) {
@@ -269,7 +317,7 @@ public class Controller {
 
 	public void changeEmail(String email, String confirmEmail, String password) {
 		try {
-			sessionManager.changeEmail(email, confirmEmail, password);
+			configAccount.changeEmail(email, confirmEmail, password);
 			profileUI.closeChangeFrame();
 			profileUI.toFront();
 		} catch (WrongInputException e) {
@@ -287,7 +335,7 @@ public class Controller {
 	public void changePassword(String password, String newPassword,
 			String confirmPassword) {
 		try {
-			sessionManager.changePassword(password, newPassword,
+			configAccount.changePassword(password, newPassword,
 					confirmPassword);
 			profileUI.closeChangeFrame();
 			profileUI.toFront();
@@ -304,8 +352,23 @@ public class Controller {
 	}
 
 	public void changeAvatar(byte[] avatar) {
-		sessionManager.changeAvatar(avatar);
+		configAccount.changeAvatar(avatar);
 		waitingRoomUI.setAvatar(avatar);
+	}
+	
+	public void deleteAccount(String password) {
+		try {
+			configAccount.deleteAccount(password);
+		} catch (InvalidLoggingException e) {
+			JOptionPane.showMessageDialog(profileUI, "The password is wrong",
+					"Incorrect password", JOptionPane.ERROR_MESSAGE);
+			e.printStackTrace();
+		} catch (WrongInputException e) {
+			JOptionPane.showMessageDialog(profileUI, e.getMessage(),
+					e.getError(), JOptionPane.WARNING_MESSAGE);
+			e.printStackTrace();
+		}
+
 	}
 
 	public void closeJoinGameUI() {
@@ -320,20 +383,7 @@ public class Controller {
 		waitingRoomUI.languageChanged();
 	}
 
-	public void deleteAccount(String password) {
-		try {
-			sessionManager.deleteAccount(password);
-		} catch (InvalidLoggingException e) {
-			JOptionPane.showMessageDialog(profileUI, "The password is wrong",
-					"Incorrect password", JOptionPane.ERROR_MESSAGE);
-			e.printStackTrace();
-		} catch (WrongInputException e) {
-			JOptionPane.showMessageDialog(profileUI, e.getMessage(),
-					e.getError(), JOptionPane.WARNING_MESSAGE);
-			e.printStackTrace();
-		}
 
-	}
 
 	public void createGame(String gameName, GameType type) {
 		try {
@@ -398,7 +448,7 @@ public class Controller {
 			gamesManager.userLeaveGame(gameName, player);
 
 		if (game.isStarted()) {
-			GameUI gameUI = gamesUI.get(gameName);
+			IGame gameUI = gamesUI.get(gameName);
 			gameUI.userLeaveGame(player);
 			if (game.players() <= 1)
 				gamesUI.remove(gameName);
@@ -416,6 +466,7 @@ public class Controller {
 		if (session.getUser().getUsername().equalsIgnoreCase(username))
 			return session.getUser();
 		else {
+			System.out.println("Buscamos al usuario");
 			for (User user : session.getUsers())
 				if (user.getUsername().equalsIgnoreCase(username))
 					return user;
@@ -459,20 +510,7 @@ public class Controller {
 	}
 
 	public void resetPassword(String identifier) {
-		try {
-			Client.getProxy().resetPassword(identifier);
-			JOptionPane
-					.showMessageDialog(
-							resetPasswordUI,
-							"Su contraseña ha sido reseteada en breve recibirá un email",
-							"Contraseña reseteada",
-							JOptionPane.INFORMATION_MESSAGE);
-			resetPasswordUI.dispose();
-		} catch (InvalidLoggingException e) {
-			JOptionPane.showMessageDialog(resetPasswordUI,
-					"El usuario introducido no existe", "Cuenta errónea",
-					JOptionPane.INFORMATION_MESSAGE);
-		}
+		new ResetPassword();
 	}
 
 	public void startGame(String game) throws NotEnoughPlayersException {
@@ -492,31 +530,31 @@ public class Controller {
 		game.setStarted(true);
 		switch (game.getTypeGame()) {
 		case Connect4:
-			GameUI connect4UI = new Connect4UI(session.getUser().getUsername(),
+			IGame connect4UI = new Connect4UI(session.getUser().getUsername(),
 					game);
 			gamesUI.put(gameName, connect4UI);
 			break;
 		case Checkers:
-			GameUI checkersUI = new CheckersUI(session.getUser().getUsername(),
+			IGame checkersUI = new CheckersUI(session.getUser().getUsername(),
 					game);
 			gamesUI.put(gameName, checkersUI);
 			break;
 		case Chess:
-			GameUI chessUI = new ChessUI(session.getUser().getUsername(), game);
+			IGame chessUI = new ChessUI(session.getUser().getUsername(), game);
 			gamesUI.put(gameName, chessUI);
 			break;
 		case Goose:
-			GameUI gooseUI = new GooseUI(session.getUser().getUsername(), game);
+			IGame gooseUI = new GooseUI(session.getUser().getUsername(), game);
 			gamesUI.put(gameName, gooseUI);
 			break;
 		case Ludo:
-			GameUI ludoUI = new LudoUI(session.getUser().getUsername(), game);
+			IGame ludoUI = new LudoUI(session.getUser().getUsername(), game);
 			gamesUI.put(gameName, ludoUI);
 		}
 	}
 
 	public void gameUpdated(String gameName, int[][] board, int nextTurn) {
-		GameUI gameUI = gamesUI.get(gameName);
+		IGame gameUI = gamesUI.get(gameName);
 		gamesManager.gameUpdated(gameName, board);
 		gameUI.updateBoard(nextTurn);
 	}
@@ -539,7 +577,7 @@ public class Controller {
 	}
 
 	public void gameFinished(String game) {
-		GameUI gameUI = gamesUI.get(game);
+		IGame gameUI = gamesUI.get(game);
 		gamesManager.finishGame(game);
 		gameUI.lostGame();
 	}
@@ -548,18 +586,9 @@ public class Controller {
 		gamesManager.finishGame(game, winnerPlayer);
 	}
 
-	public void markMessageAsRead(Message message) {
-		messagesManager.markMessageAsRead(message);
-
-	}
-
-	public void deleteMessage(Message message) {
-		messagesManager.deleteMessage(message);
-
-	}
 
 	public void friendRequestResponse(String friend, boolean accepted) {
-		messagesManager.friendRequestResponse(friend, accepted);
+		friends.friendRequestResponse(friend, accepted);
 		if (accepted)
 			waitingRoomUI.refreshFriendList();
 	}
@@ -567,7 +596,7 @@ public class Controller {
 	public User userInfo(String username) {
 		User user = null;
 		try {
-			user = sessionManager.userInfo(username);
+			user = usersInfo.userInfo(username);
 		} catch (UserNotExistsException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

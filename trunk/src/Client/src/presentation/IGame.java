@@ -1,6 +1,6 @@
 package presentation;
 
-public interface GameUI {
+public interface IGame {
 	void updateBoard(int nextTurn);
 	void lostGame();
 	void receiveMessage(String sender,String message);

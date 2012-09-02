@@ -33,7 +33,7 @@ import javax.swing.text.html.HTMLEditorKit;
 import logic.Controller;
 import model.Game;
 import model.User;
-import presentation.GameUI;
+import presentation.IGame;
 import ProductLine.Slot;
 import ProductLine.SlotState;
 import ProductLine.UserNotInGameException;
@@ -45,7 +45,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
-public class CheckersUI extends javax.swing.JFrame implements GameUI {
+public class CheckersUI extends javax.swing.JFrame implements IGame {
 
 	private HTMLEditorKit htmlEditor;
 	private HTMLDocument chatText;
