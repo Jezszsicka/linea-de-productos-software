@@ -1,8 +1,11 @@
-package logic;
+package gamesManagement;
 
 import java.util.Hashtable;
 import java.util.List;
 
+import rankings.Rankings;
+
+import logic.Controller;
 import model.Filter;
 import model.Game;
 import model.Session;
@@ -19,17 +22,17 @@ import chess.Chess;
 import connect4.Connect4;
 import exceptions.WrongInputException;
 
-public class GamesManager {
-	private Session session;
+public class GamesManager implements IGames {
 	private Hashtable<String, Game> games;
 
-	public GamesManager(Session session) {
-		this.session = session;
+	public GamesManager() {
 		games = new Hashtable<String, Game>();
 	}
 
 	/** Lists the games to join **/
+	@Override
 	public List<ProductLine.Game> listGames(String game, Filter filter) {
+		Session session = Session.getInstance();
 		return session.getProxy().listGames(session.getUser().getUsername(),
 				game, filter);
 	}
@@ -44,13 +47,16 @@ public class GamesManager {
 	 * @throws GameAlreadyExistsException
 	 * @throws WrongInputException
 	 **/
+	@Override
 	public Game createGame(String gameName, GameType type)
 			throws GameAlreadyExistsException, WrongInputException {
+		Session session = Session.getInstance();
+
 		if (gameName.isEmpty())
 			throw new WrongInputException("Name is empty",
 					"Please, introduce a name for the game");
 		String username = session.getUser().getUsername();
-		session.getProxy().createGame(gameName, username, type);
+		Session.getInstance().getProxy().createGame(gameName, username, type);
 		Game game = new Game(gameName, username, type);
 		switch (type) {
 		case Checkers:
@@ -79,7 +85,10 @@ public class GamesManager {
 	 * @throws FullGameException
 	 *             The game is full
 	 **/
+	@Override
 	public Game joinGame(String gameName) throws FullGameException {
+		Session session = Session.getInstance();
+
 		Game game = (Game) session.getProxy().joinGame(gameName,
 				session.getUser().getUsername());
 		switch (game.getTypeGame()) {
@@ -108,7 +117,9 @@ public class GamesManager {
 	 * @param gameName
 	 *            Name of the game to be deleted
 	 * **/
+	@Override
 	public void deleteGame(String gameName) {
+		Session session = Session.getInstance();
 		session.getProxy()
 				.deleteGame(gameName, session.getUser().getUsername());
 		games.remove(gameName);
@@ -120,18 +131,16 @@ public class GamesManager {
 	 * @param game
 	 *            Name of the game to leave
 	 **/
+	@Override
 	public void leaveGame(String gameName) {
+		Session session = Session.getInstance();
+
 		session.getProxy().leaveGame(gameName, session.getUser().getUsername());
 		Game game = searchGame(gameName);
-		
+
 		if (game.isStarted()) {
-			for (Ranking ranking : session.getUser().getRankings()) {
-				if (ranking.getGame() == game.getTypeGame()) {
-					int lostGames = ranking.getLostGames();
-					ranking.setLostGames(++lostGames);
-					break;
-				}
-			}
+			//TODO
+			new Rankings().addLostGame(game.getTypeGame());
 		}
 
 	}
@@ -144,6 +153,7 @@ public class GamesManager {
 	 * @param Player
 	 *            that joins the game
 	 **/
+	@Override
 	public void userJoinGame(String game, String player) {
 		searchGame(game).addPlayer(player);
 	}
@@ -156,15 +166,16 @@ public class GamesManager {
 	 * @param player
 	 *            Player that leaves the game
 	 **/
+	@Override
 	public void userLeaveGame(String gameName, String player) {
 		Game game = searchGame(gameName);
-		if (game.isStarted()){
-			if(game.players() <= 1){
+		if (game.isStarted()) {
+			if (game.players() <= 1) {
 				games.remove(gameName);
-			}else{
+			} else {
 				game.removePlayer(player);
 			}
-		}else{
+		} else {
 			game.removePlayer(player);
 		}
 	}
@@ -179,7 +190,9 @@ public class GamesManager {
 	 * @param slotState
 	 *            New state for the slot
 	 **/
+	@Override
 	public void changeSlotState(String gameName, int slot, SlotState slotState) {
+		Session session = Session.getInstance();
 		session.getProxy().changeSlotState(gameName, slot, slotState);
 		Game game = searchGame(gameName);
 		game.setSlot(slot, new Slot("", slotState));
@@ -195,6 +208,7 @@ public class GamesManager {
 	 * @param New
 	 *            state for the slot
 	 **/
+	@Override
 	public void slotStateChanged(String gameName, int slot, SlotState state) {
 		Game game = searchGame(gameName);
 		game.setSlot(slot, new Slot("", state));
@@ -207,7 +221,10 @@ public class GamesManager {
 	 *            Name of the game
 	 * @throws NotEnoughPlayersException
 	 **/
+	@Override
 	public void startGame(String gameName) throws NotEnoughPlayersException {
+		Session session = Session.getInstance();
+
 		Game game = searchGame(gameName);
 		if (game.players() > 1) {
 			session.getProxy().startGame(gameName);
@@ -227,7 +244,9 @@ public class GamesManager {
 	 * @param gameName
 	 *            Name of the game
 	 **/
+	@Override
 	public void updateGame(String gameName) {
+		Session session = Session.getInstance();
 		Game game = searchGame(gameName);
 		int nextTurn = game.getTurn();
 		String player = session.getUser().getUsername();
@@ -235,8 +254,10 @@ public class GamesManager {
 				game.getBoard());
 	}
 
+	@Override
 	public void updateDiceGame(String gameName, int fromSquare, int dice,
 			int piece) {
+		Session session = Session.getInstance();
 		Game game = searchGame(gameName);
 		int nextTurn = game.getTurn();
 		String player = session.getUser().getUsername();
@@ -252,11 +273,13 @@ public class GamesManager {
 	 * @param board
 	 *            The updated board of the game
 	 **/
+	@Override
 	public void gameUpdated(String gameName, int[][] board) {
 		Game game = searchGame(gameName);
 		game.setBoard(board);
 	}
 
+	@Override
 	public void gameUpdated(String gameName, int turn, int[][] board) {
 		Game game = searchGame(gameName);
 		game.setBoard(board);
@@ -271,7 +294,9 @@ public class GamesManager {
 	 * @param winnerPlayer
 	 *            Name of the winner player
 	 * **/
+	@Override
 	public void finishGame(String gameName, String winnerPlayer) {
+		Session session = Session.getInstance();
 		Game game = searchGame(gameName);
 
 		for (Slot slot : game.getSlots()) {
@@ -309,7 +334,9 @@ public class GamesManager {
 	 * 
 	 * @game Name of the game
 	 **/
+	@Override
 	public void finishGame(String gameName) {
+		Session session = Session.getInstance();
 		Game game = searchGame(gameName);
 
 		// TODO me hace falta saber quien es el ganador del juego
@@ -331,6 +358,7 @@ public class GamesManager {
 	 *            Name of the game to search
 	 * @return The found game
 	 **/
+	@Override
 	public Game searchGame(String game) {
 		return games.get(game);
 	}

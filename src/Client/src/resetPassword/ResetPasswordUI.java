@@ -1,4 +1,4 @@
-package presentation;
+package resetPassword;
 
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
@@ -6,7 +6,6 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
@@ -14,6 +13,9 @@ import logic.Controller;
 import logic.LanguageManager;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
+
+import presentation.JPanelRound;
+
 import java.awt.Toolkit;
 
 @SuppressWarnings("serial")

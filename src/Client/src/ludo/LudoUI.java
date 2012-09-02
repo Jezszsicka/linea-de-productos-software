@@ -30,7 +30,7 @@ import javax.swing.text.html.HTMLEditorKit;
 import logic.Controller;
 import model.Game;
 import model.User;
-import presentation.GameUI;
+import presentation.IGame;
 import ProductLine.Slot;
 import ProductLine.SlotState;
 import ProductLine.UserNotInGameException;
@@ -41,7 +41,7 @@ import presentation.JPanelRound;
 import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
-public class LudoUI extends JFrame implements GameUI {
+public class LudoUI extends JFrame implements IGame {
 	private JPanelRound pnlBackground;
 	private JPanel pnlBoard;
 	private JPanel pnlYellowPlayer;

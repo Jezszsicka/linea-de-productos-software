@@ -30,7 +30,7 @@ import javax.swing.text.html.HTMLEditorKit;
 import logic.Controller;
 import model.Game;
 import model.User;
-import presentation.GameUI;
+import presentation.IGame;
 import presentation.JPanelRound;
 import ProductLine.Slot;
 import ProductLine.SlotState;
@@ -39,7 +39,7 @@ import constants.Constants;
 import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
-public class Connect4UI extends javax.swing.JFrame implements GameUI {
+public class Connect4UI extends javax.swing.JFrame implements IGame {
 	private JPanelRound pnlBackground;
 	private JLabel lbl75;
 	private JLabel lblState;

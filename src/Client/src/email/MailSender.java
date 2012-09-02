@@ -1,4 +1,4 @@
-package logic;
+package email;
 
 import java.util.Properties;
 
@@ -13,13 +13,12 @@ import com.sun.mail.smtp.SMTPTransport;
 
 import constants.MailConstants;
 
-public class MailSender {
+public class MailSender implements IEmail{
 
-	private static MailSender manager = null;
 	Session session = null;
 	Properties props = null;
 
-	private MailSender() {
+	public MailSender() {
 		props = new Properties();
 
 		// SMTP host name
@@ -35,12 +34,6 @@ public class MailSender {
 		props.setProperty("mail.smtp.user", MailConstants.Account);
 		session = Session.getDefaultInstance(props);
 		// session.setDebug(true);
-	}
-
-	public static MailSender getMailSender() {
-		if (manager == null)
-			manager = new MailSender();
-		return manager;
 	}
 
 	public void sendMessage(final String text, final String subject, final String address) {

@@ -30,7 +30,7 @@ import javax.swing.text.html.HTMLEditorKit;
 import logic.Controller;
 import model.Game;
 import model.User;
-import presentation.GameUI;
+import presentation.IGame;
 import ProductLine.Slot;
 import ProductLine.UserNotInGameException;
 import chess.Chess.Player;
@@ -42,7 +42,7 @@ import java.awt.Font;
 import java.awt.Toolkit;
 
 @SuppressWarnings("serial")
-public class ChessUI extends javax.swing.JFrame implements GameUI {
+public class ChessUI extends javax.swing.JFrame implements IGame {
 
 	private HTMLEditorKit htmlEditor;
 	private HTMLDocument chatText;

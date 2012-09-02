@@ -9,6 +9,9 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+import model.Session;
+
+
 import ProductLine.User;
 
 public class LanguageManager {
@@ -74,7 +77,8 @@ public class LanguageManager {
 		return strings.getString(key);
 	}
 	
-	public void loadPreferences(User user){
+	public void loadPreferences(){
+		User user = Session.getInstance().getUser();
 		preferences = new Properties();
 		File file = new File("preferences.properties");
 		FileInputStream in = null;
