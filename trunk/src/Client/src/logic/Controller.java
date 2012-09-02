@@ -36,7 +36,6 @@ import ProductLine.UserNotLoggedException;
 import checkers.CheckersUI;
 import chess.ChessUI;
 
-import communications.Client;
 
 import connect4.Connect4UI;
 import exceptions.WrongInputException;
