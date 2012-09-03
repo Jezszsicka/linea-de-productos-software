@@ -22,6 +22,8 @@ import java.util.List;
 import configAccount.ConfigAccount;
 import configAccount.IConfigAccount;
 
+import rankings.IRankings;
+import rankings.Rankings;
 import register.IRegister;
 import register.Register;
 import resetPassword.IResetPassword;
@@ -68,12 +70,14 @@ public class ServerI extends _ServerDisp {
 	private IUsersInfo usersInfo;
 	private IGames gamesManagement;
 	private IList gamesFilter;
+	private IRankings rankings;
 
 	public ServerI() {
 		super();
 		identify = new UsersManager();
 		register = new Register();
-		gamesManagement = new GamesManager();
+		rankings = new Rankings();
+		gamesManagement = new GamesManager(rankings);
 		generalChat = new GeneralChat();
 		mailSender = new MailSender();
 		configAccount = new ConfigAccount();

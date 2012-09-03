@@ -3,23 +3,26 @@ package gamesManagement;
 import java.util.ArrayList;
 import java.util.List;
 
-import persistence.UserDAO;
-
 import model.Game;
 import model.Session;
 import model.Sessions;
-import model.User;
+import rankings.IRankings;
 import ProductLine.FullGameException;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
-import ProductLine.Ranking;
 import ProductLine.Slot;
 import ProductLine.SlotState;
 
 public class GamesManager implements IGames {
+	private IRankings rankings;
 	private List<Game> games;
 
-	public GamesManager() {
+	public GamesManager(){
+		games = new ArrayList<Game>();
+	}
+	
+	public GamesManager(IRankings rankings) {
+		this.rankings = rankings;
 		games = new ArrayList<Game>();
 	}
 
@@ -69,17 +72,8 @@ public class GamesManager implements IGames {
 						userSession.getCallback().userLeaveGame(gameName,
 								player);
 						if (game.players() <= 1) {
-							for (Ranking ranking : userSession.getUser()
-									.getRankings()) {
-								if (ranking.getGame() == game.getTypeGame()) {
-									int wonGames = ranking.getWonGames();
-									ranking.setWonGames(++wonGames);
-									break;
-								}
-							}
-
-							UserDAO userDAO = UserDAO.getDAO();
-							userDAO.update(userSession.getUser());
+							rankings.addWonGame(userSession.getUser()
+									.getUsername(), game.getTypeGame());
 						}
 
 					}
@@ -87,18 +81,7 @@ public class GamesManager implements IGames {
 
 				if (game.isStarted()) {
 
-					User leaveUser = Sessions.getInstance().getSession(player)
-							.getUser();
-					for (Ranking ranking : leaveUser.getRankings()) {
-						if (ranking.getGame() == game.getTypeGame()) {
-							int lostGames = ranking.getLostGames();
-							ranking.setLostGames(++lostGames);
-							break;
-						}
-					}
-
-					UserDAO userDAO = UserDAO.getDAO();
-					userDAO.update(leaveUser);
+					rankings.addLostGame(player, game.getTypeGame());
 
 					if (game.players() <= 1) {
 						games.remove(game);
@@ -309,28 +292,8 @@ public class GamesManager implements IGames {
 			Session looserSession = sessions.getSession(looserPlayer);
 			looserSession.getCallback().gameFinished(gameName);
 
-			User winnerUser = sessions.getSession(winnerPlayer).getUser();
-			User looserUser = looserSession.getUser();
-
-			for (Ranking ranking : winnerUser.getRankings()) {
-				if (ranking.getGame() == game.getTypeGame()) {
-					int wonGames = ranking.getWonGames();
-					ranking.setWonGames(++wonGames);
-					break;
-				}
-			}
-
-			for (Ranking ranking : looserUser.getRankings()) {
-				if (ranking.getGame() == game.getTypeGame()) {
-					int lostGames = ranking.getLostGames();
-					ranking.setLostGames(++lostGames);
-					break;
-				}
-			}
-
-			UserDAO userDAO = UserDAO.getDAO();
-			userDAO.update(winnerUser);
-			userDAO.update(looserUser);
+			rankings.addWonGame(winnerPlayer, game.getTypeGame());
+			rankings.addLostGame(looserPlayer, game.getTypeGame());
 
 			break;
 		case Goose:
