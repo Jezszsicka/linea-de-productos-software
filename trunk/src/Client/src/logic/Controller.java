@@ -23,6 +23,8 @@ import presentation.MessagesUI;
 import presentation.ProfileUI;
 import presentation.RegisterUI;
 import presentation.WaitingRoomUI;
+import rankings.IRankings;
+import rankings.Rankings;
 import register.IRegister;
 import register.Register;
 import resetPassword.ResetPassword;
@@ -92,6 +94,7 @@ public class Controller {
 	private IMailBox  mailBox;
 	private IFriends  friends;
 	private IEmail email;
+	private IRankings rankings;
 	
 
 	private Controller() {
@@ -104,6 +107,7 @@ public class Controller {
 		gameChat = new GameChat();
 		friends = new Friends();
 		mailBox = new MailBox();
+		rankings = new Rankings();
 		language = LanguageManager.language();
 		loginUI = new LoginUI();
 		gameWaitingRooms = new Hashtable<String, GameWaitingRoomUI>();
@@ -156,7 +160,7 @@ public class Controller {
 			identify.loginUser(username, password);
 			session = Session.getInstance();
 			language.loadPreferences();
-			gamesManager = new GamesManager();
+			gamesManager = new GamesManager(rankings);
 			waitingRoomUI = new WaitingRoomUI(session.getUser(),
 					session.getUsers());
 			loginUI.dispose();

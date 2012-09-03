@@ -3,6 +3,6 @@ package rankings;
 import ProductLine.GameType;
 
 public interface IRankings {
-	public void addWonGame(GameType game);
-	public void addLostGame(GameType game);
+	public void addWonGame(String user,GameType gameType);
+	public void addLostGame(String user,GameType gameType);
 }

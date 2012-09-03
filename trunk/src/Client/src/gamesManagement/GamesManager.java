@@ -3,18 +3,14 @@ package gamesManagement;
 import java.util.Hashtable;
 import java.util.List;
 
-import rankings.Rankings;
-
-import logic.Controller;
 import model.Filter;
 import model.Game;
 import model.Session;
-import model.User;
+import rankings.IRankings;
 import ProductLine.FullGameException;
 import ProductLine.GameAlreadyExistsException;
 import ProductLine.GameType;
 import ProductLine.NotEnoughPlayersException;
-import ProductLine.Ranking;
 import ProductLine.Slot;
 import ProductLine.SlotState;
 import checkers.Checkers;
@@ -23,9 +19,11 @@ import connect4.Connect4;
 import exceptions.WrongInputException;
 
 public class GamesManager implements IGames {
+	private IRankings rankings;
 	private Hashtable<String, Game> games;
 
-	public GamesManager() {
+	public GamesManager(IRankings rankings) {
+		this.rankings = rankings;
 		games = new Hashtable<String, Game>();
 	}
 
@@ -139,8 +137,7 @@ public class GamesManager implements IGames {
 		Game game = searchGame(gameName);
 
 		if (game.isStarted()) {
-			//TODO
-			new Rankings().addLostGame(game.getTypeGame());
+			rankings.addLostGame(session.getUser().getUsername(),game.getTypeGame());
 		}
 
 	}
@@ -302,25 +299,9 @@ public class GamesManager implements IGames {
 		for (Slot slot : game.getSlots()) {
 			if (slot.getType() == SlotState.Human) {
 				if (!slot.getPlayer().equalsIgnoreCase(winnerPlayer)) {
-					User looserPlayer = Controller.getInstance().searchUser(
-							slot.getPlayer());
-					for (Ranking ranking : looserPlayer.getRankings()) {
-						if (ranking.getGame() == game.getTypeGame()) {
-							int lostGames = ranking.getLostGames();
-							ranking.setWonGames(++lostGames);
-							break;
-						}
-					}
+					rankings.addLostGame(slot.getPlayer(), game.getTypeGame());
 				} else {
-					User winner = Controller.getInstance().searchUser(
-							slot.getPlayer());
-					for (Ranking ranking : winner.getRankings()) {
-						if (ranking.getGame() == game.getTypeGame()) {
-							int wonGames = ranking.getWonGames();
-							ranking.setWonGames(++wonGames);
-							break;
-						}
-					}
+					rankings.addWonGame(slot.getPlayer(), game.getTypeGame());
 				}
 			}
 		}
@@ -339,15 +320,8 @@ public class GamesManager implements IGames {
 		Session session = Session.getInstance();
 		Game game = searchGame(gameName);
 
-		// TODO me hace falta saber quien es el ganador del juego
-		for (Ranking ranking : session.getUser().getRankings()) {
-			if (ranking.getGame() == game.getTypeGame()) {
-				int lostGames = ranking.getLostGames();
-				ranking.setLostGames(++lostGames);
-			}
-		}
+		rankings.addLostGame(session.getUser().getUsername(), game.getTypeGame());
 
-		// TODO comprobar que se llama siempre siendo el perdedor
 		games.remove(game);
 	}
 
