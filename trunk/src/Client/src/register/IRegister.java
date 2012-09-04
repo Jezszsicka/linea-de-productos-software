@@ -5,7 +5,7 @@ import ProductLine.UserAlreadyExistsException;
 import exceptions.WrongInputException;
 
 public interface IRegister {
-	public void registerUser(final User user, String retypedPassword,
-			String retypedEmail) throws WrongInputException,
+	public void registerUser(User user, String password,
+			String email) throws WrongInputException,
 			UserAlreadyExistsException;
 }

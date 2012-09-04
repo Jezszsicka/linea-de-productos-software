@@ -711,7 +711,7 @@ public class CreateGameUI extends javax.swing.JFrame {
 
 	private void connect4Selected() {
 		lblGameTitle.setText(language.getString("connect4Name"));
-		txtGameDescription.setText(language.getString("chessDescription"));
+		txtGameDescription.setText(language.getString("connect4Description"));
 		lblGameImage.setIcon(new ImageIcon(CreateGameUI.class
 				.getResource("/images/Games/connect4_icon.png")));
 		lblGamePlayers.setText(language.getString("lblTwoPlayers"));

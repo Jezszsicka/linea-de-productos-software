@@ -126,19 +126,19 @@ public class UserInfoUI extends javax.swing.JFrame {
 
 			switch (ranking.getGame()) {
 			case Checkers:
-				txtGame = "Damas";
+				txtGame = language.getString("checkersName");
 				break;
 			case Chess:
-				txtGame = "Ajedrez";
+				txtGame = language.getString("chessName");
 				break;
 			case Connect4:
-				txtGame = "Conecta 4";
+				txtGame = language.getString("connect4Name");
 				break;
 			case Goose:
-				txtGame = "Oca";
+				txtGame = language.getString("gooseName");
 				break;
 			case Ludo:
-				txtGame = "Parchís";
+				txtGame = language.getString("ludoName");
 				break;
 			}
 
