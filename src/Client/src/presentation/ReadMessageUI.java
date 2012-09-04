@@ -250,10 +250,10 @@ public class ReadMessageUI extends javax.swing.JFrame {
 			Controller.getInstance().friendRequestResponse(message.getSender(),
 					false);
 			Controller.getInstance().deleteMessage(message);
-
+			messagesUI.removeMessage();
 		}
 		messagesUI.setVisible(true);
-		messagesUI.removeMessage();
+
 		dispose();
 	}
 

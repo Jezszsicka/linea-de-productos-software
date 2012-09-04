@@ -2,7 +2,7 @@ package communications;
 
 import email.IEmail;
 import email.MailSender;
-import filterGames.IList;
+import filterGames.IListFilter;
 import filterGames.GamesFilter;
 import friends.Friends;
 import friends.IFriends;
@@ -69,7 +69,7 @@ public class ServerI extends _ServerDisp {
 	private IEmail mailSender;
 	private IUsersInfo usersInfo;
 	private IGames gamesManagement;
-	private IList gamesFilter;
+	private IListFilter gamesFilter;
 	private IRankings rankings;
 
 	public ServerI() {

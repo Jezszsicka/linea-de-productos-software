@@ -1,13 +1,12 @@
 package mailBox;
 
-import email.IEmail;
 import model.Session;
 import model.Sessions;
 import model.User;
 import persistence.UserDAO;
 import ProductLine.Message;
-import ProductLine.MessageType;
 import ProductLine.UserNotExistsException;
+import email.IEmail;
 
 public class MailBox implements IMailBox {
 	
@@ -62,63 +61,6 @@ public class MailBox implements IMailBox {
 
 		user.getMessages().remove(message);
 		UserDAO.getDAO().update(user);
-
-	}
-
-	@Override
-	public void friendRequestResponse(String friend, String username,
-			boolean accepted) throws UserNotExistsException {
-		User friendUser = null;
-		String content;
-		String subject;
-		Sessions sessions = Sessions.getInstance();
-		Session friendSession = sessions.getSession(friend);
-		User user = sessions.getSession(username).getUser();
-
-		// User not connected
-		if (friendSession == null) {
-
-			friendUser = UserDAO.getDAO().loadByID(friend);
-
-			if (friendUser == null) {
-				throw new UserNotExistsException();
-			} else {
-				if (accepted) {
-					user.getFriends().add(friend);
-					friendUser.getFriends().add(username);
-					subject = "Petición de amistad aceptada";
-					content = username + " y tu sois amigos";
-				} else {
-					subject = "Petición de amistad rechazada";
-					content = username + " ha rechazado tu petición de amistad";
-				}
-				Message msg = new model.Message(username, friend, subject,
-						content, MessageType.Normal);
-				friendUser.getMessages().add(msg);
-				UserDAO.getDAO().update(friendUser);
-				UserDAO.getDAO().update(user);
-				mail.sendMessage(content, subject,
-						friendUser.getEmail());
-			}
-
-		} else {
-			friendUser = friendSession.getUser();
-			if (accepted) {
-				user.getFriends().add(friend);
-				friendUser.getFriends().add(username);
-				subject = "Petición de amistad aceptada";
-				content = username + " y tu sois amigos";
-			} else {
-				subject = "Petición de amistad rechazada";
-				content = username + " ha rechazado tu petición de amistad";
-			}
-			Message msg = new model.Message(username, friend, subject, content,
-					MessageType.Normal);
-			friendUser.getMessages().add(msg);
-			UserDAO.getDAO().update(friendUser);
-			UserDAO.getDAO().update(user);
-			friendSession.getCallback().receiveMessage(msg);
-		}
 
 	}
 

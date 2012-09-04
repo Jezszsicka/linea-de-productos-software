@@ -12,17 +12,17 @@ public interface IGames {
 	public void createGame(String gameName, String creator, GameType type)
 			throws GameAlreadyExistsException;
 
-	public Game joinGame(final String game, final String player)
+	public Game joinGame(String game, String player)
 			throws FullGameException;
 
-	public void leaveGame(final String gameName, final String player);
+	public void leaveGame(String gameName, String player);
 
 	public List<ProductLine.Game> listGames(String user);
 
-	public void deleteGame(final String game, String creator);
+	public void deleteGame(String game, String creator);
 
-	public void changeSlotState(String gameName, final int slot,
-			final SlotState state);
+	public void changeSlotState(String gameName, int slot,
+			SlotState state);
 
 	public void startGame(String gameName);
 	

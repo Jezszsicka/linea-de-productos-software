@@ -8,9 +8,10 @@ import java.util.List;
 import ProductLine.Filter;
 import ProductLine.Game;
 import ProductLine.GameType;
+import ProductLine.Players;
 import ProductLine.Slot;
 
-public class GamesFilter implements IList {
+public class GamesFilter implements IListFilter {
 	private IGames gamesManager;
 
 	public GamesFilter(IGames gamesManager) {
@@ -44,53 +45,100 @@ public class GamesFilter implements IList {
 			}
 		}
 
-		System.out.println("Tipo de filtro"+type);
-		
 		switch (type) {
 		case BothFilter:
-			break;
-		case GamesFilter:
-			//TODO
-			System.out.println(gamesFilter.getGamesFilter());
 			for (Game game : games) {
-				boolean toList = true;
+				boolean toList;
 				for (GameType gameType : gamesFilter.getGamesFilter()) {
+					toList = true;
 					if (!game.isStarted() && game.getName().contains(gameName)
 							&& game.getTypeGame() == gameType) {
-						
 						for (Slot slot : game.getSlots()) {
 							if (slot.getPlayer().equalsIgnoreCase(user)) {
 								toList = false;
 								break;
 							}
 						}
-						
-					} else{
+					} else {
 						toList = false;
 					}
 
-					if (toList)
+					if (toList) {
 						list.add(game);
+						break;
+					}
+				}
+			}
+
+			for (Game game : games) {
+				int size = game.getSlots().size();
+				switch (size) {
+				case 2:
+					if (gamesFilter.getPlayersFilter().contains(
+							Players.TwoPlayers)) {
+						if (!list.contains(game))
+							list.add(game);
+					}
+					break;
+				case 3:
+					if (gamesFilter.getPlayersFilter().contains(
+							Players.ThreeOrMore))
+						if (!list.contains(game))
+							list.add(game);
+					break;
+				case 4:
+					if (gamesFilter.getPlayersFilter().contains(
+							Players.ThreeOrMore))
+						if (!list.contains(game))
+							list.add(game);
+					break;
+				}
+			}
+			break;
+
+		case GamesFilter:
+			for (Game game : games) {
+				boolean toList;
+				for (GameType gameType : gamesFilter.getGamesFilter()) {
+					toList = true;
+					if (!game.isStarted() && game.getName().contains(gameName)
+							&& game.getTypeGame() == gameType) {
+						for (Slot slot : game.getSlots()) {
+							if (slot.getPlayer().equalsIgnoreCase(user)) {
+								toList = false;
+								break;
+							}
+						}
+					} else {
+						toList = false;
+					}
+
+					if (toList) {
+						list.add(game);
+						break;
+					}
 				}
 			}
 			break;
 		case PlayersFilter:
 			for (Game game : games) {
-				boolean toList = true;
-				for (GameType gameType : gamesFilter.getGamesFilter()) {
-					if (!game.isStarted() && game.getName().contains(gameName)
-							&& game.getTypeGame() == gameType) {
-						for (Slot slot : game.getSlots()) {
-							if (slot.getPlayer().equalsIgnoreCase(user)) {
-								toList = false;
-								break;
-							}
-						}
-					} else
-						toList = false;
-
-					if (toList)
+				int size = game.getSlots().size();
+				switch (size) {
+				case 2:
+					if (gamesFilter.getPlayersFilter().contains(
+							Players.TwoPlayers))
 						list.add(game);
+					break;
+				case 3:
+					if (gamesFilter.getPlayersFilter().contains(
+							Players.ThreeOrMore))
+						list.add(game);
+					break;
+				case 4:
+					if (gamesFilter.getPlayersFilter().contains(
+							Players.ThreeOrMore))
+						list.add(game);
+					break;
 				}
 			}
 			break;
@@ -101,7 +149,6 @@ public class GamesFilter implements IList {
 
 		}
 
-		System.out.println(list);
 		return list;
 	}
 

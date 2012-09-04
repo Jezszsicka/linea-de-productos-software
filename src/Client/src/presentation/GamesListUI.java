@@ -28,6 +28,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import logic.Controller;
+import logic.LanguageManager;
 import model.Filter;
 import java.awt.Color;
 import javax.swing.border.TitledBorder;
@@ -55,6 +56,7 @@ public class GamesListUI extends javax.swing.JFrame {
 	private JCheckBox checkChess;
 	private JCheckBox checkLudo;
 	private JCheckBox checkConnect4;
+	private LanguageManager language;
 
 	{
 		// Set Look & Feel
@@ -71,6 +73,7 @@ public class GamesListUI extends javax.swing.JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(
 				GamesListUI.class.getResource("/images/icon.png")));
 		setTitle("Lista de partidas");
+		language = LanguageManager.language();
 		filter = new Filter();
 		initGUI();
 		setVisible(true);
