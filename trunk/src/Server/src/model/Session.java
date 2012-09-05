@@ -25,7 +25,7 @@ public class Session {
 	/**
 	 * @param user the user to set
 	 */
-	public void setUsername(User user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 

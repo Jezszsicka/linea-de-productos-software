@@ -27,6 +27,7 @@ public class Server extends Ice.Application{
 		ServerI server = new ServerI();
 		adapter.add(server, communicator().stringToIdentity("sender"));
 		adapter.activate();
+		System.out.println("Server up");
 		communicator().waitForShutdown();
 		System.out.println("Server down");
 		return 0;

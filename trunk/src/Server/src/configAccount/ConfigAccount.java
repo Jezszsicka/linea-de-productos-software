@@ -1,6 +1,7 @@
 package configAccount;
 
 import persistence.UserDAO;
+import model.Session;
 import model.Sessions;
 import model.User;
 import ProductLine.InvalidLoggingException;
@@ -50,9 +51,11 @@ public class ConfigAccount implements IConfigAccount {
 	@Override
 	public void deleteAccount(String username, String password)
 			throws InvalidLoggingException {
-		User user = Sessions.getInstance().getSession(username).getUser();
+		Session session = Sessions.getInstance().getSession(username);
+		User user = session.getUser();
 		if (!user.getPassword().equals(password))
 			throw new InvalidLoggingException("Incorrect password");
+		Sessions.getInstance().removeSession(session);
 		UserDAO.getDAO().delete(user);
 	}
 
