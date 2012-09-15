@@ -2183,7 +2183,7 @@ public class CheckersUI extends javax.swing.JFrame implements IGame {
 				}
 
 				if (!validMove)
-					lblState.setText("Mueve donde valga caracarton");
+					lblState.setText("Ese movimiento no es válido");
 
 			}
 		}

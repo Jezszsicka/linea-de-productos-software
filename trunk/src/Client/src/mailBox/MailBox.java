@@ -56,4 +56,10 @@ public class MailBox implements IMailBox {
 				message.getMessageID());
 	}
 
+	@Override
+	public void receiveMessage(Message msg) {
+		User user = Session.getInstance().getUser();
+		user.getMessages().add(msg);
+	}
+
 }

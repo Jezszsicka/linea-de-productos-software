@@ -95,8 +95,7 @@ public class ClientI extends _ClientDisp{
 
 	@Override
 	public void receiveMessage(Message msg, Current __current) {
-		//TODO
-		
+		Controller.getInstance().receiveMessage(msg);
 	}
 
 
