@@ -1,10 +1,10 @@
 #Fat Jar Configuration File
-#Wed Sep 05 07:07:35 CEST 2012
+#Wed Sep 05 08:16:25 CEST 2012
 onejar.license.required=false
-manifest.classpath=/
+manifest.classpath=
 manifest.removesigners=false
 onejar.checkbox=false
-jarname=C\:\\Users\\Juan\\Desktop\\Client_fat.jar
+jarname=C\:\\Users\\Juan\\Desktop\\Client.jar
 manifest.mergeall=true
 manifest.mainclass=logic.Client
 manifest.file=<createnew>

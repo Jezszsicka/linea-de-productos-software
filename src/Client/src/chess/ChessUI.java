@@ -2128,7 +2128,7 @@ public class ChessUI extends javax.swing.JFrame implements IGame {
 							}
 						}
 					} else {
-						lblState.setText("Mueve donde valga, capullo!");
+						lblState.setText("No puedes mover ha esta casilla");
 					}
 				} else {
 					lblState.setText("Pulsa sobre una ficha tuya");

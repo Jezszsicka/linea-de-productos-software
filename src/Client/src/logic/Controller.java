@@ -609,4 +609,8 @@ public class Controller {
 
 	}
 
+	public void receiveMessage(Message msg) {
+		mailBox.receiveMessage(msg);	
+	}
+
 }
